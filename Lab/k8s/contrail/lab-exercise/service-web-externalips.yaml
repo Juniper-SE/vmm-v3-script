@@ -1,0 +1,13 @@
+#service-web-externalips.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-externalips
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: webserver
+  externalIPs:
+    - 101.101.10.1

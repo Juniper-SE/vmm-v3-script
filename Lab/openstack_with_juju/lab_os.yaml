@@ -1,0 +1,192 @@
+---
+name: os
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  jumpserver: ttqc-shell010.juniper.net
+  user: irzan
+  adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2 
+  desktop: images/desktop.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-21.4R1.12.vmdk
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        ipv4: 172.16.11.1/24
+        dhcp_range: 172.16.11.100-172.16.11.220
+      em2: 
+        bridge: control
+        ipv4: 172.16.12.1/24
+        mtu: 9000
+      em3:
+        bridge: data
+        ipv4: 172.16.13.1/24
+      em3:
+        bridge: sdngwge0
+        ipv4: 172.16.14.0/31
+        mtu: 9000
+        static:
+          - to: 172.16.255.1/32
+            via: 172.16.12.1
+      em4:
+        bridge: sdngwge1
+        ipv4: 172.16.14.2/31
+  juju:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.200/24
+        gateway4: 172.16.11.1
+  cc:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.201/24
+        gateway4: 172.16.11.1
+  client1:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.202/24
+        gateway4: 172.16.10.1
+      em1: 
+        bridge: access
+  ctrl1:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.101/24
+        gateway4: 172.16.11.1
+      em1: 
+        bridge: control
+        ipv4: 172.16.12.101/24
+      em2: 
+        bridge: data
+        ipv4: 172.16.13.101/24
+  ctrl2:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.102/24
+        gateway4: 172.16.11.1
+      em1: 
+        bridge: control
+        ipv4: 172.16.12.102/24
+      em2: 
+        bridge: data
+        ipv4: 172.16.13.102/24
+  ctrl3:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.103/24
+        gateway4: 172.16.11.1
+      em1: 
+        bridge: control
+        ipv4: 172.16.12.103/24
+      em2: 
+        bridge: data
+        ipv4: 172.16.13.103/24
+  compute1:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.111/24
+        gateway4: 172.16.11.1
+      em1: 
+        bridge: control
+        ipv4: 172.16.12.111/24
+      em2: 
+        bridge: data
+        ipv4: 172.16.13.111/24
+  compute2:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.112/24
+        gateway4: 172.16.11.1
+      em1: 
+        bridge: control
+        ipv4: 172.16.12.112/24
+      em2: 
+        bridge: data
+        ipv4: 172.16.13.112/24
+  compute3:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.11.113/24
+        gateway4: 172.16.11.1
+      em1: 
+        bridge: control
+        ipv4: 172.16.12.113/24
+      em2: 
+        bridge: data
+        ipv4: 172.16.13.113/24
+  
+  sdngw:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt:
+        bridge: mgmt
+        ipv4: 172.16.11.10/24 
+      lo0:
+        family:
+          inet: 172.16.255.1/32
+      ge-0/0/0:
+        bridge: sdngwge0
+        mtu: 9000
+        family:
+          inet: 172.16.14.1/31
+      ge-0/0/1: 
+        bridge: sdngwge1
+        family:
+          inet: 172.16.14.3/31
+      ge-0/0/2: 
+        bridge: access
+  
+  

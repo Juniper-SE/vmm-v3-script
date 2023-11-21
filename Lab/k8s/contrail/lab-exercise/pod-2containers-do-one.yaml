@@ -1,0 +1,16 @@
+#pod-2containers-do-one.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-1
+  labels: 
+    name: pod-1
+    app: pod-1
+spec:
+  containers:
+    - name: server
+      image: contrailk8sdayone/contrail-webserver
+      ports:
+        - containerPort: 80
+    - name: client1
+      image: contrailk8sdayone/ubuntu

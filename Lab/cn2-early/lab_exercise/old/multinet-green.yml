@@ -1,0 +1,28 @@
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: Subnet
+metadata:
+  name: vn-green-subnet
+  namespace: multinet
+  annotations:
+    core.juniper.net/display-name: vn-green-subnet
+spec:
+  cidr: "192.168.128.0/24"
+  defaultGateway: 192.168.128.1
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: VirtualNetwork
+metadata:
+  name: green-vn
+  namespace: multinet
+  annotations:
+    core.juniper.net/display-name: Sample Virtual Network
+    core.juniper.net/description:
+      VirtualNetwork is a collection of end points (interface or ip(s) or MAC(s))
+      that can communicate with each other by default. It is a collection of
+      subnets whose default gateways are connected by an implicit router
+spec:
+  v4SubnetReference:
+    apiVersion: core.contrail.juniper.net/v1alpha1
+    kind: Subnet
+    namespace: multinet
+    name: vn-green-subnet

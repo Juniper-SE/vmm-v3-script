@@ -1,0 +1,215 @@
+---
+name: ssr
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  #jumpserver: ttqc-shell010.juniper.net
+  user: irzan
+  adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2 
+  desktop: images/desktop.qcow2
+  ssr: images/ssr.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24
+        dhcp_range: 172.16.10.100-172.16.10.220
+      em2: 
+        bridge: isp1
+        family:
+          inet: 172.16.11.1/24
+          static:
+          - to: 172.17.0.0/16
+            via: 172.16.11.10
+        dhcp_range: 172.16.11.10-172.16.11.20
+      em3: 
+        bridge: isp2
+        family:
+          inet: 172.16.12.1/24
+          static:
+          - to: 172.18.0.0/16
+            via: 172.16.12.10
+        dhcp_range: 172.16.12.10-172.16.12.20
+      em4: 
+        bridge: control
+        family:
+          inet: 172.16.13.1/24
+  conductor:
+    type: ssrc
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.13.10/24
+          gateway4: 172.16.13.1
+  isp1:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: isp1
+        mtu: 9000
+        family:
+          inet: 172.16.11.10/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: sp1_r1
+        mtu: 9000
+        family:
+          inet: 172.17.1.1/24
+      em2: 
+        bridge: sp1_r2
+        mtu: 9000
+        family:
+          inet: 172.17.2.1/24
+      em3: 
+        bridge: sp1_r3
+        mtu: 9000
+        family:
+          inet: 172.17.3.1/24
+      em4: 
+        bridge: sp1_dc
+        mtu: 9000
+        family:
+          inet: 172.17.100.1/24
+  isp2:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: isp2
+        mtu: 9000
+        family:
+          inet: 172.16.12.10/24
+          gateway4: 172.16.12.1
+      em1: 
+        bridge: sp2_r1
+        mtu: 9000
+        family:
+          inet: 172.18.1.1/24
+      em2: 
+        bridge: sp2_r2
+        mtu: 9000
+        family:
+          inet: 172.18.2.1/24
+      em3: 
+        bridge: sp2_r3
+        mtu: 9000
+        family:
+          inet: 172.18.3.1/24
+      em4: 
+        bridge: sp2_dc
+        mtu: 9000
+        inet: 172.18.100.1/24
+  r1:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sp1_r1
+      em1: 
+        bridge: r1lan
+      em2: 
+        bridge: sp2_r1
+  r2:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sp1_r2
+      em1: 
+        bridge: r2lan
+      em2: 
+        bridge: sp2_r2
+  r3:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sp1_r3
+      em1: 
+        bridge: r3lan
+      em2: 
+        bridge: sp2_r3
+  DC:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sp1_dc
+      em1: 
+        bridge: dclan
+      em2: 
+        bridge: sp2_dc
+  c1r1:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: r1lan
+  c2r1:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: r1lan
+  c1r2:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: r2lan
+  c2r2:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: r2lan
+  c1r3:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: r3lan
+  c2r3:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: r3lan
+  dcsvr:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: dclan

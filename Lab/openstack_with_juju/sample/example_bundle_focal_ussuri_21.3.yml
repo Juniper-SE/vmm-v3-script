@@ -1,0 +1,935 @@
+# Copyright (c) 2017-2018 Canonical USA Inc. All rights reserved.
+#
+# Foundation HyperConverged
+#
+series: focal
+variables:
+  # https://wiki.ubuntu.com/OpenStack/CloudArchive
+  # packages for an LTS release come in a form of SRUs
+  # do not use cloud:<pocket> for an LTS version as
+  # installation hooks will fail. Example:
+  openstack-origin:    &openstack-origin    distro
+  #  openstack-origin:    &openstack-origin    cloud:focal-ussuri
+  openstack-region:    &openstack-region    RegionOne
+ 
+  # !> Important <!
+  # configure that value for the API services as if they
+  # spawn too many workers you will get inconsistent failures
+  # due to CPU overcommit
+  worker-multiplier:   &worker-multiplier   0.25
+ 
+  # Number of MySQL connections in the env. Default is not enough
+  # for environment of this size. So, bundle declares default of
+  # 2000. There's hardly a case for higher than this
+  mysql-connections:   &mysql-connections   4000
+ 
+  # MySQL tuning level. Charm default is "safest", this however
+  # impacts performance. For spinning platters consider setting this
+  # to "fast"
+  mysql-tuning-level:  &mysql-tuning-level safest
+ 
+  # Configure RAM allocation params for nova. For hyperconverged
+  # nodes, we need to have plenty reserves for service containers,
+  # Ceph OSDs, and swift-storage daemons. Those processes will not
+  # only directly allocate RAM but also indirectly via pagecache, file
+  # system caches, system buffers usage.  Adjust for higher density
+  # clouds, e.g. high OSD/host ratio or when running >2 service
+  # containers/host adapt appropriately.
+  reserved-host-memory: &reserved-host-memory 16384
+  ram-allocation-ratio: &ram-allocation-ratio 1.0 
+  cpu-allocation-ratio: &cpu-allocation-ratio 2.0
+ 
+ 
+  # This is Management network, unrelated to OpenStack and other applications
+  # OAM - Operations, Administration and Maintenance
+  oam-space:           &oam-space      oam-space
+ 
+  # This is OpenStack Admin network; for adminURL endpoints
+  admin-space:         &admin-space     oam-space
+ 
+  # This is OpenStack Public network; for publicURL endpoints
+  public-space:        &public-space    external-space
+ 
+  # This is OpenStack Internal network; for internalURL endpoints
+  internal-space:      &internal-space   oam-space
+ 
+  ## CEPH configuration
+  ## CEPH access network
+  #ceph-public-space:   &ceph-public-space  ceph-access-space
+ 
+  ## CEPH replication network
+  #ceph-cluster-space:  &ceph-cluster-space  ceph-replica-space
+ 
+  overlay-space: &overlay-space overlay-space
+ 
+  # Workaround for 'only one default binding supported'
+  oam-space-constr:    &oam-space-constr    spaces=oam-space
+  #ceph-access-constr:  &ceph-access-constr  spaces=ceph-access-space
+  #combi-access-constr:  &combi-access-constr  spaces=ceph-access-space,oam-space
+ 
+  ## CEPH OSD and journal devices; temporary workaround for #1674148
+  #osd-devices: &osd-devices >-
+  #  /dev/disk/by-dname/osddata0 /dev/disk/by-dname/osddata1
+  #  /dev/disk/by-dname/osddata2 /dev/disk/by-dname/osddata3
+  #  /dev/disk/by-dname/osddata4 /dev/disk/by-dname/osddata5
+ 
+  customize-failure-domain:    &customize-failure-domain    True
+ 
+  # Expected OSD count is total number of OSD disks that will be part of Ceph cluster.
+  # Never set this number higher or much lower than the real number. 10-20% less than
+  # actual number is acceptable
+ 
+  #original 6 nodes : expected-osd-count:  &expected-osd-count  36
+  #one node added : expected-osd-count:  &expected-osd-count  42
+  #expected-osd-count:  &expected-osd-count  72
+  #expected-osd-count:  &expected-osd-count  108
+  #expected-mon-count:  &expected-mon-count  3
+ 
+  #nagios-context: &nagios-context ltn-502
+ 
+ 
+  # Various VIPs
+  # NOTE: IPs are from openstack-api vlan and oam vlan
+ 
+  dashboard-vip:       &dashboard-vip       "10.6.0.189"
+  glance-vip:          &glance-vip          "10.6.0.182 10.6.2.152"
+  heat-vip:            &heat-vip            "10.6.0.184 10.6.2.154"
+  keystone-vip:        &keystone-vip        "10.6.0.185 10.6.2.155"
+  mysql-vip:           &mysql-vip           "10.6.2.159"
+  neutron-api-vip:     &neutron-api-vip     "10.6.0.186 10.6.2.156"
+  nova-cc-vip:         &nova-cc-vip         "10.6.0.187 10.6.2.157"
+ 
+  # NTP configuration
+  ntp-source:          &ntp-source          "10.6.2.130" #172.30.207.10 66.129.233.81"
+ 
+ 
+  #snap-proxy: &snap-proxy "http://<internal-proxy-name>:8080"
+ 
+  # Add policy-routing to the external network
+  external-network-cidr: &external-network-cidr "10.6.0.128/26"
+  external-network-gateway: &external-network-gateway "10.6.0.129"
+ 
+  # Add policy-routing for controllers to GWs
+  gw-network-cidr: &gw-network-cidr "10.6.0.86/31"
+  gw-network-gateway: &gw-network-gateway "192.168.100.1"
+
+# Add policy-routing to the appformix network
+  #appformix-network-cidr: &appformix-network-cidr 0.0.0.0/0
+  #appformix-network-gateway: &appformix-network-gateway 10.64.2.1
+ 
+ 
+  # After bundle has been deployed, log in to Landscape server and create
+  # an account. In the account settings, set the Registration key and then
+  # configure landscape-client to use that registration-key:
+  # juju config landscape-client registration-key=$your_registration_key
+ 
+  # Encryption At Res
+  # ephemeral-device: &ephemeral-device /dev/disk/by-dname/ephemeral
+ 
+  # Contrail variables
+  docker-registry: &docker-registry hub.juniper.net/contrail
+  docker-user: &docker-user <your-juniper-docker-repo-username>
+  docker-password: &docker-password <your-juniper-docker-repo-pwd>
+  #docker_runtime_repo: &docker-repo http://<internal-repo-name>/current/mirror/download.docker.com/linux/ubuntu/
+  #docker_runtime_key_url: &docker-key http://<internal-repo-name>/current/mirror/download.docker.com/linux/ubuntu/gpg
+ 
+  # contrail version
+  image-tag: &image-tag "21.3.0.93"
+  #contrail-proxy: &contrail-proxy http://<internal-proxy-name>:8080
+  #contrail-no-proxy: &contrail-no-proxy localhost,127.0.0.1,<internal-repo-name>
+  # in old charms - network also used for api calls - contrail controller and api
+  # in latest charms - seperate api network. could split this.
+  # contrail-control-net: &contrail-control-net 172.16.4.0/22
+  # #contrail net now on OAM
+  contrail-control-net: &contrail-control-net 10.6.2.128/25
+  # Data net on SDN transport
+  contrail-data-net: &contrail-data-net 192.168.100.0/24
+  # api in external
+  contrail-api-vip: &contrail-api-vip 10.6.0.190
+  # contrail log level (SYS_NOTICE or SYS_DEBUG)
+  contrail-log-level: &contrail-log-level SYS_NOTICE
+ 
+ 
+machines:
+  "0":
+    series: focal
+    constraints: tags=controller13
+  "1":
+    series: focal
+    constraints: tags=controller14
+  "2":
+    series: focal
+    constraints: tags=controller15
+  "3":
+    series: focal
+    constraints: tags=kmod3
+  "4":
+    series: focal
+    constraints: tags=kmod7
+  "5":
+    series: focal
+    constraints: tags=kmod8
+  "6":
+    series: focal
+    constraints: tags=dpdk10
+  "7":
+    series: focal
+    constraints: tags=dpdk11
+  "8":
+    series: focal
+    constraints: tags=dpdk12
+#  "9":
+#    series: focal
+#    constraints: tags=n3000
+
+applications:
+  # HAcluster
+  hacluster-glance:
+    charm: cs:hacluster
+  hacluster-horizon:
+    charm: cs:hacluster
+  hacluster-keystone:
+    charm: cs:hacluster
+  hacluster-neutron:
+    charm: cs:hacluster
+  hacluster-nova:
+    charm: cs:hacluster
+  hacluster-mysql:
+    charm: cs:hacluster
+  hacluster-heat:
+    charm: cs:hacluster
+ 
+  # CPU governor applications
+  sysconfig-compute:
+    charm: cs:sysconfig
+    options:
+      governor: "performance"
+      enable-pti: True
+      grub-config-flags: "GRUB_CMDLINE_LINUX_DEFAULT=\"$GRUB_CMDLINE_LINUX_DEFAULT default_hugepagesz=1G\""
+      update-grub: True
+
+  sysconfig-control:
+    charm: cs:sysconfig
+    options:
+      enable-pti: True
+      grub-config-flags: "GRUB_CMDLINE_LINUX_DEFAULT=\"$GRUB_CMDLINE_LINUX_DEFAULT default_hugepagesz=1G\""
+      governor: "performance"
+      update-grub: True
+
+  sysconfig-compute-dpdk:
+    charm: cs:sysconfig
+    options:
+      # cpu-range determines the pcpus that the host will utilise for kernel tasks, should be the first core on each pcpu only
+      # and should be those cores that are NOT already reserved for VM use in overlays/sriov_dpdk.yaml pin set
+      # 20 core: 0,20,40,60
+      # 28 core: 0,28,56,84
+      cpu-range: '0,14,28,42'
+      #cpu-range: '0-28'
+      #cpu-range: ''
+      governor: "performance"
+      reservation: 'affinity'
+      hugepages: '64'
+      hugepagesz: '1G'
+      enable-iommu: True
+      enable-pti: True
+      grub-config-flags: "GRUB_CMDLINE_LINUX_DEFAULT=\"$GRUB_CMDLINE_LINUX_DEFAULT default_hugepagesz=1G\""
+      update-grub: True
+
+  # Encryption at Rest applications
+#  etcd:
+#    charm: cs:etcd
+#    num_units: 3
+#    bindings:
+#      "": *oam-space
+#      cluster: *internal-space
+#      db: *internal-space
+#    options:
+#      channel: 3.2/stable
+#    to:
+#      - lxd:13
+#      - lxd:14
+#      - lxd:15
+#  easyrsa:
+#    charm: cs:~containers/easyrsa
+#    num_units: 1
+#    bindings:
+#      "": *oam-space
+#      client: *internal-space
+#    to:
+#      - lxd:13
+#    resources:
+#      easyrsa: 5
+
+  glance:
+    charm: cs:glance
+    constraints: *oam-space-constr
+    bindings:
+      "": *oam-space
+      public: *public-space
+      admin: *admin-space
+      internal: *internal-space
+      shared-db: *internal-space
+    options:
+      worker-multiplier: *worker-multiplier
+      openstack-origin: *openstack-origin
+      vip: *glance-vip
+      use-internal-endpoints: True
+      restrict-ceph-pools: False
+      region: *openstack-region
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+  keystone:
+    charm: cs:keystone
+    num_units: 3
+    bindings:
+      "": *oam-space
+      public: *public-space
+      admin: *admin-space
+      internal: *internal-space
+      shared-db: *internal-space
+    options:
+      worker-multiplier: *worker-multiplier
+      openstack-origin: *openstack-origin
+      vip: *keystone-vip
+      region: *openstack-region
+      preferred-api-version: 3
+      token-provider: 'fernet'
+      # For contrail rbac
+      admin-role: "admin"
+      admin-password: "c0ntrail123"
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+  mysql:
+    series: bionic
+    charm: cs:percona-cluster
+    num_units: 3
+    bindings:
+      "": *oam-space
+      cluster: *internal-space
+      shared-db: *internal-space
+      ha: *internal-space
+      db: *internal-space
+      db-admin: *internal-space
+    options:
+      source: *openstack-origin
+      innodb-buffer-pool-size: 512M
+      vip: *mysql-vip
+      wait-timeout: 3600
+      min-cluster-size: 3
+      enable-binlogs: True
+      performance-schema: True
+      max-connections: *mysql-connections
+      tuning-level: *mysql-tuning-level
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+  neutron-api:
+    charm: cs:neutron-api
+    num_units: 3
+    constraints: mem=32768 cores=8 root-disk=256G spaces=external-space,overlay-space,oam-space
+    bindings:
+      "": *oam-space
+      public: *public-space
+      admin: *admin-space
+      internal: *internal-space
+      shared-db: *internal-space
+      neutron-plugin-api-subordinate: *overlay-space
+    options:
+      worker-multiplier: *worker-multiplier
+      openstack-origin: *openstack-origin
+      region: *openstack-region
+      neutron-security-groups: True
+      overlay-network-type: ''
+      use-internal-endpoints: True
+      vip: *neutron-api-vip
+      enable-l3ha: True
+      dhcp-agents-per-network: 2
+      enable-ml2-port-security: True
+      default-tenant-network-type: vlan
+      l2-population: True
+      #global-physnet-mtu: 9000
+      # Contrail
+      manage-neutron-plugin-legacy-mode: False
+    to:
+    - kvm:0
+    - kvm:1
+    - kvm:2
+
+  nova-cloud-controller:
+    charm: cs:nova-cloud-controller
+    num_units: 3
+    bindings:
+      "": *oam-space
+      public: *public-space
+      admin: *admin-space
+      internal: *internal-space
+      shared-db: *internal-space
+      memcache: *internal-space
+    options:
+      worker-multiplier: *worker-multiplier
+      openstack-origin: *openstack-origin
+      network-manager: Neutron
+      region: *openstack-region
+      vip: *nova-cc-vip
+      console-access-protocol: novnc
+      console-proxy-ip: local
+      use-internal-endpoints: True
+      ram-allocation-ratio: *ram-allocation-ratio
+      cpu-allocation-ratio: *cpu-allocation-ratio
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+  nova-compute-kvm:
+    charm: cs:nova-compute
+    num_units: 3
+    #bindings:
+    #  "": *oam-space
+    #  internal: *internal-space
+    options:
+      os-internal-network: *contrail-control-net
+      openstack-origin: *openstack-origin
+      enable-live-migration: True
+      enable-resize: True
+      migration-auth-type: ssh
+      #use-internal-endpoints: True
+      #change from qcow2 to RBD
+      #libvirt-image-backend: rbd
+      #restrict-ceph-pools: False
+      #aa-profile-mode: enforce
+      virt-type: kvm
+      customize-failure-domain: *customize-failure-domain
+      reserved-host-memory: *reserved-host-memory
+      #removed
+      #ephemeral-device: *ephemeral-device
+      #encrypt: True
+      # NOTE: For cpu model names see man qemu-cpu-models
+      #   Our current version of libvirtd does not understrand Cascadelake-Server, so let it pick the best fit with host-model instead
+      #   cpu-mode: custom
+      #   cpu-model: "Cascadelake-Server"
+      #cpu-mode: host-model
+      #cpu-model: ""
+    to:
+    - 3
+    - 4
+    - 5
+
+  nova-compute-kvm-dpdk:
+    charm: cs:nova-compute
+    num_units: 3
+    #bindings:
+    #  "": *oam-space
+    #  internal: *internal-space
+    options:
+      os-internal-network: *contrail-control-net
+      openstack-origin: *openstack-origin
+      enable-live-migration: True
+      enable-resize: True
+      migration-auth-type: ssh
+      #use-internal-endpoints: True
+      #aa-profile-mode: enforce
+      virt-type: kvm
+      #customize-failure-domain: *customize-failure-domain
+      #reserved-host-memory: *reserved-host-memory
+      hugepages: '64'
+      #cpu-mode: host-model
+      #cpu-model: ""
+    to:
+    - 6
+    - 7
+    - 8
+#    - 9
+
+  ntp:
+    charm: cs:ntp
+    options:
+      source: *ntp-source
+      pools: ""
+
+  bms-ntp:
+    charm: cs:ntp
+    options:
+      source: *ntp-source
+      pools: ""
+
+  openstack-dashboard:
+    charm: cs:openstack-dashboard
+    num_units: 3
+    constraints: *oam-space-constr
+    bindings:
+      "": *public-space
+      shared-db: *internal-space
+    options:
+      openstack-origin: *openstack-origin
+      webroot: "/"
+      secret: "encryptcookieswithme"
+      vip: *dashboard-vip
+      neutron-network-l3ha: True
+      neutron-network-lb: True
+      neutron-network-firewall: False
+      cinder-backup: False
+      password-retrieve: True
+      endpoint-type: 'publicURL'
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+  placement:
+    charm: cs:placement
+    bindings:
+      "": *oam-space
+    num_units: 3
+    options:
+      worker-multiplier: *worker-multiplier
+      openstack-origin: *openstack-origin
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+  rabbitmq-server:
+    charm: cs:rabbitmq-server
+    bindings:
+      "": *oam-space
+      amqp: *internal-space
+      cluster: *internal-space
+    options:
+      source: *openstack-origin
+      min-cluster-size: 3
+    num_units: 3
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+  heat:
+    charm: cs:heat
+    num_units: 3
+    constraints: mem=32768 cores=6 root-disk=64G spaces=external-space,overlay-space,oam-space
+    bindings:
+      "": *oam-space
+      public: *public-space
+      admin: *admin-space
+      internal: *internal-space
+      shared-db: *internal-space
+      heat-plugin-subordinate: *overlay-space
+    options:
+      worker-multiplier: *worker-multiplier
+      openstack-origin: *openstack-origin
+      region: *openstack-region
+      vip: *heat-vip
+      use-internal-endpoints: True
+    to:
+    - kvm:0
+    - kvm:1
+    - kvm:2
+
+  memcached:
+    charm: cs:memcached
+    num_units: 3
+    constraints: *oam-space-constr
+    bindings:
+      "": *internal-space
+      cache: *internal-space
+    options:
+      allow-ufw-ip6-softfail: True
+    to:
+    - lxd:0
+    - lxd:1
+    - lxd:2
+
+# Contrail applications
+  contrail-openstack:
+    charm: cs:~juniper-os-software/contrail-openstack
+    options:
+      docker-registry: *docker-registry
+      docker-user: *docker-user
+      docker-password: *docker-password
+      #temp change to apt until bug fixed around no_proxy
+      #https://github.com/Juniper/contrail-charms/issues/150
+      #docker_runtime: apt
+      image-tag: *image-tag
+
+  contrail-agent:
+    charm: cs:~juniper-os-software/contrail-agent
+    options:
+      log-level: *contrail-log-level
+      docker-registry: *docker-registry
+      docker-user: *docker-user
+      docker-password: *docker-password
+      image-tag: *image-tag
+      physical-interface: 'bond0'
+      vhost-gateway: '192.168.100.1'
+      kernel-hugepages-1g: '32'
+ 
+  contrail-agent-dpdk:
+    charm: cs:~juniper-os-software/contrail-agent
+    options:
+      log-level: *contrail-log-level
+      docker-registry: *docker-registry
+      docker-user: *docker-user
+      docker-password: *docker-password
+      image-tag: *image-tag
+      physical-interface: 'bond0'
+      vhost-gateway: '192.168.100.1'
+      #vhost-gateway: auto
+      dpdk: True
+      dpdk-coremask: '1,2,3,4'
+      dpdk-service-coremask: '0,14,28,42'
+      dpdk-ctrl-thread-coremask: '0,14,28,42'
+      dpdk-driver: 'vfio-pci'
+      dpdk-main-mempool-size: '98304'
+      dpdk-pmd-txd-size: '2048'
+      dpdk-pmd-rxd-size: '2048'
+      dpdk-hugepages: '96'
+      dpdk-no-gro: True
+      dpdk-no-mrgbuf: True
+
+  contrail-analytics:
+    charm: cs:~juniper-os-software/contrail-analytics
+    num_units: 3
+    constraints: mem=32768 cores=12 root-disk=250G spaces=overlay-space,oam-space
+    bindings:
+      "": *oam-space
+    options:
+      log-level: *contrail-log-level
+      docker-registry: *docker-registry
+      docker-user: *docker-user
+      docker-password: *docker-password
+      #temp change to apt until bug fixed around no_proxy
+      #https://github.com/Juniper/contrail-charms/issues/150
+      #docker_runtime: apt
+      image-tag: *image-tag
+      control-network: *contrail-control-net
+      haproxy-http-mode: "https"
+      min-cluster-size: 3
+      vip: *contrail-api-vip
+    to:
+      - kvm:0
+      - kvm:1
+      - kvm:2
+
+  contrail-analytics-db:
+    charm: cs:~juniper-os-software/contrail-analyticsdb
+    num_units: 3
+    constraints: mem=65536 cores=16 root-disk=500G spaces=overlay-space,oam-space
+    bindings:
+      "": *oam-space
+    options:
+      log-level: *contrail-log-level
+      docker-registry: *docker-registry
+      docker-user: *docker-user
+      docker-password: *docker-password
+      #temp change to apt until bug fixed around no_proxy
+      #https://github.com/Juniper/contrail-charms/issues/150
+      #docker_runtime: apt
+      image-tag: *image-tag
+      control-network: *contrail-control-net
+      cassandra-minimum-diskgb: "4"
+      cassandra-jvm-extra-opts: "-Xms8g -Xmx8g"
+      min-cluster-size: 3
+    to:
+      - kvm:0
+      - kvm:1
+      - kvm:2
+
+  contrailinsight-controller:
+    charm: cs:focal/ubuntu
+    constraints:  *oam-space-constr
+    constraints: mem=16392 cores=8 root-disk=100G spaces=oam-space
+    bindings:
+      "": *oam-space
+    num_units: 3
+    to:
+    - kvm:0
+    - kvm:1
+    - kvm:2
+
+  contrailinsight-flow:
+    charm: cs:focal/ubuntu
+    constraints:  *oam-space-constr
+    constraints: mem=16392 cores=8 root-disk=100G spaces=oam-space
+    bindings:
+      "": *oam-space
+    num_units: 3
+    to:
+    - kvm:0
+    - kvm:1
+    - kvm:2
+
+  keepalived:
+    charm: cs:~containers/keepalived
+    options:
+      virtual_ip: *contrail-api-vip
+      port: 8143
+
+  contrail-haproxy:
+    charm: cs:haproxy
+    num_units: 3
+    bindings:
+      "": *oam-space
+      reverseproxy: *internal-space
+      website: *public-space
+      public: *public-space
+    options:
+      default_timeouts: >-
+        queue 60000, connect 5000, client 120000, server 120000
+      services: ""
+      source: backports
+      peering_mode: "active-active"
+      enable_monitoring: True
+      ssl_cert: SELFSIGNED
+    to:
+      - lxd:0
+      - lxd:1
+      - lxd:2
+
+  contrail-controller:
+    charm: cs:~juniper-os-software/contrail-controller
+    num_units: 3
+    constraints: mem=65536 cores=16 root-disk=250G spaces=overlay-space,oam-space,external-space
+    bindings:
+      "": *oam-space
+    options:
+      log-level: *contrail-log-level
+      docker-registry: *docker-registry
+      docker-user: *docker-user
+      docker-password: *docker-password
+      #temp change to apt until bug fixed around no_proxy
+      #https://github.com/Juniper/contrail-charms/issues/150
+      #docker_runtime: apt
+      image-tag: *image-tag
+      control-network: *contrail-control-net
+      data-network: *contrail-data-net
+      auth-mode: rbac
+      cassandra-minimum-diskgb: "4"
+      cassandra-jvm-extra-opts: "-Xms8g -Xmx8g"
+      vip: *contrail-api-vip
+      local-rabbitmq-hostname-resolution: True
+      haproxy-https-mode: http
+      haproxy-http-mode: "http"
+      bgp-asn: '65109'
+      min-cluster-size: 3
+    to:
+      - kvm:0
+      - kvm:1
+      - kvm:2
+ 
+  contrail-command:
+    charm: cs:~juniper-os-software/contrail-command
+    num_units: 1
+    bindings:
+      "": *oam-space
+    constraints: mem=8192 cores=8 root-disk=60G
+    options:
+      docker-registry: *docker-registry
+      docker-user: *docker-user
+      docker-password: *docker-password
+      image-tag: *image-tag
+      control-network: *contrail-control-net
+    expose: True
+    to:
+      - kvm:0
+
+  contrail-keystone-auth:
+    charm: cs:~juniper-os-software/contrail-keystone-auth
+    num_units: 3
+    constraints: spaces=overlay-space
+    bindings:
+      "": *oam-space
+    to:
+      - lxd:0
+      - lxd:1
+      - lxd:2
+ 
+  #Just to depoy ubuntu charm for baremetal controllers
+  baremetal-controller:
+    charm: cs:ubuntu
+    num_units: 3
+    to:
+      - 0
+      - 1
+      - 2  
+
+  #Just to depoy ubuntu charm for baremetal nodes
+  baremetal-server:
+    charm: cs:ubuntu
+    num_units: 6
+    to:
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+#      - 9
+
+  lldpd:
+    charm: cs:lldpd
+    options:
+      interfaces-regex: 'e*,bond*'
+
+  advanced-policy-routing:
+    charm: cs:advanced-routing
+    options:
+      advanced-routing-config: |-
+        [{
+          "type": "table",
+          "table": "public"
+         }, {
+          "type": "route",
+          "default_route": true,
+          "gateway": "10.6.0.129",
+          "table": "public"
+         }, {
+          "type": "rule",
+          "from-net": "10.6.0.128/25",
+          "to-net": "0.0.0.0/0",
+          "table": "public",
+          "priority": 100
+         }, {
+          "type": "table",
+          "table": "overlay"
+         }, {
+          "type": "route",
+          "default_route": true,
+          "gateway": "192.168.100.1",
+          "table": "overlay"
+         }, {
+          "type": "route",
+          "net": "10.6.0.86/31",
+          "gateway": "192.168.100.1",
+          "table": "overlay"
+         }, {
+          "type": "rule",
+          "from-net": "192.168.100.0/24",
+          "to-net": "0.0.0.0/0",
+          "table": "overlay",
+          "priority": 101
+         }]
+      enable-advanced-routing: True
+      action-managed-update: True
+
+relations:
+  # openstack
+  - [ "nova-compute-kvm", "ntp" ]
+  - [ "nova-compute-kvm:juju-info", "lldpd:juju-info" ]
+  - [ "nova-compute-kvm-dpdk", "ntp" ]
+    # - [ "nova-compute-kvm-dpdk:juju-info", "lldpd:juju-info" ]
+
+  - [ "mysql:ha", "hacluster-mysql:ha" ]
+  - [ "keystone:ha", "hacluster-keystone:ha" ]
+  - [ "glance:ha", "hacluster-glance:ha" ]
+  - [ "neutron-api:ha", "hacluster-neutron:ha" ]
+  - [ "nova-cloud-controller:ha", "hacluster-nova:ha" ]
+  - [ "openstack-dashboard:ha", "hacluster-horizon:ha" ]
+  - [ "heat:ha", "hacluster-heat:ha" ]
+  - [ "nova-cloud-controller:memcache", "memcached:cache" ]
+ 
+  - [ "keystone:shared-db", "mysql:shared-db" ]
+
+  - [ "glance:shared-db", "mysql:shared-db" ]
+  - [ "glance:identity-service", "keystone:identity-service" ]
+
+  - [ "glance:amqp", "rabbitmq-server:amqp" ]
+  - [ "heat:shared-db", "mysql:shared-db" ]
+  - [ "heat:identity-service", "keystone:identity-service" ]
+  - [ "heat:amqp", "rabbitmq-server:amqp" ]
+  - [ "nova-cloud-controller:shared-db", "mysql:shared-db" ]
+  - [ "nova-cloud-controller:amqp", "rabbitmq-server:amqp" ]
+  - [ "nova-cloud-controller:identity-service", "keystone:identity-service" ]
+  - [ "nova-cloud-controller:image-service", "glance:image-service" ]
+  - [ "nova-cloud-controller", "placement" ]
+  - [ "neutron-api:shared-db", "mysql:shared-db" ]
+  - [ "placement:shared-db", "mysql:shared-db" ]
+  - [ "neutron-api:amqp", "rabbitmq-server:amqp" ]
+  - [ "neutron-api:neutron-api", "nova-cloud-controller:neutron-api" ]
+  - [ "neutron-api:identity-service", "keystone:identity-service" ]
+  - [ "placement:identity-service", "keystone:identity-service" ]
+
+  - [ "nova-compute-kvm:amqp", "rabbitmq-server:amqp" ]
+  - [ "nova-compute-kvm:image-service", "glance:image-service" ]
+  - [ "nova-compute-kvm:cloud-compute", "nova-cloud-controller:cloud-compute" ]
+  - [ "nova-compute-kvm-dpdk:amqp", "rabbitmq-server:amqp" ]
+  - [ "nova-compute-kvm-dpdk:image-service", "glance:image-service" ]
+  - [ "nova-compute-kvm-dpdk:cloud-compute", "nova-cloud-controller:cloud-compute" ]
+
+  - [ "openstack-dashboard:identity-service", "keystone:identity-service" ]
+  - [ "openstack-dashboard:shared-db", "mysql:shared-db" ]
+
+  # external-policy routing
+  - ["advanced-policy-routing:juju-info", "openstack-dashboard:juju-info"]
+  - ["advanced-policy-routing:juju-info", "glance:juju-info"]
+  - ["advanced-policy-routing:juju-info", "heat:juju-info"]
+  - ["advanced-policy-routing:juju-info", "keystone:juju-info"]
+  - ["advanced-policy-routing:juju-info", "neutron-api:juju-info"]
+  - ["advanced-policy-routing:juju-info", "nova-cloud-controller:juju-info"]
+  - ["advanced-policy-routing:juju-info", "contrail-haproxy:juju-info"]
+  - ["advanced-policy-routing:juju-info", "nova-compute-kvm:juju-info"]
+  - ["advanced-policy-routing:juju-info", "nova-compute-kvm-dpdk:juju-info"]
+
+
+  # gateway-policy routing
+  - ["advanced-policy-routing:juju-info", "contrail-controller:juju-info"]
+
+  - [ "nova-compute-kvm:juju-info", "sysconfig-compute:juju-info" ]
+  - [ "nova-compute-kvm-dpdk:juju-info", "sysconfig-compute-dpdk:juju-info" ]
+
+  # Contrail relations
+  - ["contrail-command", "contrail-controller"]
+
+  - ["contrail-keystone-auth:identity-admin", "keystone:identity-admin"]
+  - ["contrail-controller:contrail-auth", "contrail-keystone-auth:contrail-auth"]
+  - ["contrail-analytics:contrail-analyticsdb", "contrail-analytics-db:contrail-analyticsdb"]
+  - ["contrail-controller:contrail-analytics", "contrail-analytics:contrail-analytics"]
+  - ["contrail-controller:contrail-analyticsdb", "contrail-analytics-db:contrail-analyticsdb"]
+
+  - ["contrail-openstack:nova-compute", "nova-compute-kvm:neutron-plugin"]
+  - ["contrail-openstack:nova-compute", "nova-compute-kvm-dpdk:neutron-plugin"]
+
+  - ["contrail-openstack:neutron-api", "neutron-api:neutron-plugin-api-subordinate"]
+  - ["contrail-openstack:heat-plugin", "heat:heat-plugin-subordinate"]
+  - ["contrail-openstack:contrail-controller", "contrail-controller:contrail-controller"]
+
+  - ["contrail-agent:juju-info", "nova-compute-kvm:juju-info"]
+  - ["contrail-agent-dpdk:juju-info", "nova-compute-kvm-dpdk:juju-info"]
+
+  - ["contrail-agent:contrail-controller", "contrail-controller:contrail-controller"]
+  - ["contrail-agent-dpdk:contrail-controller", "contrail-controller:contrail-controller"]
+
+  - [ "contrailinsight-controller", "ntp" ]
+  - [ "contrailinsight-flow", "ntp" ]
+
+  # added to support SSL on API
+ # - ["contrail-agent:tls-certificates", "easyrsa:client" ]
+ # - ["contrail-agent-dpdk:tls-certificates", "easyrsa:client" ]
+  - ["contrail-analytics:http-services", "contrail-haproxy:reverseproxy"]
+  - ["contrail-controller:http-services", "contrail-haproxy:reverseproxy"]
+  - ["contrail-controller:https-services", "contrail-haproxy:reverseproxy"]
+  - ["contrail-haproxy:juju-info", "keepalived:juju-info"]
+  - ["ntp:juju-info", "contrail-controller:juju-info"]
+  - ["ntp:juju-info", "contrail-analytics:juju-info"]
+  - ["ntp:juju-info", "contrail-analytics-db:juju-info"]
+
+  # Heat and neutron-api are KVM machines and require NTP
+  - ["ntp:juju-info", "neutron-api:juju-info"]
+  - ["ntp:juju-info", "heat:juju-info"]
+  
+  #- [ "contrail-controller:tls-certificates", "easyrsa:client" ]
+  #- [ "contrail-analytics:tls-certificates", "easyrsa:client" ]
+  #- [ "contrail-analytics-db:tls-certificates", "easyrsa:client" ]
+  #- [ "etcd:certificates", "easyrsa:client" ]
+
+  - [ "baremetal-controller:juju-info", "bms-ntp:juju-info" ]
+  - [ "baremetal-controller:juju-info", "sysconfig-control:juju-info" ]

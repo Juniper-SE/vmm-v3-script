@@ -1,0 +1,52 @@
+
+set system root-authentication encrypted-password "$6$ft0SW$GFDaGThGVZ5q7SRACIqkl04MRYQQDIbrxEm6opHupmZTXszYkWN4N9BRGuRn.NUW1QkQPlU5vcXYHhR8Ss/zd."
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$pH6AZ$Dtpnscvl8vakBT8zEWowujSUEFLzPxc/emdwr61nLMJerFqPPO8n48MqchMjH6lu/IDESXUH1lnGkrjaLIBwv0"
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/+8rkgOc76z0m7Cierw4qUs6bahYgQP4/hyPZGmb/mukCSn7ZvbUM27fX1nRbbP8Z0t+ruF8A5kP5jHOXILCTe2K5+JE9aHbkae5ztSwhxZSYxcSPtN0r8G/B57/4cw5QV7yKjSlQiLXf2EMfIt27/ZGeE402Tntz5v41wsj8C9PtBZvSMcgBWYu/HfE94ShSqsUNvg+FzKaVGhPB4mOzsApPF7Y/zopk7ADB6VkBdqUSblauU0a4aDy/3cwGR2NwOGXcszGzNYU4H6AlIsribpQPXkVs/v6b4NRHzAuKVk2FLLneeWsEKIqCZIWjzJj2ck4aWCM3NkoE86ndbRNyFaaxs67KpzPvPlAOwHU8gINyhzDfVi68xeiN9p8ybj3fI/Vw1W70i4wN2rL1PSupnnPNAX0Ijd9ulmhbAJyO+cjuoURLUR56EjJUYfddzRRRjQO0IMKNPDw0BFFxbt4gc1OnC6bJh2odHb/xbXaVCo361kz2IBoeZ3yFVpTcJH8= irzan@irzan-mbp"
+set system services ssh
+set system services netconf ssh
+set interfaces lo0 unit 0 family inet address 10.100.1.3/32
+set interfaces lo0 unit 0 family iso address 49.0001.0101.0000.1003.00
+set policy-options policy-statement lb then load-balance per-packet
+set policy-options policy-statement to_int then next-hop self
+set routing-instances cust1 instance-type vrf
+set routing-instances cust1 protocols bgp group to_ce3 neighbor 192.168.255.13 peer-as 65103
+set routing-instances cust1 protocols bgp group to_ce3 neighbor 2001:dead:beef:ffff::ffff:13 family inet6 any
+set routing-instances cust1 protocols bgp group to_ce3 neighbor 2001:dead:beef:ffff::ffff:13 peer-as 65103
+set routing-instances cust1 interface vlan10
+set routing-instances cust1 vrf-target target:64512:10001
+set routing-instances cust1 vrf-table-label
+set routing-options route-distinguisher-id 10.100.1.3
+set routing-options rib inet.0
+set routing-options rib mpls.0
+set routing-options rib inet6.0
+set routing-options router-id 10.100.1.3
+set routing-options autonomous-system 64512
+set routing-options forwarding-table export lb
+set protocols bgp group to_rr type internal
+set protocols bgp group to_rr local-address 10.100.1.3
+set protocols bgp group to_rr family inet any
+set protocols bgp group to_rr family inet-vpn any
+set protocols bgp group to_rr family inet6 labeled-unicast explicit-null
+set protocols bgp group to_rr family inet6-vpn any
+set protocols bgp group to_rr neighbor 10.100.1.255 export to_int
+set protocols bgp group to_vlan1 local-address 192.168.255.4
+set protocols bgp group to_vlan1 peer-as 65003
+set protocols bgp group to_vlan1 neighbor 192.168.255.5
+set protocols bgp group to_vlan1_v6 local-address 2001:dead:beef:ffff::ffff:4
+set protocols bgp group to_vlan1_v6 family inet6 any
+set protocols bgp group to_vlan1_v6 peer-as 65003
+set protocols bgp group to_vlan1_v6 neighbor 2001:dead:beef:ffff::ffff:5
+set protocols bgp multipath
+set protocols isis interface eth2 point-to-point
+set protocols isis interface eth3 point-to-point
+set protocols isis interface lo.0
+set protocols ldp explicit-null
+set protocols ldp interface eth2
+set protocols ldp interface eth3
+set protocols ldp interface lo
+set protocols mpls explicit-null
+deactivate protocols mpls explicit-null
+set protocols mpls ipv6-tunneling
+set protocols mpls interface eth3
+set protocols mpls interface eth2

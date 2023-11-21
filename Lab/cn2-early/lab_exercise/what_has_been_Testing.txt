@@ -1,0 +1,18 @@
+so far, these are the things that I have tested on CN2 (installed on ubuntu-5.4.0-90, CN2 with tag master-2708, cri-o 1.21.4, and kubectl 1.21.4), based on CN2-early-guide doc :
+- deploying pod
+- deploying virtual network
+- deploying multiple interface pods
+- configuring routing between VN (using route target)
+- configuring SDNGW (using VMX)
+- advertise virtual network to SDNGW and make pods connected to this VN accessible from external network
+- contrail analytic (although the data is not yet displayed )
+
+I haven't tested the following (because it is not yet availabe on the CN2 early guide)
+- load balancer object
+- ingress
+- service chaining
+
+as for ingress, is CN2 will use haproxy by default (like CN classic) or users need to install their own prefered ingress ?
+as for load balancer, from kubectl api-resources, I can see that floatingips is part of the API, so can I say that it has been supported ? when will the guide on how to configure this become available ?
+
+regards

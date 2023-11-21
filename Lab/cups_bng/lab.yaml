@@ -1,0 +1,323 @@
+---
+name: cups
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  # if your account can access vmm server directly, then you can comment out the following line
+  jumpserver: ttqc-shell002.juniper.net
+  user: irzan
+  adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  desktop: images/desktop.qcow2
+  vmx: images/vmx/junos-vmx-x86-64-23.1R1.8.vmdk
+  #vmx_re: images/vmx/junos-vmx-x86-64-21.4R3.15.vmdk
+  bridge: images/alpine.qcow2
+  wrt: images/cpe.qcow2
+junos_login:
+  login: admin
+  password: pass01
+fabric:
+  subnet: 172.16.15.0/24
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # bin 8 : large mtu
+  # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+    - [ 0x15d, acs, ge-0/0/2, p1, ge-0/0/0 ]
+    - [ 0x15d, p1, ge-0/0/1, bng1, ge-0/0/1 ]
+    - [ 0x15d, p1, ge-0/0/2, bng2, ge-0/0/1 ]
+    - [ 0x15d, bng1, ge-0/0/2, p2, ge-0/0/0 ]
+    - [ 0x15d, bng2, ge-0/0/2, p2, ge-0/0/1 ]
+    - [ 0x15d, p2, ge-0/0/3, pe1, ge-0/0/1 ]
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.1/24
+        dhcp_range: 172.16.11.100-172.16.11.254
+      em2:
+        bridge: net1
+        family:
+          inet: 172.16.12.254/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.12.1
+            - to: 172.16.255.2/32
+              via: 172.16.12.2
+      em3:
+        bridge: net2
+      em4:
+        bridge: mgmt4
+        family:
+          inet: 172.16.14.1/24
+  deployer:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.200/24
+          gateway4: 172.16.11.1
+  radius:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.201/24
+          gateway4: 172.16.11.1
+  node0:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.110/24
+          gateway4: 172.16.11.1
+  node1:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.111/24
+          gateway4: 172.16.11.1
+  node2:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.112/24
+          gateway4: 172.16.11.1
+  nfs:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.113/24
+          gateway4: 172.16.11.1
+  bng1:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt4
+        family:
+          inet: 172.16.14.11/24
+      lo0:
+        family:
+          inet: 172.16.255.1/32
+          iso: 49.0001.1720.1625.5001.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: net1
+        family:
+          inet: 172.16.12.1/24
+      ge-0/0/3:
+        bridge: acsbr1
+  bng2:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt4
+        family:
+          inet: 172.16.14.12/24
+      lo0:
+        family:
+          inet: 172.16.255.2/32
+          iso: 49.0001.1720.1625.5002.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: net1
+        family:
+          inet: 172.16.12.2/24
+      ge-0/0/3:
+        bridge: acsbr2
+  acs:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt4
+        family:
+          inet: 172.16.14.13/24
+      lo0:
+        family:
+          inet: 172.16.255.3/32
+          iso: 49.0001.1720.1625.5003.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: acs1
+      ge-0/0/1:
+        bridge: acs1
+  p1:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt4
+        family:
+          inet: 172.16.14.14/24
+      lo0:
+        family:
+          inet: 172.16.255.4/32
+          iso: 49.0001.1720.1625.5004.00
+        protocol:
+          isis: passive
+  p2:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt4
+        family:
+          inet: 172.16.14.15/24
+      lo0:
+        family:
+          inet: 172.16.255.5/32
+          iso: 49.0001.1720.1625.5005.00
+        protocol:
+          isis: passive
+  pe1:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt4
+        family:
+          inet: 172.16.14.16/24
+      lo0:
+        family:
+          inet: 172.16.255.6/32
+          iso: 49.0001.1720.1625.5006.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: net2
+  acs1:
+    type: bridge
+    os: bridge
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.115/24
+          gateway4: 172.16.11.1 
+      em1:
+        node: [cpe1, em1, bracs]
+      em2:
+        node: [cpe2, em1, bracs]
+      em3:
+        node: [cpe3, em1, bracs]
+      em4:
+        node: [cpe4, em1, bracs]
+      em5:
+        node: [acs, ge-0/0/0, bracs]
+      em6:
+        node: [acs, ge-0/0/1, bracs]
+      em7:
+        node: [bng1, ge-0/0/3, bracs]
+      em8:
+        node: [bng2, ge-0/0/3, bracs]
+  client1:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe1c
+  client2:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe2c
+  client3:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe3c
+  client4:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe4c
+  cpe1:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe1c
+      em1:
+        bridge: cpe1
+  cpe2:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe2c
+      em1:
+        bridge: cpe2
+  cpe3:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe3c
+      em1:
+        bridge: cpe3
+  cpe4:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe4c
+      em1:
+        bridge: cpe4
+  
+  

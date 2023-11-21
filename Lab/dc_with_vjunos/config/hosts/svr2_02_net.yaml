@@ -1,0 +1,67 @@
+sudo hostname svr3
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth1:
+      dhcp4: false
+      addresses: [ 192.168.101.3/24 ]
+      gateway4: 192.168.101.1
+EOF
+
+
+
+alias svr3_eth1="sudo  ip netns exec svr3_eth1 "
+sudo ip netns add svr3_eth1
+svr3_eth1 ip link set dev lo up
+sudo ip link set dev eth1 netns svr3_eth1
+svr3_eth1 ip link set dev eth1 up
+svr3_eth1 ip addr add dev eth1 192.168.101.31/24 
+svr3_eth1 ip route add default via 192.168.101.254
+
+
+
+sudo ip netns add svr3_eth0
+alias svr3_eth0="sudo ip netns exec svr3_eth0 "
+svr3_eth0 ip link set dev lo up
+sudo ip link set dev eth0 netns svr3_eth0
+svr3_eth0 ip link set dev eth0 up
+svr3_eth0 ip addr add dev eth0 192.168.102.30/24 
+svr3_eth0 ip route add default via 192.168.102.254
+
+
+HOST=svr3
+INTF=eth2
+sudo ip netns add ${HOST}_${INTF}
+alias svr3_eth2="sudo ip netns exec ${HOST}_${INTF} "
+svr3_eth2 ip link set dev lo up
+sudo ip link set dev ${INTF} netns ${HOST}_${INTF} 
+svr3_eth2 ip link set dev ${INTF} up
+svr3_eth2 ip addr add dev ${INTF} 192.168.102.32/24 
+svr3_eth2 ip route add default via 192.168.102.254
+
+
+HOST=svr3
+INTF=eth4
+sudo ip netns add ${HOST}_${INTF}
+alias svr3_eth4="sudo ip netns exec ${HOST}_${INTF} "
+svr3_eth4 ip link set dev lo up
+sudo ip link set dev ${INTF} netns ${HOST}_${INTF} 
+svr3_eth4 ip link set dev ${INTF} up
+svr3_eth4 ip addr add dev ${INTF} 192.168.102.34/24 
+svr3_eth4 ip route add default via 192.168.102.254
+
+
+
+sudo hostname svr4
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: false
+      addresses: [ 192.168.101.4/24 ]
+      gateway4: 192.168.101.1
+EOF
+
+

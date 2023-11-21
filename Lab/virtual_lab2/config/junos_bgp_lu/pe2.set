@@ -1,0 +1,75 @@
+
+set version 22.2R1.9
+set system host-name pe2
+set system root-authentication encrypted-password "$1$V.bky6Ro$92rCUxuA.yA8u0tf0fMi4/"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$V.bky6Ro$92rCUxuA.yA8u0tf0fMi4/"
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/+8rkgOc76z0m7Cierw4qUs6bahYgQP4/hyPZGmb/mukCSn7ZvbUM27fX1nRbbP8Z0t+ruF8A5kP5jHOXILCTe2K5+JE9aHbkae5ztSwhxZSYxcSPtN0r8G/B57/4cw5QV7yKjSlQiLXf2EMfIt27/ZGeE402Tntz5v41wsj8C9PtBZvSMcgBWYu/HfE94ShSqsUNvg+FzKaVGhPB4mOzsApPF7Y/zopk7ADB6VkBdqUSblauU0a4aDy/3cwGR2NwOGXcszGzNYU4H6AlIsribpQPXkVs/v6b4NRHzAuKVk2FLLneeWsEKIqCZIWjzJj2ck4aWCM3NkoE86ndbRNyFaaxs67KpzPvPlAOwHU8gINyhzDfVi68xeiN9p8ybj3fI/Vw1W70i4wN2rL1PSupnnPNAX0Ijd9ulmhbAJyO+cjuoURLUR56EjJUYfddzRRRjQO0IMKNPDw0BFFxbt4gc1OnC6bJh2odHb/xbXaVCo361kz2IBoeZ3yFVpTcJH8= irzan@irzan-mbp"
+set system services ssh
+set system services extension-service request-response grpc clear-text port 32767
+set system services netconf ssh
+set system management-instance
+set system syslog user * any emergency
+set system syslog file interactive-commands interactive-commands any
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set chassis network-services enhanced-ip
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 unit 1 vlan-id 1
+set interfaces ge-0/0/0 unit 1 family inet address 192.168.255.2/31
+set interfaces ge-0/0/0 unit 1 family inet6 address 2001:dead:beef:ffff::ffff:2/127
+set interfaces ge-0/0/0 unit 10 vlan-id 10
+set interfaces ge-0/0/0 unit 10 family inet address 192.168.255.10/31
+set interfaces ge-0/0/0 unit 10 family inet6 address 2001:dead:beef:ffff::ffff:10/127
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 unit 0 family inet address 10.100.1.145/31
+set interfaces ge-0/0/1 unit 0 family iso
+set interfaces ge-0/0/1 unit 0 family inet6
+set interfaces ge-0/0/1 unit 0 family mpls
+set interfaces ge-0/0/2 mtu 9000
+set interfaces ge-0/0/2 unit 0 family inet address 10.100.1.147/31
+set interfaces ge-0/0/2 unit 0 family iso
+set interfaces ge-0/0/2 unit 0 family inet6
+set interfaces ge-0/0/2 unit 0 family mpls
+set interfaces fxp0 unit 0 family inet address 172.16.10.102/24
+set interfaces lo0 unit 0 family inet address 10.100.1.2/32
+set interfaces lo0 unit 0 family iso address 49.0001.0101.0000.1002.00
+set snmp community public authorization read-only
+set policy-options policy-statement export term 1 from route-filter 10.100.1.2/32 exact
+set policy-options policy-statement export term 1 then accept
+set policy-options policy-statement export term default then reject
+set policy-options policy-statement to_int then next-hop self
+set routing-instances cust1 instance-type vrf
+set routing-instances cust1 protocols bgp group to_cust1 peer-as 65102
+set routing-instances cust1 protocols bgp group to_cust1 neighbor 192.168.255.11 family inet any
+set routing-instances cust1 protocols bgp group to_cust1v6 peer-as 65102
+set routing-instances cust1 protocols bgp group to_cust1v6 neighbor 2001:dead:beef:ffff::ffff:11 family inet6 any
+set routing-instances cust1 interface ge-0/0/0.10
+set routing-instances cust1 vrf-target target:64512:10001
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 172.16.10.1
+set routing-options route-distinguisher-id 10.100.1.2
+set routing-options router-id 10.100.1.2
+set routing-options autonomous-system 64512.12
+set protocols bgp group to_vlan1 local-address 192.168.255.2
+set protocols bgp group to_vlan1 family inet any
+set protocols bgp group to_vlan1 peer-as 65002
+set protocols bgp group to_vlan1 neighbor 192.168.255.3
+set protocols bgp group to_vlan1_v6 local-address 2001:dead:beef:ffff::ffff:2
+set protocols bgp group to_vlan1_v6 family inet6 any
+set protocols bgp group to_vlan1_v6 peer-as 65002
+set protocols bgp group to_vlan1_v6 neighbor 2001:dead:beef:ffff::ffff:3
+set protocols bgp group neigh family inet labeled-unicast resolve-vpn
+set protocols bgp group neigh export export
+set protocols bgp group neigh neighbor 10.100.1.144 peer-as 64512.2
+set protocols bgp group neigh neighbor 10.100.1.146 peer-as 64512.4
+set protocols bgp group vpn multihop ttl 255
+set protocols bgp group vpn local-address 10.100.1.2
+set protocols bgp group vpn family inet-vpn any
+set protocols bgp group vpn family inet6-vpn any
+set protocols bgp group vpn neighbor 10.100.1.1 peer-as 64512.11
+set protocols bgp group vpn neighbor 10.100.1.3 peer-as 64512.13
+set protocols lldp interface ge-0/0/0
+set protocols lldp interface ge-0/0/1
+set protocols lldp interface ge-0/0/2

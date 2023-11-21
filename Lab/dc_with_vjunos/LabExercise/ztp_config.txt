@@ -1,0 +1,96 @@
+group {
+  option tftp-server-name "172.16.10.3";
+  subnet 172.16.11.0 netmask 255.255.255.0 {
+    range  172.16.11.100 172.16.11.199;
+    option routers 172.16.11.1;
+  }
+  subnet 172.16.12.0 netmask 255.255.255.0 {
+    range  172.16.12.100 172.16.12.199;
+    option routers 172.16.12.1;
+  }
+  subnet 172.16.13.0 netmask 255.255.255.0 {
+    range  172.16.13.100 172.16.13.199;
+    option routers 172.16.13.1;
+  }
+  host dc1spine1 {
+    hardware ethernet 56:04:19:00:8b:60;
+    fixed-address 172.16.11.101;
+  }
+  host dc1spine2 {
+    hardware ethernet 56:04:19:00:b3:44;
+    fixed-address 172.16.11.102;
+  }
+  host dc1spine3 {
+    hardware ethernet 56:04:19:00:89:6d;
+    fixed-address 172.16.11.103;
+  }
+  host dc1spine4 {
+    hardware ethernet 56:04:19:00:31:96;
+    fixed-address 172.16.11.104;
+  }
+  host dc1leaf1 {
+    hardware ethernet 56:04:19:00:0f:89;
+    fixed-address 172.16.11.111;
+  }
+  host dc1leaf2 {
+    hardware ethernet 56:04:19:00:ac:7f;
+    fixed-address 172.16.11.112;
+  }
+  host dc1leaf3 {
+    hardware ethernet 56:04:19:00:b0:a5;
+    fixed-address 172.16.11.113;
+  }
+  host dc1leaf4 {
+    hardware ethernet 56:04:19:00:7a:0d;
+    fixed-address 172.16.11.114;
+  }
+  host dc1leaf5 {
+    hardware ethernet 56:04:19:00:6b:55;
+    fixed-address 172.16.11.115;
+  }
+  host dc1leaf6 {
+    hardware ethernet 56:04:19:00:93:8e;
+    fixed-address 172.16.11.116;
+  }
+  host dc1leaf7 {
+    hardware ethernet 56:04:19:00:b9:eb;
+    fixed-address 172.16.11.117;
+  }
+  host dc1leaf8 {
+    hardware ethernet 56:04:19:00:90:5a;
+    fixed-address 172.16.11.118;
+  }
+  host dc2sw1 {
+    hardware ethernet 56:04:19:00:68:8f;
+    fixed-address 172.16.12.101;
+  }
+  host dc2sw2 {
+    hardware ethernet 56:04:19:00:80:34;
+    fixed-address 172.16.12.102;
+  }
+  host dc3spine1 {
+    hardware ethernet 56:04:19:00:7b:b9;
+    fixed-address 172.16.13.101;
+  }
+  host dc3spine2 {
+    hardware ethernet 56:04:19:00:ab:43;
+    fixed-address 172.16.13.102;
+  }
+  host dc3leaf1 {
+    hardware ethernet 56:04:19:00:b0:7e;
+    fixed-address 172.16.13.111;
+  }
+  host dc3leaf2 {
+    hardware ethernet 56:04:19:00:ac:a9;
+    fixed-address 172.16.13.112;
+  }
+  host dc3leaf3 {
+    hardware ethernet 56:04:19:00:92:6d;
+    fixed-address 172.16.13.113;
+  }
+  host dc3leaf4 {
+    hardware ethernet 56:04:19:00:a1:b6;
+    fixed-address 172.16.13.114;
+  }
+   
+}

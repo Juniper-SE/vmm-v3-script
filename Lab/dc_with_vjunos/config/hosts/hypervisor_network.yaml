@@ -1,0 +1,130 @@
+sudo hostname lxc1
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.255.1/24,2001:dead:beef:ffff::1000:1/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.255.254
+        metric: 1
+      - to: ::/0
+        via: 2001:dead:beef:ffff::1
+        metric: 1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:6a:9c
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+         mode: 802.3ad
+EOF
+
+
+sudo hostname lxc2
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.255.2/24,2001:dead:beef:ffff::1000:2/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.255.254
+        metric: 1
+      - to: ::/0
+        via: 2001:dead:beef:ffff::1
+        metric: 1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:5c:56
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+         mode: 802.3ad
+EOF
+
+
+sudo hostname svr5
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth2:
+      dhcp4: no
+      addresses: [ 192.168.254.5/24,2001:dead:beef:fffe::1000:5/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.254.254
+        metric: 1
+      - to: ::/0
+        via: 2001:dead:beef:fffe::1
+        metric: 1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:6b:52
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+
+sudo hostname svr6
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth2:
+      dhcp4: no
+      addresses: [ 192.168.254.6/24,2001:dead:beef:fffe::1000:6/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.254.254
+        metric: 1
+      - to: ::/0
+        via: 2001:dead:beef:fffe::1
+        metric: 1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:4c:b0
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF

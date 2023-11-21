@@ -1,0 +1,59 @@
+#include "/vmm/bin/common.defs"
+#include "/vmm/data/user_disks/vmxc/common.vmx.p3.defs"
+#include "/vmm/data/user_disks/vptxc/common.evovptx.ardbeg.defs"
+#include "/vmm/data/user_disks/vptxc/common.ardbeg.defs"
+{% if disk -%}
+{% for d1 in disk -%}
+#undef {{d1}}_disk 
+#define {{d1}}_disk basedisk "{{disk[d1]}}";
+{% endfor -%}
+{% endif -%}
+config "{{name}}" {
+    {% for br in bridge -%}
+    bridge "{{br}}"{};
+    {% endfor -%}
+    bridge "reserved_bridge"{};
+    PRIVATE_BRIDGES
+    {% for v in vm -%}
+    {% if vm[v].disk == 'vmx' -%}
+
+    #undef EM_IPADDR
+    #define EM_IPADDR interface "em0" { bridge "{{vm[v].intf['em0']}}";};
+    #define VMX_CHASSIS_I2CID {{ vm[v]['type'].i2cid }}
+    #define VMX_CHASSIS_NAME {{ v }}
+    VMX_CHASSIS_START() 
+        VMX_RE_START({{ v }}_re,0)
+            VMX_RE_INSTANCE({{ v }}_re0, {{ vm[v].disk }}_disk, VMX_RE_I2CID,0)
+            install "{{vm[v]['install'] }}" "/root/junos.base.conf";
+        VMX_RE_END
+        VMX_MPC_START({{ v }}_MP,0)
+            VMX_MPC_INSTANCE({{ v }}_MPC, {{ vm[v].disk }}_disk, VMX_MPC_I2CID, 0)
+            {% for intf1 in vm[v].intf -%}
+            {% if intf1 != 'em0' -%}
+            VMX_CONNECT({{ intf1 }}, {{ vm[v].intf[intf1]}} )
+            {% endif -%}
+            {% endfor %}
+        VMX_MPC_END
+    VMX_CHASSIS_END
+    #undef VMX_CHASSIS_I2CID
+    #undef VMX_CHASSIS_NAME
+
+    {% else -%}
+    vm "{{ v }}" {
+       hostname "{{v}}";
+       {{ vm[v].disk }}_disk
+       ncpus {{vm[v]['type'].ncpus }};
+       memory {{vm[v]['type'].memory }};
+       setvar {{vm[v]['type'].setvar }};
+       {% if vm[v].vnc -%}
+       setvar "enable_vnc" "1";
+       {% endif -%}
+       install "{{vm[v]['install'] }}" "/{{ v }}.conf";
+       {% for intf1 in vm[v].intf -%}
+       interface "{{ intf1 }}" { bridge "{{vm[v].intf[intf1] }}";};
+       {% endfor %} 
+    };
+    {% endif -%}
+    {% endfor %}
+};
+

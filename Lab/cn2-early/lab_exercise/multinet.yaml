@@ -1,0 +1,101 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: multinet
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: Subnet
+metadata:
+  name: vn-green-subnet
+  namespace: multinet
+  annotations:
+    core.juniper.net/display-name: vn-green-subnet
+spec:
+  cidr: "192.168.101.0/24"
+  defaultGateway: 192.168.101.1
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: VirtualNetwork
+metadata:
+  name: green-vn
+  namespace: multinet
+  annotations:
+    core.juniper.net/display-name: Sample Virtual Network
+    core.juniper.net/description:
+      VirtualNetwork is a collection of end points (interface or ip(s) or MAC(s))
+      that can communicate with each other by default. It is a collection of
+      subnets whose default gateways are connected by an implicit router
+spec:
+  v4SubnetReference:
+    apiVersion: core.contrail.juniper.net/v1alpha1
+    kind: Subnet
+    namespace: multinet
+    name: vn-green-subnet
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: Subnet
+metadata:
+  name: vn-red-subnet
+  namespace: multinet
+  annotations:
+    core.juniper.net/display-name: vn-red-subnet
+spec:
+  cidr: "192.168.102.0/24"
+  defaultGateway: 192.168.102.1
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: VirtualNetwork
+metadata:
+  name: red-vn
+  namespace: multinet
+  annotations:
+    core.juniper.net/display-name: Sample Virtual Network
+    core.juniper.net/description:
+      VirtualNetwork is a collection of end points (interface or ip(s) or MAC(s))
+      that can communicate with each other by default. It is a collection of
+      subnets whose default gateways are connected by an implicit router
+spec:
+  v4SubnetReference:
+    apiVersion: core.contrail.juniper.net/v1alpha1
+    kind: Subnet
+    namespace: multinet
+    name: vn-red-subnet
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-green
+  namespace: multinet
+  labels:
+    app: green
+  annotations:
+    k8s.v1.cni.cncf.io/networks: green-vn
+spec:
+  containers: 
+    - name: client
+      image: 172.16.14.10:5000/webserver:0.1
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      command: [ 'sh']
+      args: ['-c','ip route delete default; ip route add default via 192.168.101.1; python3 /workingdir/webserver.py']
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-red
+  namespace: multinet
+  labels:
+    app: red
+  annotations:
+    k8s.v1.cni.cncf.io/networks: red-vn
+spec:
+  containers: 
+    - name: client
+      image: 172.16.14.10:5000/webserver:0.1
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      command: [ 'sh']
+      args: ['-c','ip route delete default; ip route add default via 192.168.102.1; python3 /workingdir/webserver.py']

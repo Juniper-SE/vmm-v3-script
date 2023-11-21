@@ -1,0 +1,13 @@
+[all]
+dc1spine1
+dc1spine2
+dc1leaf1
+dc1leaf2
+dc1leaf3
+dc1leaf4
+dc1leaf5
+dc1leaf6
+dc1leaf7
+dc1leaf8
+[all:vars]
+ansible_python_interpreter=python3

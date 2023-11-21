@@ -1,0 +1,28 @@
+network:
+  ethernets:
+    eth1: 
+      dhcp4: no
+      mtu: 1400
+  vlans:
+    vn1001:
+      id: 1001
+      link: eth1
+    vn1002:
+      id: 1002
+      link: eth1
+    vn1003:
+      id: 1003
+      link: eth1
+    vn1101:
+      id: 1101
+      link: eth1
+  bridges:
+    blue:
+       interfaces: [ vn1001 ]
+    red:
+       interfaces: [ vn1002 ]
+    purple:
+       interfaces: [ vn1003 ]
+    green:
+       interfaces: [ vn1101 ]
+

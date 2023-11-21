@@ -1,0 +1,21 @@
+
+sudo hostname svr2
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:04:19:00:6b:28
+      dhcp4: true
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF

@@ -1,0 +1,101 @@
+# ns-pod.yaml
+---
+kind: Namespace 
+apiVersion: v1 
+metadata:
+  name: dev
+  labels:
+    project: dev
+---
+kind: Namespace 
+apiVersion: v1 
+metadata:
+  name: qa
+  labels:
+    project: qa
+---
+kind: Namespace 
+apiVersion: v1 
+metadata:
+  name: jtac
+  labels:
+    project: jtac
+# create-pod.yaml
+---
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: webserver-dev 
+  labels:
+    app: webserver-dev
+    do: policy
+  namespace: dev
+spec:
+  containers:
+  - name: ubuntu
+    image: contrailk8sdayone/contrail-webserver
+---
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: dbserver-dev 
+  labels:
+    app: dbserver-dev
+    do: policy
+  namespace: dev
+spec:
+  containers:
+  - name: ubuntu
+    image: contrailk8sdayone/contrail-webserver
+---
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: client1-dev 
+  labels:
+    app: client1-dev
+    do: policy
+  namespace: dev
+spec:
+  containers:
+  - name: ubuntu
+    image: contrailk8sdayone/contrail-webserver
+---
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: client2-dev 
+  labels:
+    app: client2-dev
+    do: policy
+  namespace: dev
+spec:
+  containers:
+  - name: ubuntu
+    image: contrailk8sdayone/contrail-webserver
+---
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: client-qa
+  labels:
+    app: client-qa
+    do: policy
+  namespace: qa
+spec:
+  containers:
+  - name: ubuntu
+    image: contrailk8sdayone/contrail-webserver
+---
+apiVersion: v1 
+kind: Pod
+metadata:
+  name: client-jtac
+  labels:
+    app: client-jtac
+    do: policy
+  namespace: jtac
+spec:
+  containers:
+  - name: ubuntu
+    image: contrailk8sdayone/contrail-webserver

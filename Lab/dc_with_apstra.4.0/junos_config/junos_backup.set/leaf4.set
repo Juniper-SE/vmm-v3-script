@@ -1,0 +1,187 @@
+
+set version 20200609.165031.6_builder.r1115480
+set system host-name leaf4
+set system root-authentication encrypted-password "$1$Kfc2wR3I$.bnMfVrxi62XLNZ0Qsof91"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$Kfc2wR3I$.bnMfVrxi62XLNZ0Qsof91"
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/+8rkgOc76z0m7Cierw4qUs6bahYgQP4/hyPZGmb/mukCSn7ZvbUM27fX1nRbbP8Z0t+ruF8A5kP5jHOXILCTe2K5+JE9aHbkae5ztSwhxZSYxcSPtN0r8G/B57/4cw5QV7yKjSlQiLXf2EMfIt27/ZGeE402Tntz5v41wsj8C9PtBZvSMcgBWYu/HfE94ShSqsUNvg+FzKaVGhPB4mOzsApPF7Y/zopk7ADB6VkBdqUSblauU0a4aDy/3cwGR2NwOGXcszGzNYU4H6AlIsribpQPXkVs/v6b4NRHzAuKVk2FLLneeWsEKIqCZIWjzJj2ck4aWCM3NkoE86ndbRNyFaaxs67KpzPvPlAOwHU8gINyhzDfVi68xeiN9p8ybj3fI/Vw1W70i4wN2rL1PSupnnPNAX0Ijd9ulmhbAJyO+cjuoURLUR56EjJUYfddzRRRjQO0IMKNPDw0BFFxbt4gc1OnC6bJh2odHb/xbXaVCo361kz2IBoeZ3yFVpTcJH8= irzan@irzan-mbp"
+set system services ssh
+set system services extension-service request-response grpc clear-text port 32767
+set system services netconf ssh
+set system management-instance
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system extensions providers juniper license-type juniper deployment-scope commercial
+set system extensions providers chef license-type juniper deployment-scope commercial
+set system ntp
+set chassis aggregated-devices ethernet device-count 3
+set interfaces xe-0/0/0 description facing_spine1:xe-0/0/3
+set interfaces xe-0/0/0 mtu 9216
+set interfaces xe-0/0/0 unit 0 family inet address 10.100.0.7/31
+set interfaces xe-0/0/1 description facing_spine2:xe-0/0/3
+set interfaces xe-0/0/1 mtu 9216
+set interfaces xe-0/0/1 unit 0 family inet address 10.100.0.17/31
+set interfaces xe-0/0/2 description to.svr3
+set interfaces xe-0/0/2 ether-options 802.3ad ae1
+set interfaces xe-0/0/3 description to.svr4
+set interfaces xe-0/0/3 ether-options 802.3ad ae2
+set interfaces xe-0/0/4 unit 0 family inet
+set interfaces xe-0/0/5 unit 0 family inet
+set interfaces xe-0/0/6 description to.lxc2
+set interfaces xe-0/0/6 ether-options 802.3ad ae3
+set interfaces xe-0/0/7 unit 0 family inet
+set interfaces xe-0/0/8 unit 0 family inet
+set interfaces xe-0/0/9 unit 0 family inet
+set interfaces xe-0/0/10 unit 0 family inet
+set interfaces xe-0/0/11 unit 0 family inet
+set interfaces ae1 description to.svr3
+set interfaces ae1 native-vlan-id 101
+set interfaces ae1 mtu 9100
+set interfaces ae1 esi 00:02:00:00:00:00:02:00:00:02
+set interfaces ae1 esi all-active
+set interfaces ae1 aggregated-ether-options lacp active
+set interfaces ae1 aggregated-ether-options lacp system-id 02:00:00:00:00:02
+set interfaces ae1 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ae1 unit 0 family ethernet-switching vlan members vn101
+set interfaces ae2 description to.svr4
+set interfaces ae2 native-vlan-id 102
+set interfaces ae2 mtu 9100
+set interfaces ae2 esi 00:02:00:00:00:00:04:00:00:04
+set interfaces ae2 esi all-active
+set interfaces ae2 aggregated-ether-options lacp active
+set interfaces ae2 aggregated-ether-options lacp system-id 02:00:00:00:00:04
+set interfaces ae2 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ae2 unit 0 family ethernet-switching vlan members vn102
+set interfaces ae3 description to.lxc2
+set interfaces ae3 mtu 9100
+set interfaces ae3 esi 00:02:00:00:00:00:06:00:00:06
+set interfaces ae3 esi all-active
+set interfaces ae3 aggregated-ether-options lacp active
+set interfaces ae3 aggregated-ether-options lacp system-id 02:00:00:00:00:06
+set interfaces ae3 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ae3 unit 0 family ethernet-switching vlan members vn101
+set interfaces ae3 unit 0 family ethernet-switching vlan members vn102
+set interfaces em0 unit 0 family inet address 172.16.16.106/24
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces irb unit 101 family inet mtu 9000
+set interfaces irb unit 101 family inet address 192.168.101.1/24
+set interfaces irb unit 101 mac 00:1c:73:00:00:01
+set interfaces irb unit 102 family inet mtu 9000
+set interfaces irb unit 102 family inet address 192.168.102.1/24
+set interfaces irb unit 102 mac 00:1c:73:00:00:01
+set interfaces lo0 unit 0 family inet address 10.100.2.3/32
+set interfaces lo0 unit 2 family inet address 10.100.3.3/32
+set snmp community public authorization read-only
+set forwarding-options storm-control-profiles default all
+set policy-options policy-statement AllPodNetworks term AllPodNetworks-10 from family inet
+set policy-options policy-statement AllPodNetworks term AllPodNetworks-10 from protocol direct
+set policy-options policy-statement AllPodNetworks term AllPodNetworks-10 then accept
+set policy-options policy-statement AllPodNetworks term AllPodNetworks-100 then reject
+set policy-options policy-statement BGP-AOS-Policy term BGP-AOS-Policy-10 from policy AllPodNetworks
+set policy-options policy-statement BGP-AOS-Policy term BGP-AOS-Policy-10 then accept
+set policy-options policy-statement BGP-AOS-Policy term BGP-AOS-Policy-50 from protocol evpn
+set policy-options policy-statement BGP-AOS-Policy term BGP-AOS-Policy-50 from route-filter 0.0.0.0/0 prefix-length-range /32-/32
+set policy-options policy-statement BGP-AOS-Policy term BGP-AOS-Policy-50 then accept
+set policy-options policy-statement BGP-AOS-Policy term BGP-AOS-Policy-100 then reject
+set policy-options policy-statement LEAF_TO_SPINE_EVPN_OUT term LEAF_TO_SPINE_EVPN_OUT-10 from community FROM_SPINE_EVPN_TIER
+set policy-options policy-statement LEAF_TO_SPINE_EVPN_OUT term LEAF_TO_SPINE_EVPN_OUT-10 then reject
+set policy-options policy-statement LEAF_TO_SPINE_EVPN_OUT term LEAF_TO_SPINE_EVPN_OUT-20 then accept
+set policy-options policy-statement LEAF_TO_SPINE_FABRIC_OUT term LEAF_TO_SPINE_FABRIC_OUT-10 from community FROM_SPINE_FABRIC_TIER
+set policy-options policy-statement LEAF_TO_SPINE_FABRIC_OUT term LEAF_TO_SPINE_FABRIC_OUT-10 then reject
+set policy-options policy-statement LEAF_TO_SPINE_FABRIC_OUT term LEAF_TO_SPINE_FABRIC_OUT-20 then accept
+set policy-options policy-statement PFE-LB then load-balance per-packet
+set policy-options community FROM_SPINE_EVPN_TIER members 0:14
+set policy-options community FROM_SPINE_FABRIC_TIER members 0:15
+set routing-instances VRF1 routing-options multipath
+set routing-instances VRF1 routing-options auto-export
+set routing-instances VRF1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set routing-instances VRF1 protocols evpn ip-prefix-routes encapsulation vxlan
+set routing-instances VRF1 protocols evpn ip-prefix-routes vni 10000
+set routing-instances VRF1 protocols evpn ip-prefix-routes export BGP-AOS-Policy
+set routing-instances VRF1 instance-type vrf
+set routing-instances VRF1 forwarding-options dhcp-relay server-group VRF1 172.16.12.10
+set routing-instances VRF1 forwarding-options dhcp-relay group VRF1 active-server-group VRF1
+set routing-instances VRF1 forwarding-options dhcp-relay group VRF1 relay-option-82 server-id-override
+set routing-instances VRF1 forwarding-options dhcp-relay group VRF1 interface irb.101 overrides relay-source lo0.2
+set routing-instances VRF1 forwarding-options dhcp-relay group VRF1 interface irb.102 overrides relay-source lo0.2
+set routing-instances VRF1 interface irb.101
+set routing-instances VRF1 interface irb.102
+set routing-instances VRF1 interface lo0.2
+set routing-instances VRF1 route-distinguisher 10.100.2.3:2
+set routing-instances VRF1 vrf-target target:10000:1
+set routing-instances VRF1 vrf-table-label
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 172.16.16.1
+set routing-options forwarding-table export PFE-LB
+set routing-options forwarding-table ecmp-fast-reroute
+set routing-options forwarding-table chained-composite-next-hop ingress evpn
+set routing-options router-id 10.100.2.3
+set routing-options autonomous-system 65104
+set protocols bgp group l3clos-l type external
+set protocols bgp group l3clos-l export BGP-AOS-Policy
+set protocols bgp group l3clos-l multipath multiple-as
+set protocols bgp group l3clos-l neighbor 10.100.0.6 description facing_spine1
+set protocols bgp group l3clos-l neighbor 10.100.0.6 local-address 10.100.0.7
+set protocols bgp group l3clos-l neighbor 10.100.0.6 family inet unicast
+set protocols bgp group l3clos-l neighbor 10.100.0.6 export ( LEAF_TO_SPINE_FABRIC_OUT )
+set protocols bgp group l3clos-l neighbor 10.100.0.6 peer-as 65001
+set protocols bgp group l3clos-l neighbor 10.100.0.16 description facing_spine2
+set protocols bgp group l3clos-l neighbor 10.100.0.16 local-address 10.100.0.17
+set protocols bgp group l3clos-l neighbor 10.100.0.16 family inet unicast
+set protocols bgp group l3clos-l neighbor 10.100.0.16 export ( LEAF_TO_SPINE_FABRIC_OUT )
+set protocols bgp group l3clos-l neighbor 10.100.0.16 peer-as 65002
+set protocols bgp group l3clos-l-evpn type external
+set protocols bgp group l3clos-l-evpn multihop ttl 1
+set protocols bgp group l3clos-l-evpn multihop no-nexthop-change
+set protocols bgp group l3clos-l-evpn family evpn signaling loops 2
+set protocols bgp group l3clos-l-evpn multipath multiple-as
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.0 description facing_spine1-evpn-overlay
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.0 local-address 10.100.2.3
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.0 family evpn signaling
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.0 export ( LEAF_TO_SPINE_EVPN_OUT )
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.0 peer-as 65001
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.1 description facing_spine2-evpn-overlay
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.1 local-address 10.100.2.3
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.1 family evpn signaling
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.1 export ( LEAF_TO_SPINE_EVPN_OUT )
+set protocols bgp group l3clos-l-evpn neighbor 10.100.1.1 peer-as 65002
+set protocols bgp log-updown
+set protocols bgp graceful-restart
+set protocols bgp multipath
+set protocols evpn vni-options vni 10001 vrf-target target:10001:1
+set protocols evpn vni-options vni 10002 vrf-target target:10002:1
+set protocols evpn encapsulation vxlan
+set protocols evpn default-gateway do-not-advertise
+set protocols evpn extended-vni-list all
+set protocols lldp port-id-subtype interface-name
+set protocols lldp port-description-type interface-description
+set protocols lldp neighbour-port-info-display port-id
+set protocols lldp interface xe-0/0/2
+set protocols lldp interface xe-0/0/3
+set protocols lldp interface xe-0/0/4
+set protocols lldp interface xe-0/0/5
+set protocols lldp interface xe-0/0/6
+set protocols lldp interface xe-0/0/7
+set protocols lldp interface xe-0/0/0
+set protocols lldp interface xe-0/0/1
+set protocols lldp interface all
+set protocols igmp-snooping vlan default
+set protocols rstp bridge-priority 0
+set protocols rstp interface ae1
+set protocols rstp interface ae2
+set protocols rstp interface ae3
+set protocols rstp bpdu-block-on-edge
+set switch-options vtep-source-interface lo0.0
+set switch-options route-distinguisher 10.100.2.3:65534
+set switch-options vrf-target target:100:100
+set vlans default vlan-id 1
+set vlans vn101 description VLAN101
+set vlans vn101 vlan-id 101
+set vlans vn101 l3-interface irb.101
+set vlans vn101 vxlan vni 10001
+set vlans vn102 description VLAN102
+set vlans vn102 vlan-id 102
+set vlans vn102 l3-interface irb.102
+set vlans vn102 vxlan vni 10002

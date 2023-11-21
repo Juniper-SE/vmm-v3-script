@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: csrx-no-nat
+  namespace: lab4
+data:
+  csrx_config: |
+    security {
+        policies {
+            from-zone right to-zone left {
+                policy allow_all {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone left to-zone right {
+                policy allow_any {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone left {
+                interfaces {
+                    ge-0/0/0.0 {
+                        host-inbound-traffic {
+                            system-services {
+                                ping;
+                            }
+                            protocols {
+                                bgp;
+                            }
+                        }
+                    }
+                }
+            }
+            security-zone right {
+                interfaces {
+                    ge-0/0/1.0 {
+                        host-inbound-traffic {
+                            system-services {
+                                ping;
+                            }
+                            protocols {
+                                bgp;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  csrx_license: |
+    DemoLabJUNOS788015050 aeaqic bfajc4 vsomg4 behswj zq3qeg 6kzhgd
+                      oattzl e4ynyc qd7mvs omg4bb 3swjzq 3qwerr
+                      gaytam rqge4t ambqgi wusnle lflqye ckovxg
+                      s4dfoi qes3tu mvzg4y lma4uj 26tpuv dtstex
+                      c42wja 6mgh6v t5o2vo wrtwzj mh4w52 cprqrr
+                      bd37hz xyslew feu6uv y

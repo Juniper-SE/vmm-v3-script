@@ -1,0 +1,7 @@
+---
+api_server_host: 127.0.0.1
+virtual_network: public3
+pool_name: public3-fip-pool
+namespace: ns3
+route_target_export: 64512:10003
+route_target_import: 64512:10000

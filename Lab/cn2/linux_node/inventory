@@ -1,0 +1,15 @@
+[k8s]
+node0
+node1
+node2
+node3
+[all]
+node0
+node1
+node2
+node3
+node4
+registry
+control
+[all:vars]
+ansible_python_interpreter=python3

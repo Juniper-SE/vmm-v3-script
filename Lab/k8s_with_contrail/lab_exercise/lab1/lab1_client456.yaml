@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client4
+spec:
+  containers:
+  - name: alpine
+    image: 10.1.1.200:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+    securityContext:
+      privileged: true
+  nodeName: node1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client5
+spec:
+  containers:
+  - name: alpine
+    image: 10.1.1.200:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+    securityContext:
+      privileged: true
+  nodeName: node2
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client6
+spec:
+  containers:
+  - name: alpine
+    image: 10.1.1.200:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+    securityContext:
+      privileged: true
+  nodeName: node3
+  

@@ -1,0 +1,25 @@
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: BGPAsAService
+metadata:
+  namespace: lab4
+  name: bgpaas1
+spec:
+  shared: false
+  autonomousSystem: 65001
+  bgpAsAServiceSessionAttributes:
+    loopCount: 2
+    routeOriginOverride: 
+      origin: EGP
+    addressFamilies:
+      family:
+        - inet
+        - inet6
+  virtualMachineInterfaceReferences:
+    - apiVersion: core.contrail.juniper.net/v1alpha1
+      kind: VirtualMachineInterface
+      namespace: lab4
+      name: vnf1-a68d5ee4
+    - apiVersion: core.contrail.juniper.net/v1alpha1
+      kind: VirtualMachineInterface
+      namespace: lab4
+      name: vnf1-9adb87fa

@@ -1,0 +1,11 @@
+[all]
+spine1
+spine2
+leaf1
+leaf2
+leaf3
+leaf4
+leaf5
+leaf6
+[all:vars]
+ansible_python_interpreter=python3

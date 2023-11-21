@@ -1,0 +1,58 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-6
+  namespace: default
+  annotations:
+    opencontrail.org/fip-pool: "{
+      'domain': 'default-domain', 
+      'project': 'k8s-default', 
+      'network': 'k8s-external3-pod-network', 
+      'name': 'external3-fip-pool'
+    }" 
+spec:
+  selector:
+    app: webserver6
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver6
+  namespace: default
+  labels:
+    app: webserver6
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver6
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver6]}
+  template:
+    metadata:
+      name: webserver6
+      labels:
+        app: webserver6
+    spec:
+      volumes:
+      - name: nfsnode4
+        nfs:
+          server: 172.16.12.14
+          path: /media/nfsshare
+      containers: 
+      - name: webserver6
+        image: contrailk8sdayone/contrail-webserver 
+        imagePullPolicy: IfNotPresent
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+        volumeMounts:
+        - name: nfsnode4
+          mountPath: /app-dayone

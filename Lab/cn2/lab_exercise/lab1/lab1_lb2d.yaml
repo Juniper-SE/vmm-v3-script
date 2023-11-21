@@ -1,0 +1,42 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver2d
+spec:
+  selector:
+    app: webserver2d
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver2d
+  labels:
+    app: webserver2d
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver2d
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver2d]}
+  template:
+    metadata:
+      name: webserver2d
+      labels:
+        app: webserver2d
+    spec:
+      containers: 
+      - name: webserver2d
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: Always
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

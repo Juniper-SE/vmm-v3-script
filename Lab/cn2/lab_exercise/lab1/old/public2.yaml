@@ -1,0 +1,26 @@
+apiVersion:  core.contrail.juniper.net/v1alpha1
+kind: VirtualNetwork
+metadata:
+  namespace: contrail
+  name: public2
+  labels:
+    service.contrail.juniper.net/externalNetworkSelector: default-external
+spec:
+  exportRouteTargetList:
+    - target:64512:10001
+  importRouteTargetList:
+    - target:64512:10000
+  v4SubnetReference:
+    apiVersion: core.contrail.juniper.net/v1alpha1
+    kind: Subnet
+    name: public2-v4
+    namespace: contrail
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: Subnet
+metadata:
+  namespace: contrail
+  name: public2-v4
+spec:
+  cidr: 172.16.1.16/28
+  defaultGateway:  172.16.1.17

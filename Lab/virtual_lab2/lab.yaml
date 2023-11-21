@@ -1,0 +1,232 @@
+---
+name: vlab2
+pod: 
+  type: vmm
+  #vmmserver: q-pod25-vmm.englab.juniper.net
+  vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttqc-shell010.juniper.net
+  user: irzan
+  adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+  evo: mgmt
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  ubuntu2: images/ubuntu22.04.qcow2
+  debian: images/debian.qcow2
+  desktop: images/desktop.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-22.2R1.9.vmdk
+  # vmx_mpc: images/vmx/vFPC-20210824.vmdk
+  evo: images/evo/junos-evo-install-ptx-fixed-x86-64-22.2R1.12-EVO.iso
+  vex: images/vex/vJunos-ex-21.2R3-S1.7.qcow2
+junos_login:
+  login: admin
+  password: pass01
+fabric:
+  subnet: 10.100.1.128/25
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+    - [ 0x0, tGen, em1, bgp, ge-0/0/4 ]
+    - [ 0x0, tGen, em2, bgp, ge-0/0/5 ]
+    - [ 0x0, tGen, em3, bgp, ge-0/0/6 ]
+    - [ 0x0, tGen, em4, bgp, ge-0/0/7 ]
+    - [ 0x0, bgp, ge-0/0/0, pe1, ge-0/0/0 ]
+    - [ 0x0, bgp, ge-0/0/1, pe2, ge-0/0/0 ]
+    - [ 0x0, bgp, ge-0/0/2, pe3, em1 ]
+    - [ 0x0, bgp, ge-0/0/3, pe4, em1 ]
+    - [ 0x17d, pe1, ge-0/0/1, p1, et-0/0/1 ]
+    - [ 0x17d, pe1, ge-0/0/2, p3, et-0/0/1 ]
+    - [ 0x17d, pe3, em2, p1, et-0/0/2 ]
+    - [ 0x17d, pe3, em3, p3, et-0/0/2 ]
+    - [ 0x17d, p1, et-0/0/3, p3, et-0/0/3 ]
+    - [ 0x17d, p1, et-0/0/4, p2, et-0/0/4 ]
+    - [ 0x17d, p3, et-0/0/4, p4, et-0/0/4 ]
+    - [ 0x17d, p2, et-0/0/3, p4, et-0/0/3 ]
+    - [ 0x17d, p2, et-0/0/1, pe2, ge-0/0/1 ]
+    - [ 0x17d, p4, et-0/0/1, pe2, ge-0/0/2 ]
+    - [ 0x17d, p2, et-0/0/2, pe4, em2 ]
+    - [ 0x17d, p4, et-0/0/2, pe4, em3 ]
+    - [ 0x15, p3, et-0/0/5, rr, em1 ]
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24
+        dhcp_range: 172.16.10.200-172.16.10.230
+  tGen:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.200/24
+  pe1:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.101/24
+      lo0:
+        family:
+          inet: 10.100.1.1/32
+          iso: 49.0001.0101.0000.1001.00
+        protocol:
+          isis: passive
+      ge-0/0/3: 
+        bridge: external
+  pe2:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.102/24
+      lo0:
+        family:
+          inet: 10.100.1.2/32
+          iso: 49.0001.0101.0000.1002.00
+        protocol:
+          isis: passive
+  pe3:
+    type: pchpv2
+    os: ubuntu
+    app: crpd
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.203/24
+          gateway4: 172.16.10.1
+      #lo0:
+      #  family:
+      #    inet: 10.100.1.3/32
+      #    iso: 49.0001.0101.0000.1003.00
+      #  protocol:
+      #    isis: passive
+  pe4:
+    type: pchpv2
+    os: ubuntu
+    app: crpd
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.204/24
+          gateway4: 172.16.10.1
+      #lo0:
+      #  family:
+      #    inet: 10.100.1.4/32
+      #    iso: 49.0001.0101.0000.1004.00
+      #  protocol:
+      #    isis: passive
+  p1:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.105/24
+      lo0:
+        family:
+          inet: 10.100.1.11/32
+          iso: 49.0001.0101.0000.1011.00
+        protocol:
+          isis: passive
+  p2:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.106/24
+      lo0:
+        family:
+          inet: 10.100.1.12/32
+          iso: 49.0001.0101.0000.1012.00
+        protocol:
+          isis: passive
+  p3:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.107/24
+      lo0:
+        family:
+          inet: 10.100.1.13/32
+          iso: 49.0001.0101.0000.1013.00
+        protocol:
+          isis: passive
+  p4:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.108/24
+      lo0:
+        family:
+          inet: 10.100.1.14/32
+          iso: 49.0001.0101.0000.1014.00
+        protocol:
+          isis: passive
+  bgp:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.109/24
+  rr:
+    type: pcsmall
+    os: ubuntu2
+    app: crpd
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.210/24
+          gateway4: 172.16.10.1
+      #lo0:
+      #  family:
+      #    inet: 10.100.1.255/32
+      #    iso: 49.0001.0101.0000.1255.00
+      #  protocol:
+      #    isis: passive
+  registry:
+    type: pcmedium
+    os: ubuntu2
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.211/24

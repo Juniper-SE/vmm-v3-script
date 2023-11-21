@@ -1,0 +1,16 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: ns1-service2
+  namespace: ns1
+  annotations:
+    service.contrail.juniper.net/externalNetwork: public2
+spec:
+  selector:
+    app: webserver1
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+

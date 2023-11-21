@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fw2
+  labels:
+    app: service-instances
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+      {"name": "vn-left" },
+      {"name": "vn-right" }
+    ]'
+spec:
+  containers: 
+    - name: fw2
+      image: 172.16.14.10:5000/webserver:0.2
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true

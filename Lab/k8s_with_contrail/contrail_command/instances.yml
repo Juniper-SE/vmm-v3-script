@@ -1,0 +1,64 @@
+global_configuration:
+  CONTAINER_REGISTRY: hub.juniper.net/contrail
+  REGISTRY_PRIVATE_INSECURE: false
+  CONTAINER_REGISTRY_USERNAME: bookworm
+  CONTAINER_REGISTRY_PASSWORD: password
+provider_config:
+  bms:
+    ssh_user: root
+    ssh_pwd: pass01
+    ntpserver: ntp.juniper.net
+instances:
+  master:
+    ip: 172.16.11.10
+    ssh_user: root
+    ssh_pwd: pass01
+    provider: bms
+    roles:
+      config:
+      config_database:
+      control:
+      webui:
+      analytics:
+      analytics_database:
+      analytics_alarm:
+      analytics_snmp:
+      k8s_master:
+      kubemanager:
+  node2:
+    ip: 172.16.11.12
+    ssh_user: root
+    ssh_pwd: pass01
+    provider: bms
+    roles:
+      vrouter:
+        VROUTER_GATEWAY: 172.16.11.1
+      k8s_node:
+  node3:
+    ip: 172.16.11.13
+    ssh_user: root
+    ssh_pwd: pass01
+    provider: bms
+    roles:
+      vrouter:
+        VROUTER_GATEWAY: 172.16.11.1
+      k8s_node:
+  node1:
+    ip: 172.16.11.11
+    ssh_user: root
+    ssh_pwd: pass01
+    provider: bms
+    roles:
+      vrouter:
+        VROUTER_GATEWAY: 172.16.11.1
+      k8s_node:
+contrail_configuration:
+  CONTRAIL_VERSION: "2011.L2.372"
+  CLOUD_ORCHESTRATOR: kubernetes
+  RABBITMQ_NODE_PORT: 5673
+  VROUTER_GATEWAY: 172.16.11.1
+  ENCAP_PRIORITY: MPLSoUDP,MPLSoGRE,VXLAN
+  UPGRADE_KERNEL: true
+  CONFIG_NODEMGR__DEFAULTS__minimum_diskGB: 10
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 10
+  CONFIG_DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 10

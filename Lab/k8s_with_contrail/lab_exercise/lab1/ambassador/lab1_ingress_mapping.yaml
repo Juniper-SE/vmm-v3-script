@@ -1,0 +1,64 @@
+---
+#Ingress using ambassador
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: ingress3
+spec:
+  hostname: "*"
+  prefix: /foo
+  service: webserver3a:80 
+#  # ingressClassName: ambassador
+#  rules:
+#  - host: www.domain1.com
+#    http:
+#      paths:
+#      - path: /
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: webserver3d
+#            port:
+#              number: 80
+#  - host: www.domain2.com
+#    http:
+#      paths:
+#      - path: /
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: webserver3e
+#            port:
+#              number: 80
+#  - host: "*.domain3.com"
+#    http:
+#      paths:
+#      - path: /
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: webserver3f
+#            port:
+#              number: 80
+#  - http:
+#      paths:
+#      - path: /foo
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: webserver3b
+#            port:
+#              number: 80
+#      - path: /bar
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: webserver3c
+#            port:
+#              number: 80
+#  defaultBackend:
+#    service:
+#      name: webserver3a
+#      port: 
+#        number: 80
+#

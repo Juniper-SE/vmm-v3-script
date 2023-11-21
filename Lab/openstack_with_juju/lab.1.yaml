@@ -1,0 +1,157 @@
+---
+name: os
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  # if your account can access vmm server directly, then you can comment out the following line
+  #jumpserver: ttqc-shell010.juniper.net
+  user: irzan
+  adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  desktop: images/desktop.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-22.2R1.9.vmdk
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.1/24
+        dhcp_range: 172.16.11.100-172.16.11.254
+      em2:
+        bridge: tun0
+        family:
+          inet: 172.16.12.1/24
+        mtu: 9000
+      em3:
+        bridge: ext1
+        family:
+          inet: 172.16.13.1/24
+      em4:
+        bridge: ext2
+        family:
+          inet: 172.16.14.1/24
+        dhcp_range: 172.16.14.100-172.16.14.150
+  juju:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.100/24
+          gateway4: 172.16.11.1
+  ext1:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: ext2
+        family:
+          family: 172.16.14.101/24
+          gateway4: 172.16.14.1
+  node0:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        as_bridge: br0
+        family:
+          inet: 172.16.11.110/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: tun0
+        mtu: 9000
+        familly:
+          inet: 172.16.12.110/24
+      em2: 
+        bridge: ext1
+  node1:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          family: 172.16.11.111/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: tun0
+        mtu: 9000
+        family:
+          inet: 172.16.12.111/24
+      em2: 
+        bridge: ext1
+  node2:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          family: 172.16.11.112/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: tun0
+        mtu: 9000
+        family:
+          inet: 172.16.12.112/24
+      em2: 
+        bridge: ext1
+  node3:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          family: 172.16.11.113/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: tun0
+        mtu: 9000
+        ipv4: 172.16.12.113/24
+      em2: 
+        bridge: ext1
+  node4:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          family: 172.16.11.114/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: tun0
+        mtu: 9000
+        family:
+          inet: 172.16.12.114/24
+      em2: 
+        bridge: ext1
+
+
+  
+  

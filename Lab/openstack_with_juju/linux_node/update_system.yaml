@@ -1,0 +1,42 @@
+---
+- name: Updating system
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: apt -y upgrade
+    apt:
+      update_cache: true
+      upgrade: dist
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: install nfs server
+    when: inventory_hostname in 'node4'
+    apt:
+      name: nfs-kernel-server
+      state: present
+  - name: create directory
+    when: inventory_hostname in 'node4'
+    file:
+      path: /media/nfsshare
+      mode: 0777
+      state: directory
+      owner: nobody
+      group: nogroup
+  - name: add into /etc/exports
+    when: inventory_hostname in 'node4'
+    blockinfile:
+      state: present
+      insertafter: EOF
+      dest: /etc/exports
+      marker: "#<!-- add services ANSIBLE MANAGED BLOCK -->"
+      content : |
+        /media/nfsshare *(rw,sync,no_subtree_check)
+        /media/nfsshare/webserver *(rw,sync,no_subtree_check)
+

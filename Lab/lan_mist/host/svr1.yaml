@@ -1,0 +1,14 @@
+sudo hostname svr1
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.150.10/24]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.150.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+EOF

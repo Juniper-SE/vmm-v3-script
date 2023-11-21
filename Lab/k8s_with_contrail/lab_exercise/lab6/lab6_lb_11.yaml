@@ -1,0 +1,51 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-11
+  namespace: lab6
+  annotations:
+    opencontrail.org/fip-pool: "{
+      'domain': 'default-domain', 
+      'project': 'k8s-default', 
+      'network': 'k8s-public-pod-network', 
+      'name': 'public-fip-pool'
+    }"
+spec:
+  selector:
+    app: webserver11
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver11
+  labels:
+    app: webserver11
+  namespace: lab6
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver11
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver11]}
+  template:
+    metadata:
+      name: webserver11
+      labels:
+        app: webserver11
+    spec:
+      containers: 
+      - name: webserver6
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports:
+        - containerPort: 80
+

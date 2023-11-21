@@ -1,0 +1,74 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: csrx-nat
+  namespace: lab4
+data:
+  csrx_config: |
+    security {
+        policies {
+            from-zone right to-zone left {
+                policy allow_ping {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application junos-ping;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+            from-zone left to-zone right {
+                policy allow_any {
+                    match {
+                        source-address any;
+                        destination-address any;
+                        application any;
+                    }
+                    then {
+                        permit;
+                    }
+                }
+            }
+        }
+        zones {
+            security-zone left {
+                interfaces {
+                    ge-0/0/0.0;
+                }
+            }
+            security-zone right {
+                interfaces {
+                    ge-0/0/1.0;
+                }
+            }
+        }
+        nat {
+            source {
+                rule-set rs1 {
+                    from zone left;
+                    to zone right;
+                    rule r1 {
+                        match {
+                            source-address 0.0.0.0/0;
+                            destination-address 0.0.0.0/0;
+                        }
+                        then {
+                            source-nat {
+                                interface;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  csrx_license: |
+    DemoLabJUNOS328441235 aeaqic bfajc4 utglxi behssm zo5aeg 6kjtf3
+                      uattzj gmxoqc qd7mut glxibb 3ssmzo 5awerr
+                      gaytam rqge4t ambqgi wu66tf mr4aye ckovxg
+                      s4dfoi qes3tu mvzg4y lma4uc xosoej uual53
+                      mbutwi aty4do e3yttu dccuj5 4ujrrs 5yiec5
+                      5esdzp 32mo6w ui7fwo y

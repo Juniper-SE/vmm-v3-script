@@ -1,0 +1,433 @@
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  ubuntu2: images/ubuntu22.04.qcow2
+  vevo: images/vJunosEvolved-23.1R1.8-EVO.qcow2
+  vjunos_ex: images/vjunos-switch-23.1R1.8.qcow2
+  vjunos_mx: images/vjunos-router-23.1R1.8.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-22.4R1.10.vmdk
+junos_login:
+  login: admin
+  password: pass01
+name: vl3
+pod:
+  adpassword: ^S4tU#Du4#T1g4$
+  home_dir: /vmm/data/user_disks/irzan
+  jumpserver: ttqc-shell002.juniper.net
+  path: ../../
+  ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/+8rkgOc76z0m7Cierw4qUs6bahYgQP4/hyPZGmb/mukCSn7ZvbUM27fX1nRbbP8Z0t+ruF8A5kP5jHOXILCTe2K5+JE9aHbkae5ztSwhxZSYxcSPtN0r8G/B57/4cw5QV7yKjSlQiLXf2EMfIt27/ZGeE402Tntz5v41wsj8C9PtBZvSMcgBWYu/HfE94ShSqsUNvg+FzKaVGhPB4mOzsApPF7Y/zopk7ADB6VkBdqUSblauU0a4aDy/3cwGR2NwOGXcszGzNYU4H6AlIsribpQPXkVs/v6b4NRHzAuKVk2FLLneeWsEKIqCZIWjzJj2ck4aWCM3NkoE86ndbRNyFaaxs67KpzPvPlAOwHU8gINyhzDfVi68xeiN9p8ybj3fI/Vw1W70i4wN2rL1PSupnnPNAX0Ijd9ulmhbAJyO+cjuoURLUR56EjJUYfddzRRRjQO0IMKNPDw0BFFxbt4gc1OnC6bJh2odHb/xbXaVCo361kz2IBoeZ3yFVpTcJH8=
+    irzan@irzan-mbp
+  ssh_key_name: key1
+  ssh_key_priv: '-----BEGIN OPENSSH PRIVATE KEY-----
+
+    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
+
+    -----END OPENSSH PRIVATE KEY-----'
+  type: vmm
+  user: irzan
+  vmmpassword: ^J4k4rt4#160871$
+  vmmserver: q-pod25-vmm.englab.juniper.net
+vm:
+  gw:
+    interfaces:
+      em0:
+        bridge: external
+      em1:
+        bridge: mgmt
+        dhcp_range: 172.16.10.100-172.16.10.199
+        family:
+          inet: 172.16.10.1/24
+    os: gw
+    type: gw
+  p1:
+    interfaces:
+      em1:
+        bridge: p1PFE
+        mtu: 9600
+      em2:
+        bridge: p1RPIO
+        mtu: 9600
+      em3:
+        bridge: p1RPIO
+        mtu: 9600
+      em4:
+        bridge: p1PFE
+        mtu: 9600
+      et-0/0/0:
+        bridge: ptp0
+        family:
+          inet: 10.100.255.129/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/1:
+        bridge: ptp4
+        family:
+          inet: 10.100.255.136/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/2:
+        bridge: ptp5
+        family:
+          inet: 10.100.255.138/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      lo0:
+        family:
+          inet: 10.100.255.11/32
+          iso: 49.0001.0101.0025.5011.00
+      mgmt:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.103/24
+    os: vevo
+    type: junos
+  p2:
+    interfaces:
+      em1:
+        bridge: p2PFE
+        mtu: 9600
+      em2:
+        bridge: p2RPIO
+        mtu: 9600
+      em3:
+        bridge: p2RPIO
+        mtu: 9600
+      em4:
+        bridge: p2PFE
+        mtu: 9600
+      et-0/0/0:
+        bridge: ptp1
+        family:
+          inet: 10.100.255.131/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/1:
+        bridge: ptp4
+        family:
+          inet: 10.100.255.137/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/2:
+        bridge: ptp7
+        family:
+          inet: 10.100.255.142/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      lo0:
+        family:
+          inet: 10.100.255.12/32
+          iso: 49.0001.0101.0025.5012.00
+      mgmt:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.104/24
+    os: vevo
+    type: junos
+  p3:
+    interfaces:
+      em1:
+        bridge: p3PFE
+        mtu: 9600
+      em2:
+        bridge: p3RPIO
+        mtu: 9600
+      em3:
+        bridge: p3RPIO
+        mtu: 9600
+      em4:
+        bridge: p3PFE
+        mtu: 9600
+      et-0/0/0:
+        bridge: ptp2
+        family:
+          inet: 10.100.255.133/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/1:
+        bridge: ptp6
+        family:
+          inet: 10.100.255.140/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/2:
+        bridge: ptp5
+        family:
+          inet: 10.100.255.139/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      lo0:
+        family:
+          inet: 10.100.255.13/32
+          iso: 49.0001.0101.0025.5013.00
+      mgmt:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.105/24
+    os: vevo
+    type: junos
+  p4:
+    interfaces:
+      em1:
+        bridge: p4PFE
+        mtu: 9600
+      em2:
+        bridge: p4RPIO
+        mtu: 9600
+      em3:
+        bridge: p4RPIO
+        mtu: 9600
+      em4:
+        bridge: p4PFE
+        mtu: 9600
+      et-0/0/0:
+        bridge: ptp3
+        family:
+          inet: 10.100.255.135/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/1:
+        bridge: ptp6
+        family:
+          inet: 10.100.255.141/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      et-0/0/2:
+        bridge: ptp7
+        family:
+          inet: 10.100.255.143/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      lo0:
+        family:
+          inet: 10.100.255.14/32
+          iso: 49.0001.0101.0025.5014.00
+      mgmt:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.105/24
+    os: vevo
+    type: junos
+  pe1:
+    interfaces:
+      ge-0/0/0:
+        bridge: pe1ge0
+      ge-0/0/1:
+        bridge: ptp0
+        family:
+          inet: 10.100.255.128/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      ge-0/0/2:
+        bridge: ptp1
+        family:
+          inet: 10.100.255.130/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      lo0:
+        family:
+          inet: 10.100.255.1/32
+          iso: 49.0001.0101.0025.5001.00
+      mgmt:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.101/24
+    os: mx240
+    type: junos
+  pe2:
+    interfaces:
+      ge-0/0/0:
+        bridge: pe2ge0
+      ge-0/0/1:
+        bridge: ptp2
+        family:
+          inet: 10.100.255.132/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      ge-0/0/2:
+        bridge: ptp3
+        family:
+          inet: 10.100.255.134/31
+          iso: null
+          mpls: null
+        mtu: 9000
+        protocol:
+          isis: ptp
+          ldp: null
+          rsvp: null
+      lo0:
+        family:
+          inet: 10.100.255.2/32
+          iso: 49.0001.0101.0025.5002.00
+      mgmt:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.102/24
+    os: mx240
+    type: junos
+  svr1:
+    interfaces:
+      em0:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.111/24
+      em1:
+        bridge: pe1ge0
+    os: ubuntu
+    type: pcsmall
+    vnc: true
+  svr2:
+    interfaces:
+      em0:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.112/24
+      em1:
+        bridge: pe2ge0
+    os: ubuntu
+    type: pcsmall
+    vnc: true

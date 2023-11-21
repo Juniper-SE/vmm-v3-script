@@ -1,0 +1,13 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web4
+  namespace: ns-user4
+spec:
+  selector:
+    app: webserver4
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80

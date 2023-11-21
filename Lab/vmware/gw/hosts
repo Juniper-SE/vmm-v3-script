@@ -1,0 +1,8 @@
+127.0.0.1	localhost.localdomain localhost
+::1		localhost6.localdomain6 localhost6
+172.16.10.200 vcsa
+172.16.10.201 esxi1
+172.16.10.202 esxi2
+172.16.10.205 contrail1
+172.16.10.100 cc
+172.16.10.101 desktop0

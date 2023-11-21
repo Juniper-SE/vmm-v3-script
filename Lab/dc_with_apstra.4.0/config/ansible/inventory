@@ -1,0 +1,8 @@
+[all]
+ext1
+pe1
+pe2
+p1
+fw1
+[all:vars]
+ansible_python_interpreter=python3

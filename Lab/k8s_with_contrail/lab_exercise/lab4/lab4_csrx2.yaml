@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csrx2
+  namespace: lab4
+  labels:
+    app: service-instances
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+      {"name": "vn-left" },
+      {"name": "vn-right" }
+    ]'
+spec:
+  containers: 
+    - name: csrx2
+      image: 172.16.14.10:5000/csrx:21.4R1.12
+      imagePullPolicy: Always
+      env: 
+      #- name: CSRX_ROOT_PASSWORD
+      #  value: "pass01"
+      - name: CSRX_FORWARD_MODE
+        value: routing
+      - name: CSRX_AUTO_ASSIGN_IP
+        value: "yes"
+      - name: CSRX_SIZE
+        value: "medium"
+      - name: CSRX_LICENSE_FILE
+        value: "/var/jail/csrx_license"
+      - name: CSRX_JUNOS_CONFIG
+        value: "/var/jail/csrx_config"
+      securityContext:
+        privileged: true
+      volumeMounts:
+      - name: disk
+        mountPath: "/dev"
+      - name: config
+        mountPath: "/var/jail"
+  volumes:
+  - name: disk
+    hostPath:
+     path: /dev
+     type: Directory
+  - name: config
+    configMap:
+      name: csrx-nat
+      items:
+      - key: csrx_config
+        path: csrx_config
+      - key: csrx_license
+        path: csrx_license
+  #nodeName: node3
+

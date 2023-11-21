@@ -1,0 +1,32 @@
+enable
+config t 
+username admin privilege 15 role network-admin secret sha512 $6$478qgkv/Zj37K66t$IcAoiJEzqvavi1Wip4dq.Z2wKOoA8Q2CegD0G0IZAwjclDM.fJSbthWMpEYZjr3scyRynt3eOUILKEtigpzDq1
+username admin ssh-key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/+8rkgOc76z0m7Cierw4qUs6bahYgQP4/hyPZGmb/mukCSn7ZvbUM27fX1nRbbP8Z0t+ruF8A5kP5jHOXILCTe2K5+JE9aHbkae5ztSwhxZSYxcSPtN0r8G/B57/4cw5QV7yKjSlQiLXf2EMfIt27/ZGeE402Tntz5v41wsj8C9PtBZvSMcgBWYu/HfE94ShSqsUNvg+FzKaVGhPB4mOzsApPF7Y/zopk7ADB6VkBdqUSblauU0a4aDy/3cwGR2NwOGXcszGzNYU4H6AlIsribpQPXkVs/v6b4NRHzAuKVk2FLLneeWsEKIqCZIWjzJj2ck4aWCM3NkoE86ndbRNyFaaxs67KpzPvPlAOwHU8gINyhzDfVi68xeiN9p8ybj3fI/Vw1W70i4wN2rL1PSupnnPNAX0Ijd9ulmhbAJyO+cjuoURLUR56EjJUYfddzRRRjQO0IMKNPDw0BFFxbt4gc1OnC6bJh2odHb/xbXaVCo361kz2IBoeZ3yFVpTcJH8= irzan@irzan-mbp
+
+!
+service routing protocols model multi-agent
+hostname leaf3
+vrf instance management
+   rd 100:100
+!
+management api http-commands
+   protocol http
+   no shutdown
+   !
+   vrf management
+      no shutdown
+!
+aaa authorization exec default local
+
+interface Management1
+   vrf management
+   ip address 172.16.10.105/24
+!
+ip routing
+ip routing vrf management
+!
+ip route vrf management 0.0.0.0/0 172.16.10.1
+exit
+write mem
+reload 
+y 

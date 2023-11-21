@@ -1,0 +1,5 @@
+
+curl http://127.0.0.1:8082/bgp-routers | python3 -m json.tool
+curl http://127.0.0.1:8082/virtual-networks | python3 -m json.tool
+curl http://127.0.0.1:8082/floating-ip-pools | python3 -m json.tool
+curl http://127.0.0.1:8082/floating-ips | python3 -m json.tool

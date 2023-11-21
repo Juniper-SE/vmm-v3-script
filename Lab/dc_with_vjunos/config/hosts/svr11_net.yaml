@@ -1,0 +1,18 @@
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: false
+      addresses: [ 172.16.12.10/24, 2001:dead:beef:1012::10/64 ]
+      nameservers:
+         addresses: [ 10.49.32.95, 10.49.32.97]
+      routes:
+        - to: 0.0.0.0/0
+          via: 172.16.12.1
+          metric: 1
+        - to: ::/0
+          via: 2001:dead:beef:1012::1
+          metric: 1
+EOF
+
+sudo hostname svr11

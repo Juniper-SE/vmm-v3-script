@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csrx3 
+  namespace: lab4
+  labels:
+    app: service-instances
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+      {"name": "public", "namespace": "default" },
+      {"name": "lab4-service" ,"namespace" : "lab4"}
+    ]'
+spec:
+  containers: 
+    - name: csrx3
+      image: 172.16.14.10:5000/csrx:21.3R1.9
+      imagePullPolicy: Always
+      env: 
+      - name: CSRX_ROOT_PASSWORD
+        value: "pass01"
+      - name: CSRX_SIZE
+        value: "medium"
+      securityContext:
+        privileged: true

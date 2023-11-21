@@ -1,0 +1,24 @@
+network:
+  ethernets:
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  vlans:
+    vlan102:
+      id: 102
+      link: bond0
+      addresses: [ 192.168.210.22/24]
+      gateway4: 192.168.210.1
+      nameservers:
+        addresses: [172.16.11.0]
+  bonds:
+    bond0:
+       mtu: 1350
+       macaddress: 56:04:17:00:aa:02
+       interfaces:
+         - eth1
+         - eth2
+       parameters:
+         mode: 802.3ad
+       

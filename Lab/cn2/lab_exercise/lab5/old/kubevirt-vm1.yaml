@@ -1,0 +1,38 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstance
+metadata:
+  labels:
+    special: vmi-vm1
+  name: vmi-vm1
+  namespace: kubevirt-demo
+spec:
+  domain:
+    devices:
+      disks:
+      - disk:
+          bus: virtio
+        name: containerdisk
+      - disk:
+          bus: virtio
+        name: cloudinitdisk
+      interfaces:
+      - name: default
+        bridge: {}
+    resources:
+      requests:
+        memory: 128M
+  networks:
+  - name: default
+    pod: {}
+  volumes:
+  - containerDisk:
+      image: 172.16.14.10:5000/cirros:0.5.2
+      path: /cirros-0.5.2-x86_64-disk.img
+    name: containerdisk
+  - cloudInitNoCloud:
+      userData: |-
+        #cloud-config
+        password: pass01
+        ssh_pwauth: True
+        chpasswd: { expire: False }
+    name: cloudinitdisk

@@ -1,0 +1,43 @@
+---
+#service-web-nodeport
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-3
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 32001
+  selector:
+    app: webserver3
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver3
+  labels:
+    app: webserver3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver3
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver3]}
+  template:
+    metadata:
+      name: webserver3
+      labels:
+        app: webserver3
+    spec:
+      containers: 
+      - name: webserver3
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

@@ -1,0 +1,14 @@
+# prevent outgoing traffic
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: policy3
+  namespace: lab3
+spec:
+  podSelector:
+    matchLabels:
+      app: dbserver
+  policyTypes:
+  - Egress
+

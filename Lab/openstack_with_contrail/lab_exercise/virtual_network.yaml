@@ -1,0 +1,1562 @@
+support_status:
+  message: null
+  previous_status: null
+  status: SUPPORTED
+  version: null
+attributes:
+  address_allocation_mode:
+    description: ADDRESS_ALLOCATION_MODE.
+  annotations:
+    description: ANNOTATIONS.
+  bgpvpn_refs:
+    description: BGPVPN_REFS.
+  display_name:
+    description: DISPLAY_NAME.
+  ecmp_hashing_include_fields:
+    description: ECMP_HASHING_INCLUDE_FIELDS.
+  export_route_target_list:
+    description: EXPORT_ROUTE_TARGET_LIST.
+  external_ipam:
+    description: EXTERNAL_IPAM.
+  fabric_snat:
+    description: FABRIC_SNAT.
+  flood_unknown_unicast:
+    description: FLOOD_UNKNOWN_UNICAST.
+  fq_name:
+    description: FQ_NAME.
+  id_perms:
+    description: ID_PERMS.
+  igmp_enable:
+    description: IGMP_ENABLE.
+  import_route_target_list:
+    description: IMPORT_ROUTE_TARGET_LIST.
+  intent_map_refs:
+    description: INTENT_MAP_REFS.
+  is_provider_network:
+    description: IS_PROVIDER_NETWORK.
+  is_shared:
+    description: IS_SHARED.
+  layer2_control_word:
+    description: LAYER2_CONTROL_WORD.
+  mac_aging_time:
+    description: MAC_AGING_TIME.
+  mac_ip_learning_enable:
+    description: MAC_IP_LEARNING_ENABLE.
+  mac_learning_enabled:
+    description: MAC_LEARNING_ENABLED.
+  mac_limit_control:
+    description: MAC_LIMIT_CONTROL.
+  mac_move_control:
+    description: MAC_MOVE_CONTROL.
+  multi_policy_service_chains_enabled:
+    description: MULTI_POLICY_SERVICE_CHAINS_ENABLED.
+  multicast_policy_refs:
+    description: MULTICAST_POLICY_REFS.
+  name:
+    description: NAME.
+  network_ipam_refs:
+    description: NETWORK_IPAM_REFS.
+  network_ipam_refs_data:
+    description: NETWORK_IPAM_REFS_DATA.
+  network_policy_refs:
+    description: NETWORK_POLICY_REFS.
+  network_policy_refs_data:
+    description: NETWORK_POLICY_REFS_DATA.
+  pbb_etree_enable:
+    description: PBB_ETREE_ENABLE.
+  pbb_evpn_enable:
+    description: PBB_EVPN_ENABLE.
+  perms2:
+    description: PERMS2.
+  port_security_enabled:
+    description: PORT_SECURITY_ENABLED.
+  project:
+    description: PROJECT.
+  provider_properties:
+    description: PROVIDER_PROPERTIES.
+  qos_config_refs:
+    description: QOS_CONFIG_REFS.
+  route_table_refs:
+    description: ROUTE_TABLE_REFS.
+  route_target_list:
+    description: ROUTE_TARGET_LIST.
+  router_external:
+    description: ROUTER_EXTERNAL.
+  routing_policy_refs:
+    description: ROUTING_POLICY_REFS.
+  routing_policy_refs_data:
+    description: ROUTING_POLICY_REFS_DATA.
+  security_logging_object_refs:
+    description: SECURITY_LOGGING_OBJECT_REFS.
+  service_health_check_refs:
+    description: SERVICE_HEALTH_CHECK_REFS.
+  show:
+    description: Detailed information about resource.
+    type: map
+  tag_refs:
+    description: TAG_REFS.
+  virtual_network_category:
+    description: VIRTUAL_NETWORK_CATEGORY.
+  virtual_network_fat_flow_protocols:
+    description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS.
+  virtual_network_network_id:
+    description: VIRTUAL_NETWORK_NETWORK_ID.
+  virtual_network_properties:
+    description: VIRTUAL_NETWORK_PROPERTIES.
+  virtual_network_refs:
+    description: VIRTUAL_NETWORK_REFS.
+  virtual_network_routed_properties:
+    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES.
+properties:
+  address_allocation_mode:
+    description: ADDRESS_ALLOCATION_MODE.
+    immutable: false
+    required: false
+    type: string
+    update_allowed: true
+  annotations:
+    description: ANNOTATIONS.
+    immutable: false
+    required: false
+    schema:
+      annotations_key_value_pair:
+        description: ANNOTATIONS_KEY_VALUE_PAIR.
+        immutable: false
+        required: false
+        schema:
+          '*':
+            immutable: false
+            required: false
+            schema:
+              annotations_key_value_pair_key:
+                description: ANNOTATIONS_KEY_VALUE_PAIR_KEY.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              annotations_key_value_pair_value:
+                description: ANNOTATIONS_KEY_VALUE_PAIR_VALUE.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+            type: map
+            update_allowed: false
+        type: list
+        update_allowed: true
+    type: map
+    update_allowed: true
+  bgpvpn_refs:
+    description: BGPVPN_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  display_name:
+    description: DISPLAY_NAME.
+    immutable: false
+    required: false
+    type: string
+    update_allowed: true
+  ecmp_hashing_include_fields:
+    description: ECMP_HASHING_INCLUDE_FIELDS.
+    immutable: false
+    required: false
+    schema:
+      ecmp_hashing_include_fields_destination_ip:
+        description: ECMP_HASHING_INCLUDE_FIELDS_DESTINATION_IP.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      ecmp_hashing_include_fields_destination_port:
+        description: ECMP_HASHING_INCLUDE_FIELDS_DESTINATION_PORT.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      ecmp_hashing_include_fields_hashing_configured:
+        description: ECMP_HASHING_INCLUDE_FIELDS_HASHING_CONFIGURED.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      ecmp_hashing_include_fields_ip_protocol:
+        description: ECMP_HASHING_INCLUDE_FIELDS_IP_PROTOCOL.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      ecmp_hashing_include_fields_source_ip:
+        description: ECMP_HASHING_INCLUDE_FIELDS_SOURCE_IP.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      ecmp_hashing_include_fields_source_port:
+        description: ECMP_HASHING_INCLUDE_FIELDS_SOURCE_PORT.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+    type: map
+    update_allowed: true
+  export_route_target_list:
+    description: EXPORT_ROUTE_TARGET_LIST.
+    immutable: false
+    required: false
+    schema:
+      export_route_target_list_route_target:
+        description: EXPORT_ROUTE_TARGET_LIST_ROUTE_TARGET.
+        immutable: false
+        required: false
+        type: list
+        update_allowed: true
+    type: map
+    update_allowed: true
+  external_ipam:
+    description: EXTERNAL_IPAM.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  fabric_snat:
+    description: FABRIC_SNAT.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  flood_unknown_unicast:
+    description: FLOOD_UNKNOWN_UNICAST.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  fq_name:
+    description: FQ_NAME.
+    immutable: false
+    required: false
+    type: string
+    update_allowed: true
+  id_perms:
+    description: ID_PERMS.
+    immutable: false
+    required: false
+    schema:
+      id_perms_created:
+        description: ID_PERMS_CREATED.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      id_perms_creator:
+        description: ID_PERMS_CREATOR.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+      id_perms_description:
+        description: ID_PERMS_DESCRIPTION.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+      id_perms_enable:
+        description: ID_PERMS_ENABLE.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      id_perms_last_modified:
+        description: ID_PERMS_LAST_MODIFIED.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      id_perms_permissions:
+        description: ID_PERMS_PERMISSIONS.
+        immutable: false
+        required: false
+        schema:
+          id_perms_permissions_group:
+            description: ID_PERMS_PERMISSIONS_GROUP.
+            immutable: false
+            required: false
+            type: string
+            update_allowed: true
+          id_perms_permissions_group_access:
+            constraints:
+            - range:
+                max: 7
+                min: 0
+            description: ID_PERMS_PERMISSIONS_GROUP_ACCESS.
+            immutable: false
+            required: false
+            type: integer
+            update_allowed: true
+          id_perms_permissions_other_access:
+            constraints:
+            - range:
+                max: 7
+                min: 0
+            description: ID_PERMS_PERMISSIONS_OTHER_ACCESS.
+            immutable: false
+            required: false
+            type: integer
+            update_allowed: true
+          id_perms_permissions_owner:
+            description: ID_PERMS_PERMISSIONS_OWNER.
+            immutable: false
+            required: false
+            type: string
+            update_allowed: true
+          id_perms_permissions_owner_access:
+            constraints:
+            - range:
+                max: 7
+                min: 0
+            description: ID_PERMS_PERMISSIONS_OWNER_ACCESS.
+            immutable: false
+            required: false
+            type: integer
+            update_allowed: true
+        type: map
+        update_allowed: true
+      id_perms_user_visible:
+        description: ID_PERMS_USER_VISIBLE.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      id_perms_uuid:
+        description: ID_PERMS_UUID.
+        immutable: false
+        required: false
+        schema:
+          id_perms_uuid_uuid_lslong:
+            description: ID_PERMS_UUID_UUID_LSLONG.
+            immutable: false
+            required: false
+            type: map
+            update_allowed: true
+          id_perms_uuid_uuid_mslong:
+            description: ID_PERMS_UUID_UUID_MSLONG.
+            immutable: false
+            required: false
+            type: map
+            update_allowed: true
+        type: map
+        update_allowed: true
+    type: map
+    update_allowed: true
+  igmp_enable:
+    description: IGMP_ENABLE.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  import_route_target_list:
+    description: IMPORT_ROUTE_TARGET_LIST.
+    immutable: false
+    required: false
+    schema:
+      import_route_target_list_route_target:
+        description: IMPORT_ROUTE_TARGET_LIST_ROUTE_TARGET.
+        immutable: false
+        required: false
+        type: list
+        update_allowed: true
+    type: map
+    update_allowed: true
+  intent_map_refs:
+    description: INTENT_MAP_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  is_provider_network:
+    description: IS_PROVIDER_NETWORK.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  is_shared:
+    description: IS_SHARED.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  layer2_control_word:
+    description: LAYER2_CONTROL_WORD.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  mac_aging_time:
+    description: MAC_AGING_TIME.
+    immutable: false
+    required: false
+    type: integer
+    update_allowed: true
+  mac_ip_learning_enable:
+    description: MAC_IP_LEARNING_ENABLE.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  mac_learning_enabled:
+    description: MAC_LEARNING_ENABLED.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  mac_limit_control:
+    description: MAC_LIMIT_CONTROL.
+    immutable: false
+    required: false
+    schema:
+      mac_limit_control_mac_limit:
+        description: MAC_LIMIT_CONTROL_MAC_LIMIT.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      mac_limit_control_mac_limit_action:
+        constraints:
+        - allowed_values:
+          - log
+          - alarm
+          - shutdown
+          - drop
+        description: MAC_LIMIT_CONTROL_MAC_LIMIT_ACTION.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+    type: map
+    update_allowed: true
+  mac_move_control:
+    description: MAC_MOVE_CONTROL.
+    immutable: false
+    required: false
+    schema:
+      mac_move_control_mac_move_limit:
+        description: MAC_MOVE_CONTROL_MAC_MOVE_LIMIT.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      mac_move_control_mac_move_limit_action:
+        constraints:
+        - allowed_values:
+          - log
+          - alarm
+          - shutdown
+          - drop
+        description: MAC_MOVE_CONTROL_MAC_MOVE_LIMIT_ACTION.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+      mac_move_control_mac_move_time_window:
+        constraints:
+        - range:
+            max: 60
+            min: 1
+        description: MAC_MOVE_CONTROL_MAC_MOVE_TIME_WINDOW.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+    type: map
+    update_allowed: true
+  multi_policy_service_chains_enabled:
+    description: MULTI_POLICY_SERVICE_CHAINS_ENABLED.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  multicast_policy_refs:
+    description: MULTICAST_POLICY_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  name:
+    description: NAME.
+    immutable: false
+    required: false
+    type: string
+    update_allowed: true
+  network_ipam_refs:
+    description: NETWORK_IPAM_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  network_ipam_refs_data:
+    description: NETWORK_IPAM_REFS_DATA.
+    immutable: false
+    required: false
+    schema:
+      '*':
+        immutable: false
+        required: false
+        schema:
+          network_ipam_refs_data_host_routes:
+            description: NETWORK_IPAM_REFS_DATA_HOST_ROUTES.
+            immutable: false
+            required: false
+            schema:
+              network_ipam_refs_data_host_routes_route:
+                description: NETWORK_IPAM_REFS_DATA_HOST_ROUTES_ROUTE.
+                immutable: false
+                required: false
+                schema:
+                  '*':
+                    immutable: false
+                    required: false
+                    schema:
+                      network_ipam_refs_data_host_routes_route_community_attributes:
+                        description: NETWORK_IPAM_REFS_DATA_HOST_ROUTES_ROUTE_COMMUNITY_ATTRIBUTES.
+                        immutable: false
+                        required: false
+                        schema:
+                          network_ipam_refs_data_host_routes_route_community_attributes_community_attribute:
+                            description: NETWORK_IPAM_REFS_DATA_HOST_ROUTES_ROUTE_COMMUNITY_ATTRIBUTES_COMMUNITY_ATTRIBUTE.
+                            immutable: false
+                            required: false
+                            type: list
+                            update_allowed: true
+                        type: map
+                        update_allowed: true
+                      network_ipam_refs_data_host_routes_route_next_hop:
+                        description: NETWORK_IPAM_REFS_DATA_HOST_ROUTES_ROUTE_NEXT_HOP.
+                        immutable: false
+                        required: false
+                        type: string
+                        update_allowed: true
+                      network_ipam_refs_data_host_routes_route_next_hop_type:
+                        constraints:
+                        - allowed_values:
+                          - service-instance
+                          - ip-address
+                        description: NETWORK_IPAM_REFS_DATA_HOST_ROUTES_ROUTE_NEXT_HOP_TYPE.
+                        immutable: false
+                        required: false
+                        type: string
+                        update_allowed: true
+                      network_ipam_refs_data_host_routes_route_prefix:
+                        description: NETWORK_IPAM_REFS_DATA_HOST_ROUTES_ROUTE_PREFIX.
+                        immutable: false
+                        required: false
+                        type: string
+                        update_allowed: true
+                    type: map
+                    update_allowed: false
+                type: list
+                update_allowed: true
+            type: map
+            update_allowed: true
+          network_ipam_refs_data_ipam_subnets:
+            description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS.
+            immutable: false
+            required: false
+            schema:
+              '*':
+                immutable: false
+                required: false
+                schema:
+                  network_ipam_refs_data_ipam_subnets_addr_from_start:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_ADDR_FROM_START.
+                    immutable: false
+                    required: false
+                    type: boolean
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_alloc_unit:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_ALLOC_UNIT.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_allocation_pools:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_ALLOCATION_POOLS.
+                    immutable: false
+                    required: false
+                    schema:
+                      '*':
+                        immutable: false
+                        required: false
+                        schema:
+                          network_ipam_refs_data_ipam_subnets_allocation_pools_end:
+                            description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_ALLOCATION_POOLS_END.
+                            immutable: false
+                            required: false
+                            type: string
+                            update_allowed: true
+                          network_ipam_refs_data_ipam_subnets_allocation_pools_start:
+                            description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_ALLOCATION_POOLS_START.
+                            immutable: false
+                            required: false
+                            type: string
+                            update_allowed: true
+                          network_ipam_refs_data_ipam_subnets_allocation_pools_vrouter_specific_pool:
+                            description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_ALLOCATION_POOLS_VROUTER_SPECIFIC_POOL.
+                            immutable: false
+                            required: false
+                            type: boolean
+                            update_allowed: true
+                        type: map
+                        update_allowed: false
+                    type: list
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_created:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_CREATED.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_default_gateway:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DEFAULT_GATEWAY.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_dhcp_option_list:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DHCP_OPTION_LIST.
+                    immutable: false
+                    required: false
+                    schema:
+                      network_ipam_refs_data_ipam_subnets_dhcp_option_list_dhcp_option:
+                        description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DHCP_OPTION_LIST_DHCP_OPTION.
+                        immutable: false
+                        required: false
+                        schema:
+                          '*':
+                            immutable: false
+                            required: false
+                            schema:
+                              network_ipam_refs_data_ipam_subnets_dhcp_option_list_dhcp_option_dhcp_option_name:
+                                description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DHCP_OPTION_LIST_DHCP_OPTION_DHCP_OPTION_NAME.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                              network_ipam_refs_data_ipam_subnets_dhcp_option_list_dhcp_option_dhcp_option_value:
+                                description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DHCP_OPTION_LIST_DHCP_OPTION_DHCP_OPTION_VALUE.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                              network_ipam_refs_data_ipam_subnets_dhcp_option_list_dhcp_option_dhcp_option_value_bytes:
+                                description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DHCP_OPTION_LIST_DHCP_OPTION_DHCP_OPTION_VALUE_BYTES.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                            type: map
+                            update_allowed: false
+                        type: list
+                        update_allowed: true
+                    type: map
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_dhcp_relay_server:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DHCP_RELAY_SERVER.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_dns_nameservers:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DNS_NAMESERVERS.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_dns_server_address:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_DNS_SERVER_ADDRESS.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_enable_dhcp:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_ENABLE_DHCP.
+                    immutable: false
+                    required: false
+                    type: boolean
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_host_routes:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_HOST_ROUTES.
+                    immutable: false
+                    required: false
+                    schema:
+                      network_ipam_refs_data_ipam_subnets_host_routes_route:
+                        description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_HOST_ROUTES_ROUTE.
+                        immutable: false
+                        required: false
+                        schema:
+                          '*':
+                            immutable: false
+                            required: false
+                            schema:
+                              network_ipam_refs_data_ipam_subnets_host_routes_route_community_attributes:
+                                description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_HOST_ROUTES_ROUTE_COMMUNITY_ATTRIBUTES.
+                                immutable: false
+                                required: false
+                                schema:
+                                  network_ipam_refs_data_ipam_subnets_host_routes_route_community_attributes_community_attribute:
+                                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_HOST_ROUTES_ROUTE_COMMUNITY_ATTRIBUTES_COMMUNITY_ATTRIBUTE.
+                                    immutable: false
+                                    required: false
+                                    type: list
+                                    update_allowed: true
+                                type: map
+                                update_allowed: true
+                              network_ipam_refs_data_ipam_subnets_host_routes_route_next_hop:
+                                description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_HOST_ROUTES_ROUTE_NEXT_HOP.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                              network_ipam_refs_data_ipam_subnets_host_routes_route_next_hop_type:
+                                constraints:
+                                - allowed_values:
+                                  - service-instance
+                                  - ip-address
+                                description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_HOST_ROUTES_ROUTE_NEXT_HOP_TYPE.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                              network_ipam_refs_data_ipam_subnets_host_routes_route_prefix:
+                                description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_HOST_ROUTES_ROUTE_PREFIX.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                            type: map
+                            update_allowed: false
+                        type: list
+                        update_allowed: true
+                    type: map
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_last_modified:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_LAST_MODIFIED.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_subnet:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_SUBNET.
+                    immutable: false
+                    required: false
+                    schema:
+                      network_ipam_refs_data_ipam_subnets_subnet_ip_prefix:
+                        description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_SUBNET_IP_PREFIX.
+                        immutable: false
+                        required: false
+                        type: string
+                        update_allowed: true
+                      network_ipam_refs_data_ipam_subnets_subnet_ip_prefix_len:
+                        description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_SUBNET_IP_PREFIX_LEN.
+                        immutable: false
+                        required: false
+                        type: integer
+                        update_allowed: true
+                    type: map
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_subnet_name:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_SUBNET_NAME.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_subnet_uuid:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_SUBNET_UUID.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_subscriber_tag:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_SUBSCRIBER_TAG.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  network_ipam_refs_data_ipam_subnets_vlan_tag:
+                    description: NETWORK_IPAM_REFS_DATA_IPAM_SUBNETS_VLAN_TAG.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                type: map
+                update_allowed: false
+            type: list
+            update_allowed: true
+        type: map
+        update_allowed: false
+    type: list
+    update_allowed: true
+  network_policy_refs:
+    description: NETWORK_POLICY_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  network_policy_refs_data:
+    description: NETWORK_POLICY_REFS_DATA.
+    immutable: false
+    required: false
+    schema:
+      '*':te
+        immutable: false
+        required: false
+        schema:
+          network_policy_refs_data_sequence:
+            description: NETWORK_POLICY_REFS_DATA_SEQUENCE.
+            immutable: false
+            required: false
+            schema:
+              network_policy_refs_data_sequence_major:
+                description: NETWORK_POLICY_REFS_DATA_SEQUENCE_MAJOR.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+              network_policy_refs_data_sequence_minor:
+                description: NETWORK_POLICY_REFS_DATA_SEQUENCE_MINOR.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+            type: map
+            update_allowed: true
+          network_policy_refs_data_timer:
+            description: NETWORK_POLICY_REFS_DATA_TIMER.
+            immutable: false
+            required: false
+            schema:
+              network_policy_refs_data_timer_end_time:
+                description: NETWORK_POLICY_REFS_DATA_TIMER_END_TIME.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+              network_policy_refs_data_timer_off_interval:
+                description: NETWORK_POLICY_REFS_DATA_TIMER_OFF_INTERVAL.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+              network_policy_refs_data_timer_on_interval:
+                description: NETWORK_POLICY_REFS_DATA_TIMER_ON_INTERVAL.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+              network_policy_refs_data_timer_start_time:
+                description: NETWORK_POLICY_REFS_DATA_TIMER_START_TIME.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+            type: map
+            update_allowed: true
+        type: map
+        update_allowed: false
+    type: list
+    update_allowed: true
+  pbb_etree_enable:
+    description: PBB_ETREE_ENABLE.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  pbb_evpn_enable:
+    description: PBB_EVPN_ENABLE.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  perms2:
+    description: PERMS2.
+    immutable: false
+    required: false
+    schema:
+      perms2_global_access:
+        constraints:
+        - range:
+            max: 7
+            min: 0
+        description: PERMS2_GLOBAL_ACCESS.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      perms2_owner:
+        description: PERMS2_OWNER.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+      perms2_owner_access:
+        constraints:
+        - range:
+            max: 7
+            min: 0
+        description: PERMS2_OWNER_ACCESS.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      perms2_share:
+        description: PERMS2_SHARE.
+        immutable: false
+        required: false
+        schema:
+          '*':
+            immutable: false
+            required: false
+            schema:
+              perms2_share_tenant:
+                description: PERMS2_SHARE_TENANT.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              perms2_share_tenant_access:
+                constraints:
+                - range:
+                    max: 7
+                    min: 0
+                description: PERMS2_SHARE_TENANT_ACCESS.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+            type: map
+            update_allowed: false
+        type: list
+        update_allowed: true
+    type: map
+    update_allowed: true
+  port_security_enabled:
+    description: PORT_SECURITY_ENABLED.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  project:
+    description: PROJECT.
+    immutable: false
+    required: false
+    type: string
+    update_allowed: true
+  provider_properties:
+    description: PROVIDER_PROPERTIES.
+    immutable: false
+    required: false
+    schema:
+      provider_properties_physical_network:
+        description: PROVIDER_PROPERTIES_PHYSICAL_NETWORK.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+      provider_properties_segmentation_id:
+        constraints:
+        - range:
+            max: 4094
+            min: 0
+        description: PROVIDER_PROPERTIES_SEGMENTATION_ID.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+    type: map
+    update_allowed: true
+  qos_config_refs:
+    description: QOS_CONFIG_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  route_table_refs:
+    description: ROUTE_TABLE_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  route_target_list:
+    description: ROUTE_TARGET_LIST.
+    immutable: false
+    required: false
+    schema:
+      route_target_list_route_target:
+        description: ROUTE_TARGET_LIST_ROUTE_TARGET.
+        immutable: false
+        required: false
+        type: list
+        update_allowed: true
+    type: map
+    update_allowed: true
+  router_external:
+    description: ROUTER_EXTERNAL.
+    immutable: false
+    required: false
+    type: boolean
+    update_allowed: true
+  routing_policy_refs:
+    description: ROUTING_POLICY_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  routing_policy_refs_data:
+    description: ROUTING_POLICY_REFS_DATA.
+    immutable: false
+    required: false
+    schema:
+      '*':
+        immutable: false
+        required: false
+        schema:
+          routing_policy_refs_data_sequence:
+            description: ROUTING_POLICY_REFS_DATA_SEQUENCE.
+            immutable: false
+            required: false
+            type: string
+            update_allowed: true
+        type: map
+        update_allowed: false
+    type: list
+    update_allowed: true
+  security_logging_object_refs:
+    description: SECURITY_LOGGING_OBJECT_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  service_health_check_refs:
+    description: SERVICE_HEALTH_CHECK_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  tag_refs:
+    description: TAG_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  virtual_network_category:
+    description: VIRTUAL_NETWORK_CATEGORY.
+    immutable: false
+    required: false
+    type: string
+    update_allowed: true
+  virtual_network_fat_flow_protocols:
+    description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS.
+    immutable: false
+    required: false
+    schema:
+      virtual_network_fat_flow_protocols_fat_flow_protocol:
+        description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL.
+        immutable: false
+        required: false
+        schema:
+          '*':
+            immutable: false
+            required: false
+            schema:
+              virtual_network_fat_flow_protocols_fat_flow_protocol_destination_aggregate_prefix_length:
+                description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_DESTINATION_AGGREGATE_PREFIX_LENGTH.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+              virtual_network_fat_flow_protocols_fat_flow_protocol_destination_prefix:
+                description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_DESTINATION_PREFIX.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_fat_flow_protocols_fat_flow_protocol_destination_prefix_ip_prefix:
+                    description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_DESTINATION_PREFIX_IP_PREFIX.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  virtual_network_fat_flow_protocols_fat_flow_protocol_destination_prefix_ip_prefix_len:
+                    description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_DESTINATION_PREFIX_IP_PREFIX_LEN.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                type: map
+                update_allowed: true
+              virtual_network_fat_flow_protocols_fat_flow_protocol_ignore_address:
+                constraints:
+                - allowed_values:
+                  - none
+                  - source
+                  - destination
+                description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_IGNORE_ADDRESS.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              virtual_network_fat_flow_protocols_fat_flow_protocol_port:
+                description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_PORT.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+              virtual_network_fat_flow_protocols_fat_flow_protocol_protocol:
+                description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_PROTOCOL.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              virtual_network_fat_flow_protocols_fat_flow_protocol_source_aggregate_prefix_length:
+                description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_SOURCE_AGGREGATE_PREFIX_LENGTH.
+                immutable: false
+                required: false
+                type: integer
+                update_allowed: true
+              virtual_network_fat_flow_protocols_fat_flow_protocol_source_prefix:
+                description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_SOURCE_PREFIX.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_fat_flow_protocols_fat_flow_protocol_source_prefix_ip_prefix:
+                    description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_SOURCE_PREFIX_IP_PREFIX.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  virtual_network_fat_flow_protocols_fat_flow_protocol_source_prefix_ip_prefix_len:
+                    description: VIRTUAL_NETWORK_FAT_FLOW_PROTOCOLS_FAT_FLOW_PROTOCOL_SOURCE_PREFIX_IP_PREFIX_LEN.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                type: map
+                update_allowed: true
+            type: map
+            update_allowed: false
+        type: list
+        update_allowed: true
+    type: map
+    update_allowed: true
+  virtual_network_network_id:
+    description: VIRTUAL_NETWORK_NETWORK_ID.
+    immutable: false
+    required: false
+    type: integer
+    update_allowed: true
+  virtual_network_properties:
+    description: VIRTUAL_NETWORK_PROPERTIES.
+    immutable: false
+    required: false
+    schema:
+      virtual_network_properties_allow_transit:
+        description: VIRTUAL_NETWORK_PROPERTIES_ALLOW_TRANSIT.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      virtual_network_properties_forwarding_mode:
+        constraints:
+        - allowed_values:
+          - l2_l3
+          - l2
+          - l3
+        description: VIRTUAL_NETWORK_PROPERTIES_FORWARDING_MODE.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+      virtual_network_properties_max_flows:
+        constraints:
+        - range:
+            max: 4294967296
+            min: 0
+        description: VIRTUAL_NETWORK_PROPERTIES_MAX_FLOWS.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      virtual_network_properties_mirror_destination:
+        description: VIRTUAL_NETWORK_PROPERTIES_MIRROR_DESTINATION.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+      virtual_network_properties_network_id:
+        description: VIRTUAL_NETWORK_PROPERTIES_NETWORK_ID.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+      virtual_network_properties_rpf:
+        constraints:
+        - allowed_values:
+          - enable
+          - disable
+        description: VIRTUAL_NETWORK_PROPERTIES_RPF.
+        immutable: false
+        required: false
+        type: string
+        update_allowed: true
+      virtual_network_properties_vxlan_network_identifier:
+        constraints:
+        - range:
+            max: 16777215
+            min: 1
+        description: VIRTUAL_NETWORK_PROPERTIES_VXLAN_NETWORK_IDENTIFIER.
+        immutable: false
+        required: false
+        type: integer
+        update_allowed: true
+    type: map
+    update_allowed: true
+  virtual_network_refs:
+    description: VIRTUAL_NETWORK_REFS.
+    immutable: false
+    required: false
+    type: list
+    update_allowed: true
+  virtual_network_routed_properties:
+    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES.
+    immutable: false
+    required: false
+    schema:
+      virtual_network_routed_properties_routed_properties:
+        description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES.
+        immutable: false
+        required: false
+        schema:
+          '*':
+            immutable: false
+            required: false
+            schema:
+              virtual_network_routed_properties_routed_properties_bfd_params:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BFD_PARAMS.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_routed_properties_routed_properties_bfd_params_detection_time_multiplier:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BFD_PARAMS_DETECTION_TIME_MULTIPLIER.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_bfd_params_time_interval:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BFD_PARAMS_TIME_INTERVAL.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                type: map
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_bgp_params:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_routed_properties_routed_properties_bgp_params_auth_data:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_AUTH_DATA.
+                    immutable: false
+                    required: false
+                    schema:
+                      virtual_network_routed_properties_routed_properties_bgp_params_auth_data_key_items:
+                        description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_AUTH_DATA_KEY_ITEMS.
+                        immutable: false
+                        required: false
+                        schema:
+                          '*':
+                            immutable: false
+                            required: false
+                            schema:
+                              virtual_network_routed_properties_routed_properties_bgp_params_auth_data_key_items_key:
+                                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_AUTH_DATA_KEY_ITEMS_KEY.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                              virtual_network_routed_properties_routed_properties_bgp_params_auth_data_key_items_key_id:
+                                constraints:
+                                - range:
+                                    max: 63
+                                    min: 0
+                                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_AUTH_DATA_KEY_ITEMS_KEY_ID.
+                                immutable: false
+                                required: false
+                                type: integer
+                                update_allowed: true
+                            type: map
+                            update_allowed: false
+                        type: list
+                        update_allowed: true
+                      virtual_network_routed_properties_routed_properties_bgp_params_auth_data_key_type:
+                        constraints:
+                        - allowed_values:
+                          - md5
+                        description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_AUTH_DATA_KEY_TYPE.
+                        immutable: false
+                        required: false
+                        type: string
+                        update_allowed: true
+                    type: map
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_bgp_params_hold_time:
+                    constraints:
+                    - range:
+                        max: 65535
+                        min: 0
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_HOLD_TIME.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_bgp_params_local_autonomous_system:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_LOCAL_AUTONOMOUS_SYSTEM.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_bgp_params_multihop_ttl:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_MULTIHOP_TTL.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_bgp_params_peer_autonomous_system:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_PEER_AUTONOMOUS_SYSTEM.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_bgp_params_peer_ip_address:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_PEER_IP_ADDRESS.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_bgp_params_peer_ip_address_list:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_BGP_PARAMS_PEER_IP_ADDRESS_LIST.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                type: map
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_logical_router_uuid:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_LOGICAL_ROUTER_UUID.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_loopback_ip_address:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_LOOPBACK_IP_ADDRESS.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_ospf_params:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_routed_properties_routed_properties_ospf_params_advertise_loopback:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_ADVERTISE_LOOPBACK.
+                    immutable: false
+                    required: false
+                    type: boolean
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_ospf_params_area_id:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_AREA_ID.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_ospf_params_area_type:
+                    constraints:
+                    - allowed_values:
+                      - nssa
+                      - stub
+                      - backbone
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_AREA_TYPE.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_ospf_params_auth_data:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_AUTH_DATA.
+                    immutable: false
+                    required: false
+                    schema:
+                      virtual_network_routed_properties_routed_properties_ospf_params_auth_data_key_items:
+                        description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_AUTH_DATA_KEY_ITEMS.
+                        immutable: false
+                        required: false
+                        schema:
+                          '*':
+                            immutable: false
+                            required: false
+                            schema:
+                              virtual_network_routed_properties_routed_properties_ospf_params_auth_data_key_items_key:
+                                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_AUTH_DATA_KEY_ITEMS_KEY.
+                                immutable: false
+                                required: false
+                                type: string
+                                update_allowed: true
+                              virtual_network_routed_properties_routed_properties_ospf_params_auth_data_key_items_key_id:
+                                constraints:
+                                - range:
+                                    max: 63
+                                    min: 0
+                                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_AUTH_DATA_KEY_ITEMS_KEY_ID.
+                                immutable: false
+                                required: false
+                                type: integer
+                                update_allowed: true
+                            type: map
+                            update_allowed: false
+                        type: list
+                        update_allowed: true
+                      virtual_network_routed_properties_routed_properties_ospf_params_auth_data_key_type:
+                        constraints:
+                        - allowed_values:
+                          - md5
+                        description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_AUTH_DATA_KEY_TYPE.
+                        immutable: false
+                        required: false
+                        type: string
+                        update_allowed: true
+                    type: map
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_ospf_params_dead_interval:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_DEAD_INTERVAL.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_ospf_params_hello_interval:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_HELLO_INTERVAL.
+                    immutable: false
+                    required: false
+                    type: integer
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_ospf_params_orignate_summary_lsa:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_OSPF_PARAMS_ORIGNATE_SUMMARY_LSA.
+                    immutable: false
+                    required: false
+                    type: boolean
+                    update_allowed: true
+                type: map
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_physical_router_uuid:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_PHYSICAL_ROUTER_UUID.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_pim_params:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_PIM_PARAMS.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_routed_properties_routed_properties_pim_params_enable_all_interfaces:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_PIM_PARAMS_ENABLE_ALL_INTERFACES.
+                    immutable: false
+                    required: false
+                    type: boolean
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_pim_params_mode:
+                    constraints:
+                    - allowed_values:
+                      - sparse
+                      - sparse-dense
+                      - dense
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_PIM_PARAMS_MODE.
+                    immutable: false
+                    required: false
+                    type: string
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_pim_params_rp_ip_address:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_PIM_PARAMS_RP_IP_ADDRESS.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                type: map
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_routed_interface_ip_address:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_ROUTED_INTERFACE_IP_ADDRESS.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_routing_policy_params:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_ROUTING_POLICY_PARAMS.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_routed_properties_routed_properties_routing_policy_params_export_routing_policy_uuid:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_ROUTING_POLICY_PARAMS_EXPORT_ROUTING_POLICY_UUID.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_routing_policy_params_import_routing_policy_uuid:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_ROUTING_POLICY_PARAMS_IMPORT_ROUTING_POLICY_UUID.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                type: map
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_routing_protocol:
+                constraints:
+                - allowed_values:
+                  - static-routes
+                  - bgp
+                  - ospf
+                  - pim
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_ROUTING_PROTOCOL.
+                immutable: false
+                required: false
+                type: string
+                update_allowed: true
+              virtual_network_routed_properties_routed_properties_static_route_params:
+                description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_STATIC_ROUTE_PARAMS.
+                immutable: false
+                required: false
+                schema:
+                  virtual_network_routed_properties_routed_properties_static_route_params_interface_route_table_uuid:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_STATIC_ROUTE_PARAMS_INTERFACE_ROUTE_TABLE_UUID.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                  virtual_network_routed_properties_routed_properties_static_route_params_next_hop_ip_address:
+                    description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_ROUTED_PROPERTIES_STATIC_ROUTE_PARAMS_NEXT_HOP_IP_ADDRESS.
+                    immutable: false
+                    required: false
+                    type: list
+                    update_allowed: true
+                type: map
+                update_allowed: true
+            type: map
+            update_allowed: false
+        type: list
+        update_allowed: true
+      virtual_network_routed_properties_shared_across_all_lrs:
+        description: VIRTUAL_NETWORK_ROUTED_PROPERTIES_SHARED_ACROSS_ALL_LRS.
+        immutable: false
+        required: false
+        type: boolean
+        update_allowed: true
+    type: map
+    update_allowed: true
+resource_type: OS::ContrailV2::VirtualNetwork

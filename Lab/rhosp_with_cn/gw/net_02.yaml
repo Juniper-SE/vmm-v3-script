@@ -1,0 +1,17 @@
+  vlans:
+    vlan731:
+      addresses : ['172.16.31.1/24']
+      link: eth2
+      id: 731
+    vlan732:
+      addresses : ['172.16.32.1/24']
+      link: eth2
+      id: 732
+    vlan733:
+      addresses : ['172.16.33.1/24']
+      link: eth2
+      id: 733
+    vlan734:
+      addresses : ['172.16.34.1/24']
+      link: eth2
+      id: 734

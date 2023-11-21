@@ -1,0 +1,5 @@
+vbmcd # to start vbmc daemon
+
+vbmc add os0 --port 6201
+vbmc start os0
+vbmc show os0

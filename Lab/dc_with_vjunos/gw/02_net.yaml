@@ -1,0 +1,41 @@
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  ethernets:
+   eth1:
+      addresses: [ 172.16.10.1/24 ]
+   eth2:
+      addresses: [ 172.16.12.1/24, 2001:dead:beef:1012::1/64 ]
+   eth3:
+      dhcp4: false
+   eth4:
+      dhcp4: false
+   eth7:
+      dhcp4: false
+   eth8:
+      dhcp4: false
+  vlans:
+   leaf5v1001:
+      link: eth3
+      id: 1001
+      addresses: [ 172.16.13.0/31, fd00:dead:beef:ffff::13:0/127 ]
+   leaf6v1001:
+      link: eth4
+      id: 1001
+      addresses: [ 172.16.13.2/31, fd00:dead:beef:ffff::13:2/127 ]
+   sw1v1001:
+      link: eth7
+      id: 1001
+      addresses: [ 172.16.13.4/31, fd00:dead:beef:ffff::13:4/127 ]
+   sw2v1001:
+      link: eth8
+      id: 1001
+      addresses: [ 172.16.13.6/31, fd00:dead:beef:ffff::13:6/127 ]
+   leaf5v1002:
+      link: eth3
+      id: 1002
+      addresses: [ 172.16.13.16/31, fd00:dead:beef:ffff::13:16/127 ]
+   leaf6v1002:
+      link: eth4
+      id: 1002
+      addresses: [ 172.16.13.18/31, fd00:dead:beef:ffff::13:18/127 ]
+EOF

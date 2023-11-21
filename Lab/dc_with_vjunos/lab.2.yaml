@@ -1,0 +1,469 @@
+---
+name: dc1
+pod: 
+  type: vmm
+  # if your account can access vmm lab directly, then you can comment out jumpserver
+  #jumpserver: ttsv-shell110.juniper.net
+  #jumpserver: ttqc-shell010.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  user: irzan
+  adpassword: AnaMabokCoys
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  alpine: images/alpine.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-22.2R1.9.vmdk
+  #vqfx_re: images/vqfx/jinstall-vqfx-10-f-20.2R1.10.vmdk
+  #vqfx_re: images/vqfx/jinstall-vqfx-10-f-21.3I.vmdk
+  # vqfx_re: images/vqfx/jinstall-vqfx-10-f-18.4R2-S2.3.vmdk
+  #vqfx_cosim: images/vqfx/vqfx-20.2R1-2019010209-pfe-qemu.vmdk
+  vsrx: images/vsrx/junos-vsrx3-x86-64-22.1R1.10.vmdk
+  aos: images/aos_server_4.1.1-268.qcow2
+  aos_ztp: images/apstra-ztp-4.1.1-7.qcow2
+  vex: images/vex/vJunos-ex-21.2R3-S1.7.qcow2
+  veos: images/veos/vEOS64-lab-4.28.1F.qcow2
+  veos_cdrom: images/veos/Aboot-veos-8.0.1.iso
+junos_login:
+  login: admin
+  password: admin
+fabric:
+  subnet: 10.100.1.128/25
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+    - [ 0, spine1, ge-0/0/0, leaf1, ge-0/0/0 ]
+    - [ 0, spine1, ge-0/0/1, leaf2, ge-0/0/0 ]
+    - [ 0, spine1, ge-0/0/2, leaf3, ge-0/0/0 ]
+    - [ 0, spine1, ge-0/0/3, leaf4, ge-0/0/0 ]
+    - [ 0, spine1, ge-0/0/4, leaf5, ge-0/0/0 ]
+    - [ 0, spine2, ge-0/0/0, leaf1, ge-0/0/1 ]
+    - [ 0, spine2, ge-0/0/1, leaf2, ge-0/0/1 ]
+    - [ 0, spine2, ge-0/0/2, leaf3, ge-0/0/1 ]
+    - [ 0, spine2, ge-0/0/3, leaf4, ge-0/0/1 ]
+    - [ 0, spine2, ge-0/0/4, leaf5, ge-0/0/1 ]
+    - [ 0, spine1, ge-0/0/5, pe1, ge-0/0/1 ]
+    - [ 0, spine2, ge-0/0/5, pe1, ge-0/0/2 ]
+    - [ 0, spine1, ge-0/0/6, vxlangw, ge-0/0/2 ]
+    - [ 0, spine2, ge-0/0/6, vxlangw, ge-0/0/3 ]
+    - [ 0x5d, pe1, ge-0/0/0, p1, ge-0/0/0 ]
+    - [ 0x5d, p1, ge-0/0/1, pe2, ge-0/0/0 ]
+    - [ 0, pe2, ge-0/0/1, sw1, ge-0/0/2 ]
+    - [ 0, pe2, ge-0/0/2, sw2, ge-0/0/2 ]
+    - [ 0, sw1, ge-0/0/0, sw2, ge-0/0/0 ]
+    - [ 0, sw1, ge-0/0/1, sw2, ge-0/0/1 ]
+    - [ 0, leaf5, ge-0/0/2, ext1, ge-0/0/1 ]
+    - [ 0, leaf5, ge-0/0/3, fw1, ge-0/0/1 ]
+    - [ 0, leaf5, ge-0/0/4, fw1, ge-0/0/2 ]
+    - [ 0x1, ext1, ge-0/0/2, fw1, ge-0/0/0 ]
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        ipv4: 172.16.10.1/24
+        #dhcp_range: 172.16.10.200-172.16.10.250
+      em2: 
+        bridge: gwext1
+        ipv4: 172.16.11.0/31
+      em3:
+        bridge: ext
+        ipv4: 172.16.12.1/24
+        dhcp_range: 172.16.12.5-172.16.12.20
+      em4:
+        bridge: gwpe1
+      em5:
+        bridge: gwvx
+        ipv4: 172.16.11.2/31
+      em6: 
+        bridge: lan6
+        ipv4: 172.16.16.1/24
+  spine1:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.101/24 
+  spine2:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.102/24 
+  leaf1:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.103/24 
+      ge-0/0/2: 
+        bridge: l1p2
+      ge-0/0/3: 
+        bridge: l1p3
+      ge-0/0/4: 
+        bridge: l1p4
+      ge-0/0/5: 
+        bridge: l1p5
+      ge-0/0/6: 
+        bridge: l1p6
+      ge-0/0/7: 
+        bridge: l1p7
+  leaf2:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.104/24 
+      ge-0/0/2: 
+        bridge: l2p2
+      ge-0/0/3: 
+        bridge: l2p3
+      ge-0/0/4: 
+        bridge: l2p4
+      ge-0/0/5: 
+        bridge: l2p5
+      ge-0/0/6: 
+        bridge: l2p6
+      ge-0/0/7: 
+        bridge: l2p7
+  leaf3:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.105/24 
+      ge-0/0/2: 
+        bridge: l3p2
+      ge-0/0/3: 
+        bridge: l3p3
+      ge-0/0/4: 
+        bridge: l3p4
+      ge-0/0/5: 
+        bridge: l3p5
+      ge-0/0/6: 
+        bridge: l3p6
+      ge-0/0/7: 
+        bridge: l3p7
+  leaf4:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.106/24 
+      ge-0/0/2: 
+        bridge: l4p2
+      ge-0/0/3: 
+        bridge: l4p3
+      ge-0/0/4: 
+        bridge: l4p4
+      ge-0/0/5: 
+        bridge: l4p5
+      ge-0/0/6: 
+        bridge: l4p6
+      ge-0/0/7: 
+        bridge: l4p7
+  leaf5:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.107/24 
+      ge-0/0/5: 
+        bridge: l5p5
+      ge-0/0/6: 
+        bridge: l5p6
+      ge-0/0/7: 
+        bridge: l5p7
+  sw1:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.108/24 
+      ge-0/0/3: 
+        bridge: sw1p3
+      ge-0/0/4: 
+        bridge: sw1p4
+      ge-0/0/5: 
+        bridge: sw1p5
+      ge-0/0/6: 
+        bridge: sw1p6
+      ge-0/0/7: 
+        bridge: sw1p7
+  sw2:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.109/24 
+      ge-0/0/3: 
+        bridge: sw2p3
+      ge-0/0/4: 
+        bridge: sw2p4
+      ge-0/0/5: 
+        bridge: sw2p5
+      ge-0/0/6: 
+        bridge: sw2p6
+      ge-0/0/7: 
+        bridge: sw2p7
+  pe1:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.110/24
+      lo0:
+        family:
+          inet: 10.100.1.1/32
+          iso: 49.0001.0101.0000.1001.00
+        protocol:
+          isis: passive
+  pe2:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.111/24
+      lo0:
+        family:
+          inet: 10.100.1.2/32
+          iso: 49.0001.0101.0000.1002.00
+        protocol:
+          isis: passive   
+  p1:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.112/24
+      lo0:
+        family:
+          inet: 10.100.1.3/32
+          iso: 49.0001.0101.0000.1003.00
+        protocol:
+          isis: passive
+  ext1:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.113/24
+      ge-0/0/0: 
+        bridge: gwext1
+        description: Connection to gw
+        family:
+          inet: 172.16.11.1/31
+  vxlangw:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.114/24
+      ge-0/0/0: 
+        bridge: gwvx
+        description: Connection to gw
+        family:
+          inet: 172.16.11.3/31
+      ge-0/0/1:
+        bridge: vxp1
+  fw1:
+    type: junos
+    os: vsrx
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.10.115/24 
+  apstra:
+    type: vapp
+    os: aos
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: lan1
+        ipv4: 172.16.10.2/24 
+        gateway4: 172.16.10.1
+        dns: 172.16.10
+  ztp:
+    type: vapp_s
+    os: aos_ztp
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: lan1
+        ipv4: 172.16.10.3/24 
+        gateway4: 172.16.10.1
+        dns: 172.16.10.1
+  svr1:
+    type: pctiny
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: l1p2
+      em1:
+        bridge: l2p2
+      em2:
+        bridge: l1p4
+      em3:
+        bridge: l1p5
+  svr2:
+    type: pctiny
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: l1p3
+      em1: 
+        bridge: l2p3
+      em2: 
+        bridge: l2p4
+      em3: 
+        bridge: l2p5
+  svr3:
+    type: pctiny
+    os: alpine
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: l3p2
+      em1: 
+        bridge: l4p2
+      em2: 
+        bridge: l3p4
+      em3: 
+        bridge: l3p5
+  svr4:
+    type: pctiny
+    os: alpine
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: l3p3
+      em1: 
+        bridge: l4p3
+      em2: 
+        bridge: l4p4
+      em3: 
+        bridge: l4p5
+  svr5:
+    type: pctiny
+    os: alpine
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sw1p3
+      em1: 
+        bridge: sw2p3
+      em2: 
+        bridge: sw1p7
+  svr6:
+    type: pctiny
+    os: alpine
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sw1p4
+      em1: 
+        bridge: sw2p4
+      em2: 
+        bridge: sw2p7
+  svr7:
+    type: pctiny
+    os: alpine
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sw1p5
+      em1: 
+        bridge: sw2p5
+  svr8:
+    type: pctiny
+    os: alpine
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: sw1p6
+      em1: 
+        bridge: sw2p6
+  svr9:
+    type: pctiny
+    os: alpine
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: l5p5
+      em1: 
+        bridge: l5p6
+      em2: 
+        bridge: l5p7
+  svr10:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: vxp1
+  lxc1:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: l1p7
+      em1: 
+        bridge: l1p6
+      em2: 
+        bridge: l2p6
+  lxc2:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: l2p7
+      em1: 
+        bridge: l3p6
+      em2: 
+        bridge: l4p6
+  svr11:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: ext
+        ipv4: 172.16.12.10/24
+        gateway4: 172.16.12.1
+  
+  

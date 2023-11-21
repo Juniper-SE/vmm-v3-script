@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lab4
+  labels:
+    core.juniper.net/isolated-namespace: "true"
+

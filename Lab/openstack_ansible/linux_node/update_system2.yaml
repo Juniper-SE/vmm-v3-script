@@ -1,0 +1,106 @@
+---
+- name: installing into ansible node
+  hosts:
+  - ansible
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: installing application into node ansible
+    apt:
+      pkg:
+      - build-essential 
+      - git 
+      - chrony 
+      - python3-dev
+      state: present
+- name: installing into openstack nodes
+  hosts:
+  - node0
+  - node1
+  - node2
+  - node3
+  - node4
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: installing application into openstack node
+    apt:
+      pkg:
+      - bridge-utils 
+      - debootstrap 
+      - tcpdump 
+      - vlan 
+      - python3
+      state: present
+  - name: installing extra modules
+    copy:
+      dest: /tmp/install_extra.sh
+      content: |
+        #!/bin/bash
+        sudo apt -y install linux-modules-extra-$(uname -r)
+  - name: Change mode /tmp/install_extra.sh
+    ansible.builtin.file:
+      path: /tmp/install_extra.sh
+      mode: '0700'
+  - name: run script /tmp/install_extra.sh
+    shell: | 
+      /tmp/install_extra.sh
+- name: creating partition on node4
+  hosts:
+  - node4
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: creating partition
+    copy:
+      dest: /tmp/create_part.sh
+      content: |
+        #!/bin/bash
+        #sudo fdisk -l /dev/sda
+        echo "n
+        
+
+
+        t
+        2
+        31
+        w
+        q
+        " | sudo fdisk /dev/sda
+        # sudo fdisk -l /dev/sda
+  - name: Change mode /tmp/create_part.sh
+    ansible.builtin.file:
+      path: /tmp/create_part.sh
+      mode: '0700'
+  - name: run script /tmp/create_part.sh
+    shell: | 
+      /tmp/create_part.sh
+  - name: creating volume
+    lvg:
+      vg: cinder-volumes
+      pvs: /dev/sda2
+      pesize: 2048
+- name: editing network on node0
+  hosts:
+  - node0
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: edit network on node0
+    ansible.builtin.replace:
+      path: /etc/netplan/01_net.yaml
+      regexp: "172.16.10.10\/24"
+      replace: "172.16.10.10\/24 , 172.16.10.21\/24"
+- name: reboot
+  hosts:
+  - node0
+  - node1
+  - node2
+  - node3
+  - node4
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: reboot node
+    ansible.builtin.reboot:
+

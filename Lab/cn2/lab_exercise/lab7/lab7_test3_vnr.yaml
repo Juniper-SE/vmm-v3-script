@@ -1,0 +1,18 @@
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: VirtualNetworkRouter
+metadata:
+  namespace: test3
+  name: vnr1
+  annotations:
+    core.juniper.net/display-name: vnr1
+  labels:
+    vnr: group1
+spec:
+  type: mesh
+  virtualNetworkSelector:
+    matchExpressions:
+      - key: vn
+        operator: In
+        values:
+        - group1

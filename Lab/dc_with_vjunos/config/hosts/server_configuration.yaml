@@ -1,0 +1,366 @@
+
+sudo hostname svr1
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:32:c0
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+      # addresses: [ 192.168.101.103/24, fc00:dead:beef:101::10:103/64]
+      addresses: [ 192.168.101.1/24,2001:dead:beef:101::1000:1/64]
+      #addresses: [ 192.168.101.1/24]
+      gateway4: 192.168.101.254
+      gateway6: 2001:dead:beef:101::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+
+sudo hostname svr1
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.4.1/24,2001:dead:beef:aa04::1000:1/64]
+      gateway4: 192.168.4.254
+      gateway6: 2001:dead:beef:aa04::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+
+sudo hostname svr2
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth1:
+      dhcp4: no
+      addresses: [ 192.168.4.2/24,2001:dead:beef:aa04::1000:2/64]
+      gateway4: 192.168.4.254
+      gateway6: 2001:dead:beef:aa04::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+
+sudo hostname svr7
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.4.7/24,2001:dead:beef:aa04::1000:7/64]
+      gateway4: 192.168.4.254
+      gateway6: 2001:dead:beef:aa04::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+
+sudo hostname svr8
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth1:
+      dhcp4: no
+      addresses: [ 192.168.4.8/24,2001:dead:beef:aa04::1000:8/64]
+      gateway4: 192.168.4.254
+      gateway6: 2001:dead:beef:aa04::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+sudo hostname svr8
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:26:ff
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+      addresses: [ 192.168.4.8/24,2001:dead:beef:aa04::1000:8/64]
+      gateway4: 192.168.4.254
+      gateway6: 2001:dead:beef:aa04::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+
+sudo hostname svr3
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:82:7d
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+      # addresses: [ 192.168.101.103/24, fc00:dead:beef:101::10:103/64]
+      addresses: [ 192.168.101.3/24,2001:dead:beef:101::1000:3/64]
+      #addresses: [ 192.168.101.1/24]
+      gateway4: 192.168.101.254
+      gateway6: 2001:dead:beef:101::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+sudo hostname lxc1
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.101.11/24,2001:dead:beef:101::1000:11/64]
+      gateway4: 192.168.101.254
+      gateway6: 2001:dead:beef:101::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:2a:93
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+         mode: 802.3ad
+  vlans:
+    vlan201:
+      link: bond0
+      id: 201
+    vlan202:
+      link: bond0
+      id: 202
+    vlan203:
+      link: bond0
+      id: 203
+  bridges:
+    br201:
+      dhcp4: false
+      interfaces: [ vlan201]
+    br202:
+      dhcp4: false
+      interfaces: [ vlan202]
+    br203:
+      dhcp4: false
+      interfaces: [ vlan203]
+EOF
+
+
+
+sudo hostname svr5
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.101.5/24,2001:dead:beef:101::1000:5/64]
+      gateway4: 192.168.101.254
+      gateway6: 2001:dead:beef:101::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:4d:70
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+         mode: 802.3ad
+  vlans:
+    vlan201:
+      link: bond0
+      id: 201
+    vlan202:
+      link: bond0
+      id: 202
+    vlan203:
+      link: bond0
+      id: 203
+  bridges:
+    br201:
+      dhcp4: false
+      interfaces: [ vlan201]
+    br202:
+      dhcp4: false
+      interfaces: [ vlan202]
+    br203:
+      dhcp4: false
+      interfaces: [ vlan203]
+EOF
+
+
+sudo hostname svr2
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:04:19:00:4b:08
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+        mode: 802.3ad
+      #addresses: [ 192.168.101.103/24, fc00:dead:beef:101::10:103/64]
+      addresses: [ 192.168.102.2/24,2001:dead:beef:102::1000:2/64]
+      gateway4: 192.168.102.254
+      gateway6: 2001:dead:beef:102::1
+      nameservers:
+         addresses: [ 66.129.233.81 , 66.129.233.82]
+EOF
+
+
+
+sudo hostname svr5
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth2:
+      dhcp4: no
+      addresses: [ 192.168.50.5/24,2001:dead:beef:50::1000:5/64]
+      gateway4: 192.168.50.254
+      gateway6: 2001:dead:beef:50::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:4d:70
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+  vlans:
+    vlan201:
+      link: bond0
+      id: 201
+    vlan202:
+      link: bond0
+      id: 202
+    vlan203:
+      link: bond0
+      id: 203
+  bridges:
+    br201:
+      dhcp4: false
+      interfaces: [ vlan201]
+    br202:
+      dhcp4: false
+      interfaces: [ vlan202]
+    br203:
+      dhcp4: false
+      interfaces: [ vlan203]
+EOF
+
+
+
+
+
+sudo hostname lxc2
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.101.12/24,2001:dead:beef:101::1000:12/64]
+      gateway4: 192.168.101.254
+      gateway6: 2001:dead:beef:101::12
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:6a:7c
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+         mode: 802.3ad
+EOF
+
+sudo hostname svr6
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth2:
+      dhcp4: no
+      addresses: [ 192.168.50.6/24,2001:dead:beef:50::1000:6/64]
+      gateway4: 192.168.50.254
+      gateway6: 2001:dead:beef:50::1
+      nameservers:
+        addresses: [ 66.129.233.81 , 66.129.233.82]
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:01:08:00:6c:b9
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF

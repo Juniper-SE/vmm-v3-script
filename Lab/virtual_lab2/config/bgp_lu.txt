@@ -1,0 +1,182 @@
+set protocols bgp group neigh family inet labeled-unicast resolve-vpn
+set protocols bgp group neigh export export
+set protocols bgp group neigh neighbor 10.100.1.129 peer-as 64512.1
+set protocols bgp group neigh neighbor 10.100.1.131 peer-as 64512.3
+
+set policy-options policy-statement export term 1 from route-filter 10.100.1.1/32 exact
+set policy-options policy-statement export term 1 then accept
+set policy-options policy-statement export term default then reject
+
+set routing-options autonomous-system 64512.11
+
+
+
+set protocols bgp group neigh family inet labeled-unicast resolve-vpn
+set protocols bgp group neigh export export
+set protocols bgp group neigh neighbor  10.100.1.144 peer-as 64512.2
+set protocols bgp group neigh neighbor 10.100.1.146 peer-as 64512.4
+
+set policy-options policy-statement export term 1 from route-filter 10.100.1./32 exact
+set policy-options policy-statement export term 1 then accept
+set policy-options policy-statement export term default then reject
+
+set routing-options autonomous-system 64512.12
+
+
+
+
+set protocols bgp group neigh family inet labeled-unicast resolve-vpn
+set protocols bgp group neigh export export
+set protocols bgp group neigh neighbor  10.100.1.133 peer-as 64512.1
+set protocols bgp group neigh neighbor 10.100.1.135 peer-as 64512.3
+
+set policy-options policy-statement export term 1 from route-filter 10.100.1.3/32 exact
+set policy-options policy-statement export term 1 then accept
+set policy-options policy-statement export term default then reject
+
+set routing-options autonomous-system 64512.13
+
+del protocol bgp group to_rr
+del protocol isis
+del protocol ldp
+del protocol mpls
+
+
+set protocols bgp group neigh family inet labeled-unicast
+set protocols bgp group neigh neighbor 10.100.1.128 peer-as 64512.11
+set protocols bgp group neigh neighbor 10.100.1.132 peer-as 64512.12
+set protocols bgp group neigh neighbor 10.100.1.137 peer-as 64512.3
+set protocols bgp group neigh neighbor 10.100.1.139 peer-as 64512.2
+
+
+set protocols bgp group neigh family inet labeled-unicast
+set protocols bgp group neigh neighbor 10.100.1.145 peer-as 64512.12
+set protocols bgp group neigh neighbor 10.100.1.149 peer-as 64512.14
+set protocols bgp group neigh neighbor 10.100.1.143 peer-as 64512.4
+set protocols bgp group neigh neighbor 10.100.1.138 peer-as 64512.1
+del protocol ldp
+del protocol rsvp
+del protocol mpls
+del protocol isis
+set routing-options autonomous-system 64512.2
+
+
+set protocols bgp group neigh family inet labeled-unicast
+set protocols bgp group neigh neighbor 10.100.1.130 peer-as 64512.11
+set protocols bgp group neigh neighbor 10.100.1.134 peer-as 64512.13
+set protocols bgp group neigh neighbor 10.100.1.141 peer-as 64512.4
+set protocols bgp group neigh neighbor 10.100.1.136 peer-as 64512.1
+del protocol ldp
+del protocol rsvp
+del protocol mpls
+del protocol isis
+set routing-options autonomous-system 64512.3
+
+
+
+set protocols bgp group neigh family inet labeled-unicast
+set protocols bgp group neigh neighbor 10.100.1.147 peer-as 64512.12
+set protocols bgp group neigh neighbor 10.100.1.151 peer-as 64512.14
+set protocols bgp group neigh neighbor 10.100.1.140 peer-as 64512.3
+set protocols bgp group neigh neighbor 10.100.1.142 peer-as 64512.2
+del protocol ldp
+del protocol rsvp
+del protocol mpls
+del protocol isis
+set routing-options autonomous-system 64512.4
+
+
+
+del  routing-instances cust1_eth1 protocols bgp group to_pe1 neighbor 192.168.255.8 peer-as 64512
+del  routing-instances cust1_eth1 protocols bgp group to_pe1 neighbor 2001:dead:beef:ffff::ffff:8 peer-as 64512
+del  routing-instances cust1_eth2 protocols bgp group to_pe2 neighbor 192.168.255.10 peer-as 64512
+del  routing-instances cust1_eth2 protocols bgp group to_pe2 neighbor 2001:dead:beef:ffff::ffff:10 peer-as 64512
+del  routing-instances cust1_eth3 protocols bgp group to_pe3 neighbor 192.168.255.12 peer-as 64512
+del  routing-instances cust1_eth3 protocols bgp group to_pe3 neighbor 2001:dead:beef:ffff::ffff:12 peer-as 64512
+del  routing-instances cust1_eth4 protocols bgp group to_pe4 neighbor 192.168.255.14 peer-as 64512
+del  routing-instances cust1_eth4 protocols bgp group to_pe4 neighbor 2001:dead:beef:ffff::ffff:14 peer-as 64512
+del  routing-instances vrf1 protocols bgp group to_pe1 peer-as 64512
+del  routing-instances vrf1 protocols bgp group to_pe1_v6 peer-as 64512
+del  routing-instances vrf2 protocols bgp group to_pe2 peer-as 64512
+del  routing-instances vrf2 protocols bgp group to_pe2_v6 peer-as 64512
+del  routing-instances vrf3 protocols bgp group to_pe3 peer-as 64512
+del  routing-instances vrf3 protocols bgp group to_pe3_v6 peer-as 64512
+del  routing-instances vrf4 protocols bgp group to_pe4 peer-as 64512
+del  routing-instances vrf4 protocols bgp group to_pe4_v6 peer-as 64512
+
+
+
+
+set routing-instances cust1_eth1 protocols bgp group to_pe1 neighbor 192.168.255.8 peer-as 64512.11
+set routing-instances cust1_eth1 protocols bgp group to_pe1 neighbor 2001:dead:beef:ffff::ffff:8 peer-as 64512.11
+set routing-instances cust1_eth2 protocols bgp group to_pe2 neighbor 192.168.255.10 peer-as 64512.12
+set routing-instances cust1_eth2 protocols bgp group to_pe2 neighbor 2001:dead:beef:ffff::ffff:10 peer-as 64512.12
+set routing-instances cust1_eth3 protocols bgp group to_pe3 neighbor 192.168.255.12 peer-as 64512.13
+set routing-instances cust1_eth3 protocols bgp group to_pe3 neighbor 2001:dead:beef:ffff::ffff:12 peer-as 64512.13
+set routing-instances cust1_eth4 protocols bgp group to_pe4 neighbor 192.168.255.14 peer-as 64512.14
+set routing-instances cust1_eth4 protocols bgp group to_pe4 neighbor 2001:dead:beef:ffff::ffff:14 peer-as 64512.14
+set routing-instances vrf1 protocols bgp group to_pe1 peer-as 64512.11
+set routing-instances vrf1 protocols bgp group to_pe1_v6 peer-as 64512.11
+set routing-instances vrf2 protocols bgp group to_pe2 peer-as 64512.12
+set routing-instances vrf2 protocols bgp group to_pe2_v6 peer-as 64512.12
+set routing-instances vrf3 protocols bgp group to_pe3 peer-as 64512.13
+set routing-instances vrf3 protocols bgp group to_pe3_v6 peer-as 64512.13
+set routing-instances vrf4 protocols bgp group to_pe4 peer-as 64512.14
+set routing-instances vrf4 protocols bgp group to_pe4_v6 peer-as 64512.14
+
+
+
+set protocols bgp group vpn multihop ttl 255
+set protocols bgp group vpn local-address 10.100.1.1
+set protocols bgp group vpn family inet-vpn any
+set protocols bgp group vpn family inet6-vpn any
+set protocols bgp group vpn neighbor 10.100.1.2 peer-as 64512.12
+set protocols bgp group vpn neighbor 10.100.1.3 peer-as 64512.13
+
+set protocols bgp group vpn multihop ttl 255
+set protocols bgp group vpn local-address 10.100.1.2
+set protocols bgp group vpn family inet-vpn any
+set protocols bgp group vpn family inet6-vpn any
+set protocols bgp group vpn neighbor 10.100.1.1 peer-as 64512.11
+set protocols bgp group vpn neighbor 10.100.1.3 peer-as 64512.13
+
+
+
+set protocols bgp group vpn multihop ttl 255
+set protocols bgp group vpn local-address 10.100.1.3
+set protocols bgp group vpn family inet-vpn any
+set protocols bgp group vpn family inet6-vpn any
+set protocols bgp group vpn neighbor 10.100.1.1 peer-as 64512.11
+set protocols bgp group vpn neighbor 10.100.1.2 peer-as 64512.12
+
+
+
+set protocols bgp group overlay neighbor 10.100.1.2 local-address 10.100.1.1
+set protocols bgp group overlay neighbor 10.100.1.2 family inet any
+set protocols bgp group overlay neighbor 10.100.1.2 family inet6 labeled-unicast explicit-null
+set protocols bgp group overlay neighbor 10.100.1.2 export allow1
+set protocols bgp group overlay neighbor 10.100.1.2 peer-as 64512.12
+set protocols bgp group overlay neighbor 10.100.1.2  multihop ttl 255
+
+set policy-options policy-statement allow1 term 1 from community ce_pref
+set policy-options policy-statement allow1 term 1 then accept
+set policy-options policy-statement allow1 term default then reject
+set policy-options policy-statement from_ce then community add ce_pref
+set policy-options policy-statement from_ce then accept
+
+set policy-options community ce_pref members 64512:10001
+
+
+set protocols bgp group overlay neighbor 10.100.1.1 local-address 10.100.1.2
+set protocols bgp group overlay neighbor 10.100.1.1 family inet any
+set protocols bgp group overlay neighbor 10.100.1.1 family inet6 labeled-unicast explicit-null
+set protocols bgp group overlay neighbor 10.100.1.1 export allow1
+set protocols bgp group overlay neighbor 10.100.1.1 peer-as 64512.11
+
+set policy-options policy-statement allow1 term 1 from community ce_pref
+set policy-options policy-statement allow1 term 1 then accept
+set policy-options policy-statement allow1 term default then reject
+set policy-options policy-statement from_ce then community add ce_pref
+set policy-options policy-statement from_ce then accept
+
+set policy-options community ce_pref members 64512:10001

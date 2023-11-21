@@ -1,0 +1,33 @@
+cat << EOF | sudo tee /etc/dhcp/dhcpd.conf
+default-lease-time 600;
+max-lease-time 7200;
+ddns-update-style none;
+
+subnet 192.168.160.0 netmask 255.255.255.0 {
+}
+
+subnet 192.168.161.0 netmask 255.255.255.0 {
+        range 192.168.161.11 192.168.161.100;
+        option routers 192.168.161.254;
+        option domain-name-servers 8.8.8.8, 8.8.4.4;
+}
+subnet 192.168.162.0 netmask 255.255.255.0 {
+        range 192.168.162.11 192.168.162.100;
+        option routers 192.168.162.254;
+        option domain-name-servers 8.8.8.8, 8.8.4.4;
+}
+EOF
+
+cat << EOF | sudo tee /etc/dhcp/dhcpd6.conf
+default-lease-time 600;
+max-lease-time 7200;
+ddns-update-style none;
+subnet6 fc00:dead:beef:a160::/64 {
+}
+subnet6 fc00:dead:beef:a161::/64 {
+        range6 fc00:dead:beef:a161::1000:10ff fc00:dead:beef:a161::1000:ffff;
+}
+subnet6 fc00:dead:beef:a162::/64 {
+        range6 fc00:dead:beef:a162::1000:10ff fc00:dead:beef:a162::1000:ffff;
+}
+EOF

@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test2
+  annotations:
+    net.juniper.contrail.podnetwork: test2/vn2
+#  labels:
+#    core.juniper.net/isolated-namespace: "true"
+---
+apiVersion: k8s.cni.cncf.io/v1 
+kind: NetworkAttachmentDefinition 
+metadata:
+  name: vn2
+  namespace: test2
+  annotations:
+    juniper.net/networks: |
+      {
+        "ipamV4Subnet": "192.168.12.0/24",
+        "fabricSNAT": false,
+        "podNetwork": true,
+        "importRouteTargetList" : ["target:64512:10000"], 
+        "exportRouteTargetList" : ["target:64512:10001"]
+      }
+spec:
+  config: '{
+    "cniVersion": "0.3.1", 
+    "type": "contrail-k8s-cni"
+  }'
+# ---
+# apiVersion: core.contrail.juniper.net/v2
+# kind: Subnet
+# metadata:
+#   namespace: test2
+#   name: vn1-sn
+# spec:
+#   cidr: 192.168.10.0/24
+# ---
+# apiVersion: core.contrail.juniper.net/v2
+# kind: VirtualNetwork
+# metadata:
+#   namespace: test1
+#   name: vn1
+# spec:
+#   podNetwork: true
+#   fabricSNAT: true
+#   v4SubnetReference:
+#     apiVersion: core.contrail.juniper.net/v2
+#     kind: Subnet
+#     namespace: test1
+#     name: vn1-sn

@@ -1,0 +1,43 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver
+  namespace: lab4
+spec:
+  selector:
+    app: webserver
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+  namespace: lab4
+  labels:
+    app: webserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver]}
+  template:
+    metadata:
+      name: webserver
+      labels:
+        app: webserver
+    spec:
+      containers: 
+      - name: webserver
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: Always
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

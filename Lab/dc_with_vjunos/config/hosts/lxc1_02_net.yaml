@@ -1,0 +1,123 @@
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.100.1/24, fc00:dead:beef:1100::1000:1/64]
+      nameservers:
+        addresses: [10.49.32.95, 10.49.32.97]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.100.254
+        metric: 1
+      - to: ::/0
+        via: fc00:dead:beef:1100::1
+        metric: 1 
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:04:20:00:67:56
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+        mode: 802.3ad
+  bridges:
+    ovs0:
+      interfaces: 
+      - bond0
+      mtu: 9000
+      openvswitch: {}
+EOF
+
+sudo hostname lxc1
+hostname | sudo tee /etc/hostname
+
+
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ 192.168.100.2/24, fc00:dead:beef:1100::1000:2/64]
+      nameservers:
+        addresses: [10.49.32.95, 10.49.32.97]
+      routes:
+      - to: 172.16.12.0/24
+        via: 192.168.100.254
+        metric: 1
+      - to: 2001:dead:beef:1012::/64
+        via: fc00:dead:beef:1100::1
+        metric: 1
+    eth1:
+      dhcp4: no
+      addresses: [ 192.168.255.0/31, fc00:dead:beef:FFFF::0/127]
+    eth2:
+      dhcp4: no
+      addresses: [ 192.168.255.2/31, fc00:dead:beef:FFFF::2/127]
+EOF
+sudo hostname lxc2
+hostname | sudo tee /etc/hostname
+
+
+router bgp 65302
+ neighbor 192.168.255.1 remote-as 65103
+ neighbor 192.168.255.3 remote-as 65104
+ neighbor fc00:dead:beef:ffff::1 remote-as 65103
+ neighbor fc00:dead:beef:ffff::3 remote-as 65104
+ !
+ address-family ipv4 unicast
+  redistribute connected
+  neighbor 192.168.255.1 route-map import in
+  neighbor 192.168.255.1 route-map export out
+  neighbor 192.168.255.3 route-map import in
+  neighbor 192.168.255.3 route-map export out
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  redistribute connected
+  neighbor fc00:dead:beef:ffff::1 activate
+  neighbor fc00:dead:beef:ffff::1 route-map import in
+  neighbor fc00:dead:beef:ffff::1 route-map export out
+  neighbor fc00:dead:beef:ffff::3 activate
+  neighbor fc00:dead:beef:ffff::3 route-map import in
+  neighbor fc00:dead:beef:ffff::3 route-map export out
+ exit-address-family
+exit
+!
+route-map export permit 1
+ match interface lan100
+exit
+!
+route-map export deny 100
+exit
+!
+route-map import permit 1
+exit
+!
+end
+
+
+## CRPD
+
+set policy-options route-filter-list local 172.16.100.0/2 orlonger
+set policy-options policy-statement export term 1 from route-filter 172.16.100.0/24 orlonger
+set policy-options policy-statement export term 1 then accept
+set policy-options policy-statement export term 2 from route-filter fc00:dead:beef:f100::/64 orlonger
+set policy-options policy-statement export term 2 then accept
+set policy-options policy-statement export term default then reject
+set policy-options policy-statement lb then load-balance per-packet
+set routing-options autonomous-system 65302
+set routing-options forwarding-table export lb
+set protocols bgp group to_leaf3 export export
+set protocols bgp group to_leaf3 neighbor 192.168.255.1 peer-as 65103
+set protocols bgp group to_leaf3 neighbor fc00:dead:beef:ffff::1 family inet6 any
+set protocols bgp group to_leaf3 neighbor fc00:dead:beef:ffff::1 peer-as 65103
+set protocols bgp group to_leaf4 export export
+set protocols bgp group to_leaf4 neighbor 192.168.255.3 peer-as 65104
+set protocols bgp group to_leaf4 neighbor fc00:dead:beef:ffff::3 family inet6 any
+set protocols bgp group to_leaf4 neighbor fc00:dead:beef:ffff::3 peer-as 65104
+set protocols bgp multipath multiple-as

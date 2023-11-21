@@ -1,0 +1,34 @@
+set interfaces ge-0/0/0 unit 0 family inet6
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 unit 0 family inet address 172.16.13.8/31
+set interfaces ge-0/0/1 unit 0 family inet6 address fd00:dead:beef:ffff::13:8/127
+set interfaces ge-0/0/2 mtu 9000
+set interfaces ge-0/0/2 unit 0 family inet address 172.16.13.10/31
+set interfaces ge-0/0/2 unit 0 family inet6 address fd00:dead:beef:ffff::13:10/127
+set policy-options policy-statement in_dc1 then community add dc1
+set policy-options policy-statement out_dc1 term 1 from community dc1
+set policy-options policy-statement out_dc1 term 1 then reject
+set policy-options policy-statement out_dc1 term 2 from protocol direct
+set policy-options policy-statement out_dc1 term 2 then reject
+set policy-options policy-statement out_dc1 term default then accept
+set policy-options policy-statement to_int term 1 then next-hop self
+set policy-options policy-statement to_int term 1 then accept
+set policy-options community dc1 members 64512:10001
+set routing-options autonomous-system 64512
+set protocols bgp group to_dc1 import in_dc1
+set protocols bgp group to_dc1 export out_dc1
+set protocols bgp group to_dc1 neighbor 172.16.13.9 peer-as 65105
+set protocols bgp group to_dc1 neighbor 172.16.13.11 peer-as 65106
+set protocols bgp group to_dc1v6 import in_dc1
+set protocols bgp group to_dc1v6 family inet6 any
+set protocols bgp group to_dc1v6 export out_dc1
+set protocols bgp group to_dc1v6 neighbor fd00:dead:beef:ffff::13:9 peer-as 65105
+set protocols bgp group to_dc1v6 neighbor fd00:dead:beef:ffff::13:11 peer-as 65106
+set protocols bgp group to_pe2 type internal
+set protocols bgp group to_pe2 local-address 10.100.255.1
+set protocols bgp group to_pe2 family inet any
+set protocols bgp group to_pe2 family inet6 any
+set protocols bgp group to_pe2 export to_int
+set protocols bgp group to_pe2 neighbor 10.100.255.2
+set protocols mpls explicit-null
+set protocols mpls ipv6-tunneling

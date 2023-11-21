@@ -1,0 +1,62 @@
+# Ansible inventory file in YAML format
+# Use it to specify your Kubernetes hosts and access mechanism
+# See https://docs.ansible.com/ansible/2.10/user_guide/intro_inventory.html
+# The run script 'inv' option can be used to interactively edit this file
+
+all:
+  children:
+    cluster:
+      children:
+        master:
+          hosts:
+            172.16.11.100: {}
+        node:
+          hosts:
+            172.16.11.101: {}
+            172.16.11.102: {}
+            172.16.11.103: {}
+    local_storage_nodes:
+      children:
+        master:
+          hosts:
+            172.16.11.100: {}
+        node:
+          hosts:
+            172.16.11.101: {}
+            172.16.11.102: {}
+            172.16.11.103: {}
+    registry:
+      hosts:
+        172.16.11.95: {}
+    ungrouped: {}
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: config/id_rsa
+    ansible_password: pass01
+    ansible_become_password: pass01
+    kubernetes_cluster_name: pa1
+
+# If used, the following should be added to the vars object
+#
+# user name to connect to managed nodes using SSH
+# ansible_user: root
+#
+# SSH authentication options:
+# 1. use ssh-agent and `ssh-add` an authorized key (no configuration necessary)
+# 2. copy authorized ssh key to this directory and configure
+#    ansible_ssh_private_key_file
+# or
+# 3. configure ansible_password
+#
+# Passwords can be encrypted using ansible-vault:
+# `run -c <config-dir> ansible-vault encrypt_string`, use
+# `run -c <config-dir> deploy --ask-vault-password` to use encrypted passwords
+#
+# ansible_ssh_private_key_file: "{{ inventory_dir }}/id_rsa"
+# ansible_password: 
+#
+# If ansible_user is not root specify `sudo` password, if required
+# ansible_become_password: 
+#
+# name of kubernetes cluster
+# kubernetes_cluster_name: 

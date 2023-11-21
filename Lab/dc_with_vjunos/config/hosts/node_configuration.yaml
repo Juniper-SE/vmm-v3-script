@@ -1,0 +1,428 @@
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+    ethernets:
+        eth2:
+            dhcp4: true
+            addresses:
+              - 172.16.15.102/24
+            routes:
+              - to: 0.0.0.0/0
+                via: 172.16.15.1
+                metric: 1
+            nameservers:
+              addresses:
+                - 8.8.8.8
+                - 8.8.4.4
+    version: 2
+EOF
+
+sudo netplan apply
+scp ubuntu@172.16.15.1:~/* .
+
+
+
+
+
+sudo hostname svr8
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:c1:ba
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+      addresses: [ 192.168.151.8/24, fc00:dead:beef:a151::1000:8/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.151.254
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+EOF
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+
+sudo hostname kvm7
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.151.17/24, fc00:dead:beef:a151::1000:17/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.151.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:93:8e
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+sudo hostname kvm8
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.151.18/24, fc00:dead:beef:a151::1000:18/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.151.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:e3:b1
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+sudo hostname kvm5
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.131.15/24, fc00:dead:beef:a131::1000:15/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.131.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:50:f6
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+sudo hostname kvm1
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.111.11/24, fc00:dead:beef:a111::1000:11/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.111.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:e3:3e
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+
+sudo hostname svr1
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:75:1a
+      mtu: 9000
+      addresses: [ 192.168.111.1/24, fc00:dead:beef:a111::1000:1/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.111.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+
+sudo hostname kvm2
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.111.12/24, fc00:dead:beef:a111::1000:12/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.111.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:c1:ba
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+sudo hostname kvm3
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.111.13/24, fc00:dead:beef:a111::1000:13/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.111.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:31:95
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+sudo hostname kvm4
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.111.14/24, fc00:dead:beef:a111::1000:14/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.111.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:2c:81
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+sudo hostname kvm6
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.131.16/24, fc00:dead:beef:a131::1000:16/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.131.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:d4:fe
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+
+sudo hostname kvm9
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+    eth2:
+      dhcp4: no
+  bridges:
+    ovs1:
+      mtu: 9000
+      addresses: [ 192.168.151.19/24, fc00:dead:beef:a151::1000:19/64]
+      routes:
+      - to: 0.0.0.0/0
+        via: 192.168.151.254
+        metric: 1
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: 56:04:17:00:c7:7f
+      mtu: 9000
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+

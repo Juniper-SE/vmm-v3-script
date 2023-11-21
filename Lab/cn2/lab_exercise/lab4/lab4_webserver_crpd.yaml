@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nvf1
+  namespace: lab4
+  labels:
+    app: service-instances
+  annotations:
+    k8s.v1.cni.cncf.io/networks: blue, red
+    core.juniper.networks/bgpaas-networks: blue, red
+spec:
+  containers: 
+    - name: crpd1
+      image: 172.16.14.10:5000/crpd:22.1R1.10
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+  nodeName: node2
+

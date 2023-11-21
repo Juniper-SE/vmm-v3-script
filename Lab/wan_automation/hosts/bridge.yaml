@@ -1,0 +1,36 @@
+network:
+  ethernets:
+    eth1:
+       dhcp4: no
+       mtu : 9000
+    eth2:
+       dhcp4: no
+       mtu : 9000
+    eth3:
+       dhcp4: no
+       mtu : 9000
+    eth4:
+       dhcp4: no
+       mtu : 9000
+    eth5:
+       dhcp4: no
+       mtu : 9000
+    eth6:
+       dhcp4: no
+       mtu : 9000
+  bridges:
+    wan1:
+       dhcp4: no
+       interfaces: 
+         - eth1 
+         - eth2
+    wan2:
+       dhcp4: no
+       interfaces: 
+         - eth3 
+         - eth4
+    wan3:
+       dhcp4: no
+       interfaces: 
+         - eth5 
+         - eth6

@@ -1,0 +1,13 @@
+#pod-webserver-do-label.yaml
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: contrail-webserver
+  labels: 
+    app: webserver
+spec:
+  containers:
+  - name: contrail-webserver 
+    image: contrailk8sdayone/contrail-webserver
+  nodeSelector:
+    stage: production

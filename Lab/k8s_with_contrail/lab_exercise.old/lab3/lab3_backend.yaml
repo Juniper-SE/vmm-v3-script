@@ -1,0 +1,156 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-1
+spec:
+  ports:
+  - port: 8888
+    targetPort: 80
+  selector:
+    app: webserver1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-2
+spec:
+  ports:
+  - port: 8888
+    targetPort: 80
+  selector:
+    app: webserver2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-3
+spec:
+  ports:
+  - port: 8888
+    targetPort: 80
+  selector:
+    app: webserver3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-4
+spec:
+  ports:
+  - port: 8888
+    targetPort: 80
+  selector:
+    app: webserver4
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver1
+  labels:
+    app: webserver1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webserver1
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver1]}
+  template:
+    metadata:
+      name: webserver1
+      labels:
+        app: webserver1
+    spec:
+      containers: 
+      - name: webserver1
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver2
+  labels:
+    app: webserver2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webserver2
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver2]}
+  template:
+    metadata:
+      name: webserver2
+      labels:
+        app: webserver2
+    spec:
+      containers: 
+      - name: webserver2
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver3
+  labels:
+    app: webserver3
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webserver3
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver3]}
+  template:
+    metadata:
+      name: webserver3
+      labels:
+        app: webserver3
+    spec:
+      containers: 
+      - name: webserver3
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver4
+  labels:
+    app: webserver4
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webserver4
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver4]}
+  template:
+    metadata:
+      name: webserver4
+      labels:
+        app: webserver4
+    spec:
+      containers: 
+      - name: webserver4
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80

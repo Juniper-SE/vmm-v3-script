@@ -1,0 +1,169 @@
+---
+name: vl4
+pod: 
+  type: vmm
+  # if your account can access vmm lab directly, then you can comment out jumpserver
+  #jumpserver: ttsv-shell110.juniper.net
+  jumpserver: ttqc-shell003.juniper.net
+  #vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  user: irzan
+  adpassword: AnaMabokCoys
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  ubuntu2: images/ubuntu22.04-with-kvm.qcow2
+  debian: images/debian.qcow2
+  desktop: images/desktop.qcow2
+  centos: images/centos.qcow2
+  bridge: images/alpine.qcow2
+  #vmx_re: images/vmx/junos-vmx-x86-64-22.4R1.10.vmdk
+  vmx_re: images/vmx/junos-vmx-x86-64-23.1R1.8.vmdk
+  #vqfx_re: images/vqfx/jinstall-vqfx-10-f-20.2R1.10.vmdk
+  #vqfx_re: images/vqfx/jinstall-vqfx-10-f-21.3I.vmdk
+  # vqfx_re: images/vqfx/jinstall-vqfx-10-f-18.4R2-S2.3.vmdk
+  #vqfx_cosim: images/vqfx/vqfx-20.2R1-2019010209-pfe-qemu.vmdk
+  #vsrx: images/vsrx/junos-vsrx3-x86-64-22.4R1.10.vmdk
+  vsrx: images/vsrx/junos-vsrx3-x86-64-23.1R1.8.vmdk
+  # aos: images/aos_server_4.1.1-287.qcow2
+  # aos_ztp: images/apstra-ztp-4.1.1-8.qcow2
+  aos: images/aos_server_4.1.2-269.qcow2
+  aos_ztp: images/apstra-ztp-4.1.2-8.qcow2
+  vjunos_ex: images/vjunos-switch-23.1R1.8.qcow2
+  #vjunos_ex: images/vJunos-ex-21.2R3-S1.7.qcow2
+  #veos: images/veos/vEOS64-lab-4.28.1F.qcow2
+  #veos_cdrom: images/veos/Aboot-veos-8.0.1.iso
+junos_login:
+  login: admin
+  password: admin
+fabric:
+  subnet: 10.100.2.0/24
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+  - [ 0x0,svr1,em1, svr2, em1 ]
+  - [ 0x0,svr3,em1, svr4, em1 ]
+  - [ 0x0,svr5,em1, desktop1, em1 ]
+
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.1/24
+          inet6: fc00:dead:beef:10::1/64
+        dhcp_range: 172.16.10.10-172.16.10.99
+  svr1:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.11/24
+          inet6: fc00:dead:beef:10::1000:1/64
+          gateway4: 172.16.10.1
+          gateway6: fc00:dead:beef:10::1
+  svr2:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.12/24
+          inet6: fc00:dead:beef:10::1000:2/64
+          gateway4: 172.16.10.1
+          gateway6: fc00:dead:beef:10::1
+  svr3:
+    type: pchpv2
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.13/24
+          inet6: fc00:dead:beef:10::1000:3/64
+          gateway4: 172.16.10.1
+          gateway6: fc00:dead:beef:10::1
+  svr4:
+    type: pcsmall
+    os: debian
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.14/24
+          inet6: fc00:dead:beef:10::1000:4/64
+          gateway4: 172.16.10.1
+          gateway6: fc00:dead:beef:10::1
+  svr5:
+    type: pcsmall
+    os: centos
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.15/24
+          inet6: fc00:dead:beef:10::1000:5/64
+          gateway4: 172.16.10.1
+          gateway6: fc00:dead:beef:10::1
+  desktop1:
+    type: pcmedium
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.25/24
+          inet6: fc00:dead:beef:10::1000:25/64
+          gateway4: 172.16.10.1
+          gateway6: fc00:dead:beef:10::1
+  br1:
+    type: bridge
+    os: bridge
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.10.26/24
+          inet6: fc00:dead:beef:10::1000:25/64
+          gateway4: 172.16.10.1
+          gateway6: fc00:dead:beef:10::1
+      em1:
+        node: [ svr1, em1, br0]
+      em2:
+        node: [ svr2, em1, br0]
+      em3:
+        node: [ svr3, em1, br0]
+      em4:
+        node: [ svr4, em1, br0]
+      em5:
+        node: [ svr5, em1, br0]
+      em6:
+        node: [ desktop1, em1, br0]

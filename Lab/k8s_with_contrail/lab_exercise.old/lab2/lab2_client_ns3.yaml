@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client8
+  namespace: ns3
+spec:
+  containers:
+  - name: alpine
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+  nodeName: node3
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client9
+  namespace: ns3
+spec:
+  containers:
+  - name: alpine
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+  nodeName: node1
+  
+  
+

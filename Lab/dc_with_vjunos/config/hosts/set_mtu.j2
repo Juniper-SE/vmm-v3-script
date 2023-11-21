@@ -1,0 +1,27 @@
+{% for interface_name, iface in interface.iteritems() %}
+{% if loop.first %}
+interfaces {
+{% endif %}
+{% if 'to_pe' in iface['tags'] %}
+    {{iface['intfName']}} {
+        mtu 2500;
+    }
+{% endif %}
+{% if loop.last %}
+}
+{% endif %}
+{% endfor %}
+
+
+
+{% for interface_name, iface in interface.iteritems() %}
+interfaces {
+{% if 'to_pe' in iface['tags'] %}
+    {{iface['intfName']}} {
+        mtu 2500;
+    }
+{% endif %}
+
+}
+{% endif %}
+{% endfor %}

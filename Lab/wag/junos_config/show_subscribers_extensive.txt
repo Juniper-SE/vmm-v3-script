@@ -1,0 +1,150 @@
+Type: VLAN
+Logical System: default
+Routing Instance: default
+Interface: ge-0/0/1.3221225565
+Interface type: Dynamic
+Underlying Interface: ge-0/0/1
+Dynamic Profile Name: svlanprof
+State: Active
+Session ID: 126
+PFE Flow ID: 134
+VLAN Id: 101
+Login Time: 2022-01-18 12:27:05 UTC
+
+Type: DHCP
+User Name: 5604.1900.6f55
+IP Address: 192.168.101.101
+IP Netmask: 255.255.255.0
+Domain name server inet: 66.129.233.81 66.129.233.82 
+IPv6 Address: fc00:dead:beef:2::2000:21
+Logical System: default
+Routing Instance: default
+Interface: demux0.3221225566
+Interface type: Dynamic
+Underlying Interface: ge-0/0/1.3221225565
+Dynamic Profile Name: dhcp
+MAC Address: 56:04:19:00:6f:55
+State: Active
+Radius Accounting ID: 127
+Session ID: 127
+PFE Flow ID: 136
+VLAN Id: 101
+Login Time: 2022-01-18 12:27:06 UTC
+Service Sessions: 1
+DHCP Options: len 50
+35 01 01 3d 07 01 56 04 19 00 6f 55 37 11 01 02 06 0c 0f 1a
+1c 79 03 21 28 29 2a 77 f9 fc 11 39 02 02 40 32 04 c0 a8 65
+65 0c 07 64 65 73 6b 74 6f 70
+DHCPV6 Options: len 73
+00 0e 00 00 00 03 00 0c 2b 50 67 35 00 00 00 00 00 00 00 00
+00 27 00 09 01 07 64 65 73 6b 74 6f 70 00 06 00 08 00 17 00
+18 00 38 00 1f 00 01 00 12 00 04 3d d1 cc 9c 6e 13 fd 2e 2f
+3c ef bf a2 d0 52 95 00 08 00 02 00 00
+DHCP Header: len 44
+01 01 06 00 d8 db ac 9b 00 01 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 56 04 19 00 6f 55 00 00 00 00 00 00
+00 00 00 00
+DHCPV6 Header: len 4
+01 65 2b 12
+IP Address Pool: local1
+IPv6 Address Pool: pool6
+Accounting interval: 600
+
+   Service Session ID: 128
+   Service Session Name: redirDynamic
+   State: Active
+   Family: inet, inet6
+   Service session type: Service-Profile
+   IPv4 Input Filter Name: filter1v4-demux0.3221225566-in
+   IPv6 Input Filter Name: filter1v6-demux0.3221225566-in
+   IPv4 Input Service Set: ss1
+   IPv4 Output Service Set: ss1
+   Service Activation time: 2022-01-18 12:27:09 UTC
+   Dynamic configuration: 
+     url: http://172.16.12.11:8080/portal65ff
+
+Type: DHCP
+User Name: 5604.1900.61db
+IP Address: 192.168.101.103
+IP Netmask: 255.255.255.0
+Domain name server inet: 66.129.233.81 66.129.233.82 
+IPv6 Address: fc00:dead:beef:2::2000:22
+Logical System: default
+Routing Instance: default
+Interface: demux0.3221225567
+Interface type: Dynamic
+Underlying Interface: ge-0/0/1.3221225565
+Dynamic Profile Name: dhcp
+MAC Address: 56:04:19:00:61:db
+State: Active
+Radius Accounting ID: 129
+Session ID: 129
+PFE Flow ID: 137
+VLAN Id: 101
+Login Time: 2022-01-18 12:27:48 UTC
+Service Sessions: 1
+DHCP Options: len 50
+35 01 01 3d 07 01 56 04 19 00 61 db 37 11 01 02 06 0c 0f 1a
+1c 79 03 21 28 29 2a 77 f9 fc 11 39 02 02 40 32 04 c0 a8 65
+67 0c 07 64 65 73 6b 74 6f 70
+DHCP Header: len 44
+01 01 06 00 a9 58 b6 59 00 01 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 56 04 19 00 61 db 00 00 00 00 00 00
+00 00 00 00
+IP Address Pool: local1
+IPv6 Address Pool: pool6
+Accounting interval: 600
+
+   Service Session ID: 130
+   Service Session Name: redirDynamic
+   State: Active
+   Family: inet
+   Service session type: Service-Profile
+   IPv4 Input Filter Name: filter1v4-demux0.3221225567-in
+   IPv4 Input Service Set: ss1
+   IPv4 Output Service Set: ss1
+   Service Activation time: 2022-01-18 12:27:48 UTC
+   Dynamic configuration: 
+     url: http://172.16.12.11:8080/portal61db
+
+Type: DHCP
+User Name: 5604.1900.6f16
+IP Address: 192.168.101.102
+IP Netmask: 255.255.255.0
+Domain name server inet: 66.129.233.81 66.129.233.82 
+IPv6 Address: fc00:dead:beef:2::2000:23
+Logical System: default
+Routing Instance: default
+Interface: demux0.3221225568
+Interface type: Dynamic
+Underlying Interface: ge-0/0/1.3221225565
+Dynamic Profile Name: dhcp
+MAC Address: 56:04:19:00:6f:16
+State: Active
+Radius Accounting ID: 131
+Session ID: 131
+PFE Flow ID: 138
+VLAN Id: 101
+Login Time: 2022-01-18 12:28:04 UTC
+Service Sessions: 1
+DHCP Options: len 50
+35 01 01 3d 07 01 56 04 19 00 6f 16 37 11 01 02 06 0c 0f 1a
+1c 79 03 21 28 29 2a 77 f9 fc 11 39 02 02 40 32 04 c0 a8 65
+66 0c 07 64 65 73 6b 74 6f 70
+DHCP Header: len 44
+01 01 06 00 48 ed b5 59 00 01 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 56 04 19 00 6f 16 00 00 00 00 00 00
+00 00 00 00
+IP Address Pool: local1
+IPv6 Address Pool: pool6
+Accounting interval: 600
+
+   Service Session ID: 132
+   Service Session Name: redirStatic
+   State: Active
+   Family: inet
+   Service session type: Service-Profile
+   IPv4 Input Filter Name: filter1v4-demux0.3221225568-in
+   IPv4 Input Service Set: ss1
+   IPv4 Output Service Set: ss1
+   Service Activation time: 2022-01-18 12:28:04 UTC

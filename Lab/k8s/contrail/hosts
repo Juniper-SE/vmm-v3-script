@@ -1,0 +1,8 @@
+127.0.0.1       localhost.localdomain localhost
+::1             localhost6.localdomain6 localhost6
+172.16.11.10 master master.vmmlab.com
+172.16.11.11 node1 node1.vmmlab.com
+172.16.11.12 node2 node2.vmmlab.com
+172.16.11.13 node3 node3.vmmlab.com
+172.16.11.14 node4 node4.vmmlab.com
+172.16.11.20 cc cc.vmmlab.com

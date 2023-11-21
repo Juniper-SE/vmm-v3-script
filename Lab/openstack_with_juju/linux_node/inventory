@@ -1,0 +1,10 @@
+[all]
+node0
+node1
+node2
+node3
+node4
+cc
+juju
+[all:vars]
+ansible_python_interpreter=python3

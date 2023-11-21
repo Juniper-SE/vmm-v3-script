@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: webserver
+  labels:
+    app: webserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver]}
+  template:
+    metadata:
+      name: webserver
+      labels:
+        app: webserver
+        type: rs
+    spec:
+      containers:
+        - name: webserver
+          image: contrailk8sdayone/contrail-webserver 
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 80

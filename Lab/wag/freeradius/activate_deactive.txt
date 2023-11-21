@@ -1,0 +1,29 @@
+cat << EOF | tee deactive.txt
+User-Name="5604.2000.29de"
+Acct-Session-Id=17
+ERX-Service-Deactivate="redirDynamic" 
+EOF
+
+radclient -f deactivate.txt -x 172.16.12.2 coa jnpr123
+
+cat << EOF | tee active.txt
+User-Name="5604.2000.29de"
+Acct-Session-Id=17
+ERX-Service-Activate:1="redirDynamic" 
+EOF
+
+radclient -f client.txt -x 172.16.12.2 coa jnpr123
+
+
+vmm serial -t client3
+expect login:
+send ubuntu
+expect Password:
+send pass01
+expect $
+send "sudo hostname client3"
+expect $
+send "hostname client | sudo tee /etc/hostname"
+expect $
+send "exit"
+expect login:

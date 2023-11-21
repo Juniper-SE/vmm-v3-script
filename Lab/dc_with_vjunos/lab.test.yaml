@@ -1,0 +1,98 @@
+---
+name: dc1
+pod: 
+  type: vmm
+  # if your account can access vmm lab directly, then you can comment out jumpserver
+  #jumpserver: ttsv-shell110.juniper.net
+  #jumpserver: ttqc-shell010.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  user: irzan
+  adpassword: AnaMabokCoys
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-22.1R1.10.vmdk
+  #vqfx_re: images/vqfx/jinstall-vqfx-10-f-20.2R1.10.vmdk
+  vqfx_re: images/vqfx/jinstall-vqfx-10-f-21.3I.vmdk
+  # vqfx_re: images/vqfx/jinstall-vqfx-10-f-18.4R2-S2.3.vmdk
+  vqfx_cosim: images/vqfx/vqfx-20.2R1-2019010209-pfe-qemu.vmdk
+  vsrx: images/vsrx/junos-vsrx3-x86-64-22.1R1.10.vmdk
+  aos: images/aos_server_4.1.0-115.qcow2
+  vex: images/vex/vJunos-ex-21.2R3-S1.7.qcow2
+junos_login:
+  login: admin
+  password: admin
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        ipv4: 172.16.11.1/24
+        dhcp_range: 172.16.11.200-172.16.11.250
+      em2: 
+        bridge: lan2
+        ipv4: 172.16.12.0/31
+  sw1:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.11.101/24 
+      ge-0/0/0: 
+        bridge: sw1p0
+      ge-0/0/1: 
+        bridge: sw1p1
+      ge-0/0/2: 
+        bridge: isl1
+      ge-0/0/3: 
+        bridge: isl2
+  sw2:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        ipv4: 172.16.11.102/24
+      ge-0/0/0: 
+        bridge: sw2p0
+      ge-0/0/1: 
+        bridge: sw2p1
+      ge-0/0/2: 
+        bridge: isl1
+      ge-0/0/3: 
+        bridge: isl2
+  svr1:
+    type: pctiny
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        ipv4: 172.16.11.201/24 
+      em1: 
+        bridge: sw1p0
+      em2:
+        bridge: sw1p1
+  svr2:
+    type: pctiny
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        ipv4: 172.16.11.202/24 
+      em1: 
+        bridge: sw2p0
+      em2:
+        bridge: sw2p1
+
+  

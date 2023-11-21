@@ -1,0 +1,2 @@
+#curl -X POST -H "Content-Type: application/json; charset=UTF-8" -d '{"operation": "DELETE", "uuid" : "a98c72c5-5b53-45f3-81e5-2368126abe59", "type":"project", "ref-type":"floating-ip-pool","ref-uuid":"c0efe9a3-73fe-405e-8a20-2ec4491372ad"}' http://172.16.11.10:8082/ref-update
+curl -X POST -H "Content-Type: application/json; charset=UTF-8" -d '{"operation": "DELETE", "uuid" : "73701896-ed06-4d15-8d50-910ad209b3fc", "type":"virtual-network", "ref-type":"floating-ip-pool","ref-uuid":"c0efe9a3-73fe-405e-8a20-2ec4491372ad"}' http://172.16.11.10:8082/ref-update

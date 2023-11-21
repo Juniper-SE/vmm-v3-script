@@ -1,0 +1,125 @@
+---
+name: wag
+pod: 
+  type: vmm
+  vmmserver: q-pod32-vmm.englab.juniper.net
+  jumpserver: ttqc-shell001.juniper.net
+  user: irzan
+  adpassword: AnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2 
+  desktop: images/desktop.qcow2
+  # vmx_re: images/vmx/junos-vmx-x86-64-22.3R1.11.vmdk
+  vmx_re: images/vmx/junos-vmx-x86-64-22.4R1.10.vmdk
+  bridge: images/bridge.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.1/24
+      em2: 
+        bridge: lan2
+        family:
+          inet: 172.16.12.1/24
+      em3: 
+        bridge: lan3
+        family:
+          inet: 172.16.13.1/24
+        dhcp_range: 172.16.13.5-172.16.13.25
+      em4: 
+        bridge: lan4
+        family:
+          inet: 172.16.14.1/24
+        dhcp_range: 172.16.14.5-172.16.14.25
+  cp:
+    type: pcmedium
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan3
+        family:
+          inet: 172.16.13.11/24 
+          gateway4: 172.16.13.1
+  webserver:
+    type: pcmedium
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan4
+        family:
+          inet: 172.16.14.11/24 
+          gateway4: 172.16.14.1
+  client1:
+    type: pcsmall
+    os: desktop
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: client1
+  client2:
+    type: pcsmall
+    os: desktop
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: client2
+  client3:
+    type: pcsmall
+    os: desktop
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: client3
+  wag:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        family:
+          inet: 172.16.11.11/24 
+      ge-0/0/0:
+        bridge: lan2
+        family:
+          inet: 172.16.12.2/24
+      ge-0/0/1: 
+        bridge: access1
+        mtu: 9000
+      ge-0/0/2: 
+        bridge: access2
+        mtu: 9000
+  access:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        family:
+          inet: 172.16.11.12/24 
+      ge-0/0/0:
+        bridge: access1
+        mtu: 9000
+      ge-0/0/1:
+        bridge: access1
+        mtu: 9000
+      ge-0/0/2: 
+        bridge: client1
+      ge-0/0/3: 
+        bridge: client2
+      ge-0/0/4: 
+        bridge: client3
+
+
+

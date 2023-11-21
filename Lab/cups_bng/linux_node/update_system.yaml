@@ -1,0 +1,197 @@
+---
+- name: Updating system
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: apt -y upgrade
+    apt:
+      update_cache: true
+      upgrade: dist
+      cache_valid_time: 3600
+      force_apt_get: true
+- name: configure k8s nodes
+  hosts:
+    - node0
+    - node1
+    - node2
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install python3-pip
+    apt:
+      name: 
+        - python3-pip
+      state: latest
+  - name: edit ssh configuration
+    shell: | 
+      sed -i -e 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+      systemctl restart sshd
+      # sudo ln -s /usr/bin/pip3 /usr/bin/pip
+- name: installing freeradius
+  hosts:
+    - radius
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install freeradius
+    apt:
+      name: 
+        - freeradius
+      state: latest
+  - name: create configuration clients.conf
+    copy:
+      dest: "/etc/freeradius/3.0/clients.conf"
+      content: |
+        client localhost {
+          ipaddr = 127.0.0.1
+          proto = *
+          secret = testing123
+          require_message_authenticator = no
+          nas_type	 = other	# localhost isn't usually a NAS...
+          limit {
+            max_connections = 16
+            lifetime = 0
+            idle_timeout = 30
+          }
+        }
+
+        # IPv6 Client
+        client localhost_ipv6 {
+          ipv6addr	= ::1
+          secret		= testing123
+        }
+
+        client vbng1 {
+          ipaddr = 172.16.12.1
+          secret = pass01
+        }
+        client vbng2 {
+          ipaddr = 172.16.12.2
+          secret = pass01
+        }
+        client node1 {
+          ipaddr = 172.16.11.111
+          secret = pass01
+        }
+        client node2 {
+          ipaddr = 172.16.11.112
+          secret = pass01
+        }
+        client cups2 {
+          ipaddr = 172.16.1.1
+          secret = pass01
+        }
+  - name: create configuration authorize
+    copy:
+      dest: "/etc/freeradius/3.0/mods-config/files/authorize"
+      content: |
+        DEFAULT  Reply-Message := 'User default'
+                ERX-virtual-Router-Name := 'isp2',
+                Fall-Through = Yes
+        cpe1  Cleartext-Password := 'pass01'
+                ERX-virtual-Router-Name := 'isp1'
+        cpe2  Cleartext-Password := 'pass01'
+                ERX-virtual-Router-Name := 'isp2'
+        cpe3  Cleartext-Password := 'pass03'
+                ERX-virtual-Router-Name := 'isp3'
+        cpe4  Cleartext-Password := 'pass04'
+                ERX-virtual-Router-Name := 'isp1'
+        cpe5  Cleartext-Password := 'pass05'
+                ERX-virtual-Router-Name := 'isp2'
+        cpe6  Cleartext-Password := 'pass06'
+                ERX-virtual-Router-Name := 'isp3'
+        cpe7  Cleartext-Password := 'pass07'
+                ERX-virtual-Router-Name := 'isp1'
+        cpe8  Cleartext-Password := 'pass08'
+                ERX-virtual-Router-Name := 'isp2'
+        cpe9  Cleartext-Password := 'pass09'
+                ERX-virtual-Router-Name := 'isp3'
+  - name: restart freeradius
+    ansible.builtin.service:
+      name: freeradius
+      state: restarted
+      enabled: true
+- name: installing frr
+  hosts:
+    - gw
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install frr
+    apt:
+      name: 
+        - frr
+      state: latest
+  - name: create network configuration
+    copy:
+      dest: "/etc/netplan/03-net.yaml"
+      content: |
+        network:
+          ethernets:
+            eth3:
+              dhcp4: false
+            lo:
+              addresses: [ 127.0.0.1/32, 0::1/128, 172.16.255.255/32,  2001:1010:dead:beef:ffff:ffff:ffff:1/128]
+          vlans:
+            vlan1:
+              link: eth3
+              id: 1
+              addresses: [ 172.16.16.0/31, 2001:1010:dead:beef::1:0/127]
+            vlan2:
+              link: eth3
+              id: 2
+              addresses: [ 172.16.16.2/31, 2001:1010:dead:beef::1:2/127]
+            vlan3:
+              link: eth3
+              id: 3
+              addresses: [ 172.16.16.4/31, 2001:1010:dead:beef::1:4/127]
+  - name: edit frr daemons configuration
+    shell: | 
+      sed -i -e 's/bgpd=no/bgpd=yes/' /etc/frr/daemons
+      netplan apply
+  - name: create frr configuration
+    copy:
+      dest: "/etc/frr/frr.conf"
+      content: |
+        frr defaults traditional
+        hostname gw
+        log syslog informational
+        service integrated-vtysh-config
+        !
+        router bgp 65200
+        neighbor 172.16.11.110 remote-as 65201
+        neighbor 172.16.11.111 remote-as 65201
+        neighbor 172.16.11.112 remote-as 65201
+        neighbor 172.16.16.1 remote-as 64512
+        neighbor 172.16.16.3 remote-as 64512
+        neighbor 172.16.16.5 remote-as 64512
+        neighbor 2001:1010:dead:beef::1:1 remote-as 64512
+        neighbor 2001:1010:dead:beef::1:3 remote-as 64512
+        neighbor 2001:1010:dead:beef::1:5 remote-as 64512
+        !
+        address-family ipv4 unicast
+          network 0.0.0.0/0
+        exit-address-family
+        !
+        address-family ipv6 unicast
+          network ::/0
+          neighbor 2001:1010:dead:beef::1:1 activate
+          neighbor 2001:1010:dead:beef::1:3 activate
+          neighbor 2001:1010:dead:beef::1:5 activate
+        exit-address-family
+        !
+        line vty
+        !
+  - name: restart frr
+    ansible.builtin.service:
+      name: frr
+      state: restarted
+      enabled: true
+

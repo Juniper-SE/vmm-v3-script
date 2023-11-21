@@ -1,0 +1,66 @@
+VM "vxlangw_re":
+		config.hostname "vxlangw_re0":
+		config.basedisk "/vmm/data/user_disks/irzan/images/vmx/junos-vmx-x86-64-22.1R1.10.vmdk":
+		uuid "a858e210-fe06-11ec-8477-33167f9317af";
+		IF "em0":
+			bridge "lan6"
+			ext_vlanid 0
+		IF "vio1":
+			bridge "vxlangwre_pfe_ctrl_bridge"
+			ext_vlanid 0
+		IF "vio2":
+			bridge "vxlangwre_ore_ctrl_bridge"
+			ext_vlanid 0
+		install "/vmm/bin/configs/quincy/junos/vmx.base.systest.conf" at "/root/junos.base.conf"
+		install "/vmm/data/user_disks/irzan/vm/dc1/vxlangw.conf" at "/root/junos.base.conf"
+		setvar "hw.ata.ata_dma" to "1"
+		setvar "hw.ata.atapi_dma" to "1"
+		setvar "hw.pci.link.0x60.irq" to "10"
+		setvar "use_virtio_disk" to "1"
+		setvar "+qemu_args" to " -cpu host "
+		setvar "vmtype" to "0"
+		setvar "vm_chassname" to "vxlangw"
+		setvar "vm_retype" to "RE-VMX"
+		setvar "vm_is_virtual" to "1"
+		setvar "vm_i2cid" to "0xBAB"
+		setvar "vm_chassis_i2cid" to "161"
+		setvar "vm_instance" to "0"
+	VM "vxlangw_MP0":
+		config.hostname "vxlangw_MPC0":
+		config.basedisk "/vmm/data/base_disks/default_images/default_image_vfpc.img":
+		uuid "a858e30a-fe06-11ec-aebb-5fe85034586b";
+		IF "vio0":
+			bridge "external"
+			ext_vlanid 0
+		IF "vio1":
+			bridge "vxlangwre_pfe_ctrl_bridge"
+			ext_vlanid 0
+		IF "vio2":
+			bridge "vxlangwmpc_fabric_bridge"
+			ext_vlanid 0
+		IF "vio3":
+			bridge "gwvx"
+			ext_vlanid 0
+		IF "vio4":
+			bridge "vxp1"
+			ext_vlanid 0
+		IF "vio5":
+			bridge "ptp12"
+			ext_vlanid 0
+		IF "vio6":
+			bridge "ptp13"
+			ext_vlanid 0
+		install "/vmm/bin/configs/quincy/junos/vmx.base.systest.conf" at "/root/junos.base.conf"
+		install "/vmm/data/user_disks/vmxc/fpc.core.push.wrapper" at "/var/db/vmm/etc/rc.scripts/"
+		install "/vmm/data/user_disks/vmxc/fpc.core.push.sh" at "/var/db/vmm/root/"
+		setvar "use_virtio_disk" to "1"
+		setvar "+qemu_args" to " -cpu host"
+		setvar "boot_noveriexec" to "yes"
+		setvar "hw.pci.link.0x60.irq" to "10"
+		setvar "vmtype" to "1"
+		setvar "vm_chassname" to "vxlangw"
+		setvar "vm_retype" to "RE-VMX"
+		setvar "vm_is_virtual" to "1"
+		setvar "vm_i2cid" to "0xBAA"
+		setvar "vm_chassis_i2cid" to "161"
+		setvar "vm_instance" to "0"

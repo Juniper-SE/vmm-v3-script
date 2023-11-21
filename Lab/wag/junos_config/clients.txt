@@ -1,0 +1,7 @@
+ge-0/0/1.3221225476              101                                                              default:default
+demux0.3221225477               192.168.101.103                         5604.2000.4ee8            default:default
+*                               fc00:dead:beef:2::2000:3
+demux0.3221225478               192.168.101.101                         5604.2000.42c6            default:default
+*                               fc00:dead:beef:2::2000:4
+demux0.3221225479               192.168.101.102                         5604.2000.29de            default:default
+*                               fc00:dead:beef:2::2000:5

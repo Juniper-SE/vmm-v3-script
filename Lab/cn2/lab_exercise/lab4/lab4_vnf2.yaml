@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vnf2
+  namespace: lab4
+  labels:
+    app: vnf2
+  annotations:
+    k8s.v1.cni.cncf.io/networks: blue,red
+    core.juniper.net/bgpaas-networks: blue, red
+spec:
+  containers: 
+    - name: crpd2
+      image: 172.16.14.10:5000/crpd:22.1R1.10
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      ports:
+      - containerPort: 179
+      volumeMounts:
+      - name: config
+        mountPath: "/src"
+    - name: alpine2
+      image: 172.16.14.10:5000/webserver:0.3
+      imagePullPolicy: Always
+      securityContext:
+          privileged: true
+      ports: 
+      - containerPort: 80
+      command: [ 'sh']
+      args: ['-c','ip route delete default; python3 /workingdir/webserver.py']
+  volumes:
+  - name: disk
+    hostPath:
+     path: /dev
+     type: Directory
+  - name: config
+    configMap:
+      name: vnf1
+      items:
+      - key: csrx_config
+        path: csrx_config
+      - key: csrx_license
+        path: csrx_license
+      - key: crpd_config
+        path: crpd_config
+      - key: crpd_license
+        path: crpd_license
+  nodeName: node2
+

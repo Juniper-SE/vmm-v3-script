@@ -1,0 +1,45 @@
+## Run the web server
+
+sudo podman run --rm --detach --name portal  --net=host --privileged -it localhost/webserver:0.1 
+
+sudo podman run --rm --detach --name portal  -v ./webserver.py:/workingdir/webserver.py -v ./tmp:/tmp/tmp --net=host --privileged -it localhost/webserver:0.1 
+
+sudo podman run --rm --name portal  --net=host --privileged -it localhost/webserver:0.1
+
+sudo podman run --rm --name portal  --net=host --privileged -v ./workingdir:/workingdir -it localhost/webserver:0.2
+
+## Run the freeradius
+
+sudo podman run --rm --detach --name radius \
+    -v ./freeradius/clients.conf:/etc/raddb/clients.conf \
+    -v ./freeradius/users:/etc/raddb/mods-config/files/authorize \
+    -v ./freeradius/mods-enabled_sql:/etc/raddb/mods-enabled/sql \
+    -v ./freeradius/sites-enabled_default:/etc/raddb/sites-enabled/default \
+    -v ./freeradius/sites-enabled_inner-tunnel:/etc/raddb/sites-enabled/inner-tunnel \
+    -v ./tmp:/tmp/tmp \
+    --net=host --privileged -it docker.io/freeradius/freeradius-server
+
+
+/etc/raddb/clients.conf
+/etc/raddb/users
+
+
+Run mariaDB 
+
+sudo podman run  --rm --detach --name db1 --net=host -v ./tmp:/tmp/tmp -v ./db1:/var/lib/mysql --privileged -it -e MYSQL_ROOT_PASSWORD=pass01 mariadb
+
+
+
+
+## seting mariaDB for radius
+1. Create database
+
+        create database radius;
+        mysql -u root -p radius < schema.sql
+
+
+
+insert into radcheck (username,attribute,op,value) values ('5604.2000.4ee8','Cleartext-Password',':=','jnpr123');
+
+
+GRANT SELECT,INSERT,UPDATE, DELETE ON radius.radcheck TO 'radius'@'localhost';

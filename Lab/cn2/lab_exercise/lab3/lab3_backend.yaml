@@ -1,0 +1,126 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lab3
+  labels:
+    core.juniper.net/isolated-namespace: "true"
+  annotations:
+    core.juniper.net/forwarding-mode: "fabric-snat"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-10
+  labels:
+    app: service-web-10
+  namespace: lab3
+spec:
+  selector:
+    app: webserver10
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver10
+  labels:
+    app: webserver10
+  namespace: lab3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver10
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver10]}
+  template:
+    metadata:
+      name: webserver10
+      labels:
+        app: webserver10
+    spec:
+      containers: 
+      - name: webserver10
+        image: 172.16.14.10:5000/webserver:0.2
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+---
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: dbserversvc
+  labels:
+    app: dbserversvc
+  namespace: lab3
+spec:
+  selector:
+    app: dbserver
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dbserver
+  labels:
+    app: dbserver
+  namespace: lab3
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dbserver
+    matchExpressions:
+      - {key: app, operator: In, values: [dbserver]}
+  template:
+    metadata:
+      name: dbserver
+      labels:
+        app: dbserver
+    spec:
+      containers: 
+      - name: dbserver
+        image: 172.16.14.10:5000/dbserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client1
+  namespace: lab3
+spec:
+  containers:
+  - name: c1
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+  nodeName: node1
+--- 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client2
+  namespace: lab3
+spec:
+  containers:
+  - name: c2
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+  nodeName: node1
+  
+

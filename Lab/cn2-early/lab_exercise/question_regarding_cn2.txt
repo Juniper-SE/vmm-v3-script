@@ -1,0 +1,39 @@
+1. unable to install contrail-analytic
+---
+irzan@irzan-mbp Downloads % cat install_contrail_analytic.sh
+helm install analytics ./contrail-analytics-0.1.0.tgz -n contrail --create-namespace --set contrail-collector.install=false --set contrail-dashboard.install=false --set contrail-introspect.install=false --set contrail-portal.install=false --set elasticsearch.install=false --set fluent-bit.install=false --set fluentd.install=false --set influxdb2.install=false --set kibana.install=false --set grafana.install=false
+irzan@irzan-mbp Downloads % ./install_contrail_analytic.sh
+dependencies.go:49: Warning: Condition path 'ambassador.install' for chart ambassador returned non-bool value
+dependencies.go:49: Warning: Condition path 'kube-prometheus-stack.install' for chart kube-prometheus-stack returned non-bool value
+dependencies.go:49: Warning: Condition path 'metallb.install' for chart metallb returned non-bool value
+dependencies.go:49: Warning: Condition path 'contrail-telemetry-operator.install' for chart contrail-telemetry-operator returned non-bool value
+dependencies.go:49: Warning: Condition path 'contrail-grafana-customization.install' for chart contrail-grafana-customization returned non-bool value
+Error: INSTALLATION FAILED: failed to install CRD crds/filter.yaml: unable to recognize "": no matches for kind "CustomResourceDefinition" in version "apiextensions.k8s.io/v1beta1"
+irzan@irzan-mbp Downloads %
+---
+
+2. Namespace isolated doesn't work ?
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test2
+  annotations:
+    opencontrail.org/isolation: "true"
+
+
+3. configuring SDN gateway
+
+error: error validating "vmx-sdngw-bgprouter.yaml": error validating data: ValidationError(BGPRouter.spec.bgpRouterReferences[0].attributes.session[0]): unknown field "attributes" in net.juniper.ssd-git.contrail.cn2.contrail.pkg.apis.core.v1alpha1.BGPSession; if you choose to ignore these errors, turn validation off with --validate=false
+
+irzan@irzan-mbp lab_exercise % kubectl apply -f vmx-sdngw-bgprouter.yaml
+error: error validating "vmx-sdngw-bgprouter.yaml": error validating data: ValidationError(BGPRouter.spec.bgpRouterReferences[0].attributes.session[0]): unknown field "attributes" in net.juniper.ssd-git.contrail.cn2.contrail.pkg.apis.core.v1alpha1.BGPSession; if you choose to ignore these errors, turn validation off with --validate=false
+irzan@irzan-mbp lab_exercise % kubectl apply -f vmx-sdngw-bgprouter.yaml --validate=false
+Error from server (NotFound): error when creating "vmx-sdngw-bgprouter.yaml": namespaces "default-project" not found
+
+
+
+irzan@irzan-mbp lab_exercise % kubectl apply -f vmx-sdngw-bgprouter.yaml --validate=false
+Error from server (Forbidden): error when creating "vmx-sdngw-bgprouter.yaml": bgprouters.core.contrail.juniper.net "vmx-sdn-gw" is forbidden: unable to find parent for resource, routinginstances.core.contrail.juniper.net "default" not found
+irzan@irzan-mbp lab_exercise %

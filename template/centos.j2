@@ -1,0 +1,88 @@
+#!/bin/bash
+cat << EOF | sudo tee /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+127.0.1.1 {{ hostname }}
+EOF
+
+cat << EOF | sudo tee /etc/hostname
+{{ hostname }}
+EOF
+
+mkdir ~/.ssh
+chmod og-rwx ~/.ssh
+
+cat << EOF | tee ~/.ssh/authorized_keys
+{{ ssh_key_pub }}
+EOF
+
+cat << EOF | tee ~/.ssh/id_rsa
+{{ ssh_key_priv }}
+EOF
+
+chmod 0600 ~/.ssh/*
+
+sudo mkdir /root/.ssh
+sudo chmod og-rwx /root/.ssh
+sudo cp ~/.ssh/id_rsa /root/.ssh/id_rsa
+sudo cp ~/.ssh/authorized_keys /root/.ssh/authorized_keys
+sudo chmod 0600 /root/.ssh/*
+
+{% if net -%}
+{% for intf in net -%} 
+cat << EOF | sudo tee /etc/sysconfig/network-scripts/ifcfg-{{ intf }}
+DEVICE={{ intf }}
+ONBOOT=yes
+TYPE=ethernet
+# BOOTPROTO=static
+{% if net[intf].addr -%} 
+{% if net[intf].addr[0] -%}  
+IPADDR={{ net[intf].addr[0] }}
+PREFIX={{ net[intf].prefix[0] }}
+{% if net[intf].gateway4 -%} 
+GATEWAY={{ net[intf].gateway4 }}
+{% endif -%} 
+{% endif -%}
+{% endif -%}
+{% if net[intf].addr[1] -%} 
+IPV6INIT=yes
+IPV6ADDR={{net[intf].addr[1]}}/{{net[intf].prefix[1]}}
+{% if net[intf].gateway6 -%}
+IPV6_DEFAULTGW={{net[intf].gateway6}}
+{% endif -%}
+{% endif -%}
+{% if net[intf].mtu -%} 
+MTU={{ net[intf].mtu}}
+{% endif -%} 
+{% if net[intf].dns -%} 
+{% if net[intf].dns[0] -%}  
+DNS1={{ net[intf].dns[0] }} 
+{% endif -%} 
+{% if net[intf].dns[1] -%}
+DNS2={{ net[intf].dns[1] }} 
+{% endif -%}
+{% endif -%}
+EOF
+
+{% if net[intf].static -%}
+cat << EOF | sudo tee /etc/sysconfig/network-scripts/route-{{ intf }}
+{% for s in net[intf].static -%}
+{{ s.to }} via {{ s.via }} dev {{ intf }}
+{% endfor -%}
+EOF
+
+{% endif %}
+{% endfor -%}
+{% endif %}
+
+uuidgen  | sed -e 's/-//g' |  sudo tee /etc/machine-id
+
+cat << EOF | tee ~/.ssh/config
+Host *
+   StrictHostKeyChecking no
+EOF
+
+chmod og-rwx ~/.ssh/*
+
+sleep 2 
+sudo reboot

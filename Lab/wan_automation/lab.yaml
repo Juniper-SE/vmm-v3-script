@@ -1,0 +1,342 @@
+---
+name: auto
+pod: 
+  type: vmm
+  vmmserver: q-pod23-vmm.englab.juniper.net
+  jumpserver: ttqc-shell09.juniper.net
+  user: irzan
+  vmmpassword:  MyPassword
+  jumppassword:  MyPassword
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ntp: 172.16.10.1
+images:
+  centos: images/centos300g.img
+  ubuntu1804: images/ubuntu2004.qcow2
+  ubuntu: images/ubuntu160406.img
+  vmx_re: images/vmx-20.3R1.8/junos-vmx-x86-64-20.3R1.8.vmdk
+  vmx_mpc: images/vmx-20.3R1.8/vFPC-20200819.vmdk
+  vqfx_re: images/vqfx/jinstall-vqfx-10-f-18.4R2-S2.3.vmdk
+  vqfx_cosim: images/vqfx/vqfx-18.4R2-S2-2019010209-pfe-qemu.vmdk
+  vsrx: images/vsrx/junos-vsrx3-x86-64-20.3R1.8.vmdk
+  vrr: images/vrr/junos-x86-64-19.4R2.6.vmdk
+  vcsa: images/vmware/vcsa67.vmdk
+  esxi1: images/vmware/esxi1.vmdk
+  esxi2: images/vmware/esxi2.vmdk
+  esxi3: images/vmware/esxi3.vmdk
+  aos: images/aos.vmdk
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: centos
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        ipv4: 172.16.10.254/24
+      em2: 
+        bridge: lan20
+        ipv4: 172.16.20.254/24
+  R1:
+    type: junos
+    os: mx960
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        ipv4: 172.16.10.1/24
+        gateway4: 172.16.10.254
+      lo0:
+        family: 
+          inet: 10.255.255.129/32
+          iso: 49.0001.0102.5525.5129.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: r1p0
+        description: Connection to LAN1
+        family:
+          inet: 10.255.1.1/24
+          iso:
+        protocol:
+          isis: passive
+      ge-0/0/1:
+        bridge: r1p1
+        description: connection to R2
+        mtu: 9000
+        family:
+          inet: 10.255.255.0/31
+          iso:
+          mpls:
+        protocol:
+          lldp:
+          ldp:
+          isis: ptp
+          rsvp:
+      ge-0/0/2:
+        bridge: r1p2
+        description: connection to R3
+        mtu: 9000
+        family:
+          inet: 10.255.255.2/31
+          iso:
+          mpls:
+        protocol:
+          lldp:
+          ldp:
+          isis: ptp
+          rsvp:
+      ge-0/0/3:
+        bridge: lan20
+        description: connection to R3
+        family:
+          inet: 172.16.20.201/24
+          iso:
+        protocol:
+          isis: passive
+  R2:
+    type: junos
+    os: mx960
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        ipv4: 172.16.10.2/24
+        gateway4: 172.16.10.254
+      lo0:
+        family: 
+          inet: 10.255.255.130/32
+          iso: 49.0001.0102.5525.5130.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: r2p0
+        description: Connection to LAN2
+        family:
+          inet: 10.255.2.1/24
+          iso:
+        protocol:
+          isis: passive
+      ge-0/0/1:
+        bridge: r2p1
+        description: connection to R1
+        mtu: 9000
+        family:
+          inet: 10.255.255.1/31
+          iso:
+          mpls:
+        protocol:
+          lldp:
+          ldp:
+          isis: ptp
+          rsvp:
+      ge-0/0/2:
+        bridge: r2p2
+        description: connection to R3
+        mtu: 9000
+        family:
+          inet: 10.255.255.4/31
+          iso:
+          mpls:
+        protocol:
+          lldp:
+          ldp:
+          isis: ptp
+          rsvp:
+      ge-0/0/3:
+        bridge: r2p3
+        description: connection to FW
+        family:
+          inet: 10.255.255.6/31
+          iso:
+        protocol:
+          isis:
+  R3:
+    type: junos
+    os: mx960
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        ipv4: 172.16.10.3/24
+        gateway4: 172.16.10.254
+      lo0:
+        family: 
+          inet: 10.255.255.131/32
+          iso: 49.0001.0102.5525.5131.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: r3p0
+        description: Connection to LAN3
+        family:
+          inet: 10.255.3.1/24
+          iso:
+        protocol:
+          isis: passive
+      ge-0/0/1:
+        bridge: r3p1
+        description: connection to R1
+        mtu: 9000
+        family:
+          inet: 10.255.255.3/31
+          iso:
+          mpls:
+        protocol:
+          lldp:
+          ldp:
+          isis: ptp
+          rsvp:
+      ge-0/0/2:
+        bridge: r3p2
+        description: connection to R2
+        mtu: 9000
+        family:
+          inet: 10.255.255.5/31
+          iso:
+          mpls:
+        protocol:
+          lldp:
+          ldp:
+          isis: ptp
+          rsvp:
+      ge-0/0/3:
+        bridge: r3p3
+        description: connection to SW1
+        family:
+          inet: 10.255.4.1/24
+          iso:
+        protocol:
+          isis:
+  br1:
+    type: pcsmall
+    os: ubuntu1804
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.100/24 
+        gateway4: 172.16.10.254
+        dns: 172.16.10.254
+      em1: 
+        bridge: r1p1
+        mtu: 9000
+      em2: 
+        bridge: r2p1
+        mtu: 9000
+      em3:
+        bridge: r1p2
+        mtu: 9000
+      em4: 
+        bridge: r3p1
+        mtu: 9000
+      em5: 
+        bridge: r2p2
+        mtu: 9000
+      em6: 
+        bridge: r3p2
+        mtu: 9000
+  netround:
+    type: pcbig
+    os: ubuntu1804
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan20
+        ipv4: 172.16.20.11/24 
+        gateway4: 172.16.20.254
+        dns: 172.16.20.254
+  hb:
+    type: pcbig
+    os: ubuntu1804
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan20
+        ipv4: 172.16.20.12/24 
+        gateway4: 172.16.20.254
+        dns: 172.16.20.254
+  ns:
+    type: pcbig
+    os: centos
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan20
+        ipv4: 172.16.20.13/24 
+        gateway4: 172.16.20.254
+        dns: 172.16.20.254
+  sw1:
+    type: junos
+    os: vqfx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        ipv4: 172.16.10.4/24 
+        gateway4: 172.16.10.254
+      xe-0/0/0: 
+        bridge: r3sw1
+      xe-0/0/1: 
+        bridge: swp1
+      xe-0/0/2: 
+        bridge: swp2
+  fw1:
+    type: junos
+    os: vsrx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        ipv4: 172.16.10.5/24 
+        gateway4: 172.16.10.254
+      ge-0/0/0: 
+        bridge: r2fw1
+      ge-0/0/1: 
+        bridge: fwp1
+      ge-0/0/2: 
+        bridge: fwp2
+  client1:
+    type: pcsmall
+    os: ubuntu1804
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.101/24 
+        gateway4: 172.16.10.254
+        dns: 172.16.10.255
+      em1: 
+        bridge: lan1
+        description: to R1 
+  client2:
+    type: pcsmall
+    os: ubuntu1804
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.102/24 
+        gateway4: 172.16.10.254
+        dns: 172.16.10.255
+      em1: 
+        bridge: lan2
+        description: to R2
+      em2: 
+        bridge: sw1p1
+        description: to SW1
+  client3:
+    type: pcsmall
+    os: ubuntu1804
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.103/24 
+        gateway4: 172.16.10.254
+        dns: 172.16.10.255
+      em1: 
+        bridge: lan3
+        description: to R3
+      em2: 
+        bridge: fw1p1
+        description: to fw1

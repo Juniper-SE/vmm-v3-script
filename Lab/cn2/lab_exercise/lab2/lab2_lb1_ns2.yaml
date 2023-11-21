@@ -1,0 +1,44 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: ns2-service1
+  namespace: ns2
+spec:
+  selector:
+    app: webserver1
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver-ns2
+  namespace: ns2
+  labels:
+    app: webserver1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver1
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver1]}
+  template:
+    metadata:
+      name: webserver-ns2
+      labels:
+        app: webserver1
+    spec:
+      containers: 
+      - name: webserver-ns2
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

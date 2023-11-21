@@ -1,0 +1,31 @@
+set chassis network-services enhanced-ip
+set services analytics streaming-server ns remote-address 172.16.11.50
+set services analytics streaming-server ns remote-port 4000
+set services analytics export-profile ns local-address 10.100.1.16
+set services analytics export-profile ns reporting-rate 2
+set services analytics export-profile ns format gpb
+set services analytics export-profile ns transport udp
+set services analytics sensor ifd server-name ns
+set services analytics sensor ifd export-name ns
+set services analytics sensor ifd resource /junos/system/linecard/interface/
+set services analytics sensor ifl server-name ns
+set services analytics sensor ifl export-name ns
+set services analytics sensor ifl resource /junos/system/linecard/interface/logical/usage/
+set services analytics sensor lsp server-name ns
+set services analytics sensor lsp export-name ns
+set services analytics sensor lsp resource /junos/services/label-switched-path/usage/
+set services analytics sensor sr-te-color server-name ns
+set services analytics sensor sr-te-color export-name ns
+set services analytics sensor sr-te-color resource /junos/services/segment-routing/traffic-engineering/ingress/usage/
+set services analytics sensor sid server-name ns
+set services analytics sensor sid export-name ns
+set services analytics sensor sid resource /junos/services/segment-routing/sid/usage/
+set services analytics sensor sr-te-tunnels server-name ns
+set services analytics sensor sr-te-tunnels export-name ns
+set services analytics sensor sr-te-tunnels resource /junos/services/segment-routing/traffic-engineering/tunnel/ingress/usage/
+set protocols mpls sensor-based-stats
+set protocols source-packet-routing telemetry statistics
+
+commit
+exit configuration
+exit

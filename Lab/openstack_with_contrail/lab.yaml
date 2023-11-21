@@ -1,0 +1,289 @@
+---
+name: os
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell111.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  jumpserver: ttqc-shell11.juniper.net
+  user: irzan
+  adpassword: Maybelater
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu.qcow2
+  centos: images/centos300g.img
+  vmx_re: images/vmx/junos-vmx-x86-64-21.3R1.9.vmdk
+  vmx_mpc: images/vmx/vFPC-20210810.vmdk
+junos_login:
+  login: admin
+  password: pass01
+fabric:
+  subnet: 172.16.17.0/24
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+    - [ 0x5d, pe1, ge-0/0/2, p1, ge-0/0/0 ]
+    - [ 0x5d, p1, ge-0/0/1, sdngw, ge-0/0/2 ]
+    - [ 0x5d, sdngw, ge-0/0/3, p2, ge-0/0/0 ]
+    - [ 0x5d, p2, ge-0/0/1, pe2, ge-0/0/1 ]
+
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        ipv4: 172.16.11.1/24
+        dhcp_range: 172.16.11.5-172.16.11.25
+      em2: 
+        bridge: lan2
+        ipv4: 172.16.12.1/24
+        mtu: 9000
+      em3: 
+        bridge: lan3
+        ipv4: 172.16.13.130/31
+        mtu: 9000
+        static:
+          - to: 172.16.255.0/24
+            via: 172.16.13.131
+      em4: 
+        bridge: lan4
+        ipv4: 172.16.14.1/24
+        dhcp_range: 172.16.14.5-172.16.14.25
+      em5: 
+        bridge: lan5
+        ipv4: 172.16.15.1/24    
+  node0:
+    type: pcbig
+    os: centos
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.10/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.10/24 
+        static:
+          - to: 172.16.255.1/32
+            via: 172.16.12.1
+          - to: 172.16.255.2/32
+            via: 172.16.12.1
+      em2: 
+        bridge: lan6
+        ipv4: 172.16.16.10/24 
+        mtu: 9000
+  node1:
+    type: pchpv2
+    os: centos
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.11/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.11/24 
+        mtu: 9000
+        static:
+          - to: 172.16.255.1/32
+            via: 172.16.12.1
+      em2: 
+        bridge: lan6
+        ipv4: 172.16.16.11/24 
+        mtu: 9000
+  node2:
+    type: pchpv2
+    os: centos
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.12/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.12/24 
+        mtu: 9000
+        static:
+          - to: 172.16.255.1/32
+            via: 172.16.12.1
+      em2: 
+        bridge: lan6
+        ipv4: 172.16.16.12/24 
+        mtu: 9000
+  node3:
+    type: pchpv2
+    os: centos
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.13/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.13/24 
+        mtu: 9000
+        static:
+          - to: 172.16.255.1/32
+            via: 172.16.12.1
+      em2: 
+        bridge: lan6
+        ipv4: 172.16.16.13/24 
+        mtu: 9000
+  node4:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.14/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+      em1: 
+        bridge: lan6
+        ipv4: 172.16.16.14/24 
+        mtu: 9000
+  cc:
+    type: pcmedium
+    os: centos
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        ipv4: 172.16.11.15/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+  client1:
+    type: pcsmall
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        ipv4: 172.16.11.16/24 
+      em1: 
+        bridge: pe1ge0
+  client2:
+    type: pcsmall
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        ipv4: 172.16.11.17/24 
+      em1: 
+        bridge: pe1ge1
+  external1:
+    type: pcsmall
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan4
+        ipv4: 172.16.14.10/24 
+        gateway4: 172.16.14.1
+        dns: 172.16.14.1
+  sdngw:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        ipv4: 172.16.11.31/24 
+      lo0:
+        family:
+          inet: 172.16.255.1/32
+          iso: 49.0001.1720.1625.5001.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: lan5
+        family:
+          inet: 172.16.15.2/24
+      ge-0/0/1: 
+        bridge: lan3
+        family:
+          inet: 172.16.13.131/31
+          mtu: 9000
+  pe1:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        ipv4: 172.16.11.32/24 
+      lo0:
+        family:
+          inet: 172.16.255.2/32
+          iso: 49.0001.1720.1625.5002.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: pe1ge0
+      ge-0/0/1:
+        bridge: pe1ge1
+  pe2:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        ipv4: 172.16.11.33/24 
+      lo0:
+        family:
+          inet: 172.16.255.3/32
+          iso: 49.0001.1720.1625.5003.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: lan5
+        family:
+          inet: 172.16.15.3/24
+  p1:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        ipv4: 172.16.11.34/24 
+      lo0:
+        family:
+          inet: 172.16.255.4/32
+          iso: 49.0001.1720.1625.5004.00
+        protocol:
+          isis: passive
+  p2:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        ipv4: 172.16.11.35/24 
+      lo0:
+        family:
+          inet: 172.16.255.5/32
+          iso: 49.0001.1720.1625.5005.00
+        protocol:
+          isis: passive
+  
+

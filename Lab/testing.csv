@@ -1,0 +1,21 @@
+L2 vlan, 3967
+interface L3 vlan, 3697
+VRF,4096 
+Mac Entries (8x 64K),512k 
+Port-Channels (total), 768 
+vPC/M-LAG,744 
+Host entries, 256k 
+ipv4/IPV6 unicast route, 62K 
+Multicast Route, 32k 
+SVI,3697 
+BGP peer, 2500
+FHRP, 4905 
+Ipv4 ARP,  128k 
+BFD sessions,  1000 
+IPV6 ND,  32k 
+OSPF v2 Neighbor, 300 
+OSPF v3 Neighbor, 300 
+ACL, 4000 
+routing static,4000  
+jumbo MTU, 9216
+Throughput, 24 TB 

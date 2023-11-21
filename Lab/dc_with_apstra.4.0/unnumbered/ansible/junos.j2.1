@@ -1,0 +1,111 @@
+interfaces {
+	{% for intf in intf -%}
+	{{ intf }} {
+			unit 0 {
+				family inet;
+				family inet6;
+			}
+		}
+	{% endfor -%}
+	lo0 {
+	unit 0 {
+		family inet6 {
+			address {{ lo0 }};
+		}
+	}
+	}
+}
+policy-options {
+    policy-statement DIRECT-RTS {
+		term 1 {
+			from protocol direct;
+			then accept;
+		}
+		{% if type == 'leaf' -%}
+		term default {
+			then reject;
+		}
+		{% endif -%}
+    }
+	
+    policy-statement lb {
+        then {
+            load-balance per-packet;
+        }
+    }
+    as-list a-list members {{ as_list }};
+}
+routing-options {
+    router-id {{ router_id }};
+    forwarding-table {
+        export lb;
+    }
+}
+protocols {
+    router-advertisement {
+		{% for intf in intf -%}
+        interface {{ intf }}.0;
+		{% endfor -%}
+    }
+    bgp {
+        group auto-disc {
+            family inet6 {
+                unicast;
+            }
+            export DIRECT-RTS;
+            local-as {{ bgp.underlay.local_as }};
+            multipath {
+                multiple-as;
+            }
+            dynamic-neighbor FABRIC {
+                peer-auto-discovery {
+                    family inet6 {
+                        ipv6-nd;
+                    }
+					{% for intf in intf -%}
+					interface {{ intf }}.0;
+					{% endfor -%}
+                }
+            }
+            peer-as-list a-list;
+        }
+        group overlay-ipv6-ebgp {
+            type external;
+            multihop {
+                no-nexthop-change;
+            }
+            local-address {{ lo0 }};
+            family evpn {
+                signaling;
+            }
+            local-as {{ bgp.overlay.local_as}};
+            multipath {
+                multiple-as;
+            }
+			{% for neigh in bgp.overlay.neighbor -%}
+			neighbor {{ neigh.remote_peer }} {
+                peer-as {{ neigh.remote_as }};
+            }
+
+			{% endfor -%}
+        }
+        multipath {
+            multiple-as;
+        }
+    }
+}
+
+{% if type == 'leaf' -%}
+chassis {
+    aggregated-devices {
+        ethernet {
+            device-count 8;
+        }
+    }
+}
+forwarding-options {
+    evpn-vxlan {
+        shared-tunnels;
+    }
+}
+{% endif -%}

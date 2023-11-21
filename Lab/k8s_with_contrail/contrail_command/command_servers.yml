@@ -1,0 +1,30 @@
+---
+command_servers:
+    cc:
+        ip: 172.16.11.15
+        connection: ssh
+        ssh_user: root
+        ssh_pass: pass01
+        sudo_pass: pass01
+        ntpserver: ntp.juniper.net
+        registry_insecure: false
+        container_registry: hub.juniper.net/contrail
+        container_tag: "2011.L2.372"
+        container_registry_username: bookworm
+        container_registry_password: password
+        config_dir: /etc/contrail
+
+        contrail_config:
+            database:
+                type: postgres
+                dialect: postgres
+                password: pass01
+            keystone:
+                assignment:
+                    data:
+                      users:
+                        admin:
+                          password: pass01
+            insecure: true
+            client:
+              password: pass01

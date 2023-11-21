@@ -1,0 +1,24 @@
+---
+- name: Get device uptime
+  hosts:
+    - all
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    backup_dir: "./junos_backup"
+    conf_file: "{{ backup_dir }}/{{ inventory_hostname }}.set"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: create backup directory
+      file:
+        path: "{{ backup_dir }}"
+        state: directory
+    - name: get device configuration
+      juniper_junos_config:
+         format: set
+         host: "{{ ansible_host }}"
+         user: "{{ username }}"
+         dest: "{{ conf_file}}"
+         retrieve: committed
