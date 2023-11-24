@@ -17,33 +17,44 @@
       cache_valid_time: 3600
       force_apt_get: true
       state: latest
-- name: prepare kubernetes node
-  hosts:
-    - node0
-    - node1
-    - node2
-    - node3
-  become: yes
-  become_method: sudo
-  tasks:
-  - name: add into limits.conf
+# - name: prepare kubernetes node
+#   hosts:
+#     - node0
+#     - node1
+#     - node2
+#     - node3
+#   become: yes
+#   become_method: sudo
+#   tasks:
+  # - name: add into limits.conf
+  #   ansible.builtin.blockinfile:
+  #     path: /etc/security/limits.conf
+  #     block: |
+  #       *         hard    nofile      1048576
+  #       *         soft    nofile      1048576
+  #       root      hard    nofile      1048576
+  #       root      soft    nofile      1048576
+  #       influxdb  hard    nofile      1048576
+  #       influxdb  soft    nofile      1048576
+  - name: add into /etc/hosts
     ansible.builtin.blockinfile:
-      path: /etc/security/limits.conf
+      path: /etc/hosts
       block: |
-        *         hard    nofile      1048576
-        *         soft    nofile      1048576
-        root      hard    nofile      1048576
-        root      soft    nofile      1048576
-        influxdb  hard    nofile      1048576
-        influxdb  soft    nofile      1048576
-  - name: add into sysctl.conf
-    ansible.builtin.blockinfile:
-      path: /etc/sysctl.conf
-      block: |
-        fs.file-max = 2097152
-        vm.max_map_count=262144
-        fs.inotify.max_user_watches=524288
-        fs.inotify.max_user_instances=512
+        172.16.11.100 node0
+        172.16.11.101 node1
+        172.16.11.102 node2
+        172.16.11.103 node3
+        172.16.12.11 control
+        172.16.11.95 registry
+
+  # - name: add into sysctl.conf
+  #   ansible.builtin.blockinfile:
+  #     path: /etc/sysctl.conf
+  #     block: |
+  #       fs.file-max = 2097152
+  #       vm.max_map_count=262144
+  #       fs.inotify.max_user_watches=524288
+  #       fs.inotify.max_user_instances=512
   # - name: add into sshd_config
   #   ansible.builtin.blockinfile:
   #     path: /etc/ssh/sshd_config

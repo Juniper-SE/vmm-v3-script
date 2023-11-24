@@ -7,7 +7,7 @@
 # add project
 #from re import L
 import param1
-#import sys
+import sys
 import os
 import shutil
 import paramiko
@@ -22,6 +22,7 @@ import pprint
 from scp import SCPClient
 import random
 #import json
+
  
 # from jnpr.junos import Device
 # from jnpr.junos.utils.config import Config
@@ -74,10 +75,18 @@ def read_config(config):
 		vmmpassword_env=os.getenv('VMMPASSWORD')
 		if adpassword_env:
 			d1['pod']['adpassword'] = adpassword_env
+		else:
+			if 'adpassword' not in d1['pod']: 
+				print("parameter adpassword is not defined on configuration ")
+				sys.exit()
 		if not d1['pod']['user']:
 			d1['pod']['user']=user_env
 		if vmmpassword_env:
 			d1['pod']['vmmpassword'] = vmmpassword_env
+		else:
+			if 'vmmpassword' not in d1['pod']: 
+				print("parameter vmmpassword is not defined on configuration ")
+				sys.exit()
 		#if not d1['']
 		# add interface to vjunos_evolved VM
 		for i in d1['vm'].keys():
@@ -326,14 +335,28 @@ def add_ssh_key(d1):
 	else:
 		key_file = str(pathlib.Path.home()) + "/.ssh/id_rsa.pub"
 		key_file_priv = str(pathlib.Path.home()) + "/.ssh/id_rsa"
-	f=open(key_file)
-	ssh_key = f.read()
-	f.close()
-	d1['pod']['ssh_key']=ssh_key.strip()
-	f=open(key_file_priv)
-	ssh_key_priv = f.read()
-	f.close()
-	d1['pod']['ssh_key_priv']=ssh_key_priv.strip()
+	try:
+		with open(key_file) as f:
+			ssh_key = f.read()
+		d1['pod']['ssh_key']=ssh_key.strip()
+		with open(key_file_priv) as f:
+			ssh_key_priv = f.read()
+		d1['pod']['ssh_key_priv']=ssh_key_priv.strip()
+		if 'ssh_key_host_name' in d1['pod'].keys():
+			key_file = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_host_name'] + ".pub"
+			key_file_priv = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_host_name']
+			with open(key_file) as f:
+				ssh_key = f.read()
+			d1['pod']['ssh_key_host']=ssh_key.strip()
+			with open(key_file_priv) as f:
+				ssh_key_priv = f.read()
+			d1['pod']['ssh_key_host_priv']=ssh_key_priv.strip()
+		else:
+			d1['pod']['ssh_key_host']=d1['pod']['ssh_key']
+			d1['pod']['ssh_key_host_priv']=d1['pod']['ssh_key_priv']
+	except Exception as e:
+		print(e)
+		sys.exit()
 
 def add_path(d1,path):
 	d1['pod']['path']=path
@@ -724,8 +747,8 @@ def get_dhcp_config(d1):
 	retval['net'] = get_net_config_gw(d1)
 	retval['vnc'] = create_novnc(d1)
 	retval['ip_gw'] = d1['vm']['gw']['interfaces']['em1']['family']['inet'].split('/')[0]
-	retval['ssh_key_pub'] = d1['pod']['ssh_key']
-	retval['ssh_key_priv'] = d1['pod']['ssh_key_priv']
+	retval['ssh_key_pub'] = d1['pod']['ssh_key_host']
+	retval['ssh_key_priv'] = d1['pod']['ssh_key_host_priv']
 
 	#print(retval)
 	#print(retval.keys())
@@ -1110,8 +1133,8 @@ def set_host(d1,vm=""):
 		vm_data={}
 		vm_data['net'],vm_data['bridge'] = get_net_config(d1,i)
 		# vm_data['ip_gw'] = d1['vm']['gw']['interfaces']['em1']['family']['inet'].split('/')[0]
-		vm_data['ssh_key_pub'] = d1['pod']['ssh_key']
-		vm_data['ssh_key_priv'] = d1['pod']['ssh_key_priv']
+		vm_data['ssh_key_pub'] = d1['pod']['ssh_key_host']
+		vm_data['ssh_key_priv'] = d1['pod']['ssh_key_host_priv']
 		vm_data['hostname'] = i
 		# print(f"host {i} {vm_data}")
 		#if d['vm'][i]['os'] == 'ubuntu':
@@ -1535,6 +1558,10 @@ def write_ssh_config(d1):
 		ssh_key = d1['pod']['ssh_key_name']
 	else:
 		ssh_key = "id_rsa"
+	if 'ssh_key_host' in d1['pod'].keys():
+		ssh_key_host = d1['pod']['ssh_key_host_name']
+	else:
+		ssh_key_host = ssh_key
 	# if 'jumpserver' in d1['pod'].keys():
 	# 	jumphost_stat = True
 	print("getting gw ip address")
@@ -1577,6 +1604,7 @@ def write_ssh_config(d1):
 		'jumphost' : d1['pod']['jumpserver'],
 		'user' : d1['pod']['user'],
 		'ssh_key': ssh_key,
+		'ssh_key_host': ssh_key_host,
 		'vmm': d1['pod']['vmmserver'],
 		'gw': {'ip': gw_ip, 'user':user, 'dyn_port': dyn_port,'forward_port' : forward_port},
 		'node': node
@@ -1694,7 +1722,7 @@ def create_junos_config(d1,i):
 	dummy1['hostname']=i
 	dummy1['username']=d1['junos_login']['login']
 	dummy1['password']=md5_crypt.hash(d1['junos_login']['password'])
-	dummy1['ssh_key']=d1['pod']['ssh_key']
+	dummy1['ssh_key']=d1['pod']['ssh_key_host']
 	#print(f"VM is {i}")
 	#dummy1['ntpserver']=d1['pod']['ntp']
 	if d1['vm'][i]['os'] == 'vmx':

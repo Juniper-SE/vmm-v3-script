@@ -23,7 +23,7 @@ host gw
     hostname {{gw.ip}}
     {% endif -%}
     user {{ gw.user }}
-    IdentityFile ~/.ssh/{{ ssh_key }}
+    IdentityFile ~/.ssh/{{ ssh_key_host }}
 host proxy 
     {% if jumphost -%}
     ProxyCommand ssh -W {{ gw.ip }}:22 jumphost
@@ -31,7 +31,7 @@ host proxy
     hostname {{gw.ip}}
     {% endif -%}
     user {{ gw.user }}
-    IdentityFile ~/.ssh/{{ ssh_key }}
+    IdentityFile ~/.ssh/{{ ssh_key_host }}
     DynamicForward {{gw.dyn_port}}
     {% if gw.forward_port -%}
     {% for p1 in gw.forward_port -%}
@@ -43,7 +43,7 @@ host proxy
 host {{ n }}
     ProxyCommand ssh -W {{ node[n].ip }}:22 gw
     user {{ node[n].user }}
-    IdentityFile ~/.ssh/{{ ssh_key }}
+    IdentityFile ~/.ssh/{{ ssh_key_host }}
 
 {% endfor -%}
 

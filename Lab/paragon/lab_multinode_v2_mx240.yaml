@@ -7,10 +7,9 @@ pod:
   vmmserver: q-pod25-vmm.englab.juniper.net
   jumpserver: ttqc-shell002.juniper.net
   user: irzan
-  #adpassword: ThisIsAnaMabokCoy
+  adpassword: ThisIsAnaMabokCoy
   home_dir : /vmm/data/user_disks/irzan
   ssh_key_name: key1
-  ssh_key_host_name: keyhost
   #ntp: 172.16.10.1
 images:
   gw: images/gw.qcow2
@@ -18,9 +17,6 @@ images:
   desktop: images/desktop.qcow2
   vmx: images/vmx/junos-vmx-x86-64-23.2R1.13.vmdk
   bridge: images/bridge.qcow2
-  vjunos_switch: images/vJunos-switch-23.2R1.14.qcow2
-  vjunos_router: images/vJunos-router-23.2R1.14.qcow2
-  vjunos_evolved: images/vJunosEvolved-23.2R1.15.qcow2
 junos_login:
   login: admin
   password: pass01
@@ -77,7 +73,6 @@ vm:
         bridge: mgmt
         family:
           inet: 172.16.10.1/24
-        dhcp_range: 172.16.10.5-172.16.10.100
       em2: 
         bridge: control
         family:
@@ -146,68 +141,67 @@ vm:
               via: 172.16.14.254
             - to: 10.100.2.0/24
               via: 172.16.14.254
-  node1:
-    type: pchpv1
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: control
-        family:
-          inet: 172.16.11.101/24
-          gateway4: 172.16.11.1
-      em1: 
-        bridge: to_mpls
-        family:
-          inet: 172.16.14.101/24
-          static:
-            - to: 10.100.1.0/24
-              via: 172.16.14.254
-            - to: 10.100.2.0/24
-              via: 172.16.14.254
-  node2:
-    type: pchpv1
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: control
-        family:
-          inet: 172.16.11.102/24
-          gateway4: 172.16.11.1
-      em1: 
-        bridge: to_mpls
-        family:
-          inet: 172.16.14.102/24
-          static:
-            - to: 10.100.1.0/24
-              via: 172.16.14.254
-            - to: 10.100.2.0/24
-              via: 172.16.14.254
-  node3:
-    type: pchpv1
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: control
-        family:
-          inet: 172.16.11.103/24
-          gateway4: 172.16.11.1
-      em1: 
-        bridge: to_mpls
-        family:
-          inet: 172.16.14.103/24
-          static:
-            - to: 10.100.1.0/24
-              via: 172.16.14.254
-            - to: 10.100.2.0/24
-              via: 172.16.14.254
+  # node1:
+  #   type: pchpv1
+  #   os: ubuntu
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: control
+  #       family:
+  #         inet: 172.16.11.101/24
+  #         gateway4: 172.16.11.1
+  #     em1: 
+  #       bridge: to_mpls
+  #       family:
+  #         inet: 172.16.14.101/24
+  #         static:
+  #           - to: 10.100.1.0/24
+  #             via: 172.16.14.254
+  #           - to: 10.100.2.0/24
+  #             via: 172.16.14.254
+  # node2:
+  #   type: pchpv1
+  #   os: ubuntu
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: control
+  #       family:
+  #         inet: 172.16.11.102/24
+  #         gateway4: 172.16.11.1
+  #     em1: 
+  #       bridge: to_mpls
+  #       family:
+  #         inet: 172.16.14.102/24
+  #         static:
+  #           - to: 10.100.1.0/24
+  #             via: 172.16.14.254
+  #           - to: 10.100.2.0/24
+  #             via: 172.16.14.254
+  # node3:
+  #   type: pchpv1
+  #   os: ubuntu
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: control
+  #       family:
+  #         inet: 172.16.11.103/24
+  #         gateway4: 172.16.11.1
+  #     em1: 
+  #       bridge: to_mpls
+  #       family:
+  #         inet: 172.16.14.103/24
+  #         static:
+  #           - to: 10.100.1.0/24
+  #             via: 172.16.14.254
+  #           - to: 10.100.2.0/24
+  #             via: 172.16.14.254
   r1:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     bgpls:
       as: 64500
       local: 172.16.14.254
@@ -230,10 +224,9 @@ vm:
         protocol:
           isis: passive
   r2:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -247,10 +240,9 @@ vm:
         protocol:
           isis: passive
   r3:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -264,10 +256,9 @@ vm:
         protocol:
           isis: passive
   r4:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -281,10 +272,9 @@ vm:
         protocol:
           isis: passive
   r5:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -298,10 +288,9 @@ vm:
         protocol:
           isis: passive
   r6:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -315,10 +304,9 @@ vm:
         protocol:
           isis: passive
   r7:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -332,10 +320,9 @@ vm:
         protocol:
           isis: passive
   r8:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -349,10 +336,9 @@ vm:
         protocol:
           isis: passive
   r9:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -366,10 +352,9 @@ vm:
         protocol:
           isis: passive
   ce:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     pcep: yes
-    ztp: yes
     interfaces:
       mgmt: 
         bridge: mgmt

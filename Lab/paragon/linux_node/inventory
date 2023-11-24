@@ -1,1 +1,9 @@
-inventory.multiple_node
+[all]
+control
+node0
+node1
+node2
+node3
+registry
+[all:vars]
+ansible_python_interpreter=python3
