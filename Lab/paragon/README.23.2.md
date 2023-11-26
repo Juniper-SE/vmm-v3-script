@@ -115,9 +115,9 @@ note: the ansible script will install and setup the system to meet the requireme
 
 ## Uploading Paragon Automation installation file, installing docker and Paragon software
 
-1. Upload paragon automation installation file into node **control** ( Caution: The size of the installation (as for version 23.1) is around 15G, so it may take time to upload the file into node **control** from your workstation
+1. Upload paragon automation installation file into node **control** ( Caution: The size of the installation (as for version 23.2) is around 15G, so it may take time to upload the file into node **control** from your workstation
 
-        scp Paragon_23.1.tar.gz control:~/
+        scp Paragon_23.2.tar.gz control:~/
 
 2. From your workstation, upload script [install_docker.sh](install/install_docker.sh)
 
@@ -134,25 +134,25 @@ note: the ansible script will install and setup the system to meet the requireme
 3. Logout and login back to node **control** to allow user **ubuntu** to run as docker user
 4. Extract Paragon installation file 
 
-         tar xpvfz Paragon23.1.tar.gz
+         tar xpvfz Paragon23.2.tar.gz
 
 
 5. Run file **run** from paragon installation file  to initialize configuration directory **configdir**
 
-        chmod +x Paragon_23.1/run 
-        Paragon_23.1/run -c configdir init
+        chmod +x Paragon_23.2/run 
+        Paragon_23.2/run -c configdir init
 
     ![extract.png](images/extract.png)
 
 6. Run file **run** from paragon installation to fill initial configuration (ip addresses of kubernetes nodes, and password)
         
-        Paragon_23.1/run -c configdir inv
+        Paragon_23.2/run -c configdir inv
 
 ![run_inv.png](images/paragon_run_inv_23.1.jpg)
 
 7. Run file **run** from paragon installation to configure paragon parameter
         
-        ./Paragon_23.1/run -c configdir conf
+        ./Paragon_23.2/run -c configdir conf
 
 ![run_conf.png](images/paragon_run_conf0_23.1.jpg)
 ![run_conf.png](images/paragon_run_conf1_23.1.jpg)
@@ -169,7 +169,7 @@ note: the ansible script will install and setup the system to meet the requireme
 10. Start Paragon automation installation process. The installation proccess may take up to 90 minutes to finish.
 
         tmux
-        ./Paragon_23.1/run -c configdir  deploy -e ignore_iops_check=yes
+        ./Paragon_23.2/run -c configdir  deploy -e ignore_iops_check=yes
     
     ![deploy.png](images/deploy.png)
 

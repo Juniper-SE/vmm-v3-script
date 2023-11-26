@@ -4,7 +4,7 @@ pod:
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod25-vmm.englab.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
   jumpserver: ttqc-shell002.juniper.net
   user: irzan
   #adpassword: ThisIsAnaMabokCoy
@@ -24,10 +24,10 @@ images:
 junos_login:
   login: admin
   password: pass01
-pcep_server: 172.16.14.201
-paragon_ingest: 172.16.14.202
+pcep_server: 172.16.11.201
+paragon_ingest: 172.16.11.202
 snmp: 
-  server: 172.16.14.204
+  server: 172.16.11.204
   ro_community: public
 fabric:
   subnet: 10.100.2.0/24
@@ -80,6 +80,7 @@ vm:
         dhcp_range: 172.16.10.5-172.16.10.100
       em2: 
         bridge: control
+        mtu: 9000
         family:
           inet: 172.16.11.1/24
         dhcp_range: 172.16.11.90-172.16.11.220
@@ -90,6 +91,7 @@ vm:
         dhcp_range: 172.16.12.10-172.16.12.20
       em4: 
         bridge: to_mpls
+        mtu: 9000
         family:
           inet: 172.16.14.1/24
           static:
@@ -117,92 +119,95 @@ vm:
         family:
           inet: 172.16.12.11/24
           gateway4: 172.16.12.1
-  registry:
-    type: pcsmall
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: control
-        family:
-          inet: 172.16.11.95/24
-          gateway4: 172.16.11.1
-  node0:
-    type: pchpv1
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: control
-        family:
-          inet: 172.16.11.100/24
-          gateway4: 172.16.11.1
-      em1: 
-        bridge: to_mpls
-        family:
-          inet: 172.16.14.100/24
-          static:
-            - to: 10.100.1.0/24
-              via: 172.16.14.254
-            - to: 10.100.2.0/24
-              via: 172.16.14.254
+  # registry:
+  #   type: pcsmall
+  #   os: ubuntu
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: control
+  #       family:
+  #         inet: 172.16.11.95/24
+  #         gateway4: 172.16.11.1
+  # node0:
+  #   type: pchpv1
+  #   os: ubuntu
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: control
+  #       family:
+  #         inet: 172.16.11.100/24
+  #         gateway4: 172.16.11.1
+  #     em1: 
+  #       bridge: to_mpls
+  #       family:
+  #         inet: 172.16.14.100/24
+  #         static:
+  #           - to: 10.100.1.0/24
+  #             via: 172.16.14.254
+  #           - to: 10.100.2.0/24
+  #             via: 172.16.14.254
   node1:
     type: pchpv1
     os: ubuntu
     vnc: yes
+    mtu: 9000
     interfaces:
       em0: 
         bridge: control
         family:
           inet: 172.16.11.101/24
           gateway4: 172.16.11.1
-      em1: 
-        bridge: to_mpls
-        family:
-          inet: 172.16.14.101/24
-          static:
-            - to: 10.100.1.0/24
-              via: 172.16.14.254
-            - to: 10.100.2.0/24
-              via: 172.16.14.254
+      # em1: 
+      #   bridge: to_mpls
+      #   family:
+      #     inet: 172.16.14.101/24
+      #     static:
+      #       - to: 10.100.1.0/24
+      #         via: 172.16.14.254
+      #       - to: 10.100.2.0/24
+      #         via: 172.16.14.254
   node2:
     type: pchpv1
     os: ubuntu
     vnc: yes
+    mtu: 9000
     interfaces:
       em0: 
         bridge: control
         family:
           inet: 172.16.11.102/24
           gateway4: 172.16.11.1
-      em1: 
-        bridge: to_mpls
-        family:
-          inet: 172.16.14.102/24
-          static:
-            - to: 10.100.1.0/24
-              via: 172.16.14.254
-            - to: 10.100.2.0/24
-              via: 172.16.14.254
+      # em1: 
+      #   bridge: to_mpls
+      #   family:
+      #     inet: 172.16.14.102/24
+      #     static:
+      #       - to: 10.100.1.0/24
+      #         via: 172.16.14.254
+      #       - to: 10.100.2.0/24
+      #         via: 172.16.14.254
   node3:
     type: pchpv1
     os: ubuntu
     vnc: yes
+    mtu: 9000
     interfaces:
       em0: 
         bridge: control
         family:
           inet: 172.16.11.103/24
           gateway4: 172.16.11.1
-      em1: 
-        bridge: to_mpls
-        family:
-          inet: 172.16.14.103/24
-          static:
-            - to: 10.100.1.0/24
-              via: 172.16.14.254
-            - to: 10.100.2.0/24
-              via: 172.16.14.254
+      # em1: 
+      #   bridge: to_mpls
+      #   family:
+      #     inet: 172.16.14.103/24
+      #     static:
+      #       - to: 10.100.1.0/24
+      #         via: 172.16.14.254
+      #       - to: 10.100.2.0/24
+      #         via: 172.16.14.254
   r1:
     type: vjunos_router
     os: vjunos_router
@@ -225,6 +230,7 @@ vm:
           isis: passive
       ge-0/0/3: 
         bridge: to_mpls
+        mtu: 9000
         family:
           inet: 172.16.14.254/24
         protocol:
