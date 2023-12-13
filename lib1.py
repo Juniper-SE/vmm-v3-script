@@ -1679,6 +1679,8 @@ def get_ssh_user(d1,i):
 			retval="alpine"
 		elif d1['vm'][i]['os'] =='rhel':
 			retval="rhel"
+		else:
+			retval = 'admin'
 	return retval
 
 
@@ -1970,38 +1972,38 @@ def change_intf(intf):
 # def change_intfx(intf):
 #	return intf.replace('em','ens3f')
 
-def make_config_generic_pc(d1,i):
-	retval=[]
-	#config_dir=param1.home_dir + d1['pod']['user'] + '/' + d1['name'] + "/"
-	config_dir=d1['pod']['home_dir'] + '/vm/' + d1['name'] + "/"
-	# print("Make config for GW for vm ",i)
-	retval.append('vm "'+i+'" {')
-	retval.append('   hostname "'+i+'";')
-	if 'disk' in d1['vm'][i].keys():
-		temp_s1="    " + d1['vm'][i]['os'].upper() + "_" + d1['vm'][i]['disk'].upper() +  "_DISK"
-	else:
-		temp_s1="    " + d1['vm'][i]['os'].upper() +  "_DISK"
-	retval.append(temp_s1)
-	if 'hd2' in d1['vm'][i].keys():
-		# disk "hdb" "/vmm/data/user_disks/irzan/vm/vmware/esxi3disk2.vmdk";
-		retval.append(f"     disk \"hdb\" \"{config_dir}{i}-disk2.img\";")
-	if d1['vm'][i]['type'] in ['pchpv1','pchpv2','ssrr']:
-		retval.append('   setvar "+qemu_args" "-cpu host,+vmx";')
-	else:
-		retval.append('   setvar "+qemu_args" "-cpu qemu64,+vmx";')
-	retval.append('   ncpus ' + str(param1.vm_type[d1['vm'][i]['type']]['ncpus']) + ';')
-	retval.append('   memory ' + str(param1.vm_type[d1['vm'][i]['type']]['memory']) + ';')
-	if 'vnc' in d1['vm'][i]:
-		if (d1['vm'][i]['vnc']):
-			retval.append('   setvar "enable_vnc" "1";')
-	for j in d1['vm'][i]['interfaces'].keys():
-		# if d1['vm'][i]['os'] == 'ssr':
-		# 	intf = j.replace('em','vio')
-		# else:
-		# 	intf = j
-		intf = j
-		retval.append('   interface "' +  intf + '" { bridge "' + d1['vm'][i]['interfaces'][j]['bridge'] + '";};')
-	return retval
+# def make_config_generic_pc(d1,i):
+# 	retval=[]
+# 	#config_dir=param1.home_dir + d1['pod']['user'] + '/' + d1['name'] + "/"
+# 	config_dir=d1['pod']['home_dir'] + '/vm/' + d1['name'] + "/"
+# 	# print("Make config for GW for vm ",i)
+# 	retval.append('vm "'+i+'" {')
+# 	retval.append('   hostname "'+i+'";')
+# 	if 'disk' in d1['vm'][i].keys():
+# 		temp_s1="    " + d1['vm'][i]['os'].upper() + "_" + d1['vm'][i]['disk'].upper() +  "_DISK"
+# 	else:
+# 		temp_s1="    " + d1['vm'][i]['os'].upper() +  "_DISK"
+# 	retval.append(temp_s1)
+# 	if 'hd2' in d1['vm'][i].keys():
+# 		# disk "hdb" "/vmm/data/user_disks/irzan/vm/vmware/esxi3disk2.vmdk";
+# 		retval.append(f"     disk \"hdb\" \"{config_dir}{i}-disk2.img\";")
+# 	if d1['vm'][i]['type'] in ['pchpv1','pchpv2','ssrr']:
+# 		retval.append('   setvar "+qemu_args" "-cpu host,+vmx";')
+# 	else:
+# 		retval.append('   setvar "+qemu_args" "-cpu qemu64,+vmx";')
+# 	retval.append('   ncpus ' + str(param1.vm_type[d1['vm'][i]['type']]['ncpus']) + ';')
+# 	retval.append('   memory ' + str(param1.vm_type[d1['vm'][i]['type']]['memory']) + ';')
+# 	if 'vnc' in d1['vm'][i]:
+# 		if (d1['vm'][i]['vnc']):
+# 			retval.append('   setvar "enable_vnc" "1";')
+# 	for j in d1['vm'][i]['interfaces'].keys():
+# 		# if d1['vm'][i]['os'] == 'ssr':
+# 		# 	intf = j.replace('em','vio')
+# 		# else:
+# 		# 	intf = j
+# 		intf = j
+# 		retval.append('   interface "' +  intf + '" { bridge "' + d1['vm'][i]['interfaces'][j]['bridge'] + '";};')
+# 	return retval
 
 def init_junos(d1,vm=""):
 	print("this is for init junos")

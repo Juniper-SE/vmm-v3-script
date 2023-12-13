@@ -1,0 +1,87 @@
+set version 15.1R7.8
+set system root-authentication encrypted-password "$5$oJzq.W0J$iMzS15jCQ6UMuSGcfBAAk5P7GLCTqCMEYkr7arhtzG/"
+set system login user lab uid 2000
+set system login user lab class super-user
+set system login user lab authentication encrypted-password "$5$5RVsco3Z$6Ye8u.VpgZwTzFCXFf.ypyI5GxQco8jSu.zEz2huEpA"
+set system services ssh
+set system services telnet
+set system services dhcp traceoptions file dhcp_logfile
+set system services dhcp traceoptions level all
+set system services dhcp traceoptions flag all
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set chassis auto-image-upgrade
+set interfaces ge-0/0/0 unit 0 family ethernet-switching
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 173 vlan-id 173
+set interfaces ge-0/0/1 unit 173 family inet address 172.29.14.210/31
+set interfaces ge-0/0/3 unit 0 family ethernet-switching
+set interfaces ge-0/0/4 unit 0 family ethernet-switching
+set interfaces ge-0/0/5 unit 0 family ethernet-switching
+set interfaces ge-0/0/6 unit 0 family ethernet-switching
+set interfaces ge-0/0/7 unit 0 family ethernet-switching
+set interfaces ge-0/0/8 unit 0 family ethernet-switching
+set interfaces ge-0/0/9 unit 0 family ethernet-switching
+set interfaces ge-0/0/10 unit 0 family ethernet-switching
+set interfaces ge-0/0/11 unit 0 family ethernet-switching
+set interfaces ge-0/0/12 unit 0 family ethernet-switching
+set interfaces ge-0/0/13 unit 0 family ethernet-switching
+set interfaces ge-0/0/14 unit 0 family ethernet-switching
+set interfaces ge-0/0/15 unit 0 family ethernet-switching
+set interfaces ge-0/0/16 unit 0 family ethernet-switching
+set interfaces ge-0/0/17 unit 0 family ethernet-switching
+set interfaces ge-0/0/18 unit 0 family ethernet-switching
+set interfaces ge-0/0/19 unit 0 family ethernet-switching
+set interfaces ge-0/0/20 unit 0 family ethernet-switching
+set interfaces ge-0/0/21 unit 0 family ethernet-switching
+set interfaces ge-0/0/22 unit 0 family ethernet-switching
+set interfaces ge-0/0/23 unit 0 family ethernet-switching
+set interfaces ge-0/0/24 unit 0 family ethernet-switching
+set interfaces ge-0/0/25 unit 0 family ethernet-switching
+set interfaces ge-0/0/26 unit 0 family ethernet-switching
+set interfaces ge-0/0/27 unit 0 family ethernet-switching
+set interfaces ge-0/0/28 unit 0 family ethernet-switching
+set interfaces ge-0/0/29 unit 0 family ethernet-switching
+set interfaces ge-0/0/30 unit 0 family ethernet-switching
+set interfaces ge-0/0/31 unit 0 family ethernet-switching
+set interfaces ge-0/0/32 unit 0 family ethernet-switching
+set interfaces ge-0/0/33 unit 0 family ethernet-switching
+set interfaces ge-0/0/34 unit 0 family ethernet-switching
+set interfaces ge-0/0/35 unit 0 family ethernet-switching
+set interfaces ge-0/0/36 unit 0 family ethernet-switching
+set interfaces ge-0/0/37 unit 0 family ethernet-switching
+set interfaces ge-0/0/38 unit 0 family ethernet-switching
+set interfaces ge-0/0/39 unit 0 family ethernet-switching
+set interfaces ge-0/0/40 unit 0 family ethernet-switching
+set interfaces ge-0/0/41 unit 0 family ethernet-switching
+set interfaces ge-0/0/42 unit 0 family ethernet-switching
+set interfaces ge-0/0/43 unit 0 family ethernet-switching
+set interfaces ge-0/0/44 unit 0 family ethernet-switching
+set interfaces ge-0/0/45 unit 0 family ethernet-switching
+set interfaces ge-0/0/46 unit 0 family ethernet-switching
+set interfaces ge-0/0/47 unit 0 family ethernet-switching
+set interfaces ge-0/1/0 unit 0 family ethernet-switching
+set interfaces xe-0/1/0 unit 0 family ethernet-switching
+set interfaces ge-0/1/1 unit 0 family ethernet-switching
+set interfaces xe-0/1/1 unit 0 family ethernet-switching
+set interfaces ge-0/1/2 unit 0 family ethernet-switching
+set interfaces xe-0/1/2 unit 0 family ethernet-switching
+set interfaces ge-0/1/3 unit 0 family ethernet-switching
+set interfaces xe-0/1/3 unit 0 family ethernet-switching
+set interfaces lo0 unit 173 family inet address 61.94.3.1/32
+set interfaces me0 unit 0 family inet address 10.88.14.172/24
+set interfaces vlan unit 0 family inet address 172.29.14.206/28
+set routing-options static route 0.0.0.0/0 next-hop 172.29.14.193
+set protocols igmp-snooping vlan all
+set protocols rstp
+set protocols lldp interface all
+set protocols lldp-med interface all
+set routing-instances vr1 instance-type virtual-router
+set routing-instances vr1 interface ge-0/0/1.173
+set routing-instances vr1 interface lo0.173
+set routing-instances vr1 routing-options static route 61.94.0.216/29 next-hop 172.29.14.211
+deactivate routing-instances vr1
+set ethernet-switching-options storm-control interface all
+set vlans default l3-interface vlan.0

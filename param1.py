@@ -38,7 +38,7 @@ vm_type={
    'vapp': {'ncpus' : 4,'memory':32768,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'vapp_s': {'ncpus' : 1,'memory':4096,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'ssrc': {'ncpus' : 4,'memory':16384,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
-   'ssrr': {'ncpus' : 4,'memory':8192,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
+   'ssrr': {'ncpus' : 4,'memory':8192,'setvar':'"+qemu_args" "-cpu host,+vmx"'},
    'paagent': {'ncpus' : 1,'memory':1024,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'vspirent': {'ncpus' : 2,'memory':1024,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'bridge': {'ncpus' : 2,'memory':2048,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
@@ -53,7 +53,7 @@ vm_type={
    'mx960' : {'i2cid': 21}
 }
 # vm_os=['centos','ubuntu','vmx','vqfx','vsrx','evo','mx960','mx480','mx240','wrt']
-vm_os=['gw','alpine','centos','rhel','ubuntu','ubuntu2','debian','desktop','vmx',
+vm_os=['gw','alpine','centos','rhel','ubuntu','ubuntu2','debian','desktop','vmx','jspace','sdi',
        'vsrx','vjunos_switch','vjunos_router','vjunos_evolved','wrt','aos','aos_ztp','bridge','paagent','ssr']
 tmp_dir="./tmp/"
 vmm_group="vmm-default"

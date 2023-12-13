@@ -1,0 +1,129 @@
+ubuntu@node1:~$ kubectl exec -it -n healthbot `kubectl get po -n healthbot | grep influxdb | awk  '{print $1}'` -- bash
+Defaulted container "influxdb" out of: influxdb, init (init), sync (init), sysctl (init), mmap (init)
+root@influxdb-node1-845d75bf44-4mktq:/# influx
+Connected to http://localhost:8086 version 1.8.2
+InfluxDB shell version: 1.8.2
+> show databases
+name: databases
+name
+----
+health
+hb-default:health
+hb-northstar:health
+hb-tm:health
+hb-ems-dmon:health
+hb-default:controller:prefixes
+hb-tm:tm-dg-tenant1-Juniper:r7
+hb-tm:tm-dg-tenant1-Juniper:r1
+hb-tm:tm-dg-tenant1-Juniper:r9
+hb-tm:tm-dg-tenant1-Juniper:r4
+hb-tm:tm-dg-tenant1-Juniper:r6
+hb-tm:tm-dg-tenant1-Juniper:r5
+hb-ems-dmon:ems-grp-metrics:r8
+hb-tm:tm-dg-tenant1-Juniper:r3
+hb-tm:tm-dg-tenant1-Juniper:r8
+hb-ems-dmon:ems-grp-metrics:r2
+hb-ems-dmon:ems-grp-metrics:r1
+hb-ems-dmon:ems-grp-metrics:r4
+hb-ems-dmon:ems-grp-metrics:r3
+hb-ems-dmon:ems-grp-metrics:r6
+hb-ems-dmon:ems-grp-metrics:r5
+hb-ems-dmon:ems-grp-metrics:r9
+hb-ems-dmon:ems-grp-metrics:r7
+hb-default:controller:r4
+hb-default:controller:r7
+hb-default:controller:r1
+hb-default:controller:r5
+hb-default:controller:r2
+hb-default:controller:r9
+hb-default:controller:r8
+hb-default:controller:r3
+hb-default:controller:r6
+> use hb-default:controller:r1
+Using database hb-default:controller:r1
+> show measurements
+name: measurements
+name
+----
+controller.telemetry/ctrl-link-latency-ifl
+controller.telemetry/ctrl-link-latency-ifl_rollups-daily
+controller.telemetry/ctrl-link-latency-ifl_rollups-hourly
+controller.telemetry/ctrl-physical-interface
+controller.telemetry/ctrl-physical-interface-aggregation
+controller.telemetry/ctrl-physical-interface-aggregation_rollups-daily
+controller.telemetry/ctrl-physical-interface-aggregation_rollups-hourly
+controller.telemetry/ctrl-physical-interface/ifd-stats-collection
+> select * from "controller.telemetry/ctrl-physical-interface" ORDER BY desc LIMIT 30
+name: controller.telemetry/ctrl-physical-interface
+time                __device_timestamp__ _instance_id _playbook_name egress-stats-if-bps egress-stats-if-octets egress-stats-if-pkts egress-stats-if-pps elapsed-time if-name  ingress-stats-if-bps ingress-stats-if-octets ingress-stats-if-pkts ingress-stats-if-pps stats_received_count tandIngestTimestamp tandTimeOffset
+----                -------------------- ------------ -------------- ------------------- ---------------------- -------------------- ------------------- ------------ -------  -------------------- ----------------------- --------------------- -------------------- -------------------- ------------------- --------------
+1702258214599138763 1702258213639        ["ctrl1"]    controller     1893755             6163274912             7133917              270                 111          ge-0/0/3 33496                111447213               1737828               65                   1                    1702258214172979912 426.158851ms
+1702258214598303129 1702258213639        ["ctrl1"]    controller     10192               44131047               734264               21                  111          ge-0/0/2 447899               1548445117              2264822               75                   1                    1702258214172979912 425.323217ms
+1702258214597526229 1702258213639        ["ctrl1"]    controller     29432               110369868              1765759              58                  111          ge-0/0/1 1173319              3726651581              4746969               178                  1                    1702258214172979912 424.546317ms
+1702258214596963293 1702258213639        ["ctrl1"]    controller     88                  494989                 1608                 0                   111          ge-0/0/0 88                   491436                  1606                  0                    1                    1702258214172979912 423.983381ms
+1702258103593729744 1702258102733        ["ctrl1"]    controller     1837398             6136999061             7103900              260                 710          ge-0/0/3 30851                110982453               1730516               60                   1                    1702258103266171688 327.558056ms
+1702258103593167312 1702258102733        ["ctrl1"]    controller     9405                43989621               731901               19                  710          ge-0/0/2 457169               1542230517              2256419               76                   1                    1702258103266171688 326.995624ms
+1702258103592567361 1702258102733        ["ctrl1"]    controller     27956               109961487              1759236              55                  710          ge-0/0/1 1127515              3710371770              4727129               167                  1                    1702258103266171688 326.395673ms
+1702258103591997445 1702258102733        ["ctrl1"]    controller     90                  493757                 1604                 0                   710          ge-0/0/0 89                   490212                  1602                  0                    1                    1702258103266171688 325.825757ms
+1702257393591373477 1702257392088        ["ctrl1"]    controller     1352520             5973929917             6919026              191                 79           ge-0/0/3 23138                108244425               1687433               44                   1                    1702257392617276429 974.097048ms
+1702257393590918340 1702257392088        ["ctrl1"]    controller     8365                43154903               718029               17                  79           ge-0/0/2 345734               1501656713              2201807               59                   1                    1702257392617276429 973.641911ms
+1702257393590199400 1702257392088        ["ctrl1"]    controller     22200               107480372              1719585              44                  79           ge-0/0/1 840734               3610304798              4608011               125                  1                    1702257392617276429 972.922971ms
+1702257393589792767 1702257392088        ["ctrl1"]    controller     93                  485749                 1578                 0                   79           ge-0/0/0 92                   482256                  1576                  0                    1                    1702257392617276429 972.516338ms
+1702257314592101228 1702257313538        ["ctrl1"]    controller     1848935             5960573779             6903897              276                 901          ge-0/0/3 34494                108015928               1683891               68                   1                    1702257314068328182 523.773046ms
+1702257314591388157 1702257313538        ["ctrl1"]    controller     10051               43072290               716637               20                  901          ge-0/0/2 472060               1498242589              2197096               81                   1                    1702257314068328182 523.059975ms
+1702257314590882816 1702257313538        ["ctrl1"]    controller     84                  484825                 1575                 0                   901          ge-0/0/0 86                   481338                  1573                  0                    1                    1702257314068328182 522.554634ms
+1702257314590550813 1702257313538        ["ctrl1"]    controller     30269               107261140              1716102              60                  901          ge-0/0/1 1087529              3602002547              4598113               171                  1                    1702257314068328182 522.222631ms
+1702256413595693724 1702256412998        ["ctrl1"]    controller     1826977             5752337472             6654639              256                 899          ge-0/0/3 31062                104131011               1622485               60                   1                    1702256413524826350 70.867374ms
+1702256413594504694 1702256412998        ["ctrl1"]    controller     9618                41940219               697767               19                  899          ge-0/0/2 454662               1445076803              2123400               75                   1                    1702256413524826350 69.678344ms
+1702256413593665159 1702256412998        ["ctrl1"]    controller     27788               103852025              1661638              55                  899          ge-0/0/1 1107231              3479519549              4443986               164                  1                    1702256413524826350 68.838809ms
+1702256413592499040 1702256412998        ["ctrl1"]    controller     90                  475277                 1544                 0                   899          ge-0/0/0 87                   471546                  1541                  0                    1                    1702256413524826350 67.67269ms
+1702255514593727102 1702255513198        ["ctrl1"]    controller     1806562             5547030931             6424013              262                 900          ge-0/0/3 31801                100640365               1567663               62                   1                    1702255513722157479 871.569623ms
+1702255514593051144 1702255513198        ["ctrl1"]    controller     9451                40859335               679799               19                  900          ge-0/0/2 461327               1393984131              2055867               77                   1                    1702255513722157479 870.893665ms
+1702255514592508466 1702255513198        ["ctrl1"]    controller     28697               100729242              1611951              56                  900          ge-0/0/1 1080344              3355094432              4295821               167                  1                    1702255513722157479 870.350987ms
+1702255514591932816 1702255513198        ["ctrl1"]    controller     87                  465113                 1511                 0                   900          ge-0/0/0 87                   461754                  1509                  0                    1                    1702255513722157479 869.775337ms
+1702254614591968470 1702254613262        ["ctrl1"]    controller     1862454             5343792609             6187690              263                 899          ge-0/0/3 31499                97062677                1511773               62                   1                    1702254613782610266 809.358204ms
+1702254614591325744 1702254613262        ["ctrl1"]    controller     9523                39796057               662107               19                  899          ge-0/0/2 469032               1342084832              1986443               76                   1                    1702254613782610266 808.715478ms
+1702254614590663622 1702254613262        ["ctrl1"]    controller     28173               97500753               1560813              56                  899          ge-0/0/1 1111530              3233555693              4145110               167                  1                    1702254613782610266 808.053356ms
+1702254614589977862 1702254613262        ["ctrl1"]    controller     90                  455257                 1479                 0                   899          ge-0/0/0 89                   451962                  1477                  0                    1                    1702254613782610266 807.367596ms
+1702253714596582328 1702253714013        ["ctrl1"]    controller     1841053             5134499320             5950902              275                 900          ge-0/0/3 34737                93522896                1456002               68                   1                    1702253714530001968 66.58036ms
+1702253714596228337 1702253714013        ["ctrl1"]    controller     10001               38725798               644257               20                  900          ge-0/0/2 487225               1289377340              1917242               83                   1                    1702253714530001968 66.226369ms
+>
+> use hb-default:controller:r6
+Using database hb-default:controller:r6
+> show measurements
+name: measurements
+name
+----
+controller.telemetry/ctrl-link-latency-ifl
+controller.telemetry/ctrl-link-latency-ifl/link-latency-stats-collection
+controller.telemetry/ctrl-link-latency-ifl_rollups-daily
+controller.telemetry/ctrl-link-latency-ifl_rollups-hourly
+> select * from "controller.telemetry/ctrl-physical-interface" ORDER BY desc LIMIT 30
+>
+
+> use hb-default:controller:r5
+Using database hb-default:controller:r5
+> show measurements
+name: measurements
+name
+----
+controller.telemetry/ctrl-link-latency-ifl
+controller.telemetry/ctrl-link-latency-ifl_rollups-daily
+controller.telemetry/ctrl-link-latency-ifl_rollups-hourly
+> select * from "controller.telemetry/ctrl-physical-interface" ORDER BY desc LIMIT 30
+>
+> use hb-default:controller:r2
+Using database hb-default:controller:r2
+> show measurements
+name: measurements
+name
+----
+controller.telemetry/ctrl-link-latency-ifl
+controller.telemetry/ctrl-link-latency-ifl/link-latency-stats-collection
+controller.telemetry/ctrl-link-latency-ifl_rollups-daily
+controller.telemetry/ctrl-link-latency-ifl_rollups-hourly
+> select * from "controller.telemetry/ctrl-physical-interface" ORDER BY desc LIMIT 30
+>
+
+
+

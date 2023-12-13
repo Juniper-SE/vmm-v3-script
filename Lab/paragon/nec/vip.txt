@@ -1,0 +1,33 @@
+? Select components  done (4 selections)
+? Infrastructure Options  done (5 selections)
+? List of NTP servers  0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org
+? Virtual IP address(es) for ingress controller  172.29.14.216,61.94.0.217
+? Virtual IP address for Infrastructure Nginx Ingress Controller  61.94.0.218
+? Virtual IPv4 for device callbacks  61.94.0.217
+? Virtual IP address for Insights services  61.94.0.219
+? Virtual IP address for SNMP Trap receiver (optional)  61.94.0.220
+? Pathfinder Options  [Install Netflowd]
+? Use netflowd proxy?  No
+? Virtual IP address for Pathfinder Netflowd  61.94.0.221
+? PCEServer proxy  None
+? Virtual IP address for Pathfinder PCE server  61.94.0.222
+? LoadBalancer IP address ranges  61.94.0.217-61.94.0.222,172.29.14.216
+? Multi-master node detected do you want to setup multiple registries  Yes
+? Virtual IP address for registry  172.29.14.204
+? Enable md5 for PCE Server ?  No
+? Enable md5 for BGP ?  No
+? Hostname of Main web application  172.29.14.216
+? BGP autonomous system number of CRPD peer  64500
+? Comma separated list of CRPD peers  61.94.1.0
+? Finish and write configuration to file  Yes
+
+
+metallb_addresses:
+  - 61.94.0.217-61.94.0.222
+  - 172.29.14.216-172.29.14.216
+
+# alternatively, for metallb in L3 (BGP) mode, enable the following:
+metallb_mode: l3
+metallb_asn: 65413
+metallb_peer_asn: 65412
+metallb_peer_address: 172.29.14.193

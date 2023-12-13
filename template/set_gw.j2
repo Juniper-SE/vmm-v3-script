@@ -107,7 +107,10 @@ chmod og-rwx ~/.ssh/*
 sleep 2
 sudo netplan apply
 sleep 2
-sudo systemctl restart rc-local.service
+sudo systemctl enable startup.service
+sudo systemctl restart startup.service
 sudo systemctl restart isc-dhcp-server
 sudo systemctl restart tftpd-hpa
 sudo mv ~/tftp/*.conf /srv/tftp/
+sudo reboot
+

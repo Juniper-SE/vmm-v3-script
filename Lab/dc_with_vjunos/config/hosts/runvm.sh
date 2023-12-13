@@ -1,12 +1,12 @@
 #!/bin/bash
-VM=vm1
+VM=svr1
 DISK=${VM}.img
-VLAN=120
-LAN=ovs1
+VLAN=100
+LAN=ovsdc0
 virt-install --name ${VM} \
   --disk ./${DISK},device=disk,bus=virtio \
   --disk ./seed.iso,device=cdrom \
-  --ram 2048 --vcpu 1 --osinfo debian12 \
+  --ram 2048 --vcpu 1 --osinfo alpinelinux3.18 \
   --network=bridge:${LAN},model=virtio,virtualport_type=openvswitch \
   --xml "./devices/interface/vlan/tag/@id=${VLAN}" \
   --xml "./devices/interface/target/@dev=${VM}_e0" \

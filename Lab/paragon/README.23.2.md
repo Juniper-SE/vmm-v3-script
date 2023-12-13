@@ -162,18 +162,42 @@ note: the ansible script will install and setup the system to meet the requireme
 
         cp ~/.ssh/id_rsa ~/configdir/id_rsa
 
-9. upload file [images.txt](PA23.1/images.txt) into node **control**, directory configdir
 
-        scp PA23.1/images.txt control:~/configdir 
-
-10. Start Paragon automation installation process. The installation proccess may take up to 90 minutes to finish.
+9. Start Paragon automation installation process. The installation proccess may take up to 90 minutes to finish.
 
         tmux
-        ./Paragon_23.2/run -c configdir  deploy -e ignore_iops_check=yes
+        ./Paragon_23.2/run -c configdir  deploy -e ignore_iops_check=yes -e offline_install=true
+
+        
     
     ![deploy.png](images/deploy.png)
 
     ![finish.png](images/finish.png)
+
+## bugs with PAragon 23.2
+There is a bug on PA 23.2 related to multiple ingress VIP. 
+
+here are the steps to fix it
+1. run the following command to get service related to ingress 
+
+        kubectl get services -A | grep ambassador
+
+2. the first service will have name **ambassador**, and the 2nd, may have name **ambassador-1**, and so on
+3. Edit the 2nd service, using the command
+
+        kubectl -n ambassador edit service ambassador-1
+
+4. look for entry selector, and replace the following entries
+
+        selector:
+          app.kubernetes.io/instance: ambassador
+          app.kubernetes.io/name: ambassador
+
+        with 
+        
+        selector:
+          app.kubernetes.io/instance: emissary-ingress
+          app.kubernetes.io/name: emissary-ingress
 
 
 ##  Installation failure
@@ -204,15 +228,6 @@ note: the ansible script will install and setup the system to meet the requireme
 
 8. Then, the installation process will continue until it finish.
 
-## Copying kubernetes config file
-1. open ssh session into node0
-2. create directory ~/.kube
-3. copy file /etc/kubernetes/admin.config into ~/.kube/config
-
-        ssh node0  
-        mkdir ~/.kube
-        sudo cp /etc/kubernetes/admin.conf ./.kube/config
-        sudo chown ubuntu:ubuntu .kube/config
 
 ## Accessing Web Interface of Paragon automation
 1. From your workstation, open ssh session to node **proxy** and keep this session open if you need to access the web dashboard of Paragon Automation platform
@@ -272,4 +287,6 @@ do the following enable LSP latency calculation
         edit
         set northstar path-computation-server lsp-latency-interval 60s
         commit
+ 
+
  

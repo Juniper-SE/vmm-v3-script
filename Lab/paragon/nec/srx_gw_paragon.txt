@@ -1,0 +1,77 @@
+set version 22.3R1.11
+set system host-name GW-PARAGON
+set system root-authentication encrypted-password "$6$ueRbyvlTHr7Egl1f$Uw7GCvYVtDFo7VJGViKZnvhHpaUsIyb1E84lafGf9lkVcMTli85U.yT1Iq6d/AhPVqpyBaDr0ywGP0U4HoP4d0"
+set system commit synchronize
+set system scripts language python3
+set system scripts synchronize
+set system login user lab uid 2001
+set system login user lab class super-user
+set system login user lab authentication encrypted-password "$6$g/YCvV4e$FOHwKucMaiEkGQGUKXTccQ3hjR8REFkFg9O92nsdsmM9AsX7OQQY7eWr7K0dOXJJjKxqep4EDNmgSeIKhx2jo1"
+set system login user nec uid 2000
+set system login user nec class super-user
+set system login user nec authentication encrypted-password "$6$vQ1sCJuf$NBeJGRAsx3C1pStfvpDrtuLiCoTNKzx15FWUdO94Sqr6cMGtBgu7mMewRxRhDdcjMXoB1adAfdSFdBFfN1RO7."
+set system services ssh root-login allow
+set system services ssh protocol-version v2
+set system services telnet
+set system services netconf ssh
+set system name-server 8.8.8.8
+set system name-server 8.8.4.4
+set system syslog archive size 100k
+set system syslog archive files 3
+set system syslog user * any emergency
+set system syslog file escript.log archive size 2m
+set system syslog file escript.log archive files 5
+set system syslog file interactive-commands interactive-commands any
+set system syslog file interactive-commands match "!(.*mist.*)"
+set system syslog file interactive-commands archive size 2m
+set system syslog file interactive-commands archive files 5
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file op-script.log archive size 2m
+set system syslog file op-script.log archive files 5
+set system syslog file snapshot archive size 2m
+set system syslog file snapshot archive files 5
+set system max-configurations-on-flash 5
+set system max-configuration-rollbacks 5
+set system license autoupdate url https://ae1.juniper.net/junos/key_retrieval
+set security pki ca-profile mist-ca ca-identity mist-ca
+set security nat source pool pool1 address 61.94.0.216/32
+set security nat source rule-set rs1 from zone trust
+set security nat source rule-set rs1 to zone untrust
+set security nat source rule-set rs1 rule r1 match source-address 172.29.14.200/32
+set security nat source rule-set rs1 rule r1 match source-address 172.29.14.201/32
+set security nat source rule-set rs1 rule r1 match source-address 172.29.14.202/32
+set security nat source rule-set rs1 rule r1 match destination-address 61.94.0.0/16
+set security nat source rule-set rs1 rule r1 then source-nat pool pool1
+set security policies default-policy permit-all
+set security zones security-zone untrust interfaces ge-0/0/4.0 host-inbound-traffic system-services ping
+set security zones security-zone untrust interfaces ge-0/0/4.0 host-inbound-traffic system-services ssh
+set security zones security-zone untrust interfaces ge-0/0/4.0 host-inbound-traffic system-services telnet
+set security zones security-zone untrust interfaces ge-0/0/4.0 host-inbound-traffic system-services all
+set security zones security-zone untrust interfaces ge-0/0/1.173 host-inbound-traffic system-services ping
+set security zones security-zone untrust interfaces ge-0/0/1.172 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/0.0 host-inbound-traffic protocols bgp
+set interfaces ge-0/0/0 description "To paragon server"
+set interfaces ge-0/0/0 unit 0 family inet address 172.29.14.193/28
+set interfaces ge-0/0/1 description "to PE"
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 172 vlan-id 172
+set interfaces ge-0/0/1 unit 172 family inet address 172.29.14.209/31
+set interfaces ge-0/0/1 unit 173 vlan-id 173
+set interfaces ge-0/0/1 unit 173 family inet address 172.29.14.211/31
+set interfaces ge-0/0/2 unit 0
+set interfaces ge-0/0/3 unit 0
+set interfaces ge-0/0/4 description "to NEC Lab"
+set interfaces ge-0/0/4 unit 0 family inet address 10.88.14.171/24
+set interfaces ge-0/0/5 unit 0
+set interfaces ge-0/0/6 unit 0
+set protocols bgp group to_pa local-address 172.29.14.193
+set protocols bgp group to_pa peer-as 65413
+set protocols bgp group to_pa neighbor 172.29.14.200
+set protocols bgp group to_pa neighbor 172.29.14.201
+set protocols bgp group to_pa neighbor 172.29.14.202
+set routing-options autonomous-system 65412
+set routing-options static route 0.0.0.0/0 next-hop 10.88.14.1
+set routing-options static route 61.94.0.0/16 next-hop 172.29.14.210
+set routing-options static route 172.29.0.0/16 next-hop 172.29.14.208

@@ -51,6 +51,38 @@ This is the topology of the lab
         ssh client1a
         ssh client2
 
+
+## configuring management ip address for SRX1a, SRX1b, SRX2, and SRX3
+1. from your workstation, open ssh session into node **vmm**
+
+        ssh vmm
+
+2. access console session of srx1a through its serial port
+
+        vmm serial -t srx1
+
+3. login using user root
+
+4. Enter the initial configuration of srx1a
+
+
+       cli
+       configure
+       set system host-name srx1a
+       set system root-authentication encrypted-password $1$qDf59uzm$qp8V2LMHXWekHkoogzd1g0
+       set system login user admin class super-user authentication encrypted-password $1$qDf59uzm$qp8V2LMHXWekHkoogzd1g0
+       set system management-instance
+       set system services ssh
+       set system service netconf ssh
+       set interface fxp0 unit 0 family inet address 172.16.10.104/24
+       commit
+
+5. from your workstation, try to open ssh session into srx1a
+
+       ssh srx1a
+
+5. Repeat step 2 - 4 for srx1b, srx2, and srx3. Refer to file [lab.yaml](./lab.yaml) for management ip address of srx1b, srx2, and srx3
+
 ## configuring SRX for site 1 (cluster firewall)
 1. open ssh session into srx1a, set the cluster ID to 1 and as node 0
 
@@ -167,7 +199,8 @@ This is the topology of the lab
         ip address: 172.16.2.12
         netmask : 255.255.255.0
         gateway : 172.16.2.1
-        NTP : 172.16.2.1
+        dns: 
+        NTP : anyntp.juniper.net
         Log Collector : enabled
 
 5. Wait until the initialization process is finish

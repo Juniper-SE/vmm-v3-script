@@ -17,25 +17,25 @@
       cache_valid_time: 3600
       force_apt_get: true
       state: latest
-  - name: install ntp server
-    apt:
-      name: ntp
-      state: present
-  - name: edit /etc/ntp.conf
-    ansible.builtin.blockinfile:
-      path: /etc/ntp.conf
-      block: |
-        server anyntp.juniper.net prefer iburst
-  - name: edit ntp server
-    ansible.builtin.lineinfile:
-      path: /etc/ntp.conf
-      regexp: '^pool'
-      state: absent
-  - name: restart ntp
-    ansible.builtin.service:
-      name: ntp
-      state: restarted
-      enabled: true
+  # - name: install ntp server
+  #   apt:
+  #     name: ntp
+  #     state: present
+  # - name: edit /etc/ntp.conf
+  #   ansible.builtin.blockinfile:
+  #     path: /etc/ntp.conf
+  #     block: |
+  #       server anyntp.juniper.net prefer iburst
+  # - name: edit ntp server
+  #   ansible.builtin.lineinfile:
+  #     path: /etc/ntp.conf
+  #     regexp: '^pool'
+  #     state: absent
+  # - name: restart ntp
+  #   ansible.builtin.service:
+  #     name: ntp
+  #     state: restarted
+  #     enabled: true
 - name: prepare kubernetes node
   hosts:
     - node1
@@ -44,6 +44,18 @@
   become: yes
   become_method: sudo
   tasks:
+  - name: install application
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+    loop:
+      - apt-transport-https 
+      - ca-certificates 
+      - curl 
+      - docker.io 
+      - jq 
+      - keepalived 
+      - chrony
   - name: add into limits.conf
     ansible.builtin.blockinfile:
       path: /etc/security/limits.conf
@@ -58,11 +70,10 @@
     ansible.builtin.blockinfile:
       path: /etc/hosts
       block: |
-        172.16.11.101 node1
-        172.16.11.102 node2
-        172.16.11.103 node3
+        172.16.11.2 node1
+        172.16.11.3 node2
+        172.16.11.4 node3
         172.16.12.11 control
-        172.16.11.95 registry
   - name: add into sysctl.conf
     ansible.builtin.blockinfile:
       path: /etc/sysctl.conf

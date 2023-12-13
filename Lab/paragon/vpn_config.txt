@@ -1,0 +1,150 @@
+set protocols bgp group to_pe type internal
+set protocols bgp group to_pe local-address 10.100.1.105
+set protocols bgp group to_pe family inet-vpn any
+set protocols bgp group to_pe family inet6-vpn any
+set protocols bgp group to_pe cluster 10.100.1.105
+set protocols bgp group to_pe allow 10.100.1.0/24
+set routing-options autonomous-system 4200000512
+
+
+
+set protocols bgp group to_r5 type internal
+set protocols bgp group to_r5 local-address 10.100.1.101
+set protocols bgp group to_r5 family inet-vpn any
+set protocols bgp group to_r5 family inet6-vpn any
+set protocols bgp group to_r5 neighbor 10.100.1.105
+set routing-options autonomous-system 4200000512
+set routing-options route-distinguisher-id 10.100.1.101
+
+
+set protocols bgp group to_r5 type internal
+set protocols bgp group to_r5 local-address 10.100.1.109
+set protocols bgp group to_r5 family inet-vpn any
+set protocols bgp group to_r5 family inet6-vpn any
+set protocols bgp group to_r5 neighbor 10.100.1.105
+set routing-options autonomous-system 4200000512
+set routing-options route-distinguisher-id 10.100.1.109
+
+
+
+
+set interfaces ge-0/0/0 unit 1001 vlan-id 1001
+set interfaces ge-0/0/0 unit 1001 family inet address 192.168.100.0/31
+set interfaces ge-0/0/0 unit 1001 family inet6 address fc00:dead:beef:a100::1000:0/127
+set routing-instances vpn1 instance-type vrf
+set routing-instances vpn1 protocols bgp group to_ce local-as 4200000512
+set routing-instances vpn1 protocols bgp group to_ce neighbor 192.168.100.1 peer-as 4200001001
+set routing-instances vpn1 protocols bgp group to_ce neighbor fc00:dead:beef:a100::1000:1 peer-as 4200001001
+set routing-instances vpn1 interface ge-0/0/0.1001
+set routing-instances vpn1 vrf-target target:4200000512L:1001
+set routing-instances vpn1 vrf-table-label
+
+
+set interfaces ge-0/0/0 unit 1001 vlan-id 1001
+set interfaces ge-0/0/0 unit 1001 family inet address 192.168.100.2/31
+set interfaces ge-0/0/0 unit 1001 family inet6 address fc00:dead:beef:a100::1000:2/127
+set routing-instances vpn1 instance-type vrf
+set routing-instances vpn1 protocols bgp group to_ce local-as 4200000512
+set routing-instances vpn1 protocols bgp group to_ce neighbor 192.168.100.3 peer-as 4200001009
+set routing-instances vpn1 protocols bgp group to_ce neighbor fc00:dead:beef:a100::1000:3 peer-as 4200001009
+set routing-instances vpn1 interface ge-0/0/0.1001
+set routing-instances vpn1 vrf-target target:4200000512L:1001
+set routing-instances vpn1 vrf-table-label
+
+
+
+set routing-instances vpn1_r1 protocols bgp group to_r1 neighbor fc00:dead:beef:a100::1000:0 family inet6 any
+set routing-instances vpn1_r1 protocols bgp group to_r1 neighbor fc00:dead:beef:a100::1000:0 peer-as 4200000512
+set routing-instances vpn1_r1 protocols bgp group to_r1 neighbor fc00:dead:beef:a100::1000:0 local-as 4200001001
+
+
+
+set routing-instances vpn1_r9 instance-type virtual-router
+set routing-instances vpn1_r9 protocols bgp group to_r1 neighbor 192.168.100.2 family inet any
+set routing-instances vpn1_r9 protocols bgp group to_r1 neighbor 192.168.100.2 peer-as 4200000512
+set routing-instances vpn1_r9 protocols bgp group to_r1 neighbor 192.168.100.2 local-as 4200001009
+set routing-instances vpn1_r9 protocols bgp group to_r1 neighbor fc00:dead:beef:a100::1000:2 family inet6 any
+set routing-instances vpn1_r9 protocols bgp group to_r1 neighbor fc00:dead:beef:a100::1000:2 peer-as 4200000512
+set routing-instances vpn1_r9 protocols bgp group to_r1 neighbor fc00:dead:beef:a100::1000:2 local-as 4200001009
+set routing-instances vpn1_r9 interface ge-0/0/9.1001
+
+
+set interfaces ge-0/0/9 unit 1001 vlan-id 1001
+set interfaces ge-0/0/9 unit 1001 family inet address 192.168.100.3/31
+set interfaces ge-0/0/9 unit 1001 family inet6 address fc00:dead:beef:a100::1000:3/127
+
+
+set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols ldp interface ge-0/0/3.0
+set protocols ldp interface ge-0/0/4.0
+set protocols ldp interface lo0.0
+
+
+set policy-options policy-statement vpn1_r9 term 1 from route-filter 192.168.9.0/24 orlonger
+set policy-options policy-statement vpn1_r9 term 1 then accept
+set policy-options policy-statement vpn1_r9 term 2 from route-filter fc00:dead:beef:f009::/64 orlonger
+set policy-options policy-statement vpn1_r9 term 2 then accept
+set policy-options policy-statement vpn1_r9 term defaul then reject
+
+
+
+
+
+set interfaces {{ interface }} unit {{ unit }} vlan-id {{vlan}}
+set interfaces {{ interface }} unit {{ unit }} family inet address {{ ipv4_pe }}
+set interfaces {{ interface }} unit {{ unit }} family inet6 address {{ ipv6_pe }}
+set routing-instances {{ instance }} instance-type vrf
+set routing-instances {{ instance }} protocols bgp group to_ce local-as {{ local_as }}
+set routing-instances {{ instance }} protocols bgp group to_ce neighbor {{peer_ipv4}} peer-as {{peer_as}}
+set routing-instances {{ instance }} protocols bgp group to_ce neighbor {{peer_ipv6}} peer-as {{peer_as}}
+set routing-instances {{ instance }} interface  {{ interface }}.{{unit}}
+set routing-instances {{ instance }} vrf-target target:{{route_target}}
+set routing-instances {{ instance }} vrf-table-label
+
+
+set routing-instances vpn1 instance-type vrf
+set routing-instances vpn1 protocols bgp group to_ce local-as 4200000512
+set routing-instances vpn1 protocols bgp group to_ce neighbor 192.168.100.1 peer-as 4200001001
+set routing-instances vpn1 protocols bgp group to_ce neighbor fc00:dead:beef:a100::1000:1 peer-as 4200001001
+set routing-instances vpn1 interface ge-0/0/0.1001
+set routing-instances vpn1 vrf-target target:4200000512L:1001
+set routing-instances vpn1 vrf-table-label
+
+
+
+r1 
+instance : vpn1
+interface : ge-0/0/0
+unit: 1
+vlan: 1001
+ipv4_pe: 192.168.100.0/31
+ipv6_pe: fc00:dead:beef:a100::1000:0/127
+peer_ipv4: 192.168.100.1/31
+peer_ipv6: fc00:dead:beef:a100::1000:1/127
+local_as: 4200000512
+peer_as: 4200001001
+route_target: 4200000512L:1001
+
+r9
+instance : vpn1
+interface : ge-0/0/0
+unit: 1
+vlan: 1001
+ipv4_pe: 192.168.100.2/31
+ipv6_pe: fc00:dead:beef:a100::1000:2/127
+peer_ipv4: 192.168.100.3/31
+peer_ipv6: fc00:dead:beef:a100::1000:3/127
+local_as: 4200000512
+peer_as: 4200001009
+route_target: 4200000512L:1001
+
+
+
+set routing-instances test1 instance-type vrf
+set routing-instances test1 protocols bgp group to_ce local-as 4200000512
+set routing-instances test1 protocols bgp group to_ce neighbor 192.168.100.1 peer-as 4200001001
+set routing-instances test1 protocols bgp group to_ce neighbor fc00:dead:beef:a100::1000:1 peer-as 4200001001
+set routing-instances test1 interface  ge-0/0/0.1
+set routing-instances test1 vrf-target target:1000:10
+set routing-instances test1 vrf-table-label
