@@ -41,6 +41,7 @@
     - node1
     - node2
     - node3
+    - control
   become: yes
   become_method: sudo
   tasks:
@@ -82,11 +83,11 @@
         vm.max_map_count=262144
         fs.inotify.max_user_watches=524288
         fs.inotify.max_user_instances=512
-  # - name: add into sshd_config
-  #   ansible.builtin.blockinfile:
-  #     path: /etc/ssh/sshd_config
-  #     block: |
-  #       AllowTcpForwarding yes
+  - name: adding user ubuntu into group docker
+    user:
+      name: ubuntu
+      groups: docker
+      append: yes
   - name: edit sshd_config
     ansible.builtin.lineinfile:
       path: /etc/ssh/sshd_config

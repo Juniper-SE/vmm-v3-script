@@ -68,13 +68,13 @@ This is the topology of the lab
 
        cli
        configure
-       set system host-name srx1a
+       set system host-name srx3
        set system root-authentication encrypted-password $1$qDf59uzm$qp8V2LMHXWekHkoogzd1g0
        set system login user admin class super-user authentication encrypted-password $1$qDf59uzm$qp8V2LMHXWekHkoogzd1g0
        set system management-instance
        set system services ssh
        set system service netconf ssh
-       set interface fxp0 unit 0 family inet address 172.16.10.104/24
+       set interface fxp0 unit 0 family inet address 172.16.10.106/24
        commit
 
 5. from your workstation, try to open ssh session into srx1a
@@ -98,6 +98,7 @@ This is the topology of the lab
 4. Verify that cluster is up and running
 
         show chassis cluster status
+        
 4. add the following into the srx1 cluster
 
         edit

@@ -82,7 +82,7 @@ set protocols pcep pce northstar1 destination-ipv4-address 172.16.20.1
 ? Select components  done (4 selections)
 ? Infrastructure Options  done (5 selections)
 ? List of NTP servers  anyntp.juniper.net
-? Virtual IP address(es) for ingress controller  172.16.20.1,172.16.11.6
+? Virtual IP address(es) for ingress controller  172.16.20.1,172.16.25.1
 ? Virtual IP address for Infrastructure Nginx Ingress Controller  172.16.20.2
 ? Virtual IPv4 for device callbacks  172.16.20.1
 ? Virtual IP address for Insights services  172.16.20.3

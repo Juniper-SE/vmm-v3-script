@@ -1,13 +1,19 @@
+# Change default password and upload the license
+1. Login into Paragon dashboard using user **admin** and change the password from default to new password
+2. Login into Paragon dashboard using new password
+3. On paragon dashboard, select **Administration** > **License Management**, and add the licenses into Paragon platform
+4. Logout and login again to verify that license has been activated 
+
 # Initial setup for paragon automation
 
-1. On node **gw** test connectivity to loopback of junos VM (10.100.1.1-7)
+1. On Paragon node **node1** or **node2** or **node3**,  test connectivity to loopback of network devices (10.100.1.1, 10.100.1.2, 10.100.2.5, 10.100.2.6, 10.100.3.10, 10.100.3.11)
 
 2. On node **r1**, verify that BGP peer with **crpd** on Paragon automation is up and running
-    ![p4_bgp](images/p4_bgp.png)
+    ![p4_bgp](images/p4_bgp.jpg)
 
 3. On Paragon Automation dashboard, click **Network** > **Topology** and verify that network topology are discovered
 
-    ![network_topology](images/network_topology.png)
+    ![network_topology](images/network_topology.jpg)
 
 4. On Paragon Dashboard, click **Configuration** > **Device**, click **Add**, select **Add targets from topology to this list**, select all devices to be added, and set device credentials to admin/pass01, and click **OK**. Wait until job is done.
 
