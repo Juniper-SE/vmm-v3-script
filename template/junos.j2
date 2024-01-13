@@ -14,7 +14,6 @@ system {
             }
         }
     }
-    management-instance;
     services {
         ssh {
             root-login allow;
@@ -57,6 +56,10 @@ system {
     }
     {% endif -%}
 }
+{% if mgmt_instc == 1 -%}
+system {
+    management-instance;
+}
 routing-instances {
     mgmt_junos {
         routing-options {
@@ -68,6 +71,7 @@ routing-instances {
         }
     }
 }
+{% endif -%}
 {% if type == 'vmx' -%}
 chassis {
     network-services enhanced-ip;
@@ -90,7 +94,11 @@ interfaces {
    fxp0 {
       unit 0 {
          family inet {
+         {% if mgmt_dhcp == 1 -%}
+             dhcp;
+         {% else -%}
              address {{mgmt_ip}};
+         {% endif -%}
          }
       }
     }
@@ -103,7 +111,11 @@ interfaces {
    fxp0 {
       unit 0 {
          family inet {
-             address {{mgmt_ip}};
+         {% if mgmt_dhcp == 1 -%}
+            dhcp;
+         {% else -%}
+            address {{mgmt_ip}};
+         {% endif -%}
          }
       }
     }
@@ -113,7 +125,11 @@ interfaces {
    re0:mgmt-0 {
       unit 0 {
          family inet {
-             address {{mgmt_ip}};
+         {% if mgmt_dhcp == 1 -%}
+            dhcp;
+         {% else -%}
+            address {{mgmt_ip}};
+         {% endif -%}
          }
       }
     }

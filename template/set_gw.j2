@@ -45,6 +45,7 @@ host {{ r }} {
 EOF
 {% endif -%}
 
+
 {% if net -%}
 cat << EOF | sudo tee /etc/netplan/02_net.yaml
 network:
@@ -70,6 +71,7 @@ network:
     {% endfor %}  
 EOF
 {% endif %}
+
 
 {% if vnc -%}
 cat << EOF | sudo tee /usr/local/bin/startup.sh
@@ -104,13 +106,12 @@ EOF
 
 chmod og-rwx ~/.ssh/*
 
-sleep 2
 sudo netplan apply
-sleep 2
+
 sudo systemctl enable startup.service
 sudo systemctl restart startup.service
 sudo systemctl restart isc-dhcp-server
 sudo systemctl restart tftpd-hpa
 sudo mv ~/tftp/*.conf /srv/tftp/
-sudo reboot
+# sudo reboot
 

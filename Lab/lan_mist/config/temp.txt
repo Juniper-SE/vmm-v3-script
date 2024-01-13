@@ -1,0 +1,98 @@
+set interfaces ge-0/0/1 unit 301 description "to RZ1 core1"
+set interfaces ge-0/0/1 unit 301 vlan-id 301
+set interfaces ge-0/0/1 unit 301 family inet address 192.168.31.0/31
+set interfaces ge-0/0/1 unit 302 description "to RZ2 core1"
+set interfaces ge-0/0/1 unit 302 vlan-id 302
+set interfaces ge-0/0/1 unit 302 family inet address 192.168.31.4/31
+set interfaces ge-0/0/1 unit 1001 description "to underlay core1"
+set interfaces ge-0/0/1 unit 1001 vlan-id 1001
+set interfaces ge-0/0/1 unit 1001 family inet address 172.16.101.0/31
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 301 description "to RZ1 core2"
+set interfaces ge-0/0/2 unit 301 vlan-id 301
+set interfaces ge-0/0/2 unit 301 family inet address 192.168.31.2/31
+set interfaces ge-0/0/2 unit 302 description "to RZ2 core2"
+set interfaces ge-0/0/2 unit 302 vlan-id 302
+set interfaces ge-0/0/2 unit 302 family inet address 192.168.31.5/31
+set interfaces ge-0/0/2 unit 1001 description "to underlay core2"
+set interfaces ge-0/0/2 unit 1001 vlan-id 1001
+set interfaces ge-0/0/2 unit 1001 family inet address 172.16.101.2/31
+
+
+set security zones security-zone RZ1 tcp-rst
+set security zones security-zone RZ2 tcp-rst
+set security zones security-zone RZ1 interfaces ge-0/0/1.301 host-inbound-traffic protocols bgp
+set security zones security-zone RZ1 interfaces ge-0/0/2.301 host-inbound-traffic protocols bgp
+set security zones security-zone RZ2 interfaces ge-0/0/1.302 host-inbound-traffic protocols bgp
+set security zones security-zone RZ2 interfaces ge-0/0/2.302 host-inbound-traffic protocols bgp
+set security zones security-zone underlay interfaces ge-0/0/1.1001
+set security zones security-zone underlay interfaces ge-0/0/2.1001
+set security zones security-zone untrust screen untrust-screen
+set security zones security-zone untrust interfaces ge-0/0/0.0
+
+
+set security nat source rule-set rs1 from zone RZ1
+set security nat source rule-set rs1 from zone RZ2
+set security nat source rule-set rs1 from zone underlay
+set security nat source rule-set rs1 to zone untrust
+set security nat source rule-set rs1 rule r1 match source-address 0.0.0.0/0
+set security nat source rule-set rs1 rule r1 match destination-address 0.0.0.0/0
+set security nat source rule-set rs1 rule r1 then source-nat interface
+
+
+set security policies default-policy deny-all
+set security policies pre-id-default-policy then log session-close
+
+set security policies from-zone RZ1 to-zone RZ1 policy default-permit match source-address any
+set security policies from-zone RZ1 to-zone RZ1 policy default-permit match destination-address any
+set security policies from-zone RZ1 to-zone RZ1 policy default-permit match application any
+set security policies from-zone RZ1 to-zone RZ1 policy default-permit then permit
+
+set security policies from-zone RZ2 to-zone RZ2 policy default-permit match source-address any
+set security policies from-zone RZ2 to-zone RZ2 policy default-permit match destination-address any
+set security policies from-zone RZ2 to-zone RZ2 policy default-permit match application any
+set security policies from-zone RZ2 to-zone RZ2 policy default-permit then permit
+
+set security policies from-zone underlay to-zone underlay policy default-permit match source-address any
+set security policies from-zone underlay to-zone underlay policy default-permit match destination-address any
+set security policies from-zone underlay to-zone underlay policy default-permit match application any
+set security policies from-zone underlay to-zone underlay policy default-permit then permit
+
+set security policies from-zone RZ1 to-zone untrust policy default-permit match source-address any
+set security policies from-zone RZ1 to-zone untrust policy default-permit match destination-address any
+set security policies from-zone RZ1 to-zone untrust policy default-permit match application any
+set security policies from-zone RZ1 to-zone untrust policy default-permit then permit
+
+set security policies from-zone RZ2 to-zone untrust policy default-permit match source-address any
+set security policies from-zone RZ2 to-zone untrust policy default-permit match destination-address any
+set security policies from-zone RZ2 to-zone untrust policy default-permit match application any
+set security policies from-zone RZ2 to-zone untrust policy default-permit then permit
+
+set security policies from-zone underlay to-zone untrust policy default-permit match source-address any
+set security policies from-zone underlay to-zone untrust policy default-permit match destination-address any
+set security policies from-zone underlay to-zone untrust policy default-permit match application any
+set security policies from-zone underlay to-zone untrust policy default-permit then permit
+
+
+set security zones security-zone trust tcp-rst
+set security zones security-zone trust interfaces ge-0/0/1.301 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.301 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/1.1001
+set security zones security-zone trust interfaces ge-0/0/2.1001
+set security zones security-zone untrust screen untrust-screen
+set security zones security-zone untrust interfaces ge-0/0/0.0
+
+
+set protocols bgp group to_campus neighbor 192.168.31.3 export from_static
+set protocols bgp group to_campus neighbor 192.168.31.3 peer-as 65420
+set protocols bgp group to_campus neighbor 192.168.31.3 local-as 65412
+set protocols bgp group to_campus neighbor 192.168.31.1 export from_static
+set protocols bgp group to_campus neighbor 192.168.31.1 peer-as 65420
+set protocols bgp group to_campus neighbor 192.168.31.1 local-as 65412
+
+set protocols bgp group to_campus neighbor 192.168.31.5 export from_static
+set protocols bgp group to_campus neighbor 192.168.31.5 peer-as 65420
+set protocols bgp group to_campus neighbor 192.168.31.5 local-as 65412
+set protocols bgp group to_campus neighbor 192.168.31.7 export from_static
+set protocols bgp group to_campus neighbor 192.168.31.7 peer-as 65420
+set protocols bgp group to_campus neighbor 192.168.31.7 local-as 65412

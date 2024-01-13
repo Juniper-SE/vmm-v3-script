@@ -115,14 +115,16 @@ def change_ztp(d1):
 				
 def change_gateway4(d1):
 	for i in d1['vm'].keys():
-		if d1['vm'][i]['os'] in ['ubuntu','ubuntu2','desktop']:
+		if d1['vm'][i]['os'] in ['ubuntu','ubuntu2','desktop','debian']:
 			for j in d1['vm'][i]['interfaces'].keys():
+				#print(f"vm {i} interface {j}")
 				if 'family' in d1['vm'][i]['interfaces'][j].keys():
 					if 'inet' in d1['vm'][i]['interfaces'][j]['family'].keys():
 						#print(f"host {i} {d1['vm'][i]['interfaces'][j]['family'].keys()}")
 						#if 'gateway4' in d1['vm'][i]['interfaces'][j]['family']['inet'].keys():
 						#if 'gateway4' in d1['vm'][i]['interfaces'][j].keys():
 						if 'gateway4' in d1['vm'][i]['interfaces'][j]['family'].keys():
+							#print("Create static")
 							if 'static' in d1['vm'][i]['interfaces'][j]['family'].keys():
 								#d1['vm'][i]['interfaces'][j]['static'].append({'to':'default','via':j['gateway4']})
 								d1['vm'][i]['interfaces'][j]['family']['static'].append({'to':'0.0.0.0/0','via':d1['vm'][i]['interfaces'][j]['family']['gateway4']})
@@ -130,6 +132,8 @@ def change_gateway4(d1):
 								#d1['vm'][i]['interfaces'][j]['static']=[{'to':'default','via': d1['vm'][i]['interfaces'][j]['gateway4']}]
 								d1['vm'][i]['interfaces'][j]['family']['static']=[{'to':'0.0.0.0/0','via': d1['vm'][i]['interfaces'][j]['family']['gateway4']}]
 							d1['vm'][i]['interfaces'][j]['family'].pop('gateway4')
+						else:
+							print("no gateway4")
 						if 'gateway6' in d1['vm'][i]['interfaces'][j]['family'].keys():
 							if 'static' in d1['vm'][i]['interfaces'][j]['family'].keys():
 								#d1['vm'][i]['interfaces'][j]['static'].append({'to':'default','via':j['gateway4']})
@@ -138,6 +142,7 @@ def change_gateway4(d1):
 								#d1['vm'][i]['interfaces'][j]['static']=[{'to':'default','via': d1['vm'][i]['interfaces'][j]['gateway4']}]
 								d1['vm'][i]['interfaces'][j]['family']['static']=[{'to':'::/0','via': d1['vm'][i]['interfaces'][j]['family']['gateway6']}]
 							d1['vm'][i]['interfaces'][j]['family'].pop('gateway6')
+		#print(d1['vm'][i])
 							
 
 def create_config_interfaces(d1):
@@ -963,9 +968,10 @@ def set_gw(d1):
 	# cmd1="chmod +x /home/ubuntu/set_gw.sh"
 	#cmd1='ls -la'
 	#s0,s1,s2=ssh.exec_command(cmd1)
-	cmd1="bash /home/ubuntu/set_gw.sh"
+	cmd1="bash ~/set_gw.sh"
 	# print("executing set_gw.sh")
-	ssh.exec_command(cmd1)
+	stdin_, stdout_, stderr_ = ssh.exec_command(cmd1)
+	stdout_.channel.recv_exit_status()
 	ssh.close()
 	#print(set_gw_script)
 
@@ -1167,8 +1173,10 @@ def set_host(d1,vm=""):
 			#cmd1="chmod +x ~/set_host.sh"
 			#ssh2host.exec_command(cmd1)
 			#cmd1="bash /home/ubuntu/set_host.sh"
-			cmd1="nohup sh ~/set_host.sh &"
-			ssh2host.exec_command(cmd1)
+			#cmd1="nohup sh ~/set_host.sh &"
+			cmd1="bash ~/set_host.sh"
+			stdin_, stdout_, stderr_ = ssh2host.exec_command(cmd1)
+			stdout_.channel.recv_exit_status()
 			sftp.close()
 			ssh2host.close()
 	
@@ -1558,7 +1566,7 @@ def write_ssh_config(d1):
 		ssh_key = d1['pod']['ssh_key_name']
 	else:
 		ssh_key = "id_rsa"
-	if 'ssh_key_host' in d1['pod'].keys():
+	if 'ssh_key_host_name' in d1['pod'].keys():
 		ssh_key_host = d1['pod']['ssh_key_host_name']
 	else:
 		ssh_key_host = ssh_key
@@ -1750,6 +1758,20 @@ def create_junos_config(d1,i):
 	dummy1['protocols']=None
 	#dummy1['static']=[]
 	dummy1['rpm']={}
+	if 'mgmt_dhcp' in d1['vm'][i].keys():
+		if d1['vm'][i]['mgmt_dhcp']:
+			dummy1['mgmt_dhcp'] = 1
+		else: 
+			dummy1['mgmt_dhcp'] = 0
+	else:
+		dummy1['mgmt_dhcp'] = 0
+	if 'mgmt_instc' in d1['vm'][i].keys():
+		if d1['vm'][i]['mgmt_instc']:
+			dummy1['mgmt_intsc'] = 1
+		else: 
+			dummy1['mgmt_instc'] = 0
+	else:
+		dummy1['mgmt_instc'] = 1
 	if "lo0" in d1['vm'][i]['interfaces'].keys():
 		if 'bgpls' in d1['vm'][i].keys():
 			dummy1['bgpls']={'as' : d1['vm'][i]['bgpls']['as'],'local' : d1['vm'][i]['bgpls']['local']}
@@ -1816,25 +1838,26 @@ def write_junos_config(d1):
 		#print("template ",param1.junos_template)
 		with open(d1['template']['junos']) as f1:
 			jt=f1.read()
-		with open(d1['template']['junos2']) as f1:
-			jt2=f1.read()
-		with open(d1['template']['junos3']) as f1:
-			jt3=f1.read()
+		# with open(d1['template']['junos2']) as f1:
+		# 	jt2=f1.read()
+		# with open(d1['template']['junos3']) as f1:
+		# 	jt3=f1.read()
 		# f1=open(d1['pod']['path'] + param1.junos_template)
 		#f1.close()
 		for i in d1['vm'].keys():
 			if d1['vm'][i]['type'] in param1.junos_type:
 				dummy1 = create_junos_config(d1,i)
-				if 'dhcp' in d1['vm'][i].keys():
-					if d1['vm'][i]['dhcp'] == 2:
-						config1=Template(jt2).render(dummy1)
-					elif d1['vm'][i]['dhcp'] == 3:
-						config1=Template(jt3).render(dummy1)
-					else:
-						config1=Template(jt).render(dummy1)
-				else:
-					# print(f"template junos static {i} ")
-					config1=Template(jt).render(dummy1)
+				# if 'dhcp' in d1['vm'][i].keys():
+				# 	if d1['vm'][i]['dhcp'] == 2:
+				# 		config1=Template(jt2).render(dummy1)
+				# 	elif d1['vm'][i]['dhcp'] == 3:
+				# 		config1=Template(jt3).render(dummy1)
+				# 	else:
+				# 		config1=Template(jt).render(dummy1)
+				# else:
+				# 	# print(f"template junos static {i} ")
+				#   config1=Template(jt).render(dummy1)
+				config1=Template(jt).render(dummy1)
 				f1=param1.tmp_dir + i + ".conf"
 				with open(f1,"w") as wr1:
 					wr1.write(config1)

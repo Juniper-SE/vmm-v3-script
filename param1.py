@@ -12,7 +12,7 @@ vm_type_old={
    'pcmedium': {'ncpus' : 2,'memory':16384},
    'pcbig': {'ncpus' : 4,'memory':32768},
    'pchpv1': {'ncpus' : 8,'memory':32768},
-   'pchpv2': {'ncpus' : 4,'memory':16384},
+   'pchpv2': {'ncpus' : 8,'memory':16384},
    'pcxbig': {'ncpus' : 8,'memory':65536},
    'esxi': {'ncpus' : 8,'memory':32768},
    'vcsa': {'ncpus' : 4,'memory':16384},

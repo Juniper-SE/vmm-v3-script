@@ -59,7 +59,11 @@ network:
 EOF
 {% endif %}
 
+sleep 2
+
 uuidgen  | sed -e 's/-//g' |  sudo tee /etc/machine-id
+
+sleep 2
 
 cat << EOF | tee ~/.ssh/config
 Host *
