@@ -92,10 +92,12 @@ def read_config(config):
 		for i in d1['vm'].keys():
 			if d1['vm'][i]['os']=='vjunos_evolved':
 				## add interface em1, em2, em3, em4
-				d1['vm'][i]['interfaces'].update({'vio1': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
-				d1['vm'][i]['interfaces'].update({'vio2': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
-				d1['vm'][i]['interfaces'].update({'vio3': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
-				d1['vm'][i]['interfaces'].update({'vio4': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
+				if 'vm_type' in d1['vm'][i].keys():
+					if d1['vm'][i]['vm_type'] == 0:
+						d1['vm'][i]['interfaces'].update({'vio1': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
+						d1['vm'][i]['interfaces'].update({'vio2': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
+						d1['vm'][i]['interfaces'].update({'vio3': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
+						d1['vm'][i]['interfaces'].update({'vio4': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
 		# print("write tmp/lab.yaml")
 		# with open('lab_new.yaml','w') as f1:
 		#  	f1.write(yaml.dump(d1))
@@ -1493,7 +1495,13 @@ def create_lab_config(d1):
 							intf1 = 'vio0'
 						elif j.split('-')[0] in ['ge','et','xe']:
 							if d1['vm'][i]['type'] == 'vjunos_evolved':
-								idx = int(j.split('/')[2]) + 5
+								if 'vm_type' in d1['vm'][i].keys():
+									if d1['vm'][i]['vm_type'] == 0:
+										idx = int(j.split('/')[2]) + 5
+									else:
+										idx = int(j.split('/')[2]) + 1
+								else:
+									idx = int(j.split('/')[2]) + 1
 							else:
 								idx = int(j.split('/')[2]) + 1
 							intf1 = f"vio{idx}"
@@ -1758,8 +1766,8 @@ def create_junos_config(d1,i):
 	dummy1['protocols']=None
 	#dummy1['static']=[]
 	dummy1['rpm']={}
-	if 'mgmt_dhcp' in d1['vm'][i].keys():
-		if d1['vm'][i]['mgmt_dhcp']:
+	if 'ztp' in d1['vm'][i].keys():
+		if d1['vm'][i]['ztp']:
 			dummy1['mgmt_dhcp'] = 1
 		else: 
 			dummy1['mgmt_dhcp'] = 0
@@ -1767,7 +1775,7 @@ def create_junos_config(d1,i):
 		dummy1['mgmt_dhcp'] = 0
 	if 'mgmt_instc' in d1['vm'][i].keys():
 		if d1['vm'][i]['mgmt_instc']:
-			dummy1['mgmt_intsc'] = 1
+			dummy1['mgmt_instc'] = 1
 		else: 
 			dummy1['mgmt_instc'] = 0
 	else:

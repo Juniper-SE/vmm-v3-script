@@ -17,6 +17,10 @@
       cache_valid_time: 3600
       force_apt_get: true
       state: latest
+  - name: install lldp server
+    apt:
+      name: lldpd
+      state: present
   # - name: install ntp server
   #   apt:
   #     name: ntp

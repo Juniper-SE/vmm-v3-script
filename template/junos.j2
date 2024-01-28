@@ -17,6 +17,7 @@ system {
     services {
         ssh {
             root-login allow;
+            sftp-server;
         }
         netconf {
             ssh;
@@ -43,34 +44,12 @@ system {
             interactive-commands any;
         }
     }
-    {% if type == 'vqfx' -%}
-    extensions {
-        providers {
-            juniper {
-                license-type juniper deployment-scope commercial;
-            }
-            chef {
-                license-type juniper deployment-scope commercial;
-            }
-        }
-    }
-    {% endif -%}
 }
 {% if mgmt_instc == 1 -%}
 system {
     management-instance;
 }
-routing-instances {
-    mgmt_junos {
-        routing-options {
-            {% if gateway4 != '0.0.0.0' -%}
-            static {
-                route 0.0.0.0/0 next-hop {{ gateway4 }};
-            }
-            {% endif -%}
-        }
-    }
-}
+
 {% endif -%}
 {% if type == 'vmx' -%}
 chassis {
@@ -133,6 +112,9 @@ interfaces {
          }
       }
     }
+}
+forwarding-options {
+    tunnel-termination;
 }
 {% elif type == 'vsrx' -%}
 interfaces {
@@ -199,48 +181,6 @@ security {
         security-zone untrust {
             screen untrust-screen;
         }
-    }
-}
-{% elif type == 'vqfx' -%}
-interfaces {
-   em0 {
-      unit 0 {
-         family inet {
-             address {{mgmt_ip}};
-         }
-      }
-    }
-    em1 {
-        unit 0 {
-            family inet {
-                address 169.254.0.2/24;
-            }
-        }
-    }
-}
-forwarding-options {
-    storm-control-profiles default {
-        all;
-    }
-}
-protocols {
-    igmp-snooping {
-        vlan default;
-    }
-}
-vlans {
-    default {
-        vlan-id 1;
-    }
-}
-{% elif type == 'vrr' -%}
-interfaces {
-   em0 {
-      unit 0 {
-         family inet {
-             address {{mgmt_ip}};
-         }
-      }
     }
 }
 {% endif -%}

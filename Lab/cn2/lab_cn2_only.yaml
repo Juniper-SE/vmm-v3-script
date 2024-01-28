@@ -4,7 +4,7 @@ pod:
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  jumpserver: ttqc-shell002.juniper.net
+  jumpserver: ttqc-shell003.juniper.net
   vmmserver: q-pod32-vmm.englab.juniper.net
   # vmmserver: q-pod08-vmm.englab.juniper.net
   # the following entry can be commented out if your account can access vmm without using jump host

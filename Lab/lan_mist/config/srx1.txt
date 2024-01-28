@@ -103,16 +103,19 @@ set protocols bgp group to_campus neighbor 192.168.31.11 export from_static
 set protocols bgp group to_campus neighbor 192.168.31.11 peer-as 65420
 set protocols bgp group to_campus neighbor 192.168.31.11 local-as 65412
 set routing-options static route 0.0.0.0/0 next-hop 172.16.12.0
-
-set protocols bgp group to_campus neighbor 172.16.101.1 export from_static
-set protocols bgp group to_campus neighbor 172.16.101.1 peer-as 65420
-set protocols bgp group to_campus neighbor 172.16.101.1 local-as 65412
-set protocols bgp group to_campus neighbor 172.16.101.3 export from_static
-set protocols bgp group to_campus neighbor 172.16.101.3 peer-as 65420
-set protocols bgp group to_campus neighbor 172.16.101.3 local-as 65412
-
-
-set routing-options static route 172.16.102.0/24 next-hop 172.16.101.1
-set routing-options static route 172.16.102.0/24 next-hop 172.16.101.3
 set routing-options static route  172.16.254.0/23 next-hop 172.16.101.1
 set routing-options static route  172.16.254.0/23 next-hop 172.16.101.3
+set routing-options static route 172.16.102.0/24 next-hop 172.16.101.1
+set routing-options static route 172.16.102.0/24 next-hop 172.16.101.3
+
+
+QFX-QSFP-DAC-3M
+
+JNP-100G-DAC-5M
+
+SFP-25G-SR-C
+SFP-1G-SX-C
+
+SFP-1G-T-C
+JNP-100G-4X25G-3M
+JNP-QSFP-4X10GE-LR
