@@ -236,6 +236,7 @@ protocols {
                 {% if protocols[prot][intf] -%}
                     interface  {{intf}}.0 {
                         {{ protocols[prot][intf] }};
+                        level 1 disable;
                         {% if intf != 'lo0' %}
                             family inet {
                                     bfd-liveness-detection {
@@ -261,6 +262,13 @@ protocols {
    lldp {
       delete: interface all;
    }
+}
+{% endif -%}
+
+{% if router_id -%}
+routing-options {
+    router-id {{ router_id}};
+    route-distinguisher-id {{router_id}};
 }
 {% endif -%}
 

@@ -1,0 +1,6 @@
+ip link set dev veth5 mtu 9600
+ip link set dev veth6 mtu 9600
+ip link set dev veth7 mtu 9600
+ip link set dev veth8 mtu 9600
+ip link set dev veth9 mtu 9600
+ip link set dev veth10 mtu 9600

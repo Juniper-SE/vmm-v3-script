@@ -270,6 +270,9 @@ protocols {
                 {% endif -%}
                 {% endfor -%}
                 {% endif -%}
+                {%if prot == 'isis' %}
+                traffic-engineering l3-unicast-topology;
+                {% endif -%}
             }
         {% endfor -%}
 	{% endif -%}
@@ -323,6 +326,13 @@ protocols {
 protocols {
     mpls {
         lsp-external-controller pccd;
+        traffic-engineering {
+            database {
+                import {
+                    l3-unicast-topology;
+                }
+            }
+        }
     }
     pcep {
         pce northstar1 {

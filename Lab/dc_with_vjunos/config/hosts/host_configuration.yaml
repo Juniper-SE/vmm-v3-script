@@ -11,7 +11,7 @@ network:
       dhcp4: no
   bonds:
     bond0:
-      macaddress: 56:04:17:00:bd:38
+      macaddress: 56:04:1b:00:5f:31
       interfaces:
         - eth0
         - eth1
@@ -38,7 +38,7 @@ network:
       dhcp4: no
   bonds:
     bond0:
-      macaddress: 56:04:17:00:eb:f3
+      macaddress: 56:04:1b:00:3e:cd
       interfaces:
         - eth0
         - eth1
@@ -88,7 +88,7 @@ network:
       dhcp4: no
   bonds:
     bond0:
-      macaddress: 56:04:17:00:e0:83
+      macaddress: 56:04:1b:00:37:e4
       interfaces:
         - eth0
         - eth1
@@ -99,6 +99,9 @@ network:
       nameservers:
         addresses: [8.8.8.8,8.8.4.4]
 EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
 
 sudo hostname svr4
 hostname | sudo tee /etc/hostname

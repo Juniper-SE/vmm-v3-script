@@ -266,7 +266,7 @@ def create_config_interfaces(d1):
 		d1['vm'][i]['interfaces'].update(intf)	
 	#print(d2)
 	for i in d1['vm'].keys():
-		#print(f"vm {i}")
+		# print(f"vm {i}")
 		if d1['vm'][i]['type']=='bridge':
 			list_intf=list(d1['vm'][i]['interfaces'].keys())
 			#print(list_intf)
@@ -1176,7 +1176,7 @@ def set_host(d1,vm=""):
 			#ssh2host.exec_command(cmd1)
 			#cmd1="bash /home/ubuntu/set_host.sh"
 			#cmd1="nohup sh ~/set_host.sh &"
-			cmd1="bash ~/set_host.sh"
+			cmd1="sh ~/set_host.sh"
 			stdin_, stdout_, stderr_ = ssh2host.exec_command(cmd1)
 			stdout_.channel.recv_exit_status()
 			sftp.close()
@@ -1766,13 +1766,14 @@ def create_junos_config(d1,i):
 	dummy1['protocols']=None
 	#dummy1['static']=[]
 	dummy1['rpm']={}
-	if 'ztp' in d1['vm'][i].keys():
-		if d1['vm'][i]['ztp']:
-			dummy1['mgmt_dhcp'] = 1
-		else: 
-			dummy1['mgmt_dhcp'] = 0
-	else:
-		dummy1['mgmt_dhcp'] = 0
+	# if 'ztp' in d1['vm'][i].keys():
+	# 	if d1['vm'][i]['ztp']:
+	# 		dummy1['mgmt_dhcp'] = 1
+	# 	else: 
+	# 		dummy1['mgmt_dhcp'] = 0
+	# else:
+	# 	dummy1['mgmt_dhcp'] = 0
+	dummy1['mgmt_dhcp'] = 0
 	if 'mgmt_instc' in d1['vm'][i].keys():
 		if d1['vm'][i]['mgmt_instc']:
 			dummy1['mgmt_instc'] = 1
@@ -1781,6 +1782,7 @@ def create_junos_config(d1,i):
 	else:
 		dummy1['mgmt_instc'] = 1
 	if "lo0" in d1['vm'][i]['interfaces'].keys():
+		dummy1['router_id']  = d1['vm'][i]['interfaces']['lo0']['family']['inet'].split('/')[0]
 		if 'bgpls' in d1['vm'][i].keys():
 			dummy1['bgpls']={'as' : d1['vm'][i]['bgpls']['as'],'local' : d1['vm'][i]['bgpls']['local']}
 		if 'pcep' in d1['vm'][i].keys():
@@ -1793,7 +1795,7 @@ def create_junos_config(d1,i):
 			dummy1['ingest']={'ip' : d1['paragon_ingest'],'source': d1['vm'][i]['interfaces']['lo0']['family']['inet'].split('/')[0]}
 	for j in d1['vm'][i]['interfaces'].keys():
 		if j != 'mgmt':
-			if j[0:2] != 'em':
+			if j[0:2] not in  [ 'em','vi']:
 				#if 'mtu' in  d1['vm'][i]['interfaces'][j].keys():
 				#	add_mtu(dummy1,j,d1['vm'][i]['interfaces'][j]['mtu'])
 				add_into_protocols(dummy1,'lldp',j,"")

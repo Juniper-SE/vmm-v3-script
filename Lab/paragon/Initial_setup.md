@@ -74,7 +74,7 @@
 
         kubectl exec -n northstar -it <pod_name> -c ns-cmgd -- cli
 
-         kubectl -n northstar exec -it `kubectl -n northstar get pods | grep cmgd | tr -s " " | cut -f 1 -d " "` -c ns-cmgd cli
+        kubectl -n northstar exec -it `kubectl -n northstar get pods | grep cmgd | tr -s " " | cut -f 1 -d " "` -c ns-cmgd cli
 
 22. Run the following command on the CLI
 

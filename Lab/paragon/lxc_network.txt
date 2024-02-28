@@ -1,0 +1,21 @@
+devices:
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: lan1
+    type: nic
+  eth1:
+    name: eth1
+    nictype: bridged
+    parent: wan1
+    type: nic
+
+
+router bgp 65001
+ no bgp ebgp-requires-policy
+ neighbor 192.168.200.1 remote-as 65002
+ !
+ address-family ipv4 unicast
+  network 192.168.101.0/24
+ exit-address-family
+exit

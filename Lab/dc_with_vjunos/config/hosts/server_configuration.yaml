@@ -17,7 +17,7 @@ network:
       parameters:
          mode: 802.3ad
       # addresses: [ 192.168.101.103/24, fc00:dead:beef:101::10:103/64]
-      addresses: [ 192.168.101.1/24,2001:dead:beef:101::1000:1/64]
+      addresses: [ 192.168.111.1/24,2001:dead:beef:101::1000:1/64]
       #addresses: [ 192.168.101.1/24]
       gateway4: 192.168.101.254
       gateway6: 2001:dead:beef:101::1

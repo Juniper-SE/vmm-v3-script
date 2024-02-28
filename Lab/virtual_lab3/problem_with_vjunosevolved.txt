@@ -1,0 +1,29 @@
+L3VPN
+- ping PE to PE : OK
+- ping with DF bit, max MTU 1464
+- ssh between client  with default MTU 1500: failed
+- ssh between client with MTU 1492: OK
+
+ubuntu@client6:~$ ping -M do -s 1465 192.168.101.10
+PING 192.168.101.10 (192.168.101.10) 1465(1493) bytes of data.
+ping: local error: message too long, mtu=1492
+ping: local error: message too long, mtu=1492
+^C
+
+ubuntu@client6:~$ ping -M do -s 1464 192.168.101.10
+PING 192.168.101.10 (192.168.101.10) 1464(1492) bytes of data.
+1472 bytes from 192.168.101.10: icmp_seq=1 ttl=62 time=28.8 ms
+1472 bytes from 192.168.101.10: icmp_seq=2 ttl=62 time=27.8 ms
+1472 bytes from 192.168.101.10: icmp_seq=3 ttl=62 time=8.47 ms
+1472 bytes from 192.168.101.10: icmp_seq=4 ttl=62 time=13.8 ms
+1472 bytes from 192.168.101.10: icmp_seq=5 ttl=62 time=52.4 ms
+
+
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1492 qdisc fq_codel state UP group default qlen 1000
+    link/ether 56:04:1b:00:77:76 brd ff:ff:ff:ff:ff:ff
+    altname enp0s5f1
+    altname ens5f1
+    inet 192.168.106.10/24 brd 192.168.106.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5404:1bff:fe00:7776/64 scope link
+       valid_lft forever preferred_lft forever

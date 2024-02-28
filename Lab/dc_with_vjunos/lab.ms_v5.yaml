@@ -4,15 +4,16 @@ pod:
   type: vmm
   # if your account can access vmm lab directly, then you can comment out jumpserver
   #jumpserver: ttsv-shell110.juniper.net
-  jumpserver: ttqc-shell001.juniper.net
+  jumpserver: ttqc-shell002.juniper.net
   #vmmserver: q-pod27-vmm.englab.juniper.net
-  vmmserver: q-pod23-vmm.englab.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   user: irzan
   adpassword: AnaMabokCoys
   vmmpassword: AnaMabokCoys
   home_dir : /vmm/data/user_disks/irzan
   ssh_key_name: key1
+  ssh_key_host_name: keyhost
   #ntp: 172.16.10.1
 images:
   gw: images/gw.qcow2
@@ -20,8 +21,8 @@ images:
   ubuntu2: images/ubuntu22.04-with-kvm.qcow2
   vmx: images/vmx/junos-vmx-x86-64-23.2R1.13.vmdk
   vsrx: images/vsrx/junos-vsrx3-x86-64-23.2R1.13.qcow2
-  aos: images/aos_server_4.2.0-236.qcow2
-  aos_ztp: images/apstra-ztp-4.2.0-34.qcow2
+  aos: images/apstra/aos_server_4.2.1-207.qcow2
+  aos_ztp: images/apstra/apstra-ztp-4.2.1-18.qcow2
   vjunos_switch: images/vJunos-switch-23.2R1.14.qcow2
   vjunos_evolved: images/vJunosEvolved-23.2R1.15.qcow2
   vjunos_router: images/vJunos-router-23.2R1.14.qcow2
@@ -743,8 +744,8 @@ vm:
       ge-0/0/9: 
         bridge: d3l6p9
   pe1:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     ztp: yes
     interfaces:
       mgmt: 
@@ -766,8 +767,8 @@ vm:
       ge-0/0/3:
         bridge: d1l6p5
   pe2:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     ztp: yes
     interfaces:
       mgmt: 
@@ -789,8 +790,8 @@ vm:
       ge-0/0/3:
         bridge: d2sw2p3
   pe3:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     ztp: yes
     interfaces:
       mgmt: 
@@ -812,8 +813,8 @@ vm:
       ge-0/0/3:
         bridge: d3l6p3
   pe4:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     ztp: yes
     interfaces:
       mgmt: 
@@ -831,8 +832,8 @@ vm:
         family:
           inet: 172.16.10.254/24
   p1:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     ztp: yes
     interfaces:
       mgmt: 
@@ -846,8 +847,8 @@ vm:
         protocol:
           isis: passive
   vxlangw1:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     ztp: yes
     interfaces:
       mgmt: 
@@ -871,8 +872,8 @@ vm:
       ge-0/0/5: 
         bridge: d1s4p8
   vxlangw2:
-    type: vjunos_router
-    os: vjunos_router
+    type: mx240
+    os: vmx
     ztp: yes
     interfaces:
       mgmt: 

@@ -1,0 +1,68 @@
+---
+- name: configure BGP on routers
+  hosts:
+    - p5
+    - pe1
+    - pe2
+    - pe3
+    - pe4
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    conf_dir: "./bgp"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.conf"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper_junos_config:
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        file: "{{ conf_file}}"
+        config_mode: "exclusive"
+        load: "set"
+        # format: "text"---
+- name: configure TE on MPLS and ISIS
+  hosts:
+    - all
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    conf_dir: "./initial_config"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.conf"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper_junos_config:
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        # file: "{{ conf_file}}"
+        config_mode: "exclusive"
+        load: "set"
+        lines:
+        - "set protocols mpls traffic-engineering database import l3-unicast-topology"
+        - "set protocols isis traffic-engineering l3-unicast-topology"
+        # format: "text"
+- name: set core interface to 100M
+  hosts:
+    - all
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    conf_dir: "./config_set_intf"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.conf"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper_junos_config:
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        file: "{{ conf_file}}"
+        config_mode: "exclusive"
+        load: "set"
+        # format: "text"

@@ -1,0 +1,11 @@
+set routing-options static route 172.16.255.0/28 next-hop 172.16.14.0
+set protocols bgp group to_rr_client local-address 10.100.1.11
+set protocols bgp group to_rr_client passive
+set protocols bgp group to_rr_client family inet any
+set protocols bgp group to_rr_client family inet-vpn any
+set protocols bgp group to_rr_client family evpn signaling
+set protocols bgp group to_rr_client cluster 10.100.1.11
+set protocols bgp group to_rr_client peer-as 4200000512
+set protocols bgp group to_rr_client local-as 4200000512
+set protocols bgp group to_rr_client allow 10.100.1.0/24
+set protocols isis export from_static

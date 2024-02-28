@@ -1,0 +1,39 @@
+PE1
+-----
+set routing-options route-distinguisher-id 10.100.1.1
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 192.168.101.1/24
+set routing-instances VRF1 instance-type vrf
+set routing-instances VRF1 vrf-table-label
+set routing-instances VRF1 interface ge-0/0/0.101
+set routing-instances VRF1 vrf-target target:4200000512L:1001
+
+
+PE2
+-----
+set routing-options route-distinguisher-id 10.100.1.2
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+delete interface ge-0/0/0 unit 0
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 192.168.102.1/24
+set routing-instances VRF1 instance-type vrf
+set routing-instances VRF1 vrf-table-label
+set routing-instances VRF1 interface ge-0/0/0.101
+set routing-instances VRF1 vrf-target target:4200000512L:1001
+
+
+PE3
+-----
+set routing-options route-distinguisher-id 10.100.1.3
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+delete interface ge-0/0/0 unit 0
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 192.168.103.1/24
+set routing-instances VRF1 instance-type vrf
+set routing-instances VRF1 vrf-table-label
+set routing-instances VRF1 interface ge-0/0/0.101
+set routing-instances VRF1 vrf-target target:4200000512L:1001
