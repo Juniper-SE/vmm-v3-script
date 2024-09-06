@@ -1,0 +1,21 @@
+set system name-server 10.49.32.95
+set system name-server 10.49.32.97
+set routing-options autonomous-system 4200000001
+set policy-options policy-statement to_int term 1 from protocol static
+set policy-options policy-statement to_int term 1 from protocol direct
+set policy-options policy-statement to_int term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 prefix-length-range /32-/32
+set policy-options policy-statement to_int term 1 then next-hop self
+set policy-options policy-statement to_int term 1 then accept
+set policy-options policy-statement to_int term default then reject
+set protocols bgp group to_int type internal
+set protocols bgp group to_int export to_int
+set protocols bgp group to_int local-address fc00:dead:beef:ffff::ffff:4
+set protocols bgp group to_int family inet unicast extended-nexthop
+set protocols bgp group to_int family inet unicast advertise-srv6-service
+set protocols bgp group to_int family inet unicast accept-srv6-service
+set protocols bgp group to_int neighbor fc00:dead:beef:ffff::ffff:20
+set protocols bgp source-packet-routing srv6 locator SRV6-LOC-1 end-dt46-sid
+set protocols bgp rfc6514-compliant-safi129
+set protocols bgp multipath list-nexthop
+set routing-options resolution preserve-nexthop-hierarchy

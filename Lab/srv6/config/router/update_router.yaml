@@ -6,7 +6,7 @@
     - juniper.junos
   vars:
     username: admin
-    conf_dir: "./config_lab"
+    conf_dir: "./initial_config"
     conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.set"
   connection: local
   gather_facts: no

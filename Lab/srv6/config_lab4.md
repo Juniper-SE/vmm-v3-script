@@ -126,7 +126,9 @@ set system name-server 10.49.32.97
 set routing-options autonomous-system 4200000001
 set routing-options static route 0.0.0.0/0 next-hop 172.16.11.254
 set policy-options policy-statement to_int term 1 from protocol static
+set policy-options policy-statement to_int term 1 from protocol direct
 set policy-options policy-statement to_int term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 prefix-length-range /32-/32
 set policy-options policy-statement to_int term 1 then next-hop self
 set policy-options policy-statement to_int term 1 then accept
 set policy-options policy-statement to_int term default then reject
@@ -195,8 +197,10 @@ set policy-options policy-statement to_int term default then reject
 set system name-server 10.49.32.95
 set system name-server 10.49.32.97
 set routing-options autonomous-system 4200000001
+set policy-options policy-statement to_int term 1 from protocol static
 set policy-options policy-statement to_int term 1 from protocol direct
-set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 orlonger
+set policy-options policy-statement to_int term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 prefix-length-range /32-/32
 set policy-options policy-statement to_int term 1 then next-hop self
 set policy-options policy-statement to_int term 1 then accept
 set policy-options policy-statement to_int term default then reject
@@ -216,8 +220,10 @@ set routing-options resolution preserve-nexthop-hierarchy
 set system name-server 10.49.32.95
 set system name-server 10.49.32.97
 set routing-options autonomous-system 4200000001
+set policy-options policy-statement to_int term 1 from protocol static
 set policy-options policy-statement to_int term 1 from protocol direct
-set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 orlonger
+set policy-options policy-statement to_int term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 prefix-length-range /32-/32
 set policy-options policy-statement to_int term 1 then next-hop self
 set policy-options policy-statement to_int term 1 then accept
 set policy-options policy-statement to_int term default then reject
@@ -237,8 +243,10 @@ set routing-options resolution preserve-nexthop-hierarchy
 set system name-server 10.49.32.95
 set system name-server 10.49.32.97
 set routing-options autonomous-system 4200000001
+set policy-options policy-statement to_int term 1 from protocol static
 set policy-options policy-statement to_int term 1 from protocol direct
-set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 orlonger
+set policy-options policy-statement to_int term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 prefix-length-range /32-/32
 set policy-options policy-statement to_int term 1 then next-hop self
 set policy-options policy-statement to_int term 1 then accept
 set policy-options policy-statement to_int term default then reject
@@ -258,8 +266,10 @@ set routing-options resolution preserve-nexthop-hierarchy
 set system name-server 10.49.32.95
 set system name-server 10.49.32.97
 set routing-options autonomous-system 4200000001
+set policy-options policy-statement to_int term 1 from protocol static
 set policy-options policy-statement to_int term 1 from protocol direct
-set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 orlonger
+set policy-options policy-statement to_int term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 prefix-length-range /32-/32
 set policy-options policy-statement to_int term 1 then next-hop self
 set policy-options policy-statement to_int term 1 then accept
 set policy-options policy-statement to_int term default then reject
@@ -280,8 +290,10 @@ set routing-options resolution preserve-nexthop-hierarchy
 set system name-server 10.49.32.95
 set system name-server 10.49.32.97
 set routing-options autonomous-system 4200000001
+set policy-options policy-statement to_int term 1 from protocol static
 set policy-options policy-statement to_int term 1 from protocol direct
-set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 orlonger
+set policy-options policy-statement to_int term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_int term 1 from route-filter 192.168.255.0/24 prefix-length-range /32-/32
 set policy-options policy-statement to_int term 1 then next-hop self
 set policy-options policy-statement to_int term 1 then accept
 set policy-options policy-statement to_int term default then reject

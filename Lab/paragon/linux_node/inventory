@@ -1,9 +1,6 @@
 [all]
-node4
-node1
-node2
-node3
 client
+crpd
 gw
 # registry
 [all:vars]

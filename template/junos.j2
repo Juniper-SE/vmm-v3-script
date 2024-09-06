@@ -22,15 +22,6 @@ system {
         netconf {
             ssh;
         }
-        extension-service {
-            request-response {
-                grpc {
-                    clear-text {
-                        port 32767;
-                    }
-                }
-            }
-        }
     }
     syslog {
         user * {
@@ -100,6 +91,9 @@ interfaces {
     }
 }
 {% elif type == 'vjunos_evolved'  -%}
+chassis {
+    network-services enhanced-mode;
+}
 interfaces {
    re0:mgmt-0 {
       unit 0 {
@@ -192,6 +186,7 @@ interfaces {
         {% if interfaces[intf].mtu -%}
         mtu {{ interfaces[intf].mtu }};
         {% endif -%}
+        {% if interfaces[intf].inet or interfaces[intf].inet6 or interfaces[intf].mpls or interfaces[intf].iso -%}
         unit 0 {
         {% if interfaces[intf].inet -%}
             family inet {
@@ -220,6 +215,7 @@ interfaces {
             {% endif -%}
         {% endif -%}
         }
+        {% endif -%}
     }
 {% endfor -%}
 }
@@ -230,37 +226,51 @@ protocols {
         {% for prot in protocols -%}
             {{prot}} {
                 {% if protocols[prot] -%}
-                {% if prot == 'isis' -%}
-                {% if srv6_locator -%}
-                source-packet-routing {
-                    srv6 {
-                        locator SRV6-LOC-1 {
-                            end-sid {{srv6_end_sid}};
-                        }
+                    {% if prot == 'isis' -%}
+                    level 2 {
+                        authentication-key "$9$H.fQ69A0BE9CK8LxsYTzF/9AtuO1Ec"; ## SECRET-DATA
+                        authentication-type md5;
                     }
-                }
-                {%endif -%}
-                {% endif -%}
-                {% for intf in protocols[prot] -%}
-                {% if prot == 'lldp' -%}
-                {% if intf != 'lo0' -%}
-                interface  {{intf}};
-                {% endif -%}
-                {% else -%}
-                {% if prot == 'isis' -%}
-                {% if protocols[prot][intf] -%}
-                    interface  {{intf}}.0 {
-                        {{ protocols[prot][intf] }};
-                        level 1 disable;     
-                    }
-                {% else -%}
-                interface  {{intf}}.0;
-                {% endif -%}
-                {% else %}
-                interface {{intf}}.0;
-                {% endif -%}
-                {% endif -%}
-                {% endfor -%}
+                        {% if srv6_locator -%}
+                            source-packet-routing {
+                                srv6 {
+                                    locator SRV6-LOC-1 {
+                                        end-sid {{srv6_end_sid}};
+                                    }
+                                }
+                            }
+                        {%endif -%}
+                    {% endif -%}
+                    {% for intf in protocols[prot] -%}
+                        {% if prot == 'lldp' -%}
+                            {% if intf != 'lo0' -%}
+                            interface  {{intf}};
+                            {% endif -%}
+                        {% else -%}
+                            {% if prot == 'isis' -%}
+                                interface  {{intf}}.0 {
+                                    level 1 disable;
+                                    {% if intf != 'lo0' -%}
+                                        family inet {
+                                            bfd-liveness-detection {
+                                                minimum-interval 100;
+                                            }
+                                        }
+                                        family inet6 {
+                                            bfd-liveness-detection {
+                                                minimum-interval 100;
+                                            }
+                                        }
+                                    {% endif -%}
+                                    {% if protocols[prot][intf] -%}
+                                        {{ protocols[prot][intf] }}; 
+                                    {% endif -%}
+                                }
+                            {% else %}
+                                interface {{intf}}.0;
+                            {% endif -%}
+                        {% endif -%}
+                    {% endfor -%}
                 {% endif -%}
             }
         {% endfor -%}

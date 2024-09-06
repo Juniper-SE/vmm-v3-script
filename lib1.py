@@ -433,16 +433,20 @@ def create_config_interfaces(d1):
 		# print(f"vm {i}")
 		if d1['vm'][i]['type']=='bridge':
 			list_intf=list(d1['vm'][i]['interfaces'].keys())
+			#print(f"list of intf {list_intf}")
 			#print(list_intf)
 			_ = list_intf.pop(0)
 			#print(list_intf)
 			#print(f"list_intf {list_intf}")
 			for j in list_intf:
 				node_tmp1 = d1['vm'][i]['interfaces'][j]['node']
+				#print(f"node_tmp1 {node_tmp1}")
 				#print(node_tmp1)
 				n1 = d1['vm'][i]['interfaces'][j]['node'][0]
 				n1_intf = d1['vm'][i]['interfaces'][j]['node'][1]
 				d1['vm'][i]['interfaces'][j] = {'bridge' : i + j}
+				#print(f"node {i} {j} {n1} {n1_intf}")
+				#print(d1['vm'][n1]['interfaces'].keys())
 				d1['vm'][n1]['interfaces'][n1_intf]['bridge']=d1['vm'][i]['interfaces'][j]['bridge']
 				d1['vm'][i]['interfaces'][j]['node'] = node_tmp1
 	d1.pop('fabric')
@@ -986,11 +990,12 @@ def get_net_config(d1,vm):
 				if 'gateway4' in d1['vm'][vm]['interfaces'][i]['family'].keys():
 					retval[j]['gateway4'] = d1['vm'][vm]['interfaces'][i]['family']['gateway4']
 			if 'inet6' in d1['vm'][vm]['interfaces'][i]['family'].keys():
-				net_config[j].append(d1['vm'][vm]['interfaces'][i]['family']['inet6'])
-				addr[j].append(d1['vm'][vm]['interfaces'][i]['family']['inet6'].split('/')[0])
-				prefix[j].append(d1['vm'][vm]['interfaces'][i]['family']['inet6'].split('/')[1])
-				if 'gateway6' in d1['vm'][vm]['interfaces'][i]['family'].keys():
-					retval[j]['gateway6'] = d1['vm'][vm]['interfaces'][i]['family']['gateway6']
+				if d1['vm'][vm]['interfaces'][i]['family']['inet6'] != "inet6":
+					net_config[j].append(d1['vm'][vm]['interfaces'][i]['family']['inet6'])
+					addr[j].append(d1['vm'][vm]['interfaces'][i]['family']['inet6'].split('/')[0])
+					prefix[j].append(d1['vm'][vm]['interfaces'][i]['family']['inet6'].split('/')[1])
+					if 'gateway6' in d1['vm'][vm]['interfaces'][i]['family'].keys():
+						retval[j]['gateway6'] = d1['vm'][vm]['interfaces'][i]['family']['gateway6']
 			if 'static' in d1['vm'][vm]['interfaces'][i]['family'].keys():
 				static_config[j]=d1['vm'][vm]['interfaces'][i]['family']['static']
 		if 'mtu' in d1['vm'][vm]['interfaces'][i].keys():

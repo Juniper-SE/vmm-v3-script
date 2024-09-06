@@ -214,10 +214,10 @@ change the following
 into 
 
        # alternatively, for metallb in L3 (BGP) mode, enable the following:
-       metallb_mode: l3
-       metallb_asn: 65420
-       metallb_peer_asn: 65412
-       metallb_peer_address: 172.16.11.1
+        metallb_mode: l3
+        metallb_asn: 65420
+        metallb_peer_asn: 65412
+        metallb_peer_address: 172.16.11.1
 
 9. Start Paragon automation installation process. The installation proccess may take up to 90 minutes to finish.
 

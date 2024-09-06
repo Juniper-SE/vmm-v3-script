@@ -30,7 +30,7 @@ vm_type={
    'gw': {'ncpus' : 2,'memory':4096,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'pctiny': {'ncpus' : 1,'memory':4096,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'pcsmall': {'ncpus' : 2,'memory':8192,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
-   'pcmedium': {'ncpus' : 2,'memory':16384,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
+   'pcmedium': {'ncpus' : 4,'memory':16384,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'pcbig': {'ncpus' : 4,'memory':32768,'setvar':'"+qemu_args" "-cpu qemu64,+vmx"'},
    'pchpv0': {'ncpus' : 16,'memory':32768,'setvar':'"+qemu_args" "-cpu host,+vmx"'},
    'pchpv1': {'ncpus' : 8,'memory':32768,'setvar':'"+qemu_args" "-cpu host,+vmx"'},

@@ -1,0 +1,44 @@
+---
+- name: Updating system
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: apt -y upgrade
+    apt:
+      update_cache: true
+      upgrade: dist
+      cache_valid_time: 3600
+      force_apt_get: true
+      state: latest
+- name: installing app on node client
+  hosts:
+    - client
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install application
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+    loop:
+      - openvswitch-switch
+      - openvswitch-common
+      - bridge-utils
+- name: rebooting host
+  hosts:
+  - hb
+  - client
+  - crpd
+  - paa
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: reboot node
+    ansible.builtin.reboot:

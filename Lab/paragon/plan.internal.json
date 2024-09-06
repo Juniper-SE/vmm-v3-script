@@ -1,0 +1,1628 @@
+{
+  "customer_id": "2dae1d34-6a7c-11ef-b7aa-b62fdf743629",
+  "design_id": "infrastructure",
+  "design_version": "0.10.25",
+  "fh_config": {
+    "edited-by": "irzan@juniper.net",
+    "status": "applied device config to [00000000-0000-0000-1000-2c6bf5570b00]"
+  },
+  "infrastructure_ntw": {
+    "default_interface_profiles": [
+      "InterfaceProfile1"
+    ],
+    "default_node_profiles": [
+      "DeviceProfile1"
+    ],
+    "interface_profiles": {
+      "interface_profile": [
+        {
+          "ipv4_address": {
+            "auto": {}
+          },
+          "isis": {
+            "level": "level1-2",
+            "metric": 1
+          },
+          "ldp": {
+            "ldp_synchronization": true
+          },
+          "name": "InterfaceProfile1",
+          "rsvp": {},
+          "templates": []
+        }
+      ]
+    },
+    "network_nodes": {
+      "network_node": [
+        {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf5570b00",
+          "hostname": "pe1",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "description": "connection to LAN",
+                "ipv4_address": {
+                  "explicit": "10.100.128.1/24"
+                },
+                "name": "ge-0/0/1.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.100.0.0/31"
+                },
+                "link": "link1",
+                "name": "ge-0/0/2.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.100.0.2/31"
+                },
+                "link": "link2",
+                "name": "ge-0/0/3.0",
+                "profiles": []
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.100.1.1"
+          },
+          "mac_address": "2c:6b:f5:57:0b:00",
+          "model": "vMX",
+          "name": "pe1",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:20:35.941899+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:20:22.499916+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, get test results; active-assurance-tests-initiated; Debug info - active assurance tests initiated on [00000000-0000-0000-1000-2c6bf5570b00]",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:17:12.159833+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:16:59.508960+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:16:51.911569+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:16:45.021421+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:16:37.646702+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:15:08.771220+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:15:00.743816+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:13:35.444252+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:13:28.028609+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:12:02.655794+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:11:55.054815+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:10:28.974081+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:10:21.896318+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:08:56.965149+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:08:49.855465+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:07:24.261177+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:07:16.087161+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:05:55.818456+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:05:43.291240+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:04:17.919359+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:04:10.471790+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:02:45.792092+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:02:37.981034+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:01:18.297992+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T14:01:05.887888+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:59:40.446742+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:59:33.065667+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:58:07.567678+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:57:59.379385+00:00"
+              },
+              {
+                "reason": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:56:32.868873+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:56:25.287221+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:46.489908+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:43.339989+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:40.475579+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:36.471559+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:28.659491+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:11.238089+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:10.888578+00:00"
+              },
+              {
+                "reason": "Planned site a6400903-cbe1-4d8b-8cd3-aa8aaa643f63 and actual site a6400903-cbe1-4d8b-8cd3-aa8aaa643f63 matched for node pe1",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2024-09-04T13:54:10.498738+00:00"
+              }
+            ],
+            "installation": {
+              "check_end": "2024-09-04T14:16:51.568441+00:00",
+              "check_start": "2024-09-04T13:56:18.714731+00:00"
+            },
+            "state_info": {
+              "onboarding": {
+                "logical_stage": {
+                  "sub_state": "logical-modify"
+                },
+                "stage": "stage-logical"
+              },
+              "state": "node-state-onboarding"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "physical": {
+                  "active_assurance_onboard_status": "active-assurance-tests-initiated",
+                  "neighbour_ping_test_status": {
+                    "neighbour_ping_test_result": [
+                      {
+                        "destination_host": "10.100.0.1",
+                        "result": "test-status-failed",
+                        "source_interface": "ge-0/0/2.0",
+                        "status": "STATUS_FAILED"
+                      },
+                      {
+                        "destination_host": "10.100.0.3",
+                        "result": "test-status-failed",
+                        "source_interface": "ge-0/0/3.0",
+                        "status": "STATUS_FAILED"
+                      }
+                    ]
+                  }
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": [
+                    {
+                      "description": "NA",
+                      "installed": "NA",
+                      "planned": "NA",
+                      "slot_name": "ge-0/0/1.0"
+                    },
+                    {
+                      "description": "NA",
+                      "installed": "NA",
+                      "planned": "NA",
+                      "slot_name": "ge-0/0/2.0"
+                    },
+                    {
+                      "description": "NA",
+                      "installed": "NA",
+                      "planned": "NA",
+                      "slot_name": "ge-0/0/3.0"
+                    }
+                  ]
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 1,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 3,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [],
+          "serial": "VM66D861D2F0",
+          "site_id": "a6400903-cbe1-4d8b-8cd3-aa8aaa643f63"
+        },
+        {
+          "hostname": "pe2",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "description": "connection to LAN",
+                "ipv4_address": {
+                  "explicit": "10.100.129.1/24"
+                },
+                "name": "ge-0/0/1.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.100.0.4/31"
+                },
+                "link": "link3",
+                "name": "ge-0/0/2.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.100.0.6/31"
+                },
+                "link": "link4",
+                "name": "ge-0/0/3.0",
+                "profiles": []
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.100.1.2"
+          },
+          "model": "vMX",
+          "name": "pe2",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM66D861C41E",
+          "site_id": "7cb69524-39ce-4e9e-ac77-3ff9149337a3"
+        },
+        {
+          "hostname": "pe3",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "description": "connection to LAN",
+                "ipv4_address": {
+                  "explicit": "10.100.130.1/24"
+                },
+                "name": "ge-0/0/1.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.100.0.8/31"
+                },
+                "link": "link5",
+                "name": "ge-0/0/2.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.100.0.10/31"
+                },
+                "link": "link6",
+                "name": "ge-0/0/3.0",
+                "profiles": []
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.100.1.3"
+          },
+          "model": "vMX",
+          "name": "pe3",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM66D861CDBE",
+          "site_id": "2c228c6e-8731-4e8d-a5ab-75e3c94728fd"
+        },
+        {
+          "hostname": "p1",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "description": "connection to LAN",
+                "ipv4_address": {
+                  "explicit": "10.100.131.1/24"
+                },
+                "name": "ge-0/0/1.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to PE1",
+                "ipv4_address": {
+                  "explicit": "10.100.0.1/31"
+                },
+                "link": "link1",
+                "name": "ge-0/0/2.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to PE2",
+                "ipv4_address": {
+                  "explicit": "10.100.0.5/31"
+                },
+                "link": "link3",
+                "name": "ge-0/0/3.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to PE3",
+                "ipv4_address": {
+                  "explicit": "10.100.0.9/31"
+                },
+                "link": "link5",
+                "name": "ge-0/0/4.0",
+                "profiles": []
+              },
+              {
+                "description": "to P2",
+                "ipv4_address": {
+                  "explicit": "10.100.0.12/31"
+                },
+                "link": "link7",
+                "name": "ge-0/0/5.0",
+                "profiles": []
+              },
+              {
+                "description": "to external",
+                "ipv4_address": {
+                  "explicit": "10.100.2.1/24"
+                },
+                "name": "ge-0/0/6.0",
+                "profiles": []
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.100.1.4"
+          },
+          "model": "vMX",
+          "name": "p1",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM66D861C923",
+          "site_id": "6d885018-ded7-4724-927c-448dad16a0d3"
+        },
+        {
+          "hostname": "p2",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "description": "connection LAN",
+                "ipv4_address": {
+                  "explicit": "10.100.132.1/24"
+                },
+                "name": "ge-0/0/1.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to PE1",
+                "ipv4_address": {
+                  "explicit": "10.100.0.3/31"
+                },
+                "link": "link2",
+                "name": "ge-0/0/2.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to PE3",
+                "ipv4_address": {
+                  "explicit": "10.100.0.7/31"
+                },
+                "link": "link4",
+                "name": "ge-0/0/3.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to PE3",
+                "ipv4_address": {
+                  "explicit": "10.100.0.11/31"
+                },
+                "link": "link6",
+                "name": "ge-0/0/4.0",
+                "profiles": []
+              },
+              {
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.100.0.13/31"
+                },
+                "link": "link7",
+                "name": "ge-0/0/5.0",
+                "profiles": []
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.100.1.5"
+          },
+          "model": "vMX",
+          "name": "p2",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM66D861CE0F",
+          "site_id": "cfda6d7c-8ec8-4834-975b-882a8022207f"
+        }
+      ]
+    },
+    "node_profiles": {
+      "node_profile": [
+        {
+          "ipv4_loopback": {
+            "auto": {}
+          },
+          "iso_net_address": {
+            "area_id": "01",
+            "system_id": {
+              "auto": [
+                null
+              ]
+            }
+          },
+          "labels": [],
+          "name": "DeviceProfile1",
+          "router_id": {
+            "auto": {}
+          },
+          "templates": [],
+          "trust": {
+            "enabled": true
+          }
+        }
+      ]
+    }
+  },
+  "instance_id": "internal",
+  "instance_status": "active",
+  "instance_uuid": "2db3bc9a-6a7c-11ef-b7aa-b62fdf743629",
+  "operation": "modify",
+  "order_id": "e3981748-6ac4-11ef-b27c-8effea1cccfe",
+  "order_status": {
+    "components": [
+      {
+        "component_data": [
+          {
+            "message": "placed",
+            "status": "success",
+            "time": "2024-09-04T13:55:07Z"
+          },
+          {
+            "message": "placed",
+            "status": "success",
+            "time": "2024-09-04T14:20:55Z"
+          }
+        ],
+        "component_type": "placement"
+      },
+      {
+        "component_data": [
+          {
+            "message": "transform service order to device config",
+            "status": "success",
+            "time": "2024-09-04T13:55:17Z"
+          },
+          {
+            "message": "applied device config to [00000000-0000-0000-1000-2c6bf5570b00]",
+            "status": "success",
+            "support_hint": "00000000-0000-0000-1000-2c6bf5570b00",
+            "time": "2024-09-04T13:55:33Z"
+          },
+          {
+            "message": "transform service order to device config",
+            "status": "success",
+            "time": "2024-09-04T14:21:06Z"
+          },
+          {
+            "message": "applied device config to [00000000-0000-0000-1000-2c6bf5570b00]",
+            "status": "success",
+            "time": "2024-09-04T14:21:22Z"
+          }
+        ],
+        "component_type": "device"
+      },
+      {
+        "component_data": [
+          {
+            "message": "transform service order to insights config",
+            "status": "success",
+            "time": "2024-09-04T13:55:49Z"
+          },
+          {
+            "message": "apply-insights-configuration",
+            "status": "success",
+            "support_hint": "insights configuration done for devices with mac addresses [2c6bf5570b00 2c6bf51ae500 16411d18ffff]",
+            "time": "2024-09-04T13:55:58Z"
+          },
+          {
+            "message": "transform service order to insights config",
+            "status": "success",
+            "time": "2024-09-04T14:21:33Z"
+          }
+        ],
+        "component_type": "insights"
+      },
+      {
+        "component_data": [
+          {
+            "message": "transform service order to active assurance config",
+            "status": "success",
+            "time": "2024-09-04T14:17:04Z"
+          },
+          {
+            "message": "active-assurance-tests-initiated",
+            "status": "success",
+            "support_hint": "active assurance tests initiated on [00000000-0000-0000-1000-2c6bf5570b00]",
+            "time": "2024-09-04T14:17:08Z"
+          }
+        ],
+        "component_type": "active assurance"
+      }
+    ],
+    "status": "processing",
+    "workflow_trace": [
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "prepare_order",
+        "time": "2024-09-04T13:54:11.311398+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.phys_branch",
+        "time": "2024-09-04T13:54:15.426695+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.get_trust_baseline",
+        "time": "2024-09-04T13:54:24.944320+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.record_trust_baseline",
+        "time": "2024-09-04T13:54:28.713009+00:00"
+      },
+      {
+        "message": "software image not specified",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.software_update",
+        "time": "2024-09-04T13:54:36.528757+00:00"
+      },
+      {
+        "message": "No request id provided in node instance data, no software to upgrade",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.software_update_launch_check",
+        "time": "2024-09-04T13:54:40.544916+00:00"
+      },
+      {
+        "message": "No request id provided in node instance data, no software to upgrade",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.software_update_connect_check",
+        "time": "2024-09-04T13:54:43.395468+00:00"
+      },
+      {
+        "message": " No device EMS templates configured. No interface EMS templates configured.",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.ems_templates_check",
+        "time": "2024-09-04T13:54:46.550280+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "common_fh.get_and_update_topo_resource",
+        "time": "2024-09-04T14:20:48.233051+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "common_fh.upload_network_resources",
+        "time": "2024-09-04T14:20:51.477840+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "common_fh.place_service_order",
+        "time": "2024-09-04T14:20:55.731037+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "common_fh.transform_service_order",
+        "time": "2024-09-04T14:20:58.288807+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.apply_device_config_subset",
+        "time": "2024-09-04T13:55:34.286095+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "common_fh.apply_device_done",
+        "time": "2024-09-04T14:21:25.583253+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "common_fh.transform_service_order_insights",
+        "time": "2024-09-04T14:21:33.775940+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.apply_insights_config",
+        "time": "2024-09-04T13:55:59.013616+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.insight_provisioning_done",
+        "time": "2024-09-04T13:56:02.064174+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "modify_paa_config",
+        "time": "2024-09-04T13:56:05.093938+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.phys_modify",
+        "time": "2024-09-04T13:56:15.685853+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 14,
+        "status": "success",
+        "task": "get_insights_hardware",
+        "time": "2024-09-04T14:16:34.576381+00:00"
+      },
+      {
+        "message": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+        "runs": 14,
+        "status": "success",
+        "task": "record_insights_hardware",
+        "time": "2024-09-04T14:16:37.872467+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 14,
+        "status": "success",
+        "task": "get_insights_interfaces",
+        "time": "2024-09-04T14:16:42.052850+00:00"
+      },
+      {
+        "message": "Interfaces are not healthy, check node onboard>subsystems>insights>physical stats for details",
+        "runs": 14,
+        "status": "failed",
+        "task": "record_insights_interfaces",
+        "time": "2024-09-04T14:16:45.250454+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 14,
+        "status": "success",
+        "task": "get_ems_alarms_pluggables",
+        "time": "2024-09-04T14:16:48.505883+00:00"
+      },
+      {
+        "message": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+        "runs": 1,
+        "status": "success",
+        "task": "record_ems_alarms_pluggables",
+        "time": "2024-09-04T14:16:52.275412+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.phys_insights_health",
+        "time": "2024-09-04T14:16:55.957672+00:00"
+      },
+      {
+        "message": "Finished 'modify' processing, and active assurance is enabled",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.post_phys_modify",
+        "time": "2024-09-04T14:16:59.506744+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.transform_so_paa_phys",
+        "time": "2024-09-04T14:17:04.628494+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.apply_paa_config_phys",
+        "time": "2024-09-04T14:17:08.597284+00:00"
+      },
+      {
+        "message": "Finished 'active assurance' tasks, get test results; active-assurance-tests-initiated; Debug info - active assurance tests initiated on [00000000-0000-0000-1000-2c6bf5570b00]",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.post_phys_paa_tests",
+        "time": "2024-09-04T14:17:12.223336+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.get_paa_tests_phys",
+        "time": "2024-09-04T14:20:16.088441+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.record_paa_tests_phys",
+        "time": "2024-09-04T14:20:19.146837+00:00"
+      },
+      {
+        "message": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.post_phys_all_configs",
+        "time": "2024-09-04T14:20:22.574269+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.get_trust_physical",
+        "time": "2024-09-04T14:20:32.366430+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.record_trust_physical",
+        "time": "2024-09-04T14:20:36.006237+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "logical_stage.logical_branch",
+        "time": "2024-09-04T14:20:39.004437+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.apply_device_config",
+        "time": "2024-09-04T14:21:22.766179+00:00"
+      }
+    ]
+  },
+  "org_id": "cee5ebfa-5f8c-4186-9cd5-c533187f1ab9",
+  "place": [
+    {
+      "number": 2,
+      "options": [
+        {
+          "numbers": 256,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "loopback",
+              "type": "resource"
+            },
+            {
+              "name": "10.100.1.0/24",
+              "type": "loopback"
+            }
+          ]
+        }
+      ],
+      "optionsq": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        }
+      ],
+      "path": [
+        {
+          "name": "pe3",
+          "type": "node"
+        },
+        {
+          "name": "loopback_req",
+          "type": "loopback"
+        }
+      ],
+      "pool": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        },
+        {
+          "name": "10.100.1.0/24",
+          "type": "loopback"
+        }
+      ],
+      "type": "numbered"
+    },
+    {
+      "number": 3,
+      "options": [
+        {
+          "numbers": 256,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "loopback",
+              "type": "resource"
+            },
+            {
+              "name": "10.100.1.0/24",
+              "type": "loopback"
+            }
+          ]
+        }
+      ],
+      "optionsq": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        }
+      ],
+      "path": [
+        {
+          "name": "p1",
+          "type": "node"
+        },
+        {
+          "name": "loopback_req",
+          "type": "loopback"
+        }
+      ],
+      "pool": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        },
+        {
+          "name": "10.100.1.0/24",
+          "type": "loopback"
+        }
+      ],
+      "type": "numbered"
+    },
+    {
+      "number": 4,
+      "options": [
+        {
+          "numbers": 256,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "loopback",
+              "type": "resource"
+            },
+            {
+              "name": "10.100.1.0/24",
+              "type": "loopback"
+            }
+          ]
+        }
+      ],
+      "optionsq": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        }
+      ],
+      "path": [
+        {
+          "name": "p2",
+          "type": "node"
+        },
+        {
+          "name": "loopback_req",
+          "type": "loopback"
+        }
+      ],
+      "pool": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        },
+        {
+          "name": "10.100.1.0/24",
+          "type": "loopback"
+        }
+      ],
+      "type": "numbered"
+    },
+    {
+      "number": 0,
+      "options": [
+        {
+          "numbers": 256,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "loopback",
+              "type": "resource"
+            },
+            {
+              "name": "10.100.1.0/24",
+              "type": "loopback"
+            }
+          ]
+        }
+      ],
+      "optionsq": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        }
+      ],
+      "path": [
+        {
+          "name": "pe1",
+          "type": "node"
+        },
+        {
+          "name": "loopback_req",
+          "type": "loopback"
+        }
+      ],
+      "pool": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        },
+        {
+          "name": "10.100.1.0/24",
+          "type": "loopback"
+        }
+      ],
+      "type": "numbered"
+    },
+    {
+      "number": 1,
+      "options": [
+        {
+          "numbers": 256,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "loopback",
+              "type": "resource"
+            },
+            {
+              "name": "10.100.1.0/24",
+              "type": "loopback"
+            }
+          ]
+        }
+      ],
+      "optionsq": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        }
+      ],
+      "path": [
+        {
+          "name": "pe2",
+          "type": "node"
+        },
+        {
+          "name": "loopback_req",
+          "type": "loopback"
+        }
+      ],
+      "pool": [
+        {
+          "name": "loopback",
+          "type": "resource"
+        },
+        {
+          "name": "10.100.1.0/24",
+          "type": "loopback"
+        }
+      ],
+      "type": "numbered"
+    }
+  ],
+  "placement": {
+    "infrastructure_ntw": {
+      "network_nodes": {
+        "network_node": [
+          {
+            "ipv4_loopback": {
+              "options": [
+                "10.100.1.0/24"
+              ],
+              "selected": "10.100.1.0/24"
+            },
+            "name": "pe1"
+          },
+          {
+            "ipv4_loopback": {
+              "options": [
+                "10.100.1.0/24"
+              ],
+              "selected": "10.100.1.1/24"
+            },
+            "name": "pe2"
+          },
+          {
+            "ipv4_loopback": {
+              "options": [
+                "10.100.1.0/24"
+              ],
+              "selected": "10.100.1.2/24"
+            },
+            "name": "pe3"
+          },
+          {
+            "ipv4_loopback": {
+              "options": [
+                "10.100.1.0/24"
+              ],
+              "selected": "10.100.1.3/24"
+            },
+            "name": "p1"
+          },
+          {
+            "ipv4_loopback": {
+              "options": [
+                "10.100.1.0/24"
+              ],
+              "selected": "10.100.1.4/24"
+            },
+            "name": "p2"
+          }
+        ]
+      }
+    }
+  },
+  "upload_time": "2024-09-04T14:21:33Z",
+  "version": "1.0.0",
+  "workflow_id": "onboard-infrastructure-0_10_25",
+  "workflow_run_id": "manual__2024-09-04T13:54:07.370288+00:00"
+}

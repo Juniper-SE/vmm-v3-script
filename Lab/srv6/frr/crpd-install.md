@@ -6,22 +6,24 @@ echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.i
 
 sudo apt -y update
 sudo apt -y upgrade
-sudo apt install -y cri-o podman
+sudo apt install -y cri-o podman lldpd
 sudo systemctl start crio.service
 
 ## installing cRPD
+podman load -i junos-routing-crpd-docker-amd64-24.2R1.14.tgz
+export CRPD_NAME=crpd1
+sudo podman volume create ${CRPD_NAME}-config
+sudo podman volume create ${CRPD_NAME}-varlog
 
 export CRPD_NAME=crpd1
-podman load -i junos-routing-crpd-docker-amd64-24.2R1.14.tgz
-podman volume create ${CRPD_NAME}-config
-podman volume create ${CRPD_NAME}-varlog
-
-export CRPD_NAME=crpd11
-podman run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} \
+sudo podman run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} \
        --net=host --privileged \
        -v ${CRPD_NAME}-config:/config \
        -v ${CRPD_NAME}-varlog:/var/log \
        -it localhost/crpd:24.2R1.14
+
+sudo podman ps -a
+
 
 ## installing on PE11
 
@@ -309,3 +311,8 @@ set routing-options route-distinguisher-id 192.168.255.12
 delete protocols isis interface eth3.101
 
 
+
+
+set system ntp server 66.129.233.81
+set system name-server 10.49.32.95
+set system name-server 10.49.32.97
