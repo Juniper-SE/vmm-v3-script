@@ -31,4 +31,19 @@ done
 # set apply-groups template3
 # commit
 
+configure
+set groups bgpls policy-options policy-statement TE term 1 from family traffic-engineering
+set groups bgpls policy-options policy-statement TE term 1 then accept
+set groups bgpls routing-options autonomous-system {{ ASN }}
+set groups bgpls protocols bgp group bgpls type internal
+set groups bgpls protocols bgp group bgpls description "Peering to Paragon Automation
+set groups bgpls protocols bgp group bgpls local-address {{localAddr}}
+set groups bgpls protocols bgp group bgpls passive
+set groups bgpls protocols bgp group bgpls family traffic-engineering unicast
+set groups bgpls protocols bgp group bgpls export TE
+set groups bgpls protocols bgp group bgpls allow 0.0.0.0/0
+set groups bgpls protocols mpls traffic-engineering database import policy TE
+set apply-groups bgpls
+commit
+
 

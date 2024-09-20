@@ -44,6 +44,8 @@ if config1:
 			lib1.config_junos(d1)
 		elif config1['cmd'] == 'get_ztp_config':
 			lib1.get_ztp_config(d1)
+		elif config1['cmd'] == 'get_vjunos_mac':
+			lib1.get_vjunos_mac(d1)
 		# elif config1['cmd'] == 'get_vjunos_dhcp':
 		# 	lib1.get_vjunos_config(d1)
 		elif config1['cmd'] == 'print_data':

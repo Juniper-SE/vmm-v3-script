@@ -42,7 +42,7 @@ cli -c "configure; set system commit synchronize; set chassis evpn-vxlan-default
 EOF
 sudo chmod +x /containers_data/tftp/junos_custom1.sh
 
-export JUNOS_VERSION="23.4R1.10"
+export JUNOS_VERSION="24.2R1.17"
 #export JUNOS_VERSION="23.2R1.14"
 sudo sed -i -e "s/junos-version1/${JUNOS_VERSION}/" /containers_data/tftp/ztp.json
 sudo sed -i -e "s/junos-version2//" /containers_data/tftp/ztp.json

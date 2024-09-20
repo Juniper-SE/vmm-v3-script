@@ -4,7 +4,7 @@ pod:
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod36-vmm.englab.juniper.net
+  vmmserver: q-pod35-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan
@@ -23,8 +23,8 @@ images:
   bridge: images/bridge.qcow2
   #vjunos_switch: images/vJunos-switch-23.2R1.14.qcow2
   #vjunos_router: images/vJunos-router-23.4R1.10.qcow2
-  #vjunos_router: images/vJunos-router-23.2R1.15.qcow2
-  vjunos_router: images/vJunos-router-24.2R1.17.qcow2
+  vjunos_router: images/vJunos-router-23.2R1.15.qcow2
+  #vjunos_router: images/vJunos-router-24.2R1.17.qcow2
   #pa2: images/paragon-2.1.0-disk1.qcow2
   #vjunos_evolved: images/vJunosEvolved-24.2R1-S1.2-EVO.qcow2
   paagent: images/paa-test-agent_4.4.0.9.qcow2
@@ -99,6 +99,8 @@ wg:
   - 192.168.199.1/31
   prefix_allowed:
   - 172.16.11.0/24 
+  - 172.16.10.0/24 
+  - 172.16.12.0/24 
   - 192.168.255.0/24
 vm:
   gw:
@@ -114,13 +116,25 @@ vm:
         dhcp_range: 172.16.10.1-172.16.10.100
       em2: 
         bridge: ext
+        dhcp_range: 172.16.11.1-172.16.11.100
         family: 
           inet: 172.16.11.254/24
+          inet6: fc00:dead:beef:aa15::1000:ffff/64
           static:
           - to: 192.168.255.0/24
             via: 172.16.11.15
-          inet6: fc00:dead:beef:affe::1000:ffff/64
-        dhcp_range: 172.16.11.1-172.16.11.100
+          - to: 10.100.11.0/24
+            via: 172.16.11.15
+          - to: 10.100.12.0/24
+            via: 172.16.11.15
+          - to: 10.100.13.0/24
+            via: 172.16.11.15
+          - to: 10.100.14.0/24
+            via: 172.16.11.15
+          - to: fc00:dead:beef:ffff::/64
+            via: fc00:dead:beef:aa15::1000:15
+          - to: fc00:dead:beef:aa00::/56
+            via: fc00:dead:beef:aa15::1000:15
   pe11:
     type: vjunos_router
     os: vjunos_router
@@ -153,6 +167,8 @@ vm:
           iso: null
         protocol:
           isis: null
+      ge-0/0/5:
+        bridge: pe11ge5
   pe12:
     type: vjunos_router
     os: vjunos_router
@@ -185,6 +201,8 @@ vm:
           iso: null
         protocol:
           isis: null
+      ge-0/0/5:
+        bridge: pe12ge5
   pe13:
     type: vjunos_router
     os: vjunos_router
@@ -217,6 +235,8 @@ vm:
           iso: null
         protocol:
           isis: null
+      ge-0/0/5:
+        bridge: pe13ge5
   pe14:
     type: vjunos_router
     os: vjunos_router
@@ -224,7 +244,7 @@ vm:
     router-id: 192.168.0.14
     srv6-locator: fc00:dead:beef:ff14::/64
     interfaces:
-      mgmt: e
+      mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.4/24
@@ -249,6 +269,8 @@ vm:
           iso: null
         protocol:
           isis: null
+      ge-0/0/5:
+        bridge: pe14ge5
   pe15:
     type: vjunos_router
     os: vjunos_router
@@ -271,9 +293,13 @@ vm:
         bridge: ext
         family:
           inet: 172.16.11.15/24
-          inet6: fc00:dead:beef:aa15::15/64
+          inet6: fc00:dead:beef:aa15::1000:15/64
         protocol:
           isis: passive
+      ge-0/0/2:
+        bridge: pe15ge2
+      ge-0/0/3:
+        bridge: pe15ge3
   p1:
     type: vjunos_router
     os: vjunos_router
@@ -479,22 +505,25 @@ vm:
         bridge: pe14ge0
         mtu: 9000
       em5:
-        bridge: pe11ge3
+        bridge: pe15ge2
         mtu: 9000
       em6:
-        bridge: pe12ge3
+        bridge: pe11ge3
         mtu: 9000
       em7:
-        bridge: pe13ge3
+        bridge: pe12ge3
         mtu: 9000
       em8:
-        bridge: pe14ge3
+        bridge: pe13ge3
         mtu: 9000
       em9:
+        bridge: pe14ge3
+        mtu: 9000
+      em10:
         bridge: ext
   crpd:
     type: pcsmall
-    os: ubuntu
+    os: ubuntu2
     vnc: yes
     interfaces:
       em0: 
@@ -502,26 +531,6 @@ vm:
         family:
           inet: 172.16.10.21/24
           gateway4: 172.16.10.254
-  paa:
-    type: pcmedium
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: ext
-        family:
-          inet: 172.16.11.21/24
-          gateway4: 172.16.11.254
-  hb:
-    type: pchpv0
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: ext
-        family:
-          inet: 172.16.11.22/24
-          gateway4: 172.16.11.254
   agent11:
     type: paagent
     os: paagent
@@ -529,6 +538,8 @@ vm:
     interfaces:
       em0: 
         bridge: pe11ge4
+      em1: 
+        bridge: pe11ge5
   agent12:
     type: paagent
     os: paagent
@@ -536,6 +547,8 @@ vm:
     interfaces:
       em0: 
         bridge: pe12ge4
+      em1: 
+        bridge: pe12ge5
   agent13:
     type: paagent
     os: paagent
@@ -543,6 +556,8 @@ vm:
     interfaces:
       em0: 
         bridge: pe13ge4
+      em1: 
+        bridge: pe13ge5
   agent14:
     type: paagent
     os: paagent
@@ -550,6 +565,8 @@ vm:
     interfaces:
       em0: 
         bridge: pe14ge4
+      em1: 
+        bridge: pe14ge5
   agent15:
     type: paagent
     os: paagent
@@ -557,3 +574,5 @@ vm:
     interfaces:
       em0: 
         bridge: ext
+      em1: 
+        bridge: pe15ge3

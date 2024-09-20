@@ -7,7 +7,7 @@
   vars:
     username: admin
     password: pass01
-    backup_dir: "./backup_all"
+    backup_dir: "./backup_mpls_srv6"
     conf_file: "{{ backup_dir }}/{{ inventory_hostname }}.conf"
   connection: local
   gather_facts: no

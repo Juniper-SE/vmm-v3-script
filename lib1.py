@@ -25,6 +25,7 @@ import subprocess
 from passlib.hash import md5_crypt
 #import json
 
+
  
 # from jnpr.junos import Device
 # from jnpr.junos.utils.config import Config
@@ -875,7 +876,7 @@ def get_ip_vm(d1,i):
 
 
 def get_dhcp_config(d1):
-	dhcp_yes=['centos','rhel','ubuntu','ubuntu2','debian','esxi','bridge','desktop','paagent','vjunos_switch','vjunos_router','vjunos_evolved']
+	dhcp_yes=['centos','rhel','ubuntu','ubuntu2','debian','esxi','bridge','desktop','paagent','vjunos_switch','vjunos_router','vjunos_evolved','aos','aos_flow','aos_ztp']
 	dhcp_list=[]
 	retval={}
 	t1={}
@@ -1391,6 +1392,10 @@ def get_gateway(d1,i):
 			retval=d1['vm']['gw']['interfaces'][j]['family']['inet'].split('/')[0]
 	return retval
 	
+def get_vjunos_mac(d1):
+	print("inside get_vjunos_mac")
+	mac_vjunos = get_mac_vjunos(d1)
+	pprint.pprint(mac_vjunos)
 
 def get_mac_vjunos(d1):
 	mac_vjunos={}

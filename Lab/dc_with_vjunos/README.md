@@ -229,9 +229,9 @@ there are three options to access Web UI of AOS.
 
         cat << EOF | sudo tee /containers_data/status/app/aos.conf
         {
-           "ip": "172.16.10.2",
-           "user": "ztp",
-           "password": "J4k4rt4#01"
+            "ip": "172.16.55.1",
+            "user": "ztp",
+            "password": "J4k4rt4#01"
         }
         EOF
 
