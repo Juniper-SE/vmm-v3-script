@@ -51,13 +51,15 @@ set protocols bgp rfc6514-compliant-safi129
 set protocols bgp multipath list-nexthop
 set routing-options resolution preserve-nexthop-hierarchy
 
-
-set routing-options route-distinguisher-id 192.168.255.211
+set interface lo0 unit 1 family inet
+set interface lo0 unit 1 family inet6
+set routing-options route-distinguisher-id 10.100.255.1
 set routing-instances VRF1 instance-type vrf
 set routing-instances VRF1 protocols evpn ip-prefix-routes advertise direct-nexthop
 set routing-instances VRF1 protocols evpn ip-prefix-routes encapsulation srv6
 set routing-instances VRF1 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRV6-LOC-1 end-dt46-sid
 set routing-instances VRF1 interface ge-0/0/0.0
+set routing-instances VRF1 interface lo0.1
 set routing-instances VRF1 vrf-target target:65412:1001
 set routing-instances VRF1 vrf-table-label
 delete  protocols isis interface ge-0/0/0.0

@@ -17,20 +17,6 @@
       cache_valid_time: 3600
       force_apt_get: true
       state: latest
-- name: install on node gw
-  hosts:
-    - gw
-  become: yes
-  become_method: sudo
-  tasks:
-  - name: install wireguard and lldp
-    apt:
-      name: "{{ item }}"
-      update_cache: yes
-    loop:
-      - wireguard
-      - wireguard-tools
-      - lldpd
 - name: install kvm and openvswitch
   hosts:
     - kvm1
@@ -40,9 +26,6 @@
     - kvm5
     - kvm6
     - kvm7
-    - kvm8
-    - kvm9
-    - kvm10
   become: yes
   become_method: sudo
   tasks:
