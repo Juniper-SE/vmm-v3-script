@@ -25,6 +25,10 @@ set protocols bgp group to_int cluster 10.100.255.10
 set protocols bgp group to_int neighbor fc00:dead:beef:ffff::ffff:1
 set protocols bgp group to_int neighbor fc00:dead:beef:ffff::ffff:2
 set protocols bgp group to_int neighbor fc00:dead:beef:ffff::ffff:3
+
+
+
+
 set protocols bgp group to_int neighbor fc00:dead:beef:ffff::ffff:4
 
 
@@ -63,8 +67,6 @@ set routing-instances VRF1 interface lo0.1
 set routing-instances VRF1 vrf-target target:65412:1001
 set routing-instances VRF1 vrf-table-label
 delete  protocols isis interface ge-0/0/0.0
-
-set routing-instances VRF1 forwarding-options dhcp-relay
 set routing-instances VRF1 forwarding-options dhcp-relay forward-only
 set routing-instances VRF1 forwarding-options dhcp-relay server-group dhcp-server 172.16.55.4
 set routing-instances VRF1 forwarding-options dhcp-relay active-server-group dhcp-server
@@ -110,16 +112,25 @@ set protocols bgp group to_int neighbor fc00:dead:beef:ffff::ffff:10
 set protocols bgp rfc6514-compliant-safi129
 set protocols bgp multipath list-nexthop
 set routing-options resolution preserve-nexthop-hierarchy
-
-set routing-options route-distinguisher-id 192.168.255.212
+set routing-options route-distinguisher-id 10.100.255.2
+set interface lo0 unit 1 family inet
+set interface lo0 unit 1 family inet6
 set routing-instances VRF1 instance-type vrf
 set routing-instances VRF1 protocols evpn ip-prefix-routes advertise direct-nexthop
 set routing-instances VRF1 protocols evpn ip-prefix-routes encapsulation srv6
 set routing-instances VRF1 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRV6-LOC-1 end-dt46-sid
 set routing-instances VRF1 interface ge-0/0/0.0
+set routing-instances VRF1 interface lo0.1
 set routing-instances VRF1 vrf-target target:65412:1001
 set routing-instances VRF1 vrf-table-label
 delete  protocols isis interface ge-0/0/0.0
+set routing-instances VRF1 forwarding-options dhcp-relay forward-only
+set routing-instances VRF1 forwarding-options dhcp-relay server-group dhcp-server 172.16.55.4
+set routing-instances VRF1 forwarding-options dhcp-relay active-server-group dhcp-server
+set routing-instances VRF1 forwarding-options dhcp-relay group dhcp interface ge-0/0/0.0
+
+
+
 
 
 set routing-options autonomous-system 4200000001
@@ -204,12 +215,15 @@ set protocols bgp multipath list-nexthop
 set routing-options resolution preserve-nexthop-hierarchy
 
 
-set routing-options route-distinguisher-id 192.168.255.214
+set routing-options route-distinguisher-id 10.100.255.4
+set interfaces lo0 unit 1 family inet
+set interfaces lo0 unit 1 family inet6
 set routing-instances VRF1 instance-type vrf
 set routing-instances VRF1 protocols evpn ip-prefix-routes advertise direct-nexthop
 set routing-instances VRF1 protocols evpn ip-prefix-routes encapsulation srv6
 set routing-instances VRF1 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRV6-LOC-1 end-dt46-sid
 set routing-instances VRF1 interface ge-0/0/0.0
+set routing-instances VRF1 interface lo0.1
 set routing-instances VRF1 vrf-target target:65412:1001
 set routing-instances VRF1 vrf-table-label
 delete  protocols isis interface ge-0/0/0.0
@@ -229,7 +243,7 @@ set policy-options policy-statement to_int term 2 then next-hop self
 set policy-options policy-statement to_int term 2 then accept
 set protocols bgp group to_int type internal
 set protocols bgp group to_int export to_int
-set protocols bgp group to_int local-address fc00:dead:beef:ffff::ffff:4
+set protocols bgp group to_int local-address fc00:dead:beef:ffff::ffff:4 
 set protocols bgp group to_int family inet unicast extended-nexthop
 set protocols bgp group to_int family inet unicast advertise-srv6-service
 set protocols bgp group to_int family inet unicast accept-srv6-service

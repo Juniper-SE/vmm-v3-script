@@ -7,17 +7,17 @@
   vars:
     username: admin
     password: pass01
-    conf_dir: "./junos_config"
-    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.conf"
+    conf_dir: "./junos_config_set"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.set"
   connection: local
   gather_facts: no
   tasks:
     - name: upload config into router
       juniper_junos_config:
-         host: "{{ ansible_host }}"
-         user: "{{ username }}"
-         password: "{{ password }}"
-         file: "{{ conf_file}}"
-         config_mode: "exclusive"
-         load: "merge"
-         format: "text"
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        file: "{{ conf_file}}"
+        config_mode: "exclusive"
+        load: "merge"
+        format: "set"

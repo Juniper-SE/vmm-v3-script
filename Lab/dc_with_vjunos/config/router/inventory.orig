@@ -2,10 +2,6 @@
 pe1
 pe2
 pe3
-pe4
 p1
-ext1
-ext2
-ext3
 [all:vars]
 ansible_python_interpreter=python3

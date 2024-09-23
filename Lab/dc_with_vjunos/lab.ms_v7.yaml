@@ -54,7 +54,7 @@ fabric:
     - [ 0x16, pe1, ge-0/0/1, p1, ge-0/0/0 ]
     - [ 0x16, pe2, ge-0/0/1, p1, ge-0/0/1 ]
     - [ 0x16, pe3, ge-0/0/1, p1, ge-0/0/2 ]
-    - [ 0x16, p1, ge-0/0/3, crpd, em1 ]
+    - [ 0x16, p1, ge-0/0/3, rr, em1 ]
 wg:
   gw_ip: 192.168.199.0/31
   ws_ip: 192.168.199.1/31
@@ -150,7 +150,7 @@ vm:
         bridge: d2sw2p7
   vxlangw:
     type: vjunos_router
-    os: vsrx_vjunos_router
+    os: vjunos_router
     ztp: yes
     interfaces:
       mgmt: 
@@ -660,7 +660,7 @@ vm:
           inet6: fc00:dead:beef:ffff::ffff:5/128
         protocol:
           isis: passive
-  crpd:
+  rr:
     type: pcsmall
     os: ubuntu2
     vnc: yes
