@@ -1451,6 +1451,9 @@ def get_mac_vm(d1,i):
 	elif d1['pod']['type'] == 'kvm':
 		print("not implemented for this type")
 		return ""
+	
+def get_vjunos_sernum(d1,i):
+	cmd1=f"cli -c \"show chassis hardware | match Chassis\" | tr -s \" \" | cut -d \" \" -f 2"
 
 def get_serial(d1,vm=""):
 	if d1['pod']['type'] == 'vmm':

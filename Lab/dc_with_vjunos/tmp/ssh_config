@@ -1,0 +1,184 @@
+### by vmm-v3-script ###
+Host *
+    StrictHostKeyChecking no
+
+host vmm 
+    hostname q-pod26-vmm.englab.juniper.net
+    user irzan
+    IdentityFile ~/.ssh/key1
+host gw
+    hostname 10.49.10.204
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host proxy 
+    hostname 10.49.10.204
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+    DynamicForward 1080
+
+host fw1
+    ProxyCommand ssh -W 172.16.10.211:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host fw2
+    ProxyCommand ssh -W 172.16.10.212:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host vxlangw
+    ProxyCommand ssh -W 172.16.10.213:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1spine1
+    ProxyCommand ssh -W 172.16.11.101:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1spine2
+    ProxyCommand ssh -W 172.16.11.102:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1spine3
+    ProxyCommand ssh -W 172.16.11.103:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1spine4
+    ProxyCommand ssh -W 172.16.11.104:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf1
+    ProxyCommand ssh -W 172.16.11.111:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf2
+    ProxyCommand ssh -W 172.16.11.112:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf3
+    ProxyCommand ssh -W 172.16.11.113:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf4
+    ProxyCommand ssh -W 172.16.11.114:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf5
+    ProxyCommand ssh -W 172.16.11.115:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf6
+    ProxyCommand ssh -W 172.16.11.116:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf7
+    ProxyCommand ssh -W 172.16.11.117:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc1leaf8
+    ProxyCommand ssh -W 172.16.11.118:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc2sw1
+    ProxyCommand ssh -W 172.16.12.101:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host dc2sw2
+    ProxyCommand ssh -W 172.16.12.102:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host pe1
+    ProxyCommand ssh -W 172.16.10.204:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host pe2
+    ProxyCommand ssh -W 172.16.10.205:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host pe3
+    ProxyCommand ssh -W 172.16.10.206:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host p1
+    ProxyCommand ssh -W 172.16.10.208:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host apstra
+    ProxyCommand ssh -W 172.16.55.1:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host apstraw2
+    ProxyCommand ssh -W 172.16.55.2:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host apstraw3
+    ProxyCommand ssh -W 172.16.55.3:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host ztp
+    ProxyCommand ssh -W 172.16.55.4:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host flow
+    ProxyCommand ssh -W 172.16.55.5:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host kvm1
+    ProxyCommand ssh -W 172.16.10.221:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host kvm2
+    ProxyCommand ssh -W 172.16.10.222:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host kvm3
+    ProxyCommand ssh -W 172.16.10.223:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host kvm4
+    ProxyCommand ssh -W 172.16.10.224:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host kvm5
+    ProxyCommand ssh -W 172.16.10.225:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host kvm6
+    ProxyCommand ssh -W 172.16.10.226:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host kvm7
+    ProxyCommand ssh -W 172.16.10.230:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+

@@ -45,18 +45,6 @@ items:
 - name: DC2_VRF_loopback
   subnets:
   - network: 10.2.3.0/24
-- name: DC3_fabric_link
-  subnets:
-  - network: 10.3.0.0/24
-- name: DC3_Spine_loopback
-  subnets:
-  - network: 10.3.1.0/24
-- name: DC3_Leaf_loopback
-  subnets:
-  - network: 10.3.2.0/24
-- name: DC3_VRF_loopback
-  subnets:
-  - network: 10.3.3.0/24
 """
 ippools_dict = yaml.load(ippools,Loader=yaml.FullLoader)
 for i in ippools_dict['items']:

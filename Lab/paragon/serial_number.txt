@@ -1,0 +1,11 @@
+PE1: VM66FA261D61
+PE2: VM66FA265576
+PE3: VM66FA261ADA
+P1: VM66FA262580
+P2: VM66FA262E47
+
+
+
+set system name-server 10.49.32.95
+set system name-server 10.49.32.97
+set system ntp server 66.129.233.81

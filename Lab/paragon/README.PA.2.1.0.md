@@ -329,16 +329,16 @@ The following step is to setup wireguard to allow direct access into the lab, fo
 2. Enter the following configuration on paragon shell. change the web-admin-user to your email
 
        configure
-       set paragon cluster nodes kubernetes 1 address 172.16.11.11
-       set paragon cluster nodes kubernetes 2 address 172.16.11.12
-       set paragon cluster nodes kubernetes 3 address 172.16.11.13
-       set paragon cluster nodes kubernetes 4 address 172.16.11.14
+       set paragon cluster nodes kubernetes 1 address 172.16.11.1
+       set paragon cluster nodes kubernetes 2 address 172.16.11.2
+       set paragon cluster nodes kubernetes 3 address 172.16.11.3
+       set paragon cluster nodes kubernetes 4 address 172.16.11.4
        set paragon cluster ntp ntp-servers ntp.juniper.net
-       set paragon cluster common-services ingress ingress-vip 172.16.11.21
-       set paragon cluster applications active-assurance test-agent-gateway-vip 172.16.11.22
+       set paragon cluster common-services ingress ingress-vip 172.16.11.11
+       set paragon cluster applications active-assurance test-agent-gateway-vip 172.16.11.12
        set paragon cluster applications web-ui web-admin-user "irzan@juniper.net"
        set paragon cluster applications web-ui web-admin-password "J4k4rt4#170845"
-       set paragon cluster applications pathfinder pce-server pce-server-vip 172.16.11.23
+       set paragon cluster applications pathfinder pce-server pce-server-vip 172.16.11.13
        commit
        exit
 

@@ -5,7 +5,7 @@ pod:
   # if your account can access vmm lab directly, then you can comment out jumpserver
   #jumpserver: ttsv-shell110.juniper.net
   #vmmserver: q-pod27-vmm.englab.juniper.net
-  vmmserver: q-pod36-vmm.englab.juniper.net
+  vmmserver: q-pod26-vmm.englab.juniper.net
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   user: irzan
   # adpassword: AnaMabokCoys
@@ -22,7 +22,8 @@ images:
   aos: images/aos_server_5.0.0-64.qcow2
   aos_ztp: images/apstra-ztp-5.0.0-10.qcow2
   aos_flow: images/apstra-flow-5.0.0-ubuntu-22.04-7.2.1.qcow2
-  vjunos_switch: images/vJunos-switch-24.2R1.17.qcow2
+  #vjunos_switch: images/vJunos-switch-24.2R1.17.qcow2
+  vjunos_switch: images/vJunos-switch-24.2R1-S1.5.qcow2
   vjunos_router: images/vJunos-router-24.2R1.17.qcow2
 junos_login:
   login: admin
@@ -54,7 +55,7 @@ fabric:
     - [ 0x16, pe1, ge-0/0/1, p1, ge-0/0/0 ]
     - [ 0x16, pe2, ge-0/0/1, p1, ge-0/0/1 ]
     - [ 0x16, pe3, ge-0/0/1, p1, ge-0/0/2 ]
-    - [ 0x16, p1, ge-0/0/3, rr, em1 ]
+    # - [ 0x16, p1, ge-0/0/3, rr, em1 ]
 wg:
   gw_ip: 192.168.199.0/31
   ws_ip: 192.168.199.1/31
@@ -142,8 +143,8 @@ vm:
       ge-0/0/0: 
         bridge: ext1
         family:
-          inet: 172.16.16.5/24
-          inet6: fc00:dead:beef:ff16::5/64
+          inet: 172.16.16.2/24
+          inet6: fc00:dead:beef:ff16::2/64
       ge-0/0/1: 
         bridge: d2sw1p7
       ge-0/0/2: 
@@ -196,6 +197,10 @@ vm:
         bridge: d1s1p8
       ge-0/0/9: 
         bridge: d1s1p9
+      ge-0/0/10: 
+        bridge: d1s1p10
+      ge-0/0/11: 
+        bridge: d1s1p11
   dc1spine2:
     type: vjunos_switch
     os: vjunos_switch
@@ -224,6 +229,10 @@ vm:
         bridge: d1s2p8
       ge-0/0/9: 
         bridge: d1s2p9
+      ge-0/0/10: 
+        bridge: d1s2p10
+      ge-0/0/11: 
+        bridge: d1s2p11
   dc1spine3:
     type: vjunos_switch
     os: vjunos_switch
@@ -252,6 +261,10 @@ vm:
         bridge: d1s3p8
       ge-0/0/9: 
         bridge: d1s3p9
+      ge-0/0/10: 
+        bridge: d1s3p10
+      ge-0/0/11: 
+        bridge: d1s3p11
   dc1spine4:
     type: vjunos_switch
     os: vjunos_switch
@@ -280,6 +293,10 @@ vm:
         bridge: d1s4p8
       ge-0/0/9: 
         bridge: d1s4p9
+      ge-0/0/10: 
+        bridge: d1s4p10
+      ge-0/0/11: 
+        bridge: d1s4p11
   dc1leaf1:
     type: vjunos_switch
     os: vjunos_switch
@@ -305,8 +322,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l1p7
       ge-0/0/8: 
-        bridge: d1s3p0
+        bridge: d1l1p8
       ge-0/0/9: 
+        bridge: d1l1p9
+      ge-0/0/10: 
+        bridge: d1s3p0
+      ge-0/0/11: 
         bridge: d1s4p0
   dc1leaf2:
     type: vjunos_switch
@@ -333,8 +354,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l2p7
       ge-0/0/8: 
-        bridge: d1s3p1
+        bridge: d1l2p8
       ge-0/0/9: 
+        bridge: d1l2p9
+      ge-0/0/10: 
+        bridge: d1s3p1
+      ge-0/0/11: 
         bridge: d1s4p1
   dc1leaf3:
     type: vjunos_switch
@@ -361,8 +386,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l3p7
       ge-0/0/8: 
-        bridge: d1s3p2
+        bridge: d1l3p8
       ge-0/0/9: 
+        bridge: d1l3p9
+      ge-0/0/10: 
+        bridge: d1s3p2
+      ge-0/0/11: 
         bridge: d1s4p2
   dc1leaf4:
     type: vjunos_switch
@@ -389,8 +418,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l4p7
       ge-0/0/8: 
-        bridge: d1s3p3
+        bridge: d1l4p8
       ge-0/0/9: 
+        bridge: d1l4p9
+      ge-0/0/10: 
+        bridge: d1s3p3
+      ge-0/0/11: 
         bridge: d1s4p3
   dc1leaf5:
     type: vjunos_switch
@@ -417,8 +450,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l5p7
       ge-0/0/8: 
-        bridge: d1s3p4
+        bridge: d1l5p8
       ge-0/0/9: 
+        bridge: d1l5p9
+      ge-0/0/10: 
+        bridge: d1s3p4
+      ge-0/0/11: 
         bridge: d1s4p4
   dc1leaf6:
     type: vjunos_switch
@@ -445,8 +482,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l6p7
       ge-0/0/8: 
-        bridge: d1s3p5
+        bridge: d1l6p8
       ge-0/0/9: 
+        bridge: d1l6p9
+      ge-0/0/10: 
+        bridge: d1s3p5
+      ge-0/0/11: 
         bridge: d1s4p5
   dc1leaf7:
     type: vjunos_switch
@@ -473,8 +514,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l7p7
       ge-0/0/8: 
-        bridge: d1s3p6
+        bridge: d1l7p8
       ge-0/0/9: 
+        bridge: d1l7p9
+      ge-0/0/10: 
+        bridge: d1s3p6
+      ge-0/0/11: 
         bridge: d1s4p6
   dc1leaf8:
     type: vjunos_switch
@@ -501,8 +546,12 @@ vm:
       ge-0/0/7: 
         bridge: d1l8p7
       ge-0/0/8: 
-        bridge: d1s3p7
+        bridge: d1l8p8
       ge-0/0/9: 
+        bridge: d1l8p9
+      ge-0/0/10: 
+        bridge: d1s3p7
+      ge-0/0/11: 
         bridge: d1s4p7
   dc2sw1:
     type: vjunos_switch
@@ -532,6 +581,10 @@ vm:
         bridge: d2sw1p8
       ge-0/0/9: 
         bridge: d2sw1p9
+      ge-0/0/10: 
+        bridge: d2sw1p10
+      ge-0/0/11: 
+        bridge: d2sw1p11
   dc2sw2:
     type: vjunos_switch
     os: vjunos_switch
@@ -560,6 +613,10 @@ vm:
         bridge: d2sw2p8
       ge-0/0/9: 
         bridge: d2sw2p9
+      ge-0/0/10: 
+        bridge: d2sw2p10
+      ge-0/0/11: 
+        bridge: d2sw2p11
   pe1:
     type: vjunos_router
     os: vjunos_router
@@ -660,16 +717,16 @@ vm:
           inet6: fc00:dead:beef:ffff::ffff:5/128
         protocol:
           isis: passive
-  rr:
-    type: pcsmall
-    os: ubuntu2
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: mgmt
-        family:
-          inet: 172.16.10.209/24
-          gateway4: 172.16.10.254
+  # rr:
+  #   type: pcsmall
+  #   os: ubuntu2
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: mgmt
+  #       family:
+  #         inet: 172.16.10.209/24
+  #         gateway4: 172.16.10.254
   apstra:
     type: pchpv1
     os: aos
@@ -720,25 +777,34 @@ vm:
         family:
           inet: 172.16.55.5/24 
           gateway4: 172.16.55.254
-  svr1:
+  svr1a:
     type: pcsmall
-    os: ubuntu
+    os: ubuntu2
     vnc: yes
     interfaces: 
       em0: 
         bridge: d1l1p2
       em1:
         bridge: d1l2p2
-  svr2:
+  svr1b:
     type: pcsmall
     os: ubuntu
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: d1l1p5
+      em1:
+        bridge: d1l1p6
+  svr2:
+    type: pcsmall
+    os: ubuntu2
     vnc: yes
     interfaces:
       em0: 
         bridge: d1l1p3
       em1:
         bridge: d1l2p3
-  svr3:
+  svr3a:
     type: pcsmall
     os: ubuntu
     vnc: yes
@@ -747,9 +813,18 @@ vm:
         bridge: d1l3p2
       em1:
         bridge: d1l4p2
-  svr4:
+  svr3b:
     type: pcsmall
     os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: d1l4p5
+      em1:
+        bridge: d1l4p6
+  svr4:
+    type: pcsmall
+    os: ubuntu2
     vnc: yes
     interfaces:
       em0: 
@@ -758,16 +833,25 @@ vm:
         bridge: d1l4p3
   svr5:
     type: pcsmall 
-    os: ubuntu
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: d1l5p3
+      em1:
+        bridge: d1l6p3
+  svr6:
+    type: pcsmall 
+    os: ubuntu2
     vnc: yes
     interfaces:
       em0: 
         bridge: d1l7p2
       em1:
         bridge: d1l8p2
-  svr6:
+  svr7:
     type: pcsmall
-    os: ubuntu
+    os: ubuntu2
     vnc: yes
     interfaces:
       em0: 
@@ -830,15 +914,33 @@ vm:
         bridge: d1l7p4
       em2: 
         bridge: d1l8p4
-  svr7:
+  svr8a:
     type: pcsmall
-    os: ubuntu
+    os: ubuntu2
     vnc: yes
     interfaces:
       em0: 
         bridge: d2sw1p4
       em1: 
         bridge: d2sw2p4
+  svr8b:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: d2sw1p8
+      em1: 
+        bridge: d2sw1p9
+  svr9:
+    type: pcsmall
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: d2sw1p10
+      em1: 
+        bridge: d2sw2p10
   kvm5:
     type: pchpv2
     os: ubuntu
@@ -875,7 +977,7 @@ vm:
       em0:
         bridge: mgmt
         family:
-          inet: 172.16.10.230/24
+          inet: 172.16.10.227/24
           gateway4: 172.16.10.254
       em1:
         bridge: ext

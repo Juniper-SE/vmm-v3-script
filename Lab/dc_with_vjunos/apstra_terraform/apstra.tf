@@ -6,7 +6,7 @@ terraform {
    }
 }
 provider "apstra" {
-    url = "https://172.16.10.2"
+    url = "https://172.16.55.1"
     tls_validation_disabled = true
     blueprint_mutex_enabled = false
     experimental = true
@@ -14,7 +14,7 @@ provider "apstra" {
 
 
 resource "apstra_logical_device" "ald1" {
-  name = "AOS-10x1"
+  name = "_AOS-10x1"
   panels = [
     {
       rows = 1

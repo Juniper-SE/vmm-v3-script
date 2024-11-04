@@ -74,6 +74,7 @@ def create_asn_pools(asn):
         token = {'AuthToken': d1['token']}
         data={
             "display_name": asn['name'],
+            "id": asn['name'],
             "ranges":[
                 {
                     "first": asn['first'],
@@ -236,6 +237,7 @@ def create_ip_pools(ippool):
         token = {'AuthToken': d1['token']}
         data={
             "display_name": ippool['name'],
+            "id": ippool['name'],
             "subnets":[]
         }
         for i in ippool['subnets']:
@@ -306,6 +308,7 @@ def create_ipv6_pools(ippool):
         token = {'AuthToken': d1['token']}
         data={
             "display_name": ippool['name'],
+            "id": ippool['name'],
             "subnets":[]
         }
         for i in ippool['subnets']:

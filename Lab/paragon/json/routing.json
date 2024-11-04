@@ -1,0 +1,32 @@
+{
+  "customer_id": "network-operator",
+  "design_id": "routing",
+  "instance_id": "routing-stuff",
+  "operation": "create",
+  "routing": {
+    "autonomous_system": [
+      {
+        "name": 65200,
+        "count": 1024
+      }
+    ],
+    "spring": {
+      "sids": {
+        "size": 1000
+      }
+    },
+    "route_reflector": {
+      "clusters": [
+        {
+          "cluster": "1.1.1.1"
+        },
+        {
+          "cluster": "2.2.2.2"
+        },
+        {
+          "cluster": "3.3.3.3"
+        }
+      ]
+    }
+  }
+}
