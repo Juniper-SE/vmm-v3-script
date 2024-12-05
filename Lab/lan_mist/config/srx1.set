@@ -1,0 +1,11 @@
+set system host-name srx1
+set system root-authentication encrypted-password $1$Smyac9TY$T8nnJx0hDJ70p78wH00mi/
+set system login user admin class super-user
+set system login user admin authentication encrypted-password $1$Smyac9TY$T8nnJx0hDJ70p78wH00mi/
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBUA+4YJwqE2rqwweZ3NG7GpXF3JqIxFbnDxraW8//QWjHLGVgn+jFbXFB3T/yLYpIRAh8SsAw6M6pZXzGd3oiltENLkoN5YGI1yW0bCTsS/Z4BoW/iuPR2rYQqhA+NPi9OZO/opVbJ+VIdfm+fugWPSVpduBiJN20P9iEF1zCW4EmWZn3qkl25LjVSBVMiwn+crcsCHUub3xDRicgTOOINFo4lZy03Fsa3PoqpxXv18FhNi3pVWmV2n3vIckWt8BbaPWMTFZmERHkVb4Y15GsHwcQxb6gm3h8Do4QgURbujCUJQhpJT4BRdD8kja1NQK4lbcPq6l9rF3YM7aQkscB16nCplWcgdnxI7eN//FA4ovvx7d57i43Y7GzSlQE87kcIDDQ1eCesYOfg9EfqCFSVWV0hbhc2Ap6YCoc0R9POpG1n0LO+o++h0J0bkLUWsIiQLb3LiC91FnP3giK5MEzdJ+maJcjIyGlTth52s01nLdT4gQDgTURqIpfL8L0HWE= irzan@irzan-mbp"
+set system services ssh root-login allow
+set system services ssh sftp-server
+set system services netconf ssh
+set system management-instance
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 172.16.11.1
+set interfaces fxp0 unit 0 family inet address 172.16.11.100/24

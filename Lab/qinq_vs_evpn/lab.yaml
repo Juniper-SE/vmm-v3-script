@@ -1,0 +1,142 @@
+---
+name: qinq
+pod: 
+  type: vmm
+  # if your account can access vmm lab directly, then you can comment out jumpserver
+  #jumpserver: ttsv-shell110.juniper.net
+  #jumpserver: ttqc-shell001.juniper.net
+  #vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  user: irzan
+  # adpassword: AnaMabokCoys
+  # vmmpassword: AnaMabokCoys
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  vjunos_switch: images/vJunos-switch-23.4R1.10.qcow2
+  #vjunos_evolved: images/vJunosEvolved-23.4R1-S1.9-EVO.qcow2
+  vjunos_router: images/vJunos-router-23.4R1.10.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24
+        dhcp_range: 172.16.10.10-172.16.10.254
+  sw1:
+    type: vjunos_switch
+    os: vjunos_switch
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.11/24
+      ge-0/0/0:
+        bridge: sw1p0
+      ge-0/0/1:
+        bridge: sw1p1
+      ge-0/0/2:
+        bridge: sw1p2
+      ge-0/0/3:
+        bridge: sw1p3
+      ge-0/0/4:
+        bridge: sw1p4
+  sw2:
+    type: vjunos_switch
+    os: vjunos_switch
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.12/24
+      ge-0/0/0:
+        bridge: sw2p0
+      ge-0/0/1:
+        bridge: sw2p1
+      ge-0/0/2:
+        bridge: sw2p2
+      ge-0/0/3:
+        bridge: sw2p3
+      ge-0/0/4:
+        bridge: sw2p4
+  swpe1:
+    type: vjunos_switch
+    os: vjunos_switch
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.13/24
+      ge-0/0/0:
+        bridge: sw1p0
+      ge-0/0/1:
+        bridge: ptp1
+  swp1:
+    type: vjunos_switch
+    os: vjunos_switch
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.14/24
+      ge-0/0/0:
+        bridge: ptp1
+      ge-0/0/1:
+        bridge: ptp2
+  swpe2:
+    type: vjunos_switch
+    os: vjunos_switch
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.15/24
+      ge-0/0/0:
+        bridge: sw2p0
+      ge-0/0/1:
+        bridge: ptp2
+  kvm1:
+    type: pchpv2
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.16/24
+          gateway4: 172.16.10.1
+      em1: 
+        bridge: sw1p1
+      em2: 
+        bridge: sw1p2
+      em3: 
+        bridge: sw1p3
+      em4: 
+        bridge: sw1p4
+      em5: 
+        bridge: sw2p1
+      em6: 
+        bridge: sw2p2
+      em7: 
+        bridge: sw3p3
+      em8: 
+        bridge: sw4p4
+
+  

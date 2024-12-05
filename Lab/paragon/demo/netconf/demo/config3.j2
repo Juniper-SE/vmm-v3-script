@@ -1,0 +1,21 @@
+interfaces {
+   {{ intf }} {
+       flexible-vlan-tagging;
+       encapsulation flexible-ethernet-services;
+       unit {{ vlan_id }} {
+           vlan-id {{ vlan_id }};
+           family inet {
+               address {{ ip_addr }};
+           }
+       }
+   }
+}
+routing-instances {
+   vrf1 {
+       instance-type vrf;
+       interface {{ intf }}.{{ vlan_id }};
+       vrf-target target:{{ route_target }};
+       vrf-table-label;
+   }
+}
+

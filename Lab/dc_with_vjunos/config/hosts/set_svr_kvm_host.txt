@@ -1,0 +1,324 @@
+# node SVR
+#!/bin/bash
+VM=svr8b
+MAC=56:04:1a:00:80:46
+IPv4=192.168.22.8/24
+IPv6=fc00:dead:beef:a022::1000:8/64
+GWv4=192.168.22.254
+GWv6=fc00:dead:beef:a022::1
+sudo hostname ${VM}
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: ${MAC}
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+      addresses: [ ${IPv4} , ${IPv6}]
+      routes:
+      - to: 0.0.0.0/0
+        via: ${GWv4}
+#      - to: ::/0
+#        via: ${GWv6}
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+EOF
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+sudo netplan apply
+
+
+# node KVM
+MAC=56:04:1a:00:80:41
+#!/bin/bash
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  ethernets:
+    eth1:
+      dhcp4: no
+      mtu: 9000
+    eth2:
+      dhcp4: no
+      mtu: 9000
+  bridges:
+    ovs0:
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: ${MAC}
+      mtu: 9000
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+         mode: 802.3ad
+EOF
+sudo netplan apply
+
+
+# Download image
+
+lxc image copy images:alpine/edge local: --alias alpine
+lxc image copy --vm images:alpine/edge local: --alias alpineVM
+
+# Start LXC instance
+lxc launch alpine --name lxc
+
+
+export LXC_NAME=vm1
+export VLAN=1011
+export OVS=ovs0
+export IPv4=192.168.11.141/24
+export GWv4=192.168.11.254
+export IPv6=192.168.11.102/24
+export GWv6=192.168.11.254
+
+
+echo "Creating VM ${LXC_NAME}"
+lxc copy lxc ${LXC_NAME}
+lxc query --request PATCH /1.0/instances/${LXC_NAME} --data "{
+  \"devices\": {
+    \"eth0\" :{
+       \"name\": \"eth0\",
+       \"nictype\": \"bridged\",
+       \"parent\": \"${OVS}\",
+       \"vlan\" : \"${VLAN}\",
+       \"type\": \"nic\"
+    }
+  }
+}"
+echo "push configuration into node ${LXC_NAME}"
+cat << EOF | tee ./interface.conf
+auto eth0
+iface eth0 inet static
+    address ${IPv4}
+    mtu 1500
+    gateway ${GWv4}
+iface eth0 inet6 static
+    address ${IPv6}
+    gateway ${GWv6}
+EOF
+
+lxc file push ./interface.conf ${LXC_NAME}/etc/network/interfaces
+cat << EOF | tee ./resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+EOF
+lxc file push ./interface.conf ${LXC_NAME}/etc/resolv.conf
+
+
+## alpine on KVM with ovs
+export VM=vm6kvm5
+export DISK=${VM}.img
+VLAN=1031
+LAN=ovs0
+export IPv4=192.168.31.122/24
+export GWv4=192.168.31.254
+export IPv6=fc00:dead:beef:a031::1000:122/64
+export GWv6=fc00:dead:beef:a031::1
+qemu-img create -b alpine.qcow2 -f qcow2 -F qcow2 ${DISK}
+virt-install --name ${VM} \
+  --disk ./${DISK},device=disk,bus=virtio \
+  --ram 512 --vcpu 1 --osinfo alpinelinux3.18 \
+  --network=bridge:${LAN},model=virtio,virtualport_type=openvswitch \
+  --xml "./devices/interface/vlan/tag/@id=${VLAN}" \
+  --xml "./devices/interface/target/@dev=${VM}_e0" \
+  --console pty,target_type=serial \
+  --noautoconsole \
+  --hvm --accelerate \
+  --vnc \
+  --virt-type=kvm \
+  --boot hd --noreboot --import
+
+if [ -d ./tmp ]; then
+  echo "directory exist"
+else
+  mkdir ./tmp
+fi
+
+sudo modprobe nbd max_part=8
+sudo qemu-nbd --connect=/dev/nbd0 ./${DISK}
+sudo mount /dev/nbd0p3 ./tmp
+
+cat << EOF | sudo tee tmp/etc/hostname 
+${VM}
+EOF
+
+
+cat << EOF | sudo tee tmp/etc/network/interfaces 
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address ${IPv4}
+gateway ${GWv4}
+iface eth0 inet6 static
+address ${IPv6}
+# gateway ${GWv6}
+EOF
+cat << EOF | sudo tee tmp/etc/resolv.conf 
+nameserver 10.49.32.95
+nameserver 10.49.32.97
+EOF
+
+sudo umount ./tmp
+sudo qemu-nbd --disconnect /dev/nbd0
+sleep 1
+sudo rmmod nbd
+
+
+## alpine on KVM, on linux bridge
+export VM=vm2kvm6
+export DISK=${VM}.img
+LAN=br0
+export IPv4=192.168.216.12/24
+export GWv4=192.168.216.254
+export IPv6=fc00:dead:beef:a216::1000:12/64
+export GWv6=fc00:dead:beef:a216::1
+qemu-img create -b alpine.qcow2 -f qcow2 -F qcow2 ${DISK}
+virt-install --name ${VM} \
+  --disk ./${DISK},device=disk,bus=virtio \
+  --ram 512 --vcpu 1 --osinfo alpinelinux3.18 \
+  --network=bridge:${LAN},model=virtio \
+  --xml "./devices/interface/target/@dev=${VM}_e0" \
+  --console pty,target_type=serial \
+  --noautoconsole \
+  --hvm --accelerate \
+  --vnc \
+  --virt-type=kvm \
+  --boot hd --noreboot --import
+
+if [ -d ./tmp ]; then
+  echo "directory exist"
+else
+  mkdir ./tmp
+fi
+sudo modprobe nbd max_part=8
+sudo qemu-nbd --connect=/dev/nbd0 ./${DISK}
+sudo mount /dev/nbd0p3 ./tmp
+
+cat << EOF | sudo tee tmp/etc/hostname 
+${VM}
+EOF
+
+
+cat << EOF | sudo tee tmp/etc/network/interfaces 
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address ${IPv4}
+gateway ${GWv4}
+iface eth0 inet6 static
+address ${IPv6}
+#gateway ${GWv6}
+EOF
+cat << EOF | sudo tee tmp/etc/resolv.conf 
+nameserver 10.49.32.95
+nameserver 10.49.32.97
+EOF
+
+sudo umount ./tmp
+sudo qemu-nbd --disconnect /dev/nbd0
+sleep 1
+sudo rmmod nbd
+
+## node HBR
+
+#!/bin/bash
+VM=svr9
+IPv4ETH0=192.168.211.109/24
+IPv6ETH0=fc00:dead:beef:a211::1000:109/64
+IPv4ETH1=192.168.212.109/24
+IPv6ETH1=fc00:dead:beef:a212::1000:109/64
+
+sudo hostname ${VM}
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses: [ ${IPv4ETH0} , ${IPv6ETH0}]
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+    eth1:
+      dhcp4: no
+      addresses: [ ${IPv4ETH1} , ${IPv6ETH1}]
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+EOF
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+sudo netplan apply
+
+#### CRPD install
+## installing cRPD
+sudo podman load -i junos-routing-crpd-docker-amd64-24.2R1.14.tgz
+export CRPD_NAME=hbr
+sudo podman volume create ${CRPD_NAME}-config
+sudo podman volume create ${CRPD_NAME}-varlog
+export CRPD_NAME=hbr
+sudo podman run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} \
+       --net=host --privileged \
+       -v ${CRPD_NAME}-config:/config \
+       -v ${CRPD_NAME}-varlog:/var/log \
+       -it localhost/crpd:24.2R1.14
+
+
+## node HBR with vlan
+#!/bin/bash
+VM=kvm6
+IPv4ETH1=192.168.211.106/24
+IPv6ETH1=fc00:dead:beef:a211::1000:106/64
+VLANETH1=211
+IPv4ETH2=192.168.212.106/24
+IPv6ETH2=fc00:dead:beef:a212::1000:106/64
+VLANETH2=212
+IPv4br=192.168.216.254/24
+IPv6br=fc00:dead:beef:a216::1/64
+
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  ethernets:
+    eth1:
+      dhcp4: no
+      mtu: 9000
+    eth2:
+      dhcp4: no
+      mtu: 9000
+  vlans:
+    eth1v211:
+      dhcp4: no
+      link: eth1
+      id: 211
+      addresses: [ ${IPv4ETH1} , ${IPv6ETH1}]
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+    eth2v212:
+      dhcp4: no
+      link: eth2
+      id: 212
+      dhcp4: no
+      addresses: [ ${IPv4ETH2} , ${IPv6ETH2}]
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+  bridges:
+    br0:
+      addresses: [ ${IPv4br} , ${IPv6br}]
+EOF
+sudo netplan apply
+
+
+

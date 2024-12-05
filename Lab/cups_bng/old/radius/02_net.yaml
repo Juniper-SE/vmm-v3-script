@@ -1,0 +1,5 @@
+network:
+  ethernets:
+    eth1:
+      dhcp4: false
+      addresses: [ 172.16.20.201/24 ]

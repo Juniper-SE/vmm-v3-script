@@ -1,0 +1,15 @@
+vmm capacity -g vmm-default
+vmm config <config_file> -g vmm-default
+vmm start
+vmm stop
+vmm unbind
+
+
+Remarks from Juniper 
+TR-092 - Supported, the only significant requirements Juniper don’t support are ATM specific, which should not present an issue when TR-101 serves as the successor.
+
+TR-146 - Most of the requirements are supported.
+
+TR-300 - Most of the broadband requirements for BNG wrt PCRF or RADIUS are supported (it’s rarely requested by operator RFPs).
+
+TR-178 - Most of the requirements are supported

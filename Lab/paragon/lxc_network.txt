@@ -1,0 +1,68 @@
+devices:
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br-e5v101
+    type: nic
+  eth1:
+    name: eth1
+    nictype: bridged
+    parent: wan1
+    type: nic
+
+
+router bgp 65001
+ no bgp ebgp-requires-policy
+ neighbor 192.168.200.1 remote-as 65002
+ !
+ address-family ipv4 unicast
+  network 192.168.101.0/24
+ exit-address-family
+exit
+
+
+eth0:
+    name: eth0
+    nictype: bridged
+    parent: br-e5v101
+    type: nic
+
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: dclan0
+    type: nic
+
+  
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: ce2eth1
+    type: nic
+
+
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: pe12gev101
+    type: nic
+  eth1:
+    name: eth1
+    nictype: bridged
+    parent: ce2eth1
+    type: nic
+  
+set interfaces ge-0/0/0 unit 104 vlan-id 104
+set interfaces ge-0/0/0 unit 104 family inet address 192.168.255.8/31
+set interfaces ge-0/0/0 unit 104 family inet6 address 2001:dead:beef:ffff::8/127
+
+
+set routing-instances VRF2 instance-type vrf
+set routing-instances VRF2 protocols bgp group to_ce1 neighbor 192.168.255.9 peer-as 1005
+set routing-instances VRF2 protocols bgp group to_ce1 neighbor 2001:dead:beef:ffff::9 family inet6 any
+set routing-instances VRF2 protocols bgp group to_ce1 neighbor 2001:dead:beef:ffff::9 peer-as 1005
+set routing-instances VRF2 protocols bgp source-packet-routing srv6 locator SRV6-LOC-1 end-dt46-sid
+set routing-instances VRF2 interface ge-0/0/0.104
+set routing-instances VRF2 vrf-target target:65412:1004
+set routing-instances VRF2 vrf-table-label
+set routing-instances VRF2 protocols evpn ip-prefix-routes encapsulation srv6

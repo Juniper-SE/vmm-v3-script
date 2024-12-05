@@ -1,0 +1,21 @@
+
+network:
+  ethernets:
+    eth0:
+      dhcp4: false
+  bridges:
+    br-ex:
+      addresses: [ 172.16.11.110/24 ]
+      nameservers:
+         addresses: [ 66.129.233.81 , 66.129.233.82]
+      openvswitch: {}
+      parameters:
+        forward-delay: 15
+        stp: false
+      interfaces:
+      - eth0
+      routes:
+        - to: 0.0.0.0/0
+          via: 172.16.11.1
+          metric: 1
+

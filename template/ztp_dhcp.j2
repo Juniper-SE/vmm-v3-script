@@ -1,0 +1,16 @@
+group {
+  option tftp-server-name "{{ ztp_server }}";
+  {% for s in subnet -%}
+  subnet {{ s.subnet }} netmask {{ s.netmask }} {
+    range  {{ s.low_ip }} {{ s.high_ip }};
+    option routers {{ s.routers }};
+  }
+  {% endfor -%} 
+  {% for h in host -%}
+  host {{ h.host }} {
+    hardware ethernet {{ h.mac }};
+    option host-name "{{h.host}}";
+    fixed-address {{ h.ip }};
+  }
+  {% endfor %} 
+}

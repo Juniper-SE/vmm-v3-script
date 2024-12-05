@@ -1,0 +1,1753 @@
+{
+    "subscribers-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/24.2R0/junos-subscribers"}, 
+        "subscriber" : [
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "VLAN"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "demux0.3221225478"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "ge-0/0/3"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "vlan-profile"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "7"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "20"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1001"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:32:43 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "PPPoE"
+            }
+            ], 
+            "user-name" : [
+            {
+                "data" : "cpe1"
+            }
+            ], 
+            "ip-address" : [
+            {
+                "data" : "172.16.201.3"
+            }
+            ], 
+            "ip-netmask" : [
+            {
+                "data" : "255.255.255.255"
+            }
+            ], 
+            "primary-dns-address" : [
+            {
+                "data" : "10.49.32.95"
+            }
+            ], 
+            "secondary-dns-address" : [
+            {
+                "data" : "10.49.32.97"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a202::/64"
+            }
+            ], 
+            "ipv6-user-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a100::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225479"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "demux0.3221225478"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "pppoe1"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:4a:11"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "22"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1001"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:32:44 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ip-address-pool" : [
+            {
+                "data" : "pool4"
+            }
+            ], 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "ipv6-framed-interface-id" : [
+            {
+                "data" : "7878:c18d:70df:7f88"
+            }
+            ], 
+            "ipv4-input-filter-name" : [
+            {
+                "data" : "police-5M-pp0.3221225479-in"
+            }
+            ], 
+            "ipv4-output-filter-name" : [
+            {
+                "data" : "police-5M-pp0.3221225479-out"
+            }
+            ], 
+            "ipv6-input-filter-name" : [
+            {
+                "data" : "police-5Mv6-pp0.3221225479-in"
+            }
+            ], 
+            "ipv6-output-filter-name" : [
+            {
+                "data" : "police-5Mv6-pp0.3221225479-out"
+            }
+            ], 
+            "accounting-interval" : [
+            {
+                "data" : "600"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+                "profile-variables-attribute" : [
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5Mv6"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-ipv6-ndra-prefix"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "fc00:dead:beef:a100::/64"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5Mv6"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "DHCP"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a202::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225479"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Static"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "pp0.3221225479"
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:4a:11"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "9"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "9"
+            }
+            ], 
+            "underlying-session-id" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "22"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:32:45 UTC"
+            }
+            ], 
+            "dhcpv6-options" : [
+            {
+                "data" : "len 98"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "00 08 00 02 00 00 00 06 00 18 00 15 00 16 00 17 00 18 00 1f"
+            }, 
+            {
+                "data" : "00 38 00 40 00 43 00 5e 00 5f 00 60 00 52 00 01 00 0a 00 03"
+            }, 
+            {
+                "data" : "00 01 56 04 1a 00 34 d1 00 14 00 00 00 27 00 0a 00 07 4f 70"
+            }, 
+            {
+                "data" : "65 6e 57 72 74 00 00 03 00 0c 00 00 00 01 00 00 00 00 00 00"
+            }, 
+            {
+                "data" : "00 00 00 19 00 0c 00 00 00 01 00 00 00 00 00 00 00 00"
+            }
+            ], 
+            "dhcpv6-header" : [
+            {
+                "data" : "len 4"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "01 3a 87 db"
+            }
+            ], 
+            "next-hop-ipv6-mac-address" : [
+            {
+                "data" : "56:04:1a:00:4a:11"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "VLAN"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "demux0.3221225489"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "ge-0/0/3"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "vlan-profile"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "22"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "32"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1002"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:43:50 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "PPPoE"
+            }
+            ], 
+            "user-name" : [
+            {
+                "data" : "cpe2"
+            }
+            ], 
+            "ip-address" : [
+            {
+                "data" : "172.16.201.4"
+            }
+            ], 
+            "ip-netmask" : [
+            {
+                "data" : "255.255.255.255"
+            }
+            ], 
+            "primary-dns-address" : [
+            {
+                "data" : "10.49.32.95"
+            }
+            ], 
+            "secondary-dns-address" : [
+            {
+                "data" : "10.49.32.97"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a203::/64"
+            }
+            ], 
+            "ipv6-user-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a101::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225490"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "demux0.3221225489"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "pppoe1"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:44:99"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "23"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "23"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "33"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1002"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:43:51 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ip-address-pool" : [
+            {
+                "data" : "pool4"
+            }
+            ], 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "ipv6-framed-interface-id" : [
+            {
+                "data" : "695d:511d:e7ac:7aba"
+            }
+            ], 
+            "ipv4-input-filter-name" : [
+            {
+                "data" : "police-10M-pp0.3221225490-in"
+            }
+            ], 
+            "ipv4-output-filter-name" : [
+            {
+                "data" : "police-10M-pp0.3221225490-out"
+            }
+            ], 
+            "ipv6-input-filter-name" : [
+            {
+                "data" : "police-10Mv6-pp0.3221225490-in"
+            }
+            ], 
+            "ipv6-output-filter-name" : [
+            {
+                "data" : "police-10Mv6-pp0.3221225490-out"
+            }
+            ], 
+            "accounting-interval" : [
+            {
+                "data" : "600"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+                "profile-variables-attribute" : [
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-10M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-10Mv6"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-ipv6-ndra-prefix"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "fc00:dead:beef:a101::/64"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-10M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-10Mv6"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "DHCP"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a203::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225490"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Static"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "pp0.3221225490"
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:44:99"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "24"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "24"
+            }
+            ], 
+            "underlying-session-id" : [
+            {
+                "data" : "23"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "33"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:43:52 UTC"
+            }
+            ], 
+            "dhcpv6-options" : [
+            {
+                "data" : "len 98"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "00 08 00 02 00 00 00 06 00 18 00 15 00 16 00 17 00 18 00 1f"
+            }, 
+            {
+                "data" : "00 38 00 40 00 43 00 5e 00 5f 00 60 00 52 00 01 00 0a 00 03"
+            }, 
+            {
+                "data" : "00 01 56 04 1a 00 44 b0 00 14 00 00 00 27 00 0a 00 07 4f 70"
+            }, 
+            {
+                "data" : "65 6e 57 72 74 00 00 03 00 0c 00 00 00 01 00 00 00 00 00 00"
+            }, 
+            {
+                "data" : "00 00 00 19 00 0c 00 00 00 01 00 00 00 00 00 00 00 00"
+            }
+            ], 
+            "dhcpv6-header" : [
+            {
+                "data" : "len 4"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "01 2f dd 3f"
+            }
+            ], 
+            "next-hop-ipv6-mac-address" : [
+            {
+                "data" : "56:04:1a:00:44:99"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "VLAN"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "demux0.3221225492"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "ge-0/0/3"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "vlan-profile"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "25"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "35"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1003"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:47:57 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "PPPoE"
+            }
+            ], 
+            "user-name" : [
+            {
+                "data" : "cpe3"
+            }
+            ], 
+            "ip-address" : [
+            {
+                "data" : "172.16.201.5"
+            }
+            ], 
+            "ip-netmask" : [
+            {
+                "data" : "255.255.255.255"
+            }
+            ], 
+            "primary-dns-address" : [
+            {
+                "data" : "10.49.32.95"
+            }
+            ], 
+            "secondary-dns-address" : [
+            {
+                "data" : "10.49.32.97"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a204::/64"
+            }
+            ], 
+            "ipv6-user-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a102::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225493"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "demux0.3221225492"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "pppoe1"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:44:e1"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "26"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "26"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "36"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1003"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:47:58 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ip-address-pool" : [
+            {
+                "data" : "pool4"
+            }
+            ], 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "ipv6-framed-interface-id" : [
+            {
+                "data" : "6d00:70cf:c1e0:d119"
+            }
+            ], 
+            "ipv4-input-filter-name" : [
+            {
+                "data" : "police-1M-pp0.3221225493-in"
+            }
+            ], 
+            "ipv4-output-filter-name" : [
+            {
+                "data" : "police-1M-pp0.3221225493-out"
+            }
+            ], 
+            "ipv6-input-filter-name" : [
+            {
+                "data" : "police-1Mv6-pp0.3221225493-in"
+            }
+            ], 
+            "ipv6-output-filter-name" : [
+            {
+                "data" : "police-1Mv6-pp0.3221225493-out"
+            }
+            ], 
+            "accounting-interval" : [
+            {
+                "data" : "600"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+                "profile-variables-attribute" : [
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-1M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-1Mv6"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-ipv6-ndra-prefix"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "fc00:dead:beef:a102::/64"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-1M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-1Mv6"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "DHCP"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a204::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225493"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Static"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "pp0.3221225493"
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:44:e1"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "27"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "27"
+            }
+            ], 
+            "underlying-session-id" : [
+            {
+                "data" : "26"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "36"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:47:58 UTC"
+            }
+            ], 
+            "dhcpv6-options" : [
+            {
+                "data" : "len 98"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "00 08 00 02 00 00 00 06 00 18 00 15 00 16 00 17 00 18 00 1f"
+            }, 
+            {
+                "data" : "00 38 00 40 00 43 00 5e 00 5f 00 60 00 52 00 01 00 0a 00 03"
+            }, 
+            {
+                "data" : "00 01 56 04 1a 00 47 6b 00 14 00 00 00 27 00 0a 00 07 4f 70"
+            }, 
+            {
+                "data" : "65 6e 57 72 74 00 00 03 00 0c 00 00 00 01 00 00 00 00 00 00"
+            }, 
+            {
+                "data" : "00 00 00 19 00 0c 00 00 00 01 00 00 00 00 00 00 00 00"
+            }
+            ], 
+            "dhcpv6-header" : [
+            {
+                "data" : "len 4"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "01 5a d0 a8"
+            }
+            ], 
+            "next-hop-ipv6-mac-address" : [
+            {
+                "data" : "56:04:1a:00:44:e1"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "VLAN"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "demux0.3221225495"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "ge-0/0/3"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "vlan-profile"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "28"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "38"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1004"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 12:28:57 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "PPPoE"
+            }
+            ], 
+            "user-name" : [
+            {
+                "data" : "cpe4"
+            }
+            ], 
+            "ip-address" : [
+            {
+                "data" : "172.16.201.6"
+            }
+            ], 
+            "ip-netmask" : [
+            {
+                "data" : "255.255.255.255"
+            }
+            ], 
+            "primary-dns-address" : [
+            {
+                "data" : "10.49.32.95"
+            }
+            ], 
+            "secondary-dns-address" : [
+            {
+                "data" : "10.49.32.97"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a205::/64"
+            }
+            ], 
+            "ipv6-user-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a103::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225496"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "demux0.3221225495"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "pppoe1"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:47:ba"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "29"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "29"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "39"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1004"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 12:28:58 UTC"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ip-address-pool" : [
+            {
+                "data" : "pool4"
+            }
+            ], 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "ipv6-framed-interface-id" : [
+            {
+                "data" : "e4d0:5804:465a:cbe9"
+            }
+            ], 
+            "ipv4-input-filter-name" : [
+            {
+                "data" : "police-5M-pp0.3221225496-in"
+            }
+            ], 
+            "ipv4-output-filter-name" : [
+            {
+                "data" : "police-5M-pp0.3221225496-out"
+            }
+            ], 
+            "ipv6-input-filter-name" : [
+            {
+                "data" : "police-5Mv6-pp0.3221225496-in"
+            }
+            ], 
+            "ipv6-output-filter-name" : [
+            {
+                "data" : "police-5Mv6-pp0.3221225496-out"
+            }
+            ], 
+            "accounting-interval" : [
+            {
+                "data" : "600"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+                "profile-variables-attribute" : [
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-input-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5Mv6"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-ipv6-ndra-prefix"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "fc00:dead:beef:a103::/64"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5M"
+                    }
+                    ]
+                }, 
+                {
+                    "attribute-name" : [
+                    {
+                        "data" : "junos-output-ipv6-filter"
+                    }
+                    ], 
+                    "attribute-value" : [
+                    {
+                        "data" : "police-5Mv6"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }, 
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "DHCP"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a205::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225496"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Static"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "pp0.3221225496"
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:47:ba"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "30"
+            }
+            ], 
+            "underlying-session-id" : [
+            {
+                "data" : "29"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "39"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 12:28:59 UTC"
+            }
+            ], 
+            "dhcpv6-options" : [
+            {
+                "data" : "len 98"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "00 08 00 02 00 00 00 06 00 18 00 15 00 16 00 17 00 18 00 1f"
+            }, 
+            {
+                "data" : "00 38 00 40 00 43 00 5e 00 5f 00 60 00 52 00 01 00 0a 00 03"
+            }, 
+            {
+                "data" : "00 01 56 04 1a 00 47 86 00 14 00 00 00 27 00 0a 00 07 4f 70"
+            }, 
+            {
+                "data" : "65 6e 57 72 74 00 00 03 00 0c 00 00 00 01 00 00 00 00 00 00"
+            }, 
+            {
+                "data" : "00 00 00 19 00 0c 00 00 00 01 00 00 00 00 00 00 00 00"
+            }
+            ], 
+            "dhcpv6-header" : [
+            {
+                "data" : "len 4"
+            }
+            ], 
+            "hex-data" : [
+            {
+                "data" : "01 88 c0 5b"
+            }
+            ], 
+            "next-hop-ipv6-mac-address" : [
+            {
+                "data" : "56:04:1a:00:47:ba"
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "extensive"}, 
+            "ipv6-address-pool" : [
+            {
+                "data" : "pool6"
+            }
+            ], 
+            "ipv6-delegated-pool" : [
+            {
+                "data" : "pool6pd"
+            }
+            ], 
+            "profile-variables-info" : [
+            {
+            }
+            ]
+        }, 
+        {
+            "attributes" : {"junos:style" : "service-session"}
+        }
+        ]
+    }
+    ]
+}

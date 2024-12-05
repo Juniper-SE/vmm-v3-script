@@ -1,0 +1,9 @@
+auth:
+  user: admin
+  password: pass01
+  ssh_key: key1.pem
+host:
+  - pe1
+  - pe2
+  - pe3
+  

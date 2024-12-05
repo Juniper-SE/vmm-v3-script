@@ -1,0 +1,90 @@
+---
+name: vl6
+pod: 
+  type: vmm
+  # if your account can access vmm lab directly, then you can comment out jumpserver
+  #jumpserver: ttsv-shell110.juniper.net
+  jumpserver: ttqc-shell002.juniper.net
+  #vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  user: irzan
+  adpassword: AnaMabokCoys
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  desktop: images/desktop.qcow2
+  bridge: images/bridge.qcow2
+  vjunos_switch: images/vJunos-switch-23.2R1.14.qcow2
+  vjunos_router: images/vJunos-router-23.2R1.14.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.1/24
+        dhcp_range: 172.16.11.10-172.16.11.200
+      em2:
+        bridge: to_sw1
+        family:
+          inet: 172.16.12.0/31
+  sw1:
+    type: vjunos_switch
+    os: vjunos_switch
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.101/24 
+          gateway4: 172.16.11.1
+      ge-0/0/0: 
+        bridge: to_sw1
+        family:
+          inet: 172.16.12.1/31
+      ge-0/0/1: 
+        bridge: lan_sw
+        mtu: 9000
+  svr1:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.11/24 
+          gateway4: 172.16.11.1
+  client1:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan_sw
+  client2:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan_sw
+  client3:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: lan_sw
+  

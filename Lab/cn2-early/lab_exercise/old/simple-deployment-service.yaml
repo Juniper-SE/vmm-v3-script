@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      svc: beaker-web-deployment
+  template:
+    metadata:
+      labels:
+        svc: beaker-web-deployment
+    spec:
+      containers:
+        - name: webapp
+          image: us.gcr.io/inet-science/nodebeaker:latest
+          command: ["/usr/bin/supervisord", "-n"]
+          env:
+            - name: PYTHONPATH
+              value: "/var/run/nodeBeaker/"
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          ports:
+            - name: web
+              containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-deployment
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 8080
+    protocol: TCP
+  selector:
+    svc: beaker-web-deployment

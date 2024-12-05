@@ -1,0 +1,22 @@
+RE :
+  CPU:
+    core: 4
+    RAM: 8G
+  Interfaces:
+  - eth0: mgmt
+  - eth1: PFE_LINK
+  - eth2: RPIO_LINK
+  - eth3: RPIO_LINK
+  - eth4: mgmt
+
+CSPP:
+  CPU:
+    core: 4
+    RAM: 4G
+  Interfaces:
+  - eth0: mgmt
+  - eth1: PFE_LINK
+  - eth2: RPIO_LINK
+  - eth3: dead
+  - eth4: wan1  # et-0/0/0
+  - eth5: wan2  # et-0/0/1

@@ -1,0 +1,14 @@
+openstack overcloud deploy --disable-validations --templates tripleo-heat-templates/ \
+  --stack overcloud \
+  -e tripleo-heat-templates/environments/deployed-server-environment.yaml \
+  -e hostname-map.yaml \
+  -e ctlplane-assignments.yaml \
+  -e tripleo-heat-templates/environments/rhsm.yaml \
+  -e tripleo-heat-templates/environments/network-isolation.yaml \
+  -e tripleo-heat-templates/environments/contrail/contrail-services.yaml \
+  -e tripleo-heat-templates/environments/contrail/contrail-net.yaml \
+  -e tripleo-heat-templates/environments/contrail/contrail-plugins.yaml \
+  -e containers-prepare-parameter.yaml  \
+  --roles-file  tripleo-heat-templates/roles_data_contrail.yaml \
+  --overcloud-ssh-user stack   \
+  --overcloud-ssh-key ~/.ssh/id_rsa 

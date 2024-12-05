@@ -1,0 +1,36 @@
+sudo mkdir /home/ftp
+sudo chown nobody:nogroup /home/ftp
+sudo sed -i -e 's/anonymous_enable=NO/anonymous_enable=YES/g' /etc/vsftpd.conf
+echo "no_anon_password=YES
+anon_root=/home/ftp
+" | sudo tee -a /etc/vsftpd.conf
+sudo systemctl restart vsftpd
+
+
+
+dhcp.conf
+
+default-lease-time 600;
+max-lease-time 7200;
+ddns-update-style none;
+subnet 172.16.10.0 netmask 255.255.255.0 {
+        range 172.16.10.100 172.16.10.250;
+        option routers 172.16.10.1;
+        option domain-name-servers 172.16.10.1;
+}
+option space ZTP;
+option ZTP.server-image code 0 = text;
+option ZTP.server-file code 1 = text;
+option ZTP.image-file-type code 2 = text;
+option ZTP.transfer-mode code 3 = text;
+option ZTP.symlink-server-image code 4 = text;
+option ZTP.http-port code 5 = text;
+option ZTP-encapsulation code 43 = encapsulate ZTP;
+host p2 {
+   hardware ethernet 56:04:19:00:5f:ff;
+   fixed-address 172.16.10.104;
+   option ZTP.transfer-mode "ftp";
+   option host-name "p2";
+   option ZTP.server-file "p2.conf";
+   option tftp-server-name "172.16.10.1.";
+}

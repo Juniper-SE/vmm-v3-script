@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-left
+  namespace: lab4
+  labels:
+    app: left
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+      {"name": "vn-left" }
+    ]'
+spec:
+  containers: 
+    - name: left
+      image: 172.16.14.10:5000/webserver:0.1
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      command: [ 'sh']
+      args: ['-c','ip route delete default; ip route add default via 172.16.101.254; python3 /workingdir/webserver.py']
+  nodeName: node1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-right
+  namespace: lab4
+  labels:
+    app: right
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+      {"name": "vn-right" }
+    ]'
+spec:
+  containers: 
+    - name: right
+      image: 172.16.14.10:5000/webserver:0.1
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      command: [ 'sh']
+      args: ['-c','ip route delete default; ip route add default via 172.16.102.254; python3 /workingdir/webserver.py']
+  nodeName: node2

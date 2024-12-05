@@ -1,0 +1,240 @@
+---
+name: t1
+pod: 
+  type: vmm
+  vmmserver: q-pod32-vmm.englab.juniper.net
+  jumpserver: ttqc-shell003.juniper.net
+  user: irzan
+  adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  #ntp: 172.16.10.1
+  evo: mgmt
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  desktop: images/desktop.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-22.4R1.10.vmdk
+  # vmx_mpc: images/vmx/vFPC-20210824.vmdk
+  evo: images/evo/junos-evo-install-ptx-fixed-x86-64-22.4R1.11-EVO.iso
+  vex: images/vex/vJunos-ex-21.2R3-S1.7.qcow2
+junos_login:
+  login: admin
+  password: pass01
+fabric:
+  subnet: 10.100.1.128/25
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+    - [ 0x1, ce1, ge-0/0/1, pe1, ge-0/0/0 ]
+    - [ 0x7d, pe1, ge-0/0/1, p1, et-0/0/0 ]
+    - [ 0x7d, pe1, ge-0/0/2, p3, et-0/0/0 ]
+    - [ 0x7d, p1, et-0/0/1, p2, et-0/0/1 ]
+    - [ 0x7d, p1, et-0/0/2, p3, et-0/0/2 ]
+    - [ 0x7d, p2, et-0/0/2, p4, et-0/0/2 ]
+    - [ 0x7d, p3, et-0/0/1, p4, et-0/0/1 ]
+    - [ 0x7d, p2, et-0/0/0, pe2, ge-0/0/1 ]
+    - [ 0x7d, p4, et-0/0/0, pe2, ge-0/0/2 ]
+    - [ 0x7d, pe3, ge-0/0/1, p3, et-0/0/3 ]
+    - [ 0x7d, pe3, ge-0/0/2, p4, et-0/0/3 ]
+    - [ 0x1, pe2, ge-0/0/0, ce2, ge-0/0/1 ]
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family: 
+          inet: 172.16.10.1/24
+      em2: 
+        bridge: conn1
+        family:
+          inet: 172.16.3.0/31
+      em3:
+        bridge: mgmt2
+        family: 
+          inet: 172.16.13.1/24
+        dhcp_range: 172.16.13.200-172.16.13.220
+  ce1:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.101/24
+      ge-0/0/0: 
+        bridge: ce1ge0
+        family:
+          inet: 172.16.1.1/24
+  pe1:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.102/24
+      lo0:
+        family:
+          inet: 10.100.1.1/32
+          iso: 49.0001.0101.0000.1001.00
+        protocol:
+          isis: passive
+  p1:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.103/24
+      lo0:
+        family:
+          inet: 10.100.1.11/32
+          iso: 49.0001.0101.0000.1011.00
+        protocol:
+          isis: passive
+  p2:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.104/24
+      lo0:
+        family:
+          inet: 10.100.1.12/32
+          iso: 49.0001.0101.0000.1012.00
+        protocol:
+          isis: passive
+  p3:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.105/24
+      lo0:
+        family:
+          inet: 10.100.1.13/32
+          iso: 49.0001.0101.0000.1013.00
+        protocol:
+          isis: passive
+  p4:
+    type: junos
+    os: evo
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.106/24
+      lo0:
+        family:
+          inet: 10.100.1.14/32
+          iso: 49.0001.0101.0000.1014.00
+        protocol:
+          isis: passive
+  pe2:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.107/24
+      lo0:
+        family:
+          inet: 10.100.1.2/32
+          iso: 49.0001.0101.0000.1002.00
+        protocol:
+          isis: passive
+  ce2:
+    type: junos
+    os: vex
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.108/24
+      ge-0/0/0: 
+        bridge: ce2ge0
+        family:
+          inet: 172.16.2.1/24
+  pe3:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.109/24
+      lo0:
+        family:
+          inet: 10.100.1.3/32
+          iso: 49.0001.0101.0000.1003.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: conn1
+        family:
+          inet: 172.16.3.1/31
+  c1:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt2
+        family:
+          inet: 172.16.13.201/24
+      em1:
+        bridge: ce1ge0
+        family:
+          inet: 172.16.1.1/24
+          gateway4: 172.16.1.1
+  c2:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt2
+        family:
+          inet: 172.16.13.202/24
+      em1:
+        bridge: ce2ge0
+        family:
+          inet: 172.16.2.1/24
+          gateway4: 172.16.2.1
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+    

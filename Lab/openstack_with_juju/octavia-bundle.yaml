@@ -1,0 +1,77 @@
+---
+series: focal
+variables:
+  # OpenStack variables
+  openstack-origin: &openstack-origin distro
+  openstack-region: &openstack-region RegionOne
+applications:
+  barbican:
+    charm: cs:barbican
+    num_units: 1
+    options:
+      openstack-origin: *openstack-origin
+    to:
+    - lxd:0
+  barbican-vault:
+    charm: cs:barbican-vault-12
+    series: bionic
+  octavia:
+    series: bionic
+    charm: cs:~apavlov-e/octavia
+    num_units: 1
+    options:
+      loadbalancer-topology: ACTIVE_STANDBY
+      openstack-origin: *openstack-origin
+      create-mgmt-network: false
+    to:
+    - lxd:0
+  octavia-dashboard:
+    charm: cs:octavia-dashboard
+  vault:
+    charm: cs:vault
+    num_units: 1
+    to:
+    - lxd:0
+  glance-simplestreams-sync:
+    charm: cs:glance-simplestreams-sync
+    num_units: 1
+    options:
+      use_swift: false
+    to:
+    - lxd:0
+  octavia-diskimage-retrofit:
+    charm: cs:octavia-diskimage-retrofit
+    options:
+      amp-image-tag: 'octavia-amphora'
+      retrofit-uca-pocket: train
+relations:
+- - mysql:shared-db
+  - octavia:shared-db
+- - mysql:shared-db
+  - barbican:shared-db
+- - mysql:shared-db
+  - vault:shared-db
+- - keystone:identity-service
+  - octavia:identity-service
+- - keystone:identity-service
+  - barbican:identity-service
+- - rabbitmq-server:amqp
+  - octavia:amqp
+- - rabbitmq-server:amqp
+  - barbican:amqp
+- - neutron-api:neutron-load-balancer
+  - octavia:neutron-api
+- - openstack-dashboard:dashboard-plugin
+  - octavia-dashboard:dashboard
+- - barbican-vault:secrets
+  - barbican:secrets
+- - vault:secrets
+  - barbican-vault:secrets-storage
+- - glance-simplestreams-sync:juju-info
+  - octavia-diskimage-retrofit:juju-info
+- - keystone:identity-service
+  - glance-simplestreams-sync:identity-service
+- - keystone:identity-credentials
+  - octavia-diskimage-retrofit:identity-credentials
+- - contrail-openstack
+  - octavia

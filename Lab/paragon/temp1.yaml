@@ -1,0 +1,95 @@
+  ci1:
+    type: junos
+    os: mx240
+    pcep: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.131/24
+          gateway4: 172.16.10.1
+      lo0:
+        family:
+          inet: 10.100.1.131/32
+          iso: 49.0001.0101.0000.1131.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: ci1ge0
+  ci2:
+    type: junos
+    os: mx240
+    pcep: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.132/24
+          gateway4: 172.16.10.1
+      lo0:
+        family:
+          inet: 10.100.1.132/32
+          iso: 49.0001.0101.0000.1132.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: ci2ge0
+  pei1:
+    type: junos
+    os: mx240
+    pcep: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.133/24
+          gateway4: 172.16.10.1
+      lo0:
+        family:
+          inet: 10.100.1.133/32
+          iso: 49.0001.0101.0000.1133.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: pei1ge0
+  pei2:
+    type: junos
+    os: mx240
+    pcep: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.134/24
+          gateway4: 172.16.10.1
+      lo0:
+        family:
+          inet: 10.100.1.134/32
+          iso: 49.0001.0101.0000.1134.00
+        protocol:
+          isis: passive
+      ge-0/0/0: 
+        bridge: pei2ge0
+  ci:
+    type: pctiny
+    os: ubuntu
+    vnc: no
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.137/24
+          gateway4: 172.16.10.1
+      em1:
+        bridge: pei1ge0
+      em2:
+        bridge: pei2ge0
+      em3:
+        bridge: ci1ge0
+      em4:
+        bridge: ci2ge0
+
+
+
+ delete system services outbound-ssh
+ delete system login user emsuser

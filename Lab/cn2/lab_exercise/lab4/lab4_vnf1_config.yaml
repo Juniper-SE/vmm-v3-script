@@ -1,0 +1,166 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vnf1
+  namespace: lab4
+data:
+    csrx_config: |
+        security {
+            policies {
+                from-zone untrust to-zone trust {
+                    policy allow_ping {
+                        match {
+                            source-address any;
+                            destination-address any;
+                            application junos-ping;
+                        }
+                        then {
+                            permit;
+                        }
+                    }
+                }
+                from-zone trust to-zone untrust {
+                    policy allow_any {
+                        match {
+                            source-address any;
+                            destination-address any;
+                            application any;
+                        }
+                        then {
+                            permit;
+                        }
+                    }
+                }
+            }
+            zones {
+                security-zone trust {
+                    interfaces {
+                        ge-0/0/0.0 {
+                            host-inbound-traffic {
+                                system-services {
+                                    ping;
+                                }
+                                protocols {
+                                    bgp;
+                                }
+                            }
+                        }
+                    }
+                }
+                security-zone untrust {
+                    interfaces {
+                        ge-0/0/1.0 {
+                            host-inbound-traffic {
+                                system-services {
+                                    ping;
+                                }
+                                protocols {
+                                    bgp;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    csrx_license: |
+        DemoLabJUNOS788015050 aeaqic bfajc4 vsomg4 behswj zq3qeg 6kzhgd
+                        oattzl e4ynyc qd7mvs omg4bb 3swjzq 3qwerr
+                        gaytam rqge4t ambqgi wusnle lflqye ckovxg
+                        s4dfoi qes3tu mvzg4y lma4uj 26tpuv dtstex
+                        c42wja 6mgh6v t5o2vo wrtwzj mh4w52 cprqrr
+                        bd37hz xyslew feu6uv y
+    crpd_license: |
+        19 243 Ni LONG NORMAL STANDALONE AGGR 1_KEYS INFINITE_KEYS 3 JUN 2022 0 0 3 JUN 2023 0 0 NiL SLM_CODE DEMO NiL NiL Ni NiL NiL 15_MINS NiL 0 eveQBeAHU81pT/axeulUVahrlHALtZcUV2FiCVD6zqECTpQNsuJgruRQ5Ceb+MQEJ/sJi1vUKhYYa7Lwed9tYHzWePpECRJAwVFTuxfY/Icpn3FLwq/eW3qe1+xECy0b7YRtCZWjvo4G33v9c9WRefNlpPfN/MK/4qVpQqgtMHOpWtpp4WWuvyyfMidg5b8OaP+Uivh99hwHYy2vSuU2KP5ysN3Qgfa2IoikqlEUoSjlbP5pwa5JR4/hs1zpgamYOfx17KtWoNhg+3grHMtyphDIpavRJnlgRIkluV/lQMjpKGVCDTsRGLqCQL8a9yz+1L3f1zpOxEChE0bQOHBJmaqPsnbYqgxw4NkMXswDaS8GOragnDGyr7WbwbdapTclz55aqJaAqqq2NAqh/gGuteO3SL5xqdKCiPoIZvEMY5/HVQhjTaqMKpGt81wa4O1dMwJZCqKIwKCumIaK2AuibJ7Ge2uZ0rLsSdahPsvIA6DbbY6FIOzLebvUorm2Zu1bSgoRFKxqJFjpbySuzk2mTL05RZYecBzqwWas3N0A/rEp2CNX2vFsHHuZS1SdUKVq243OcpCABtdz+/0OFKsltQUEUkNCMguDCQUEUkNCMgYBAQcBAQQlOGIxYjZmMWQtMzc2OS00ZjRlLWIzODctMzRlMzJlZTk2M2JkAAgBAQlApcnSKVGYup/I8yCzq1T2oOfVzQwIs6WHJOvIHOLi30SE8xpnUEyn2vVNSvARo83219EuMAg2YZuJYeeXn6S11QqCDjCCAQoCggEBANjjIBEkIdX8+C412dEpg7KzxidnAec1OAj7EJkI9BY541GHxeNZwxjujuJqSJ8uVk8xSWEqete9faGcgxFbCWGcJ6itzc8rMDQVY9wqkh8dx6SgrtZ6gDdbAu/YW8Wty7G7xmtudto7TM4a3exdzHcnBnsGtjtOtK6wc/Wa6MYq6h+mceI5sxUSW4GV+1FDibMFt2+XEypTsl/2GJda0CKGmfn9WLRGiER0PI/Y/F5/xuAE9V40BTh/WH6N/TzxERq9bAhjiJSqWFmSYT+i9x6iDBdtrbAFiS1ZDiDwriPz2aZOVTJmGaBdyjHaOZEnwE4KLVurn4akjUm4Uep7u4sCAwEAAQQlOGIxYjZmMWQtMzc2OS00ZjRlLWIzODctMzRlMzJlZTk2M2JkAAcBAQyCAI/9Bl0UhuEWYHM4qnZjbhgKxSbM1wNNb8bhk1EtXVI3X9DygbdK6f/di9EqDj3E0/3rlXWhSSAnnKiYeYqjAQBLSwMNnwnlR1kkDkHco93XLYSoQVPZK4cm3fTEPumbItU1EXjiqi4k7rpu6eiA8lR6iCEgHxIaBO49gOOOptSXyTjdPC7oxK5u3Nn/TxWCNBTG46HAU7qLR9oKmnpkTxnamrGBD9mj6znY/20HhhK8PmNllC65D2MULIiw8E83JxHMw5pkR6tIQ7wnQgLNmyfKtAhXszV1iUUhwaneGUVr34PEwgsihaxUiqi5R/kgIM6lvg9DY3+5Kr/O4Ylc/0MAAAK/#KeyType=DemoLab#AID=195787fc-0922-45e5-80c1-5ca4e4467c87 SIGN=0728D2C641A0B49A13A2D6CDC6D62CD9D222FD8EF16584EC03F2A3DAD5B86B55023815EF66CC882060C0
+    crpd_config: |
+        policy-options {
+            policy-statement to_left {
+                term 1 {
+                    from {
+                        route-filter 192.168.102.0/24 exact;
+                    }
+                    then accept;
+                }
+                term default {
+                    then reject;
+                }
+            }
+            policy-statement to_right {
+                term 1 {
+                    from {
+                        route-filter 192.168.101.0/24 exact;
+                    }
+                    then accept;
+                }
+                term default {
+                    then reject;
+                }
+            }
+        }
+        routing-options {
+            autonomous-system 65001;
+        }
+        protocols {
+            bgp {
+                group to_left {
+                    neighbor 192.168.101.3 {
+                        export to_left;
+                        peer-as 64512;
+                    }
+                }
+                group to_right {
+                    neighbor 192.168.102.3 {
+                        export to_right;
+                        peer-as 64512;          
+                    }                           
+                }
+            }
+        }
+    crpd2_config: |
+        policy-options {
+            policy-statement to_left {
+                term 1 {
+                    from {
+                        route-filter 192.168.102.0/24 exact;
+                    }
+                    then accept;
+                }
+                term default {
+                    then reject;
+                }
+            }
+            policy-statement to_right {
+                term 1 {
+                    from {
+                        route-filter 192.168.101.0/24 exact;
+                    }
+                    then accept;
+                }
+                term default {
+                    then reject;
+                }
+            }
+        }
+        routing-options {
+            autonomous-system 65001 loops 4;
+        }
+        protocols {
+            bgp {
+                group to_left {
+                    neighbor 192.168.101.3 {
+                        peer-as 64512;
+                        as-override;
+                    }
+                }
+                group to_right {
+                    neighbor 192.168.102.3 {
+                        peer-as 64512;   
+                        as-override;       
+                    }                           
+                }
+            }
+        }
+        
+
+

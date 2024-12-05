@@ -1,0 +1,53 @@
+set routing-options static route 172.16.255.0/28 next-hop 172.16.14.0
+set protocols bgp group to_rr_client local-address 10.100.1.11
+set protocols bgp group to_rr_client passive
+set protocols bgp group to_rr_client family inet any
+set protocols bgp group to_rr_client family inet-vpn any
+set protocols bgp group to_rr_client family evpn signaling
+set protocols bgp group to_rr_client cluster 10.100.1.11
+set protocols bgp group to_rr_client peer-as 4200000512
+set protocols bgp group to_rr_client local-as 4200000512
+set protocols bgp group to_rr_client allow 10.100.1.0/24
+set protocols isis export from_static
+
+
+protocols {
+    isis {
+        interface ge-0/0/2.0 {
+            level 1 disable;
+            point-to-point;
+            family inet {
+                bfd-liveness-detection {
+                    minimum-interval 100;
+                }
+            }
+            family inet6 {
+                bfd-liveness-detection {
+                    minimum-interval 100;
+                }
+            }
+        }
+    }
+}
+
+
+set system services ssh protocol-version v2
+set system authentication-order password
+set system login user jcloud-dev class super-user
+set system login user jcloud-dev authentication encrypted-password $6$tkWtkqwZltDsfES/$Od3BW..lH3iIx7EorvdGjIbaEdF280zjy5fPpIhKrHTvlzC4ZSIcv7/k1oIdCKY1N4Azd0eSo752S7i9hBou51
+set system login user jcloud-dev authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCedZwDh91hHpNOy610chKdqkmqy9PFPScEk6hU7Drkm3CyQMTg8bRnGUHNltzhl44/iF5YHy/Dnfvt67OywVbBq04q697gLOAKr7vlqWn3QLZVlgpYhu9q/Axzw9/Ttg2LD7Dz91HzSEIsHJWFB6opfvZYQRTcZkQnTeLkRNatIzu9tCWXQMKh5pGizvkK1fum7GNi3rj3Eh8nsi5dwRzZNH90W460yWHymJbJKprSRlQg1h2gjx6hR22mzD6FJ01gp5PFzQwAPTYEN8w0c2QoRu1X7zxesmrEGwLJW62e6pFGI7+U/eIt92jaf2oUhXRtrpc9Nq+RqodTwvekaSGZaHSdzjGghuPogLBAphonQaHuLvZqN8hwoLi5c501fspUb2hPPGKP/u1R+2UQ9zAHyCL+yHkxOdAwKGQQSXHRfEr9cpc3aq/5umMwm2wPwB/W0gX3TppoSQGdArKDWgsR6CFgWks10DCG70ip8as7FZcGxkZWY6ZrGnMIQNdyS2M= jcloud-dev@68029dd1-a28f-4035-9318-09a2e4f3cbaa"
+set system services outbound-ssh client jcloud-dev secret 8dae9ad218a80570624e7e8d64c5bde419b338672eb6f549fc6a8c7be4920f6b58df64f16c45be3e051104c3b8aa444dc5988731c791b308fd2872bfb9601696
+set system services outbound-ssh client jcloud-dev services netconf keep-alive retry 12 timeout 5
+set system services outbound-ssh client jcloud-dev 172.16.11.21 port 2200 timeout 60 retry 1000
+set system services outbound-ssh client jcloud-dev device-id 68029dd1-a28f-4035-9318-09a2e4f3cbaa.6352ca4f-b9b2-451e-91b8-5c8ea06c8eea
+delete system phone-home
+
+
+
+set protocols bgp group to_rr type internal
+set protocols bgp group to_rr family inet any
+set protocols bgp group to_rr family inet-vpn any
+set protocols bgp group to_rr family inet6 any
+set protocols bgp group to_rr family inet6-vpn any
+set protocols bgp group to_rr family evpn signaling
+set protocols bgp group to_rr neighbor 10.100.1.255 local-address 10.100.1.5

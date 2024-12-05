@@ -1,0 +1,361 @@
+pe1
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.129
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.128
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.131
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.130
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+pe2
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.154
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.155
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.158
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.159
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+
+run show interfaces terse | match ge | match "up    up   inet" 
+
+pe3
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.156
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.157
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.160
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.161
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+
+p1
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.128
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.129
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/1.0 target address 10.100.1.133
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/1.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/1.0 source-address 10.100.1.132
+set services rpm probe northstar-ifl test ge-0/0/1.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/1.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/1.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.135
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.134
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/3.0 target address 10.100.1.137
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/3.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/3.0 source-address 10.100.1.136
+set services rpm probe northstar-ifl test ge-0/0/3.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/3.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/3.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-type icmp-ping-timestamp
+
+p2
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.130
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.131
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/1.0 target address 10.100.1.132
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/1.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/1.0 source-address 10.100.1.133
+set services rpm probe northstar-ifl test ge-0/0/1.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/1.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/1.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.139
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.138
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/3.0 target address 10.100.1.141
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/3.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/3.0 source-address 10.100.1.140
+set services rpm probe northstar-ifl test ge-0/0/3.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/3.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/3.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/4.0 target address 10.100.1.143
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/4.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/4.0 source-address 10.100.1.142
+set services rpm probe northstar-ifl test ge-0/0/4.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/4.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/4.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-type icmp-ping-timestamp
+
+
+
+run show interfaces terse | match ge | match "up    up   inet" 
+
+p3
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.135
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.135
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/1.0 target address 10.100.1.138
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/1.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/1.0 source-address 10.100.1.139
+set services rpm probe northstar-ifl test ge-0/0/1.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/1.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/1.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.145
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.144
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/3.0 target address 10.100.1.147
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/3.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/3.0 source-address 10.100.1.146
+set services rpm probe northstar-ifl test ge-0/0/3.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/3.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/3.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/4.0 target address 10.100.1.149
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/4.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/4.0 source-address 10.100.1.148
+set services rpm probe northstar-ifl test ge-0/0/4.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/4.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/4.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-type icmp-ping-timestamp
+
+
+p4
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.140
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.141
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/1.0 target address 10.100.1.144
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/1.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/1.0 source-address 10.100.1.145
+set services rpm probe northstar-ifl test ge-0/0/1.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/1.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/1.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.151
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.150
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+
+run show interfaces terse | match ge | match "up    up   inet" 
+
+p5
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.136
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.137
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/1.0 target address 10.100.1.146
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/1.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/1.0 source-address 10.100.1.147
+set services rpm probe northstar-ifl test ge-0/0/1.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/1.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/1.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.153
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.152
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/3.0 target address 10.100.1.155
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/3.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/3.0 source-address 10.100.1.154
+set services rpm probe northstar-ifl test ge-0/0/3.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/3.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/3.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/4.0 target address 10.100.1.157
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/4.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/4.0 source-address 10.100.1.156
+set services rpm probe northstar-ifl test ge-0/0/4.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/4.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/4.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-type icmp-ping-timestamp
+
+
+p6
+set services rpm probe northstar-ifl test ge-0/0/0.0 target address 10.100.1.142
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/0.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/0.0 source-address 10.100.1.143
+set services rpm probe northstar-ifl test ge-0/0/0.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/0.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/0.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/0.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/1.0 target address 10.100.1.148
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/1.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/1.0 source-address 10.100.1.149
+set services rpm probe northstar-ifl test ge-0/0/1.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/1.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/1.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/1.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/2.0 target address 10.100.1.150
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/2.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/2.0 source-address 10.100.1.151
+set services rpm probe northstar-ifl test ge-0/0/2.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/2.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/2.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/2.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/3.0 target address 10.100.1.152
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/3.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/3.0 source-address 10.100.1.153
+set services rpm probe northstar-ifl test ge-0/0/3.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/3.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/3.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/3.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/4.0 target address 10.100.1.159
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/4.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/4.0 source-address 10.100.1.158
+set services rpm probe northstar-ifl test ge-0/0/4.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/4.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/4.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/4.0 probe-type icmp-ping-timestamp
+
+set services rpm probe northstar-ifl test ge-0/0/5.0 target address 10.100.1.161
+set services rpm probe northstar-ifl test ge-0/0/5.0 probe-count 11
+set services rpm probe northstar-ifl test ge-0/0/5.0 probe-interval 5
+set services rpm probe northstar-ifl test ge-0/0/5.0 test-interval 60
+set services rpm probe northstar-ifl test ge-0/0/5.0 source-address 10.100.1.160
+set services rpm probe northstar-ifl test ge-0/0/5.0 moving-average-size 12
+set services rpm probe northstar-ifl test ge-0/0/5.0 traps test-completion
+set services rpm probe northstar-ifl test ge-0/0/5.0 hardware-timestamp
+set services rpm probe northstar-ifl test ge-0/0/5.0 probe-type icmp-ping-timestamp

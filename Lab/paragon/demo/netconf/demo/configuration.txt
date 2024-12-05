@@ -1,0 +1,50 @@
+routing-options {
+    rib inet.3 {
+        static {
+            route 0.0.0.0/0 discard;
+        }
+    }
+    autonomous-system 64512;
+}
+protocols{
+   bgp {
+       group to_client {
+           local-address 10.100.1.13;
+           family inet-vpn {
+               any;
+           }
+           family inet6-vpn {
+               any;
+           }
+           type internal;
+           cluster 10.100.1.13;
+           neighbor 10.100.1.1;
+           neighbor 10.100.1.2;
+           neighbor 10.100.1.3;
+       }
+   }
+}
+
+
+routing-options {
+    autonomous-system 64512;
+}
+protocols {
+   bgp {
+       group to_rr {
+           type internal;
+           local-address 10.100.1.1;
+           family inet-vpn {
+               any;
+           }
+           family inet6-vpn {
+               any;
+           }
+           neighbor 10.100.1.13;
+       }
+   }
+}
+
+routing-options {
+    delete: autonomous-system;
+}

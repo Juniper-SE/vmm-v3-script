@@ -1,0 +1,14 @@
+[all]
+ansible
+node0
+node1
+node2
+node3
+node4
+ext
+[os]
+node0
+node1
+node2
+node3
+node4

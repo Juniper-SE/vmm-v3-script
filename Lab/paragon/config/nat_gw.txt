@@ -1,0 +1,21 @@
+sudo iptables -t nat -A POSTROUTING -o eth4 --source 172.16.11.0/28 --destination 10.100.1.0/24 -j SNAT --to 172.16.255.0
+sudo iptables -t nat -A POSTROUTING -o eth4 --source 172.16.11.0/28 --destination 10.100.0.0/24 -j SNAT --to 172.16.255.0
+sudo iptables -t nat -A POSTROUTING -o eth4 --source 172.16.12.0/24 --destination 10.100.1.0/24 -j SNAT --to 172.16.255.0
+sudo iptables -t nat -A POSTROUTING -o eth4 --source 172.16.12.0/24 --destination 10.100.0.0/24 -j SNAT --to 172.16.255.0
+
+config t
+router bgp 65412
+ no bgp ebgp-requires-policy
+ neighbor 172.16.11.11 remote-as 65420
+ neighbor 172.16.11.12 remote-as 65420
+ neighbor 172.16.11.13 remote-as 65420
+exit
+exit
+write mem
+
+
+set protocols mpls traffic-engineering database import l3-unicast-topology
+set protocols isis traffic-engineering l3-unicast-topology
+
+172.16.11.
+172.16.255.

@@ -1,0 +1,896 @@
+#####################################################################
+# Select components to install
+
+# Install common infrastructure:
+#   kubernetes cluster, CNI, common services
+install_infra: true
+
+# Install Pathfinder product
+install_northstar: true
+
+# Install Paragon UI
+install_paragon_ui: true
+
+# Install Insights product
+install_healthbot: true
+
+# Install EMS product
+install_ems: true
+
+# Main infra subcomponents
+install_kubernetes: true
+install_metallb: true
+
+install_chrony: true
+
+# loadbalancer for multi-master
+install_loadbalancer: true
+
+#####################################################################
+# Required configuration values
+#
+# Configure virtual IP address for kubernetes API in multi master configuraiton.
+# For single master, use the address of the first master
+kubernetes_master_address:
+
+# Configure ethernet interface for cluster internal communication
+# Defaults to default-ipv4 interface (i.e. target of default route)
+kubernetes_system_interface: '{{ ansible_default_ipv4.interface }}'
+
+# Configure ethernet interface for multi-master loadbalancer (keepalived)
+lb_interface: '{{ kubernetes_system_interface }}'
+
+# Optionally allow scheduling of application workloads on master node
+allow_master_scheduling: false
+
+# Enter credentials for external Docker registries if necessary, e.g.
+# registry_credentials:
+#   - url : registry-url
+#     user: registry-user-id
+#     password: registry-password
+
+# LoadBalancer
+# List of IP address ranges or prefixes owned by metallb, e.g.:
+# metallb_addresses:
+#  - 10.0.0.1-10.0.0.20
+#  - 10.0.0.192/26
+metallb_addresses:
+  - 172.16.11.50-172.16.11.80
+
+# alternatively, specify complete metallb_config, e.g.
+# metallb_config:
+#   peers:
+#     - peer-address: 192.168.10.1
+#       peer-asn: 64501
+#       my-asn: 64500
+#   address-pools:
+#     - name: default
+#       protocol: bgp
+#       addresses:
+#         - 10.0.0.0/24
+# see https://metallb.universe.tf/configuration/
+
+# NTP configuration, configure reachable NTP servers
+chrony_config_server:
+  - ntp.juniper.net
+
+# Ingress Controller
+# service type and LoadBalancer settings
+ingress_service_type: LoadBalancer
+ingress_service_annotations: {}
+#  metallb.universe.tf/allow-shared-ip: default
+
+# Fixed IP address for Web interface. The address must be in a pool
+# managed by MetalLB.
+ingress_vip:
+
+# Fixed IP address for device callback. This must be one of the addresses
+# assigned to the ingress controller
+  - 172.16.11.50
+callback_vip: 172.16.11.50
+
+# Hostname for accessing kibana (system log files).
+# The hostname must resolve to ingress_vip
+# kibana_ingress_hosts:
+#  - kibana.example.com
+kibana_ingress_hosts: []
+
+#####################################################################
+# Pathfinder application configuration
+#
+# Hostname of Pathfinder web server, must resolve to ingress_vip
+northstar_web_hostname: 172.16.11.50
+
+# Virtual IP address of PCEP server. The address must be in a pool managed
+# by MetalLB and must be different from ingress_vip
+# northstar_pceserver_vip: 10.0.0.2
+northstar_pceserver_vip: 172.16.11.53
+northstar_pceserver_replicas: 1
+northstar_pceserver_proxy: false
+
+# Virtual IP address of nginx-ingress-controller. The address must be in a pool managed
+# by MetalLB and must be different from ingress_vip
+# nginx_controller_vip: 10.0.0.2
+nginx_controller_vip: ''
+nginx_controller_replicas: 1
+
+# northstar/netflowd
+# If netflowd needs to be accessible from outside the cluster, configure
+# northstar_netflowd_service_type: LoadBalancer
+# and configure virtual IP address in northstar_netflowd_vip
+northstar_netflowd_service_type: ClusterIP
+northstar_netflowd_traffic_policy: Local
+northstar_netflowd_vip: ''
+northstar_netflowd_replicas: 1
+
+# northstar/pcviewer (Pathfinder planner)
+# If pcviewer needs to be accessible from outside the cluster, configure
+# northstar_pcviewer_service_type: LoadBalancer
+# and configure virtual IP address in northstar_pcviewer_vip
+northstar_pcviewer_service_type: ClusterIP
+northstar_pcviewer_vip: ''
+
+# CRPD (BPG-LS peer)
+# Autonomous System number
+crpd_autonomous_system: '64500'
+
+# List of BGP neighbors. The BGP neighbors need to be configured to allow
+# incoming connections from all nodes in the kubernetes cluster.
+# e.g.
+#crpd_neighbors:
+#  - 10.0.1.1
+crpd_neighbors:
+  - 172.16.11.4
+
+# Default Web admin password
+northstar_web_admin_password: ''
+
+# Optional flag to install debugutils
+install_northstar_debugutils: false
+
+# Pathfinder license
+northstar_license: |
+  expire_date=6/7/2024
+  usercount=5
+  node_limit=250
+  card=micro_service
+  MAC=FF:EE:DD:CC:BB:AA
+  customer=MICRO_SERVICE
+  S-NS-PLNR-BSC=gWTqDmZKRnaQRVjARguWYW
+  S-NS-PLNR-PRM=TWRhUihDeZLWDYFXDbiaTj
+  S-NS-SDN-BSC=ZIVamtZDhiHQRVjARguWYW
+  S-NS-SDN-STD=LDYYjugBUpZLSBGTOimXQn
+  S-NS-SDN-PRM=gdPdcxcSjjXRYWYPDauiBD
+
+#####################################################################
+# Insights application configuration
+#
+healthbot_vip: 172.16.11.51
+healthbot_service_annotations:
+  metallb.universe.tf/allow-shared-ip: default
+
+healthbot_snmp_proxy_vip: 172.16.11.52
+
+# maximum time to wait for comonents to start up in minutes
+max_wait: 15
+
+#####################################################################
+# Changes below this line to fine-tune installation.
+# For normal installation no changes are required.
+#
+# variables starting with "install_" select a subcomponent to install
+# other variables configure specific components
+# 
+# local_registry: localhost:5000/
+# boot_registry_image: localhost:5000/svl-artifactory.juniper.net/northstar-docker-local/registry:2.6.2
+# local_charts: /export/charts
+# 
+# install_docker: true
+# install_reloader: '{{ install_northstar or install_healthbot }}'
+# install_rbac: '{{ install_northstar or install_healthbot }}'
+# 
+# install_cassandra: false
+# install_fluentd: true
+# install_opendistro_es: true
+# install_elasticsearch: '{{ install_fluentd and not install_opendistro_es }}'
+# install_ambassador: true
+# install_kibana: '{{ install_fluentd and not install_opendistro_es }}'
+# install_postgres: '{{ install_healthbot or install_ems or install_northstar }}'
+# install_local_volumes: '{{ install_postgres or install_opendistro_es }}'
+# 
+# number of local volumes per local_storage_node
+# local_volume_path: "/export/local-volumes"
+# volumes_per_node: 5
+# 
+# install_java: '{{ install_elasticsearch }}'
+# install_keycloak: false
+# install_keycloak_theme: false
+# 
+# install_dashboard: '{{ install_healthbot }}'
+# 
+# install_logcollector: '{{ not install_healthbot }}'
+# 
+# install_kafka: '{{ install_ems }}'
+# install_zookeeper: '{{ install_kafka }}'
+# 
+# install_storage: "{{ install_ems }}"
+# install_minio: "{{ not install_rook }}"
+# install_cert_manager: true
+# install_iam: "{{ install_ems or install_healthbot }}"
+# install_db_backup: '{{ install_healthbot or install_ems or install_northstar }}'
+# install_ambassador_auth_jwt: "{{ install_ambassador and install_iam }}"
+# install_nginx_ingress: false ## "{{ install_northstar and install_iam }}"
+# 
+# install_rook: true
+# rook_namespace: rook-ceph
+# discovery daemon detects dynamically added disks. Enable if required
+# rook_enable_discovery_daemon: false
+# rook_object_store_users:
+#   - ems-user
+# 
+# kubernetes_cluster_name: kubernetes
+# kubernetes_pod_cidr: 10.244.0.0/16
+# kubernetes_service_cidr: 10.96.0.0/12
+# kubernetes_repo: svl-artifactory.juniper.net/northstar-docker-local
+# 
+# kubelet_runtime_request_timeout: 5m0s
+# 
+# kube_scheduler_config:
+#   profiles:
+#     - plugins:
+#         score:
+#           disabled:
+#             - name: ImageLocality
+# 
+# kubelet_apiserver_tls_cipher_suites:
+#   - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+#   - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+#   - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+#   - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+#   - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+#   - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+# 
+# defaults file for kubectl-config
+# kubectl_file_name: 'admin.conf'
+# kubectl_allow_admin_kubectl: true
+# 
+# docker
+# docker_version: '20.10.7'
+# containerd_version_debian: '1.4.6-1'
+# containerd_version_redhat: '1.4.6-3.1'
+# docker_storage_driver: overlay2
+#
+# # Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.
+# docker_apt_release_channel: stable
+# docker_apt_repository: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+#
+# # Used only for RedHat/CentOS.
+# docker_yum_repo_url: https://download.docker.com/linux/centos/docker-ce.repo
+# docker_yum_repo_enable_edge: 0
+# docker_yum_repo_enable_test: 0
+#
+# docker_log_max_size: 10m
+# docker_log_max_file: 3
+# 
+# metalLB - Baremetal Load balancer
+# metallb_version: v0.9.3
+# metallb_baseurl: https://raw.githubusercontent.com/metallb/metallb/{{ metallb_version }}/manifests
+# metallb_protocol: layer2
+# metallb_addresses: []
+# 
+# Local volume provisioner
+#
+# local_volume_namespace: "common"
+# local_volume_path: "/export/local-volumes"
+# local_volume_storage_class: "local-storage"
+# local_volume_mode: "Filesystem"
+# default_storage_class: "true"
+# 
+# Reloader configuration
+# reloader_namespace: kube-system
+# reloader_version: v0.0.65
+# reloader_repo: svl-artifactory.juniper.net/northstar-docker-local/
+# 
+# k8s dashboard
+# k8s_dashboard_file: recommended.yaml
+# k8s_dashboard_user_file: dashboard-admin.yaml
+# k8s_dashboard_namespace: kubernetes-dashboard
+# k8s_dashboard_repo: svl-artifactory.juniper.net/northstar-docker-local/
+# k8s_dashboard_create_admin_role_binding: true
+# 
+# java
+# java_ver: 8
+# java_minor_ver: 0
+# 
+# chrony
+# chrony_pkg_state: 'present'
+# chrony_service_state: 'started'
+# chrony_service_enabled: 'yes'
+# 
+# chrony_config_server: [ '0.pool.ntp.org', '1.pool.ntp.org', '2.pool.ntp.org', '3.pool.ntp.org' ]
+# chrony_config_logdir: '/var/log/chrony'
+# 
+# addons/cni
+# flannel or calico
+# kubernetes_addons_cni: calico
+#
+# Configure calico_ip_autodetect method if host has more than one interface
+# default: can-reach=8.8.8.8, i.e. interface used by default route
+# select interface that can reach specific destination, e.g:
+# calico_ip_autodetect: can-reach=8.8.8.8
+# select interface matching regular expression, e.g.:
+# calico_ip_autodetect: interface=eth.*
+# select interface not matching regular expression, e.g.:
+# calico_ip_autodetect: skip-interface=eth.*
+#
+# calico_repo: svl-artifactory.juniper.net/northstar-docker-local/
+# 
+# addons/helm
+# kubernetes_helm_mirror: https://storage.googleapis.com/kubernetes-helm
+# kubernetes_helm_ver: v2.8.2
+# kubernetes_helm_checksums:
+#   v2.8.2: sha256:614b5ac79de4336b37c9b26d528c6f2b94ee6ccacb94b0f4b8d9583a8dd122d3
+#
+# kubernetes_helm_bin_dir: /usr/local/bin
+# 
+# addons/ingress-controller
+# ingress_release: nginx-ingress
+# ingress_namespace: kube-system
+# ingress_chart: stable/nginx-ingress
+# ingress_chart_version: 1.30.0
+#
+# ingress_service_annotations: {}
+# e.g. to enable ip address sharing using MetalLB loadbalancer:
+# ingress_service_annotations:
+#   metallb.universe.tf/allow-shared-ip: <shared-service-name>
+# ingress_http_nodePort: 30080
+# ingress_https_nodePort: 30443
+# ingress_host_network: false
+#
+# ingress_vip configures virtual IP address for ingress controller.
+# ingress_vip:
+# 
+# addons/keycloak
+# keycloak_release: "keycloak"
+# keycloak_chart: "{{ comp_target_dir }}/charts/keycloak"
+# keycloak_namespace: default
+# keycloak_realm_configmap_name: keycloak-realm-configmap
+# keycloak_realm_name: example_realm
+# Name of the admin user to be created for the realm
+# keycloak_realm_admin: admin
+# Path which the ingress route for keycloak is exposed on
+# keycloak_basepath: keycloak
+## List of roles to be created during installation
+##  - name: <label to be used for role, e.g. read_write>
+##    description: <useful description for role, e.g. Read/Write permission>
+# keycloak_roles: []
+## List of clients to be created during installation
+##  - name: <name of the client, e.g. healthbot_ui>
+##    root_url: <the root url of the client, e.g. http://localhost:3000>
+##    redirect_urls: ["http://localhost:3000/*","http://example.com"]
+# keycloak_clients: []
+# # Name of theme to be applied to this keycloak realm
+# keycloak_theme: keycloak
+# keycloak_db_name:
+# keycloak_db_host:
+# keycloak_db_port:
+# keycloak_db_user:
+# keycloak_db_secret:
+# keycloak_db_secret_key:
+# keycloak_db_password:
+# 
+# addons/elasticsearch
+# elasticsearch_unicast_hosts: "127.0.0.1"
+# elasticsearch_rest_port: 9200
+# elasticsearch_kube_master: "{{ groups.master[0] }}"
+# elasticsearch_namespace: "kube-system"
+# elasticsearch_replicas: 0
+#
+# elasticsearch_cluster_name: "NS_Cluster"
+# elasticsearch_version: "6.4.0"
+# elasticsearch_node_name: "${HOSTNAME}"
+# elasticsearch_network_host: "[_site_, _local_]"
+# elasticsearch_network_publish_host: "_site_"
+# elasticsearch_unicast_hosts: "127.0.0.1, [::1]"
+# elasticsearch_default_tmpdir: /var/lib/elasticsearch/tmp
+# elasticsearch_jvm_xms: 2g
+# elasticsearch_jvm_xmx: 2g
+# elasticsearch_rest_port: 9200
+# elasticsearch_retain_logstash_days: 7
+# 
+# addons/kibana
+# kibana_release: kibana
+# Kibana access is unauthenticated, if mapping is set to true
+# any client will be able to access the kibana ui at https://{{ui_vip or kibana_host}}/{{kibana_basepath}}
+# do not enable on production systems
+# kibana_mapping: false
+# kibana_namespace: kube-system
+# kibana_chart: stable/kibana
+# kibana_chart_version: 3.2.6
+# elasticsearch_version: 6.4.0
+# kibana_image: svl-artifactory.juniper.net/northstar-docker-local/kibana/kibana-oss
+# 
+# kibana_elasticsearch_url: http://elasticsearch:9200
+#
+# kibana_service_type: ClusterIP
+#
+# Set virtual host name(s) that resolve to "ingress_vip" for accessing
+# kibana service.
+# kibana_ingress_hosts: []
+#
+# kibana_resources: {}
+#
+# kibana_replicaCount: 1
+# 
+# addons/opendistro-es
+# opendistro_es_namespace: kube-system
+# opendistro_es_kibana_basepath: "/kibana"
+# opendistro_es_fullname: opendistro
+# opendistro_es_cluster_name: Paragon_Cluster
+# opendistro_es_image: svl-artifactory.juniper.net/northstar-docker-local/amazon/opendistro-for-elasticsearch
+# opendistro_es_kibana_image: svl-artifactory.juniper.net/northstar-docker-local/amazon/opendistro-for-elasticsearch-kibana
+# opendistro_es_version: 1.13.2
+# opendistro_es_init_image: svl-artifactory.juniper.net/northstar-docker-local/busybox
+# opendistro_es_init_image_version: 1.27.2
+# opendistro_es_data_replicas: 3
+# opendistro_es_admin_user: admin
+# opendistro_es_admin_password: ""
+# opendistro_es_retain: 7d
+# opendistro_es_cleanup_index_pattern: ["logstash-*"]
+# 
+# addons/logstash
+# logstash_release_name: logstash
+# logstash_namespace: default
+# logstash_chart: ~/logstash
+#
+# logstash_persistence_enabled: false
+# logstash_elasticsearch_hostname: elasticsearch
+# logstash_elasticsearch_port: 9200
+# 
+# addons/rabbitmq
+# rabbitmq_release: rabbitmq
+# rabbitmq_namespace: "{{ northstar_namespace | default('northstar') }}"
+# rabbitmq_repo: svl-artifactory.juniper.net/northstar-docker-local/
+# 
+# rabbitmq_username: northstar
+# rabbitmq_password: ""
+# rabbitmq_port: 5672
+# rabbitmq_replicas: >
+#   {%if (groups.node|count) + (groups.master|count if groups.node|count == 0 or allow_master_scheduling else 0) >= 2 %}3{% else %}1{% endif %}
+# 
+# addons/redis
+# redis_release: redis
+# redis_namespace: default
+# redis_repo: svl-artifactory.juniper.net/northstar-docker-local/
+# 
+# redis_password: ""
+# redis_persistence: false
+#
+# redis_cluster_enabled: false
+# redis_cluster_slave_count: 0
+# 
+# addons/registry
+# docker_registry_release: docker-registry
+# docker_registry_chart: "{{ comp_target_dir }}/docker-registry"
+# docker_registry_repo: svl-artifactory.juniper.net/northstar-docker-local/
+# docker_registry_version: 2.6.2
+# docker_registry_storage_size: 25Gi
+#
+# docker_hostpath: "/export/registry"
+# registry_nodes:
+#   - "{{ inventory_hostname }}"
+#
+# docker_registry_cron_job: /etc/cron.d/sync-registry
+# docker_registry_sync_registry_script: /usr/local/bin/sync-registry
+# 
+# addons/clean-registry
+# CronJob schedule for running clean-registry task
+# clean_registry_schedule: "0 1 * * *"
+# 
+# northstar/common
+# northstar_namespace: default
+# northstar_configmap_name: northstar-config
+# northstar_db_schema_configmap_name: northstar-db-schema-config
+# northstar_tls_secret_name: northstar-tls-client
+# northstar_tls_ca_cert_name: client.pem
+# northstar_kube_master: "{{ groups.master[0] }}"
+# northstar_s3bucket: '{% if not install_rook %}northstar{% endif %}'
+# northstar_s3_cache_time: 2s
+# northstar_s3_endpoint: '{% if not install_rook %}http://minio.{{ minio_namespace }}:9000{% endif %}'
+# northstar_crpd_s3_endpoint: '{{ northstar_s3_endpoint }}'
+# northstar_s3_secret: '{% if not install_rook %}minio{% endif %}'
+# 
+# TopoServer
+# toposerver bmp client port
+# bmp_port: 10002
+# 
+# TopologyFilter
+# filter_client_port: 10002
+# filter_server_port: 10004
+# filter_http_port: 8082
+# filter_http_host: 0.0.0.0
+# filter_http_protocol: http
+# filter_bmp_host: bmp-grpc
+# bmp_service: bmp-grpc
+# 
+# northstar/pcserver
+# ServiceTypes: LoadBalancer -- requires external load balancer
+#               ClusterIP -- requires pcep-proxy (experimental)
+# northstar_pceserver_service_type: LoadBalancer
+# northstar_pceserver_external_traffic_policy: Local
+# northstar_pceserver_nodeport: 31189
+# 
+# northstar/netflowd
+# northstar_netflowd_service_annotations: {}
+# 
+# northstar/pcviewer
+# northstar_pcviewer_traffic_policy: Cluster
+# northstar_pcviewer_service_annotations: {}
+# 
+# northstar/web
+# Virtual Hostname of Pathfinder Web server, MUST be provided.
+# northstar_web_hostname: ""
+#
+# Filenames for private key and certificate in config/ folder.
+# if the files do not exist, create a certificate signed by the local
+# kubernetes CA, otherwise use key/cert
+#
+# northstar_web_tls_key_filename: key.pem
+# northstar_web_tls_cert_filename: cert.pem
+#
+# Set TLS Subject name for certificate creation. Format:
+# /CN=<hostname>/O=<Org/C=<country>
+# northstar_web_tls_subj: ""
+#
+# northstar_web_tls_secret_name: northstar-web-tls-secret
+# northstar_web_service_type: ClusterIP
+# northstar_web_nodeport: 31443
+# 
+# Optionally set initial admin password. If not set, a random password
+# will be created.
+# northstar_web_admin_password:
+# 
+# The initial admin password can be retrieved with the command:
+# "kubectl get secret northstar-web-admin-secret -o jsonpath='{.data.password}' | base64 -d"
+# northstar_web_admin_secret_name: northstar-web-admin-secret
+# 
+# Persistent volume handling for northstar:
+# - if northstar_data_pv_create is false and northstar_data_pvc_name is not
+#   empty use northstar_data_pvc_name as an existing volume claim
+# - if northstar_data_pvc_name is empty, don't use persistent volume, i.e.
+#   /opt/northstar/data is NOT shared between pods
+# - if northstar_data_pv_create is set to true, create a new persistent volume
+#   and volume claim
+#   - if northstar_data_nfs_server is not empty, it must name an existing NFS
+#     server, that exports {{northstar_data_nfs_path}}
+#   - otherwise, create nfs_server in kube-master and export
+#     {{northstar_data_nfs_path}}
+#
+# northstar_data_nfs_server: ""
+# northstar_data_nfs_clients: "{{ hostvars[inventory_hostname].ansible_default_ipv4.network }}/{{ hostvars[inventory_hostname].ansible_default_ipv4.netmask }}"
+# northstar_data_nfs_path: "{% if not install_rook %}/export/ns-data{% endif %}"
+# northstar_data_pvc_name: ns-data
+# northstar_data_pv_create: "{{ install_rook }}"
+# northstar_data_pv_size: "5Gi"
+# 
+# defaults file for logcollector
+# northstar_logcollector_service_type: LoadBalancer
+# northstar_logcollector_traffic_policy: Cluster
+# northstar_logcollector_service_annotations: {}
+# northstar_logcollector_vip: ''
+#
+# NodePorts, if northstar_logcollector_service==NodePort
+# northstar_jti_ifd_port: 32010
+# northstar_jti_ifl_port: 32011
+# northstar_jti_lsp_port: 32012
+# 
+# Note: if "northstar_pceserver_vip" is configured northstar_web is accessible via
+# http://<northstar_pceserver_vip>:8443
+# 
+# northstar_netconf_secret_name: "netconf"
+# northstar_netconf_username: "northstar"
+# northstar_netconf_password: ""
+# 
+# northstar_srt_enable: false
+# 
+# Number of celery worker instances
+# northstar_celeryworkers: 2
+# 
+# addons/bmp
+# bmp_bmp_port: 10001
+# bmp_grpc_port: 10002
+# bmp_node_port: 32001
+# bmp_namespace: northstar
+# bmp_router_add: ['127.0.0.1:10003']
+# 
+# CRPD can be configured either to listen for incoming BGP connection
+# or to connect to BGP peers.
+#
+# To listen, set:
+# crpd_service_type: LoadBalancer
+# and define a virtual IP address for CRPD:
+# crpd_vip:
+#
+# To connect to BGP peers, set
+# crpd_service_type: ClusterIP (default)
+# and define a list of BGP peers:
+# crpd_neighbors: []
+# 
+# crpd_service_type: ClusterIP
+# crpd_external_traffic_policy: Local
+# 
+# To enable ip address sharing with MetalLB load balancer set
+# crpd_external_traffic_policy: Cluster
+# and
+# crpd_service_annotations:
+#   metallb.universe.tf/allow-shared-ip: <shared-service-name>
+# (note: this setting prevents multiple BGP peers with the network)
+# 
+# Additional CRPD configuration, must be valid JUNOS configuration
+# E.g.
+# crpd_router_config: |
+#   protocols {
+#     bgp {
+#       group as2 {
+#         type external;
+#         family traffic-engineering {
+#           unicast;
+#         }
+#         peer-as 2;
+#         neighbor 192.168.10.21;
+#       }
+#       export reject-all;
+#     }
+#   }
+#   policy-options {
+#     policy-statement reject-all {
+#       then reject;
+#     }
+#   }
+# crpd_router_config: ""
+# 
+# optional CRPD license
+# crpd_license: >
+#   ...
+# 
+# Optional Healthbot configuration
+# ================================
+# healthbot_namespace: healthbot
+# healthbot_image_registry:
+# healthbot_service_annotations: {}
+# healthbot_vip: null
+# 
+# Optional EMS configuration
+# ==========================
+# ems_namespace: ems
+# 
+# Set common option for installing EMS helm charts
+# ems_helm_options:
+#  - --atomic
+# 
+# Default log level for ems/atom/fault services
+# ems_log_level: warning
+# Override log level for specific components
+# doa_log_level:
+# devicemodel_log_level:
+# devicemodel_connector_log_level:
+# dcs_log_level:
+# auditlog_log_level:
+# report_service_log_level:
+# telemetrymanager_log_level:
+# devicemanager_log_level:
+# alarmmanager_log_level:
+# jobstore_log_level:
+# dpm_log_level:
+# dmonproxy_log_level:
+# iam_log_level:
+# storage_log_level:
+# 
+# Default DB Drop Config Flag for ems services
+# ems_db_drop: false
+# Override dbdrop for specific components
+# devicemodel_db_drop:
+# auditlog_db_drop:
+# devicemanager_db_drop:
+# jobstore_db_drop:
+# dpm_db_drop:
+# dmonproxy_db_drop:
+# iam_db_drop:
+# jobmanager_db_drop:
+# 
+# EMS Devicemodel
+# install_ems_devicemodel: '{{ install_ems }}'
+# 
+# ems_devicemodel_db_host: "{{ postgres_service }}.{{ postgres_namespace }}"
+# ems_devicemodel_auditlog_enabled: true
+# ems_devicemodel_auditlog_path: /var/log/contrail-of/audit
+# 
+## ems_devicemodel_server_name: devicemodel
+## ems_devicemodel_secret: devicemodel
+# 
+# install_ems_devicemodel_connector: '{{ install_ems }}'
+# ems_devicemodel_connector_replicas: 1
+# 
+# EMS Jobstore
+# install_ems_jobstore: '{{ install_ems }}'
+# ems_jobstore_replicas: 1
+# 
+# EMS Jobmanager
+# install_ems_jobmanager: '{{ install_ems }}'
+# ems_jobmanager_replicas: 1
+# 
+# EMS DCS
+# install_ems_dcs: '{{ install_ems }}'
+# ems_dcs_replicas: 1
+# 
+# EMS DeviceManager
+# install_ems_devicemanager: '{{ install_ems }}'
+# ems_devicemanager_replicas: 1
+# syslog_ingest_vip: '{{ healthbot_vip }}'
+# 
+# install_ems_doa: '{{ install_ems }}'
+# doa_dhcp_server_interface: ens160
+# doa_vip: '{{ healthbot_vip }}'
+# 
+# EMS DPM
+# install_ems_dpm: '{{ install_ems }}'
+# ems_dpm_replicas: 1
+# 
+# EMS DmonProxy
+# install_ems_dmonproxy: '{{ install_ems }}'
+# ems_dmonproxy_replicas: 1
+# 
+# EMS EdgeManager
+# install_ems_edgemanager: '{{ install_ems }}'
+# ems_edgemanager_replicas: 1
+# 
+# EMS EdgeProfile
+# install_ems_edgeprofile: '{{ install_ems }}'
+# 
+# EMS AlarmManager
+# install_ems_alarmmanager: '{{ install_ems }}'
+# ems_alarmmanager_replicas: 1
+# 
+# EMS TelemetryManager
+# install_ems_telemetrymanager: '{{ install_ems }}'
+# ems_telemetrymanager_replicas: 1
+# ems_telemetrymanager_healthbot_scheme: http
+# 
+# Auditlog
+# install_auditlog: '{{ install_ems }}'
+# auditlog_db_host: '{{ postgres_service }}.{{ postgres_namespace }}'
+# 
+# Report-Service
+# install_report_service: '{{ install_ems }}'
+# ems_report_service_replicas: 1
+# 
+# PostgreSQL database
+#
+# postgres_namespace: common
+# postgres_release: postgres-operator
+# postgres_chart: '{{comp_target_dir }}/charts/postgres-operator'
+# postgres_crd: postgresqls.acid.zalan.do
+# postgres_cluster_name: atom
+# postgres_cluster_instances: >
+#   {%if (groups.node|count) + (groups.master|count if groups.node|count == 0 or allow_master_scheduling else 0) >= 2 %}3{% else %}1{% endif %}
+# postgres_cluster_volume_size: 5Gi
+# postgres_db_names:
+#   - atom
+# postgres_db_username: atom
+# postgres_db_version: '12'
+# postgres_operator_image: svl-artifactory.juniper.net/northstar-docker-local/zalando/postgres-operator
+# postgres_operator_tag: v1.6.0
+# postgres_spilo_image: svl-artifactory.juniper.net/northstar-docker-local/zalando/spilo-13:2.0-p6
+# postgres_backup_image: svl-artifactory.juniper.net/northstar-docker-local/zalando/logical-backup:v1.6.0
+# postgres_pooler_image: svl-artifactory.juniper.net/northstar-docker-local/zalando/pgbouncer:master-7
+# 
+# Discovered number of target nodes
+# postgres_available_target_nodes: "{{ groups['cluster']|length }}"
+# 
+# postgres_service: '{{ postgres_cluster_name }}-db'
+# postgres_credentials: '{{ postgres_db_username }}.{{ postgres_cluster_name }}-db.credentials'
+# postgres_superuser_credentials: postgres.{{ postgres_cluster_name }}-db.credentials
+# 
+## postgres_tls_secret_name: '{{ postgres_cluster_name }}-db-tls-secret'
+#
+# Specify resource limits for postgres database instance
+# postgres_resources:
+#   limits:
+#     cpu: "64"
+#     memory: 512Gi
+#   requests:
+#     cpu: 100m
+#     memory: 100Mi
+# 
+# Maximum number of connections
+# postgres_max_connections: "200"
+# 
+# Queries exceeding this duration in ms will be logged
+# postgres_log_min_duration_statement: "5000"
+# 
+# user/pass used by northstar clients to access postgres
+# postgres_northstar_credentials: northstar.{{ postgres_cluster_name }}-db.credentials
+# postgres_northstar_backup_volume_size: 10Gi
+# postgres_northstar_backup_schedule: '30 0 * * *'
+# 
+# redis
+# redis_service: '{{ redis_release }}-master'
+# redis_credentials: '{{ redis_release }}'
+# 
+# rabbitmq
+# rabbitmq_service: '{{ rabbitmq_release }}'
+# rabbitmq_credentials: '{{ rabbitmq_release }}'
+# 
+# Ambassador configuration
+# ambassador_namespace: ambassador
+# ambassador_instance: ambassador
+# ambassador_secret: ambassador
+# ambassador_repo: svl-artifactory.juniper.net/northstar-docker-local/datawire/ambassador
+# ambassador_replicas: >
+#   {%if (groups.node|count) + (groups.master|count if groups.node|count == 0 or allow_master_scheduling else 0) >= 2 %}3{% else %}1{% endif %}
+# ambassador_resources:
+#   limits:
+#     cpu: 2000m
+#     memory: 1Gi
+#   requests:
+#     cpu: 200m
+#     memory: 300Mi
+# 
+# Atom configuration
+# atom_namespace: common
+# 
+# Kafka configuraiton
+# kafka_namespace: '{{ atom_namespace }}'
+# kafka_brokers: >
+#   {%if (groups.node|count) + (groups.master|count if groups.node|count == 0 or allow_master_scheduling else 0) >= 2 %}3{% else %}1{% endif %}
+# 
+# Zookeeper configuration
+# zookeeper_namespace: '{{ atom_namespace }}'
+# zookeeper_replicas: >
+#   {%if (groups.node|count) + (groups.master|count if groups.node|count == 0 or allow_master_scheduling else 0) >= 2 %}3{% else %}1{% endif %}
+# 
+# Cert-manager configuration
+# cert_manager_namespace: '{{ atom_namespace }}'
+# Name of builtin CA certificate issuer
+# cert_manager_ca_issuer: atom-clusterissuer
+# 
+# MinIO configuration
+# minio_namespace: '{{ atom_namespace }}'
+# standalone or distributed
+# minio_mode: "{% if groups['local_storage_nodes']|count < 4 %}standalone{% else %}distributed{% endif %}"
+# neeed at least 4 replicas in distributed mode
+# minio_replicas: 4
+# expose the web interface
+# minio_expose_web: false
+# 
+# Storage configuration
+# storage_namespace: '{{ atom_namespace }}'
+# storage_replicas: 1
+# 
+# IAM configuration
+# iam_namespace: '{{ atom_namespace }}'
+# iam_portal_url: https://{{ northstar_web_hostname }}
+# iam_app_name: Paragon
+# iam_support_email_id: paragon-hackers@juniper.net
+# iam_default_user: admin
+# iam_skip_mail_verification: false
+# 
+# ETCD configuratin
+# install_etcd: false ## "{{ install_ems }}"
+# etcd_namespace: '{{ atom_namespace }}'
+# etcd_replicas: >
+#   {%if (groups.node|count) + (groups.master|count if groups.node|count == 0 or allow_master_scheduling else 0) >= 2 %}3{% else %}1{% endif %}
+# 
+# HB configuration
+# hb_db_rest_service_name: influxdb.{{ healthbot_namespace }}
+# hb_db_rest_service_port: 8086
+# hb_tenant_token : hb-default
+# 
+# Fault configuration
+# fault_namespace: fault
+# 
+# Excluded Services for HB
+# excluded_services: ''
+# 
+# Paragon UI configurations
+# paragon_ui_namespace: paragonui

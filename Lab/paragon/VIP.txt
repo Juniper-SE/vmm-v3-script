@@ -1,0 +1,104 @@
+? Select components  done (4 selections)
+? Infrastructure Options  done (5 selections)
+? List of NTP servers  anyntp.juniper.net
+? Virtual IP address(es) for ingress controller  172.16.11.7
+? Virtual IP address for Infrastructure Nginx Ingress Controller  172.16.11.5
+? Virtual IP address for Insights services  172.16.11.6
+? Virtual IP address for SNMP Trap receiver (optional)  172.16.11.8
+? Pathfinder Options  [Install Netflowd]
+? Use netflowd proxy?  Yes
+? PCEServer proxy  Nginx Ingress
+? LoadBalancer IP address ranges  172.16.11.5-172.16.11.8
+? Multi-master node detected do you want to setup multiple registries  Yes
+? Virtual IP address for registry  172.16.11.9
+? Enable md5 for PCE Server ?  No
+? Enable md5 for BGP ?  No
+? Hostname of Main web application  172.16.11.7
+? BGP autonomous system number of CRPD peer  64500
+? Comma separated list of CRPD peers  172.16.14.254
+? Finish and write configuration to file  Yes
+
+
+sudo apt -y install apt-transport-https ca-certificates curl docker.io jq keepalived chrony
+
+
+delete snmp trap-group to_snmp targets 172.16.11.5
+
+
+
+? Select components  done (4 selections)
+? Infrastructure Options  done (5 selections)
+? List of NTP servers  anyntp.juniper.net
+? Virtual IP address(es) for ingress controller  172.16.20.1
+? Virtual IP address for Infrastructure Nginx Ingress Controller  172.16.20.2
+? Virtual IP address for Insights services  172.16.20.3
+? Virtual IP address for SNMP Trap receiver (optional)  172.16.20.4
+? Pathfinder Options  [Install Netflowd]
+? Use netflowd proxy?  No
+? Virtual IP address for Pathfinder Netflowd  172.16.20.5
+? PCEServer proxy  None
+? Virtual IP address for Pathfinder PCE server  172.16.20.6
+? LoadBalancer IP address ranges  172.16.20.1-172.16.20.6
+? Multi-master node detected do you want to setup multiple registries  Yes
+? Virtual IP address for registry  172.16.11.5
+? Enable md5 for PCE Server ?  No
+? Enable md5 for BGP ?  No
+? Hostname of Main web application  172.16.20.1
+? BGP autonomous system number of CRPD peer  64500
+? Comma separated list of CRPD peers  172.16.14.254
+? Finish and write configuration to file  Yes
+
+
+
+delete system services outbound-ssh client EMS-172.16.11.7 device-id bdedfc38-72fc-47dc-a07b-464a70572f77.JUNOS
+delete system services outbound-ssh client EMS-172.16.11.7 secret "$9$6iOQ/CuOBEleWz3lKMLN-bs2aJDF36uBI6/tOIRlebsY2ZUfTz/9p3nRhyr8LHq.fT369ABIEu08XNdg4TzF/uOcylL7-SyvLX7VbYgoZHq"
+delete system services outbound-ssh client EMS-172.16.11.7 keep-alive
+delete system services outbound-ssh client EMS-172.16.11.7 services netconf
+delete system services outbound-ssh client EMS-172.16.11.7 172.16.11.7 port 7804
+delete services analytics streaming-server ns remote-address 172.16.11.6
+delete snmp trap-group to_snmp targets 172.16.11.8
+delete routing-options static route 172.16.11.0/28 next-hop 172.16.14.1
+delete protocols pcep pce northstar1 destination-ipv4-address 172.16.11.5
+
+set system services outbound-ssh client EMS-172.16.11.7 device-id bdedfc38-72fc-47dc-a07b-464a70572f77.JUNOS
+set system services outbound-ssh client EMS-172.16.11.7 secret "$9$6iOQ/CuOBEleWz3lKMLN-bs2aJDF36uBI6/tOIRlebsY2ZUfTz/9p3nRhyr8LHq.fT369ABIEu08XNdg4TzF/uOcylL7-SyvLX7VbYgoZHq"
+set system services outbound-ssh client EMS-172.16.11.7 keep-alive
+set system services outbound-ssh client EMS-172.16.11.7 services netconf
+set system services outbound-ssh client EMS-172.16.11.7 172.16.11.7 port 7804
+
+
+delete services analytics streaming-server ns remote-address 172.16.11.6
+delete snmp trap-group to_snmp targets 172.16.11.8
+delete routing-options static route 172.16.11.0/28 next-hop 172.16.14.1
+delete protocols pcep pce northstar1 destination-ipv4-address 172.16.11.5
+set services analytics streaming-server ns remote-address 172.16.20.3
+set snmp trap-group to_snmp targets 172.16.20.4
+set routing-options static route 172.16.11.0/28 next-hop 172.16.14.1
+set routing-options static route 172.16.20.0/28 next-hop 172.16.14.1
+set protocols pcep pce northstar1 destination-ipv4-address 172.16.20.1
+
+
+
+? Select components  done (4 selections)
+? Infrastructure Options  done (5 selections)
+? List of NTP servers  anyntp.juniper.net
+? Virtual IP address(es) for ingress controller  172.16.20.1,172.16.25.1
+? Virtual IP address for Infrastructure Nginx Ingress Controller  172.16.20.2
+? Virtual IPv4 for device callbacks  172.16.20.1
+? Virtual IP address for Insights services  172.16.20.3
+? Virtual IP address for SNMP Trap receiver (optional)  172.16.20.4
+? Pathfinder Options  [Install Netflowd]
+? Use netflowd proxy?  No
+? Virtual IP address for Pathfinder Netflowd  172.16.20.5
+? PCEServer proxy  None
+? Virtual IP address for Pathfinder PCE server  172.16.20.6
+? LoadBalancer IP address ranges  172.16.11.6,172.16.20.1-172.16.20.6
+? Multi-master node detected do you want to setup multiple registries  Yes
+? Virtual IP address for registry  172.16.11.5
+? Enable md5 for PCE Server ?  No
+? Enable md5 for BGP ?  No
+? Hostname of Main web application  172.16.11.6
+? BGP autonomous system number of CRPD peer  64500
+? Comma separated list of CRPD peers  172.16.14.254
+? Finish and write configuration to file  Yes
+ubuntu@control:~$

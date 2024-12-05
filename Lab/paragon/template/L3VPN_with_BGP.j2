@@ -1,0 +1,10 @@
+set interfaces {{ interface }} unit {{ unit }} vlan-id {{vlan}}
+set interfaces {{ interface }} unit {{ unit }} family inet address {{ ipv4_pe }}
+set interfaces {{ interface }} unit {{ unit }} family inet6 address {{ ipv6_pe }}
+set routing-instances {{ vpn }} instance-type vrf
+set routing-instances {{ vpn }} protocols bgp group to_ce local-as {{ local_as }}
+set routing-instances {{ vpn }} protocols bgp group to_ce neighbor {{peer_ipv4}} peer-as {{peer_as}}
+set routing-instances {{ vpn }} protocols bgp group to_ce neighbor {{peer_ipv6}} peer-as {{peer_as}}
+set routing-instances {{ vpn }} interface  {{ interface }}.{{unit}}
+set routing-instances {{ vpn }} vrf-target target:{{route_target}}
+set routing-instances {{ vpn }} vrf-table-label

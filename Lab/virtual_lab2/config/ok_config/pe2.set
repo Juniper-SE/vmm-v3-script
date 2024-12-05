@@ -1,0 +1,53 @@
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 unit 1 vlan-id 1
+set interfaces ge-0/0/0 unit 1 family inet address 192.168.255.2/31
+set interfaces ge-0/0/0 unit 1 family inet6 address 2001:dead:beef:ffff::ffff:2/127
+set interfaces ge-0/0/0 unit 10 vlan-id 10
+set interfaces ge-0/0/0 unit 10 family inet address 192.168.255.10/31
+set interfaces ge-0/0/0 unit 10 family inet6 address 2001:dead:beef:ffff::ffff:10/127
+set interfaces ge-0/0/1 unit 0 family inet6
+set interfaces ge-0/0/2 unit 0 family inet6
+set policy-options policy-statement to_int then next-hop self
+set routing-instances cust1 instance-type vrf
+set routing-instances cust1 protocols bgp group to_cust1 peer-as 65102
+set routing-instances cust1 protocols bgp group to_cust1 neighbor 192.168.255.11 family inet any
+set routing-instances cust1 protocols bgp group to_cust1v6 peer-as 65102
+set routing-instances cust1 protocols bgp group to_cust1v6 neighbor 2001:dead:beef:ffff::ffff:11 family inet6 any
+set routing-instances cust1 interface ge-0/0/0.10
+set routing-instances cust1 vrf-target target:64512:10001
+set routing-options route-distinguisher-id 10.100.1.2
+set routing-options router-id 10.100.1.2
+set routing-options autonomous-system 64512
+set protocols bgp group to_rr type internal
+set protocols bgp group to_rr local-address 10.100.1.2
+set protocols bgp group to_rr family inet any
+set protocols bgp group to_rr family inet-vpn any
+set protocols bgp group to_rr family inet6 labeled-unicast explicit-null
+set protocols bgp group to_rr family inet6-vpn any
+set protocols bgp group to_rr export to_int
+set protocols bgp group to_rr neighbor 10.100.1.255
+set protocols bgp group to_vlan1 local-address 192.168.255.2
+set protocols bgp group to_vlan1 family inet any
+set protocols bgp group to_vlan1 peer-as 65002
+set protocols bgp group to_vlan1 neighbor 192.168.255.3
+set protocols bgp group to_vlan1_v6 local-address 2001:dead:beef:ffff::ffff:2
+set protocols bgp group to_vlan1_v6 family inet6 any
+set protocols bgp group to_vlan1_v6 peer-as 65002
+set protocols bgp group to_vlan1_v6 neighbor 2001:dead:beef:ffff::ffff:3
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/1.0 family inet bfd-liveness-detection minimum-interval 100
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/2.0 family inet bfd-liveness-detection minimum-interval 100
+set protocols isis interface lo0.0 passive
+set protocols ldp interface ge-0/0/1.0
+set protocols ldp interface ge-0/0/2.0
+set protocols mpls explicit-null
+set protocols mpls ipv6-tunneling
+set protocols mpls interface ge-0/0/1.0
+set protocols mpls interface ge-0/0/2.0
+set protocols rsvp interface ge-0/0/1.0
+set protocols rsvp interface ge-0/0/2.0
+set protocols lldp interface ge-0/0/0
+set protocols lldp interface ge-0/0/1
+set protocols lldp interface ge-0/0/2

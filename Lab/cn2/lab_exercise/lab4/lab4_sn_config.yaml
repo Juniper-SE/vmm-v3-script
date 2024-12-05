@@ -1,0 +1,18 @@
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: Subnet
+metadata:
+  namespace: lab4
+  name: blue-v4
+spec:
+ disableBGPaaSIPAutoAllocation: true
+ bgpaasPrimaryIP: 192.168.101.2
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: Subnet
+metadata:
+  namespace: lab4
+  name: red-v4
+spec:
+ disableBGPaaSIPAutoAllocation: true
+ bgpaasPrimaryIP: 192.168.102.2

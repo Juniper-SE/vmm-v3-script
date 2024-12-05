@@ -1,0 +1,3 @@
+# this is the freeradius configuration for users
+DEFAULT         Auth-Type := Accept
+                ERX-Service-Activate:1 += "redirDynamic(http://172.16.13.11"

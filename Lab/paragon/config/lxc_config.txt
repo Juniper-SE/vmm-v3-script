@@ -1,0 +1,102 @@
+devices:
+  eth1:
+    name: eth1
+    nictype: bridged
+    parent: br-e5v101
+    type: nic
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: s3lan
+    type: nic
+
+
+devices:
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br-e5v101
+    type: nic
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br-eth1
+    type: nic
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br-e3v101
+    type: nic
+  eth1:
+    name: eth1
+    nictype: bridged
+    parent: wan1
+    type: nic
+
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br-e5v1001
+    type: nic
+  
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: br-e1v1011
+    type: nic
+  
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: r1lan
+    type: nic
+
+
+
+sudo lxc launch images:alpine/edge client
+
+delete interface ge-0/0/0 unit 101
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 192.168.103.1/24
+set interfaces ge-0/0/0 unit 101 family inet6 address fc00:dead:beef:a103::1/64
+
+
+
+apk update
+apk upgrade
+apk add openssh openssh-server iperf iperf3 curl
+rc-update add sshd
+service sshd start
+ssh-keygen -t rsa
+cp .ssh/id_rsa.pub .ssh/authorized_keys
+
+sudo lxc stop client
+sudo lxc export client client.tgz
+
+
+
+apk update
+apk upgrade
+apk add frr
+rc-update add frr
+sed -i -e "s/bgpd=no/bgpd=yes/" /etc/frr/daemons
+service frr start
+
+
+
+router bgp 4200002001
+ no bgp ebgp-requires-policy
+ neighbor 192.168.255.1 remote-as 4200001001
+ neighbor fc00:dead:beef:ffff::1 remote-as 4200001001
+ !
+ address-family ipv4 unicast
+  network 192.168.102.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network fc00:dead:beef:a102::/64
+  neighbor fc00:dead:beef:ffff::1 activate
+ exit-address-family
+exit
+
+

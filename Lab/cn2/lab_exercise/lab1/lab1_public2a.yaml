@@ -1,0 +1,21 @@
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: VirtualNetwork
+metadata:
+  name: public2
+  namespace: contrail
+  labels:
+    service.contrail.juniper.net/externalNetworkSelector: default-external
+spec:
+  exportRouteTargetList:
+   - target:64512:10002
+  importRouteTargetList:
+   - target:64512:10000
+  v4SubnetReference:
+    apiVersion: core.contrail.juniper.net/v1alpha1
+    attributes:
+      ipamSubnets:
+      - defaultGateway: 172.16.1.17
+        enableDHCP: true
+        subnet:
+          ipPrefix: 172.16.1.16
+          ipPrefixLen: "24"

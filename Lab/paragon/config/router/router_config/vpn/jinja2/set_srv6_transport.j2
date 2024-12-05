@@ -1,0 +1,8 @@
+set routing-options source-packet-routing srv6 locator myloc {{srv6_locator}}
+set protocols isis source-packet-routing srv6 locator myloc end-sid {{srv6_end_sid}} flavor usd psp
+{% for i in intf -%}
+{% if i.0 != 'lo0' -%}
+set protocols isis interface {{ i.0 }}.0 level 2 srv6-adjacency-segment protected locator myloc end-x-sid {{ i.2 }} flavor usd psp
+set protocols isis interface {{ i.0 }}.0 node-link-protection
+{% endif %}
+{% endfor %}

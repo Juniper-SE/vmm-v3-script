@@ -1,0 +1,129 @@
+---
+name: test2
+pod: 
+  type: vmm
+  # if your account can access vmm lab directly, then you can comment out jumpserver
+  #jumpserver: ttsv-shell110.juniper.net
+  jumpserver: ttqc-shell002.juniper.net
+  #vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  user: irzan
+  adpassword: AnaMabokCoys
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  ubuntu2: images/ubuntu22.04-with-kvm.qcow2
+  desktop: images/desktop.qcow2
+  vmx: images/vmx/junos-vmx-x86-64-23.1R1.8.vmdk
+  vjunos_ex: images/vJunos-switch-23.2R1.14.qcow2
+  vsrx: images/vsrx/junos-vsrx3-x86-64-23.2R1.13.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.1/24
+        dhcp_range: 172.16.11.120-172.16.11.150
+  r1:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.101/24
+      ge-0/0/0:
+        bridge: r1ge0
+        family:
+          inet: 172.16.101.1/24
+          inet6: fc00:dead:beef:f101::1/64
+      ge-0/0/1:
+        bridge: wan1
+        family:
+          inet: 172.16.100.0/31
+          inet6: fc00:dead:beef:f100::0/127
+  r2:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.102/24
+      ge-0/0/0:
+        bridge: r2ge0
+        family:
+          inet: 172.16.102.1/24
+          inet6: fc00:dead:beef:f102::1/64
+      ge-0/0/1:
+        bridge: wan1
+        family:
+          inet: 172.16.100.1/31
+          inet6: fc00:dead:beef:f100::1/127
+      ge-0/0/2:
+        bridge: wan2
+        family:
+          inet: 172.16.100.2/31
+          inet6: fc00:dead:beef:f100::2/127
+  r3:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.103/24
+      ge-0/0/0:
+        bridge: r3ge0
+        family:
+          inet: 172.16.103.1/24
+          inet6: fc00:dead:beef:f103::1/64
+      ge-0/0/1:
+        bridge: wan2
+        family:
+          inet: 172.16.100.3/31
+          inet6: fc00:dead:beef:f100::3/127
+  svr1:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.111/24
+      em1: 
+        bridge: r1ge0
+  svr2:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.112/24
+      em1: 
+        bridge: r2ge0
+  svr3:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.11.113/24
+      em1: 
+        bridge: r3ge0

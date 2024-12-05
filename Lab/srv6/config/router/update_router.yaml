@@ -1,0 +1,20 @@
+---
+- name: configure SRv6 and IPv6 on routers
+  hosts:
+    - all
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    conf_dir: "./initial_config"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.set"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper_junos_config:
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        file: "{{ conf_file}}"
+        config_mode: "exclusive"
+        load: "set"

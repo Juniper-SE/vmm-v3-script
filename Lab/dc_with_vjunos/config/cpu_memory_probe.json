@@ -1,0 +1,88 @@
+{
+    "label": "Stream CPU and Memory Utilization",
+    "description": "Probe used to stream cpu and memory utilization from a blueprint in Apstra to the Cloud",
+    "processors": [
+        {
+            "name": "System cpu utilization data",
+            "type": "extensible_data_collector",
+            "properties": {
+                "execution_count": "-1",
+                "service_name": "resource_util",
+                "query_expansion": {},
+                "service_interval": "10",
+                "enable_streaming": true,
+                "system_id": "system.system_id",
+                "query_tag_filter": {
+                    "filter": {},
+                    "operation": "and"
+                },
+                "graph_query": "node('system', name='system', role=is_in(['leaf', 'access', 'spine', 'superspine']), deploy_mode=is_in(['deploy', 'drain']))",
+                "keys": [
+                    "metric"
+                ],
+                "query_group_by": [],
+                "ingestion_filter": {},
+                "data_type": "number",
+                "service_input": "''",
+                "metric": "'system_cpu_utilization'"
+            },
+            "inputs": {},
+            "outputs": {
+                "out": "System cpu utilization data"
+            }
+        },
+        {
+            "name": "System memory utilization data",
+            "type": "extensible_data_collector",
+            "properties": {
+                "execution_count": "-1",
+                "service_name": "resource_util",
+                "query_expansion": {},
+                "service_interval": "10",
+                "enable_streaming": true,
+                "system_id": "system.system_id",
+                "query_tag_filter": {
+                    "filter": {},
+                    "operation": "and"
+                },
+                "graph_query": "node('system', name='system', role=is_in(['leaf', 'access', 'spine', 'superspine']), deploy_mode=is_in(['deploy', 'drain']))",
+                "keys": [
+                    "metric"
+                ],
+                "query_group_by": [],
+                "ingestion_filter": {},
+                "data_type": "number",
+                "service_input": "''",
+                "metric": "'system_memory_utilization'"
+            },
+            "inputs": {},
+            "outputs": {
+                "out": "System memory utilization data"
+            }
+        }
+    ],
+    "stages": [
+        {
+            "description": "System memory utilization percentage",
+            "enable_metric_logging": false,
+            "retention_size": 0,
+            "name": "System memory utilization data",
+            "graph_annotation_properties": {},
+            "retention_duration": 2592000,
+            "units": {
+                "value": "%"
+            }
+        },
+        {
+            "description": "System cpu utilization percentage",
+            "enable_metric_logging": false,
+            "retention_size": 0,
+            "name": "System cpu utilization data",
+            "graph_annotation_properties": {},
+            "retention_duration": 2592000,
+            "units": {
+                "value": "%"
+            }
+        }
+    ]
+}

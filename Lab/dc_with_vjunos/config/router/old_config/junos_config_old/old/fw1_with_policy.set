@@ -1,0 +1,68 @@
+set system host-name fw1
+set system root-authentication encrypted-password "$1$X.Q52Yjv$qOBjPbq6AzlCCOGW/8ki7."
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$X.Q52Yjv$qOBjPbq6AzlCCOGW/8ki7."
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFReuXgpulMHOjBBhIcVpKmUh0ui/48gFlwoWNZJuuta7dFwgd3+SullAYCet3k6LG8UEltZbyytZuvqsesD9u6YV+o9op107Bl3vcEiHDmFklIBHIK3rWbnfKZYBKrgh2EIubIEq5K8oUpujH+E/L7Du8tMvrHPIVEVTA4D7n0vxMLRVVE/QBC5mTYfjeUuCjFfYpqhIvjNxdfnBrOM/O53J0eI018NjEiEW6mNU547X0zBSELD1+4Ft8as6MWftEB1Tr0w43HM7h6LHFCDfgRBf5rPqhJYngYV0DgbBwR8XIrNokDyNmu3T3f95+hrvyJ1uPX2NggIlnsHgc85Ymw+/VmEF8h0sjuIQV6k2N1nK123KCSv7bt6Q1OYWg5QNif7gndWRee48o54rLtaOMfkzRBQJoXcmvW/LdNxRmwqK3ekNhF232BJc7ZlFev7uO8qP5WeFzRfLQ/JNkriEWBE= irzan@irzan-mbp"
+set system services ssh root-login allow
+set system services extension-service request-response grpc clear-text port 32767
+set system services netconf ssh
+set system management-instance
+set security policies from-zone trust to-zone trust policy default-permit match source-address any
+set security policies from-zone trust to-zone trust policy default-permit match destination-address any
+set security policies from-zone trust to-zone trust policy default-permit match application any
+set security policies from-zone trust to-zone trust policy default-permit then permit
+set security policies from-zone trust to-zone untrust policy default-permit match source-address any
+set security policies from-zone trust to-zone untrust policy default-permit match destination-address any
+set security policies from-zone trust to-zone untrust policy default-permit match application any
+set security policies from-zone trust to-zone untrust policy default-permit then permit
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic protocols bgp
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic protocols bgp
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.16.4/24
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:ff16::4/64
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 1001 vlan-id 1001
+set interfaces ge-0/0/1 unit 1001 family inet address 10.1.101.29/31
+set interfaces ge-0/0/1 unit 1001 family inet6 address fc00:dead:beef:ff01::29/127
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 1001 vlan-id 1001
+set interfaces ge-0/0/2 unit 1001 family inet address 10.1.101.31/31
+set interfaces ge-0/0/2 unit 1001 family inet6 address fc00:dead:beef:ff01::31/127
+set interfaces fxp0 unit 0 family inet address 172.16.10.211/24
+set policy-options policy-statement to_dc term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_dc term 1 then accept
+set policy-options policy-statement to_dc term 2 from route-filter ::/0 exact
+set policy-options policy-statement to_dc term 2 then accept
+set policy-options policy-statement to_dc term default then reject
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 172.16.10.1
+set protocols bgp group to_ext neighbor 172.16.16.254 peer-as 4200009000
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff family inet6 any
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff peer-as 4200009000
+set protocols bgp group to_dc1 export to_dc
+set protocols bgp group to_dc1 neighbor 10.1.101.28 family inet any
+set protocols bgp group to_dc1 neighbor 10.1.101.28 peer-as 4200001015
+set protocols bgp group to_dc1 neighbor 10.1.101.30 family inet any
+set protocols bgp group to_dc1 neighbor 10.1.101.30 peer-as 4200001016
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::28 family inet6 any
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::28 peer-as 4200001015
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::30 family inet6 any
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::30 peer-as 4200001016
+set protocols lldp interface all
+set routing-options autonomous-system 4200009004
+
+
+
+set security address-book global address vm5kvm2_v6 fc00:dead:beef:a124::2000:4/128
+set security address-book global address vm5kvm2_v4 192.168.124.105/32
+set security policies from-zone untrust to-zone trust policy allow_to_vm5kvm2 match source-address any
+set security policies from-zone untrust to-zone trust policy allow_to_vm5kvm2 match destination-address vm5kvm2_v4
+set security policies from-zone untrust to-zone trust policy allow_to_vm5kvm2 match destination-address vm5kvm2_v6
+set security policies from-zone untrust to-zone trust policy allow_to_vm5kvm2 match application junos-ssh
+set security policies from-zone untrust to-zone trust policy allow_to_vm5kvm2 then permit
+set security policies from-zone untrust to-zone trust policy default-permit match source-address any
+set security policies from-zone untrust to-zone trust policy default-permit match destination-address any
+set security policies from-zone untrust to-zone trust policy default-permit match application any
+set security policies from-zone untrust to-zone trust policy default-permit then reject

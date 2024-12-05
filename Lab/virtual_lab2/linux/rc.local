@@ -1,0 +1,32 @@
+#!/bin/bash
+# to set ARP/NDP limits
+# sysctl -w net.ipv4.neigh.default.gc_thresh1=4096
+# sysctl -w net.ipv4.neigh.default.gc_thresh2=8192
+# sysctl -w net.ipv4.neigh.default.gc_thresh3=8192
+# sysctl -w net.ipv6.neigh.default.gc_thresh1=4096
+# sysctl -w net.ipv6.neigh.default.gc_thresh2=8192
+# sysctl -w net.ipv6.neigh.default.gc_thresh3=8192
+# # to set IGMP membership maximum
+# sysctl -w net.ipv4.igmp_max_memberships=1000
+# # to load mpls module
+# modprobe mpls_router
+# modprobe mpls_iptunnel
+# modprobe ip_tunnel
+# sysctl -w net.mpls.platform_labels=1048575
+
+CRPD_NAME=${HOSTNAME}
+CRPD_IMAGE="localhost/crpd:22.2R1.9"
+
+#ip link add dev cust1 type vrf table 1
+#ip link set dev cust1 up
+#ip link show type vrf
+#ip link set dev vlan10 master cust1
+
+# podman volume create ${CRPD_NAME}-config
+# podman volume create ${CRPD_NAME}-varlog
+podman run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} --net=host --privileged -v ${CRPD_NAME}-config:/config -v ${CRPD_NAME}-varlog:/var/log -it ${CRPD_IMAGE}
+# docker run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} --net=host --privileged -v ${CRPD_NAME}-config:/config -v ${CRPD_NAME}-varlog:/var/log -it ${CRPD_IMAGE}
+
+# setting the ip address 
+
+exit 0

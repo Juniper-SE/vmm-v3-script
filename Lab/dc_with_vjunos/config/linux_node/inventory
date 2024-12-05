@@ -1,0 +1,12 @@
+[all]
+kvm1
+kvm2
+kvm3
+kvm3
+kvm4
+kvm5
+kvm6
+kvm7
+gw
+[all:vars]
+ansible_python_interpreter=python3

@@ -1,0 +1,410 @@
+{
+  "customer_id": "07bb2ea1-b191-11ef-8bd0-fa6c313e563e",
+  "design_id": "infrastructure",
+  "design_version": "0.12.4",
+  "fh_config": {
+    "edited-by": "irzan@juniper.net",
+    "status": "uploaded"
+  },
+  "infrastructure_ntw": {
+    "default_interface_profiles": [
+      "WAN1"
+    ],
+    "default_node_profiles": [
+      "plan1"
+    ],
+    "interface_profiles": {
+      "interface_profile": [
+        {
+          "isis": {
+            "level": "level1-2",
+            "metric": 1
+          },
+          "name": "LAN1",
+          "templates": []
+        },
+        {
+          "isis": {
+            "level": "level1-2",
+            "metric": 1
+          },
+          "ldp": {},
+          "name": "WAN1",
+          "rsvp": {},
+          "templates": []
+        }
+      ]
+    },
+    "labels": {
+      "label": []
+    },
+    "network_nodes": {
+      "network_node": [
+        {
+          "hostname": "pe1",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "name": "ge-0/0/0.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE, ge-0/0/2",
+                "ipv4_address": {
+                  "explicit": "10.1.100.0/31"
+                },
+                "link": "link_PE1_P1",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2, ge-0/0/2",
+                "ipv4_address": {
+                  "explicit": "10.1.100.2/31"
+                },
+                "link": "Link_PE1_P2",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.1"
+          },
+          "model": "vMX",
+          "name": "pe1",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM6750D6034C",
+          "site_id": "14279aab-80c8-4433-ab73-1416f1358b28"
+        },
+        {
+          "hostname": "pe2",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "name": "ge-0/0/0.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "ipv4_address": {
+                  "explicit": "10.1.100.4/31"
+                },
+                "link": "Link_PE2_P1",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2 ge-0/0/4",
+                "ipv4_address": {
+                  "explicit": "10.1.100.6/31"
+                },
+                "link": "Link_PE2_P2",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.2"
+          },
+          "model": "vMX",
+          "name": "pe2",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM6750D6019E",
+          "site_id": "e4785ccf-462d-4262-bd05-501711d44c1d"
+        },
+        {
+          "hostname": "pe3",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "name": "ge-0/0/0.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1 ge-0/0/4",
+                "ipv4_address": {
+                  "explicit": "10.1.100.8/31"
+                },
+                "link": "Link_PE3_P1",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2, ge-0/0/4",
+                "ipv4_address": {
+                  "explicit": "10.1.100.10/31"
+                },
+                "link": "Link_PE3_P2",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.3"
+          },
+          "model": "vMX",
+          "name": "pe3",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM6750D6009C",
+          "site_id": "47f961bb-2238-47fd-b727-35e7828c5adb"
+        },
+        {
+          "hostname": "p1",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1 ge-0/0/3",
+                "ipv4_address": {
+                  "explicit": "10.1.100.1/31"
+                },
+                "link": "link_PE1_P1",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE2, ge-0/0/3",
+                "ipv4_address": {
+                  "explicit": "10.1.100.5/31"
+                },
+                "link": "Link_PE2_P1",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE3, ge-0/0/3",
+                "ipv4_address": {
+                  "explicit": "10.1.100.9/31"
+                },
+                "link": "Link_PE3_P1",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.100.12/31"
+                },
+                "link": "Link_P1_P2",
+                "name": "ge-0/0/5.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to paragon",
+                "ipv4_address": {
+                  "explicit": "10.100.2.1/24"
+                },
+                "link": "link_P1_to_paragon",
+                "name": "ge-0/0/6.0",
+                "profiles": [
+                  "LAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.4"
+          },
+          "model": "vMX",
+          "name": "p1",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM6750D6037C",
+          "site_id": "1f690acd-0a97-4c28-83fb-4a072b9d5612"
+        },
+        {
+          "hostname": "p2",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1 ge-0/0/4",
+                "ipv4_address": {
+                  "explicit": "10.1.100.3/31"
+                },
+                "link": "Link_PE1_P2",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE2 ge-0/0/4.0",
+                "ipv4_address": {
+                  "explicit": "10.1.100.7/31"
+                },
+                "link": "Link_PE2_P2",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE3 ge-0/0/4",
+                "ipv4_address": {
+                  "explicit": "10.1.100.11/31"
+                },
+                "link": "Link_PE3_P2",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1 ge-0/0/5",
+                "ipv4_address": {
+                  "explicit": "10.1.100.13/31"
+                },
+                "link": "Link_P1_P2",
+                "name": "ge-0/0/5.0",
+                "profiles": [
+                  "WAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.5"
+          },
+          "model": "vMX",
+          "name": "p2",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM6750D60124",
+          "site_id": "a475a1e3-f8a0-40ed-b028-e3ac62e87f91"
+        }
+      ]
+    },
+    "node_profiles": {
+      "node_profile": [
+        {
+          "isis": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "iso_net_address": {
+            "area_id": "01",
+            "system_id": {
+              "auto": [
+                null
+              ]
+            }
+          },
+          "labels": [],
+          "ldp": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "name": "plan1",
+          "router_id": {
+            "auto": {}
+          },
+          "templates": [],
+          "trust": {
+            "enabled": true
+          }
+        }
+      ]
+    }
+  },
+  "instance_id": "Plan1",
+  "instance_status": "feasibility_checked",
+  "instance_uuid": "7f9c96f7-b290-11ef-845c-561800640404",
+  "operation": "create",
+  "order_id": "f7d9f11b-b292-11ef-8bd0-fa6c313e563e",
+  "org_id": "53c196ff-76c0-40ce-9989-66a3fb708a6e",
+  "upload_time": "2024-12-04T22:56:16Z",
+  "version": "1.0.0"
+}

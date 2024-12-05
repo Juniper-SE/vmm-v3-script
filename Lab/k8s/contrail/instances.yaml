@@ -1,0 +1,61 @@
+---
+# Contrail inventory section
+global_configuration:
+  ENABLE_DESTROY: True
+  CONTAINER_REGISTRY: hub.juniper.net/contrail
+  REGISTRY_PRIVATE_INSECURE: false
+  CONTAINER_REGISTRY_USERNAME: bookworm
+  CONTAINER_REGISTRY_PASSWORD: password
+
+provider_config:
+  bms:
+    ssh_user: root
+    ssh_pwd: pass01
+    ntpserver: 10.1.100.1
+    domainsuffix: homelab.com
+instances:
+  master:
+    ip: 10.1.100.190
+    provider: bms
+    roles:
+      k8s_master:
+      kubemanager:
+      config:
+      config_database:
+      control:
+      webui:
+      analytics:
+      analytics_database:
+      analytics_alarm:
+      analytics_snmp:
+  node1:
+    ip: 10.1.100.191
+    provider: bms
+    roles:
+      vrouter:
+        VROUTER_GATEWAY: 10.1.100.1
+      k8s_node:
+  node2:
+    ip: 10.1.100.192
+    provider: bms
+    roles:
+      vrouter:
+        VROUTER_GATEWAY: 10.1.100.1
+      k8s_node:
+  node3:
+    ip: 10.1.100.193
+    provider: bms
+    roles:
+      vrouter:
+        VROUTER_GATEWAY: 10.1.100.1
+      k8s_node:
+
+contrail_configuration:
+  CONTRAIL_VERSION: 2011.138
+  CLOUD_ORCHESTRATOR: kubernetes
+  ENCAP_PRIORITY: MPLSoUDP,MPLSoGRE,VXLAN
+  UPGRADE_KERNEL: true
+  CONFIG_NODEMGR__DEFAULTS__minimum_diskGB: 10
+  DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 10
+  CONFIG_DATABASE_NODEMGR__DEFAULTS__minimum_diskGB: 10
+  CONTROL_NODES: 10.1.100.190

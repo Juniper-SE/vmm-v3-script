@@ -1,0 +1,24 @@
+{
+  "infrastructure_ntw": {
+    "node_profiles": {
+      "node_profile": [
+        {
+          "labels": [],
+          "templates": [],
+          "trust": {
+            "enabled": true
+          },
+          "name": "plan1"
+        }
+      ]
+    },
+    "labels": {
+      "label": []
+    },
+    "route_reflector": {
+      "clusters": {
+        "cluster": []
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+set interfaces {{interface}} unit {{vlan_id}} vlan-id {{vlan_id}}
+set interfaces {{interface}} unit {{vlan_id}} family inet address {{ipv4_address}}
+set interfaces {{interface}} unit {{vlan_id}} family inet6 address {{ipv6_address}}
+set routing-instances {{vrf_name}} instance-type vrf
+set routing-instances {{vrf_name}} vrf-table-label
+set routing-instances {{vrf_name}} interface {{interface}}.{{vlan_id}}
+set routing-instances {{vrf_name}} vrf-target {{vrf_target}}

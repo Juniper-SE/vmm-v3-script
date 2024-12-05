@@ -1,0 +1,51 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-4
+  namespace: lab2-ns2
+spec:
+  selector:
+    app: webserver4
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver4
+  namespace: lab2-ns2
+  labels:
+    app: webserver4
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver4
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver4]}
+  template:
+    metadata:
+      name: webserver4
+      labels:
+        app: webserver4
+    spec:
+      volumes:
+      - name: nfsnode4
+        nfs:
+          server: 172.16.12.14
+          path: /media/nfsshare
+      containers: 
+      - name: webserver4
+        image: contrailk8sdayone/contrail-webserver
+        imagePullPolicy: IfNotPresent
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+        volumeMounts:
+        - name: nfsnode4
+          mountPath: /app-dayone

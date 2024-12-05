@@ -1,0 +1,11 @@
+#pod-client-do.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  labels:
+    app: client
+spec:
+  containers:
+  - name: ubuntu
+    image: contrailk8sdayone/ubuntu

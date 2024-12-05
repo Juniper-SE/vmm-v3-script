@@ -1,0 +1,24 @@
+---
+- name: Upload config into router
+  hosts:
+    - all
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    conf_dir: "./initial_config"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.conf"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper_junos_config:
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        # file: "{{ conf_file}}"
+        config_mode: "exclusive"
+        load: "set"
+        lines:
+        - "set protocols mpls traffic-engineering database import l3-unicast-topology"
+        - "set protocols isis traffic-engineering l3-unicast-topology"
+        # format: "text"

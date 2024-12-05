@@ -1,0 +1,53 @@
+
+set version 23.4R1.10
+set system host-name p1
+set system root-authentication encrypted-password "$1$m7fzW0ie$csDqlQZWuVYPLuGcE7qhD1"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$m7fzW0ie$csDqlQZWuVYPLuGcE7qhD1"
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBUA+4YJwqE2rqwweZ3NG7GpXF3JqIxFbnDxraW8//QWjHLGVgn+jFbXFB3T/yLYpIRAh8SsAw6M6pZXzGd3oiltENLkoN5YGI1yW0bCTsS/Z4BoW/iuPR2rYQqhA+NPi9OZO/opVbJ+VIdfm+fugWPSVpduBiJN20P9iEF1zCW4EmWZn3qkl25LjVSBVMiwn+crcsCHUub3xDRicgTOOINFo4lZy03Fsa3PoqpxXv18FhNi3pVWmV2n3vIckWt8BbaPWMTFZmERHkVb4Y15GsHwcQxb6gm3h8Do4QgURbujCUJQhpJT4BRdD8kja1NQK4lbcPq6l9rF3YM7aQkscB16nCplWcgdnxI7eN//FA4ovvx7d57i43Y7GzSlQE87kcIDDQ1eCesYOfg9EfqCFSVWV0hbhc2Ap6YCoc0R9POpG1n0LO+o++h0J0bkLUWsIiQLb3LiC91FnP3giK5MEzdJ+maJcjIyGlTth52s01nLdT4gQDgTURqIpfL8L0HWE= irzan@irzan-mbp"
+set system services netconf ssh
+set system services ssh root-login allow
+set system services ssh sftp-server
+set system services extension-service request-response grpc clear-text port 32767
+set system management-instance
+set system syslog user * any emergency
+set system syslog file interactive-commands interactive-commands any
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set chassis network-services enhanced-ip
+set interfaces ge-0/0/0 mtu 9000
+set interfaces ge-0/0/0 unit 0 family iso
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:fffe::1/127
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 unit 0 family iso
+set interfaces ge-0/0/1 unit 0 family inet6 address fc00:dead:beef:fffe::5/127
+set interfaces ge-0/0/2 mtu 9000
+set interfaces ge-0/0/2 unit 0 family iso
+set interfaces ge-0/0/2 unit 0 family inet6 address fc00:dead:beef:fffe::10/127
+set interfaces ge-0/0/3 mtu 9000
+set interfaces ge-0/0/3 unit 0 family iso
+set interfaces ge-0/0/3 unit 0 family inet6 address fc00:dead:beef:fffe::14/127
+set interfaces fxp0 unit 0 family inet address 172.16.10.5/24
+set interfaces lo0 unit 0 family inet address 192.168.255.201/32
+set interfaces lo0 unit 0 family iso address 49.0001.1921.6800.0001.00
+set interfaces lo0 unit 0 family inet6 address fc00:dead:beef:ffff::ffff:01/128
+set policy-options policy-statement LB term 1 then load-balance per-flow
+set policy-options policy-statement LB term 1 then accept
+set routing-options source-packet-routing srv6 locator SRV6-LOC-1 fc00:dead:beef:ff01::/64
+set routing-options route-distinguisher-id 192.168.255.201
+set routing-options router-id 192.168.255.201
+set routing-options forwarding-table export LB
+set protocols isis interface ge-0/0/0.0 level 1 disable
+set protocols isis interface ge-0/0/0.0 point-to-point
+set protocols isis interface ge-0/0/1.0 level 1 disable
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 level 1 disable
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/3.0 level 1 disable
+set protocols isis interface ge-0/0/3.0 point-to-point
+set protocols isis interface lo0.0 level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis source-packet-routing srv6 locator SRV6-LOC-1 end-sid fc00:dead:beef:ff01::
+set protocols lldp interface all
+set protocols lldp interface fxp0 disable

@@ -1,0 +1,29 @@
+set protocols bgp group northstar type internal
+set protocols bgp group northstar description "NorthStar BGP-TE Peering"
+set protocols bgp group northstar local-address 61.94.1.1
+set protocols bgp group northstar passive
+set protocols bgp group northstar family traffic-engineering unicast
+set protocols bgp group northstar export TE
+set protocols bgp group northstar allow 0.0.0.0/0
+set policy-options policy-statement TE term 1 from family traffic-engineering
+set policy-options policy-statement TE term 1 then accept
+set protocols mpls traffic-engineering database import policy TE
+set routing-options autonomous-system 64500
+
+
+
+
+protocols {
+    mpls {
+        lsp-external-controller pccd;
+    }
+    pcep {
+        pce northstar1 {
+            local-address 61.94.1.3;
+            destination-ipv4-address 61.94.0.222;
+            destination-port 4189;
+            pce-type active stateful;
+            lsp-provisioning;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+---
+interfaces:
+- ge-0/0/0
+- ge-0/0/1
+router_id: 10.1.10.5
+local_as: 65005
+as_list: 65000-65100
+loopback_ipv6: fc00:dead:beef:10::5/128
+overlay:
+    local_as: 4200065005
+    local_addr: fc00:dead:beef:10::5
+    neighbors:
+    - addr: fc00:dead:beef:10::1
+      as: 4200065001
+    - addr: fc00:dead:beef:10::2
+      as: 4200065002

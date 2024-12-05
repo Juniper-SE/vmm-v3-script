@@ -1,0 +1,10 @@
+10.100.1.1:
+  intf: ge-0/0/0
+  vlan_id: 1001
+  ip_addr: 192.168.101.1/24
+  route_target: 64512:10001
+10.100.1.2:
+  intf: ge-0/0/0
+  vlan_id: 1002
+  ip_addr: 192.168.102.1/24
+  route_target: 64512:10001

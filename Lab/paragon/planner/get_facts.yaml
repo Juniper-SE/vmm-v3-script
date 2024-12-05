@@ -1,0 +1,23 @@
+---
+- name: Get device facts
+  hosts:
+    - all
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    facts_dir: "./sample3_hw"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: create backup directory
+      file:
+        path: "{{ facts_dir }}"
+        state: directory
+    - name: get device facts
+      juniper_junos_facts:
+        savedir: "{{ facts_dir }}"
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+      register: result
+        

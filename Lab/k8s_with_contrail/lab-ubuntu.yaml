@@ -1,0 +1,170 @@
+---
+name: k8s
+pod: 
+  type: vmm
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  jumpserver: ttqc-shell010.juniper.net
+  user: irzan
+  adpassword: AnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  desktop: images/desktop.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-21.4R1.12.vmdk
+junos_login:
+  login: admin
+  password: pass01
+proxy:
+  forward:
+    - localPort: 8082
+      destPort: 8082
+      destIP: 172.16.11.10
+    - localPort: 6443
+      destPort: 6443
+      destIP: 172.16.11.10
+  DynForward: 1080
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        ipv4: 172.16.11.1/24
+        dhcp_range: 172.16.11.5-172.16.11.25
+        mtu: 9000
+      em2: 
+        bridge: lan2
+        ipv4: 172.16.12.1/24
+        mtu: 9000
+      em3: 
+        bridge: lan3
+        ipv4: 172.16.13.130/31
+        mtu: 9000
+        static:
+          - to: 172.16.255.1/32
+            via: 172.16.13.131
+      em4: 
+        bridge: lan4
+        ipv4: 172.16.14.1/24
+        dhcp_range: 172.16.14.5-172.16.14.25
+      em5: 
+        bridge: lan5
+        ipv4: 172.16.13.128/31
+  master:
+    type: pcmedium
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.10/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+        mtu: 9000
+  node1:
+    type: pchpv1
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.11/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+        mtu: 9000
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.11/24 
+        mtu: 9000
+  node2:
+    type: pchpv1
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.12/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+        mtu: 9000
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.12/24 
+        mtu: 9000
+  node3:
+    type: pchpv1
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.13/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+        mtu: 9000
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.13/24 
+        mtu: 9000
+  nfs:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan1 
+        ipv4: 172.16.11.14/24 
+        gateway4: 172.16.11.1
+        dns: 172.16.11.1
+        mtu: 9000
+      em1: 
+        bridge: lan2
+        ipv4: 172.16.12.14/24 
+        mtu: 9000
+  registry:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: lan4
+        ipv4: 172.16.14.10/24 
+        gateway4: 172.16.14.1
+        dns: 172.16.14.1
+      em1: 
+        bridge: ds
+  rdesktop:
+    type: pcsmall
+    os: desktop
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan4
+        ipv4: 172.16.14.11/24 
+        gateway4: 172.16.14.1
+        dns: 172.16.14.1
+      em1: 
+        bridge: ds
+  sdngw:
+    type: junos
+    os: vmx
+    interfaces:
+      mgmt:
+        bridge: lan1
+        ipv4: 172.16.11.22/24 
+      lo0:
+        family:
+          inet: 172.16.255.1/32
+      ge-0/0/0:
+        bridge: lan5
+        family:
+          inet: 172.16.13.129/31
+        
+      ge-0/0/1: 
+        bridge: lan3
+        family:
+          inet: 172.16.13.131/31
+        mtu: 9000
+      ge-0/0/2: 
+        bridge: ds
+

@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client1
+  namespace: ns1
+spec:
+  containers:
+  - name: c1
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+    securityContext:
+      privileged: true
+  nodeName: node1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client2
+  namespace: ns1
+spec:
+  containers:
+  - name: c1
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+    securityContext:
+      privileged: true
+  nodeName: node2
+  
+  
+

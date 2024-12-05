@@ -1,0 +1,38 @@
+{% for i in intf -%}
+delete interfaces {{i.0}}.0 family inet
+{% if i.0 != 'lo0' %}
+delete interfaces {{i.0}}.0 family mpls
+{% endif %}
+{% endfor %}
+delete protocols isis source-packet-routing  srgb
+delete protocols isis source-packet-routing node-segment
+delete protocols ldp
+delete protocols mpls
+delete protocols rsvp
+
+{% for i in disable_ri_list -%}
+disable deactivate routing-instances {{i}}
+{% endfor %}
+
+
+deactivate routing-instances EVPN1
+deactivate routing-instances EVPN2
+deactivate routing-instances EVPN3
+deactivate routing-instances L3-EVPN1
+
+delete protocols isis source-packet-routing srgb
+delete protocols isis source-packet-routing node-segment
+delete interface lo0.0 family inet
+delete interface et-0/0/2.0 family inet
+delete interface et-0/0/3.0 family inet
+delete interface et-0/0/2.0 family mpls
+delete interface et-0/0/3.0 family mpls
+
+set routing-instances VPWS1 protocols evpn encapsulation srv6
+set routing-instances VPWS1 protocols evpn interface et-0/0/0.1012 vpws-service-id source-packet-routing srv6 locator myloc
+set routing-instances VPWS1 protocols evpn interface et-0/0/0.1012 vpws-service-id source-packet-routing srv6 locator end-dx2-sid fc00:a110:a3:4:1001:0:0:0
+
+set policy-options policy-statement vpws-nh-change term 1 from protocol evpn
+set policy-options policy-statement vpws-nh-change term 1 then next-hop fc00:a110:a3:4::
+set policy-options policy-statement vpws-nh-change term 1 then accept
+set protocols bgp group to_rr export vpws-nh-change

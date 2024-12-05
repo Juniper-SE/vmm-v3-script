@@ -1,0 +1,22 @@
+apiVersion: configplane.juniper.net/v1alpha1
+kind: Kubemanager
+metadata:
+  name: contrail-k8s-kubemanager
+  namespace: contrail
+spec:
+  externalNetworkSelectors:
+    default-external:
+      networkSelector:
+        matchLabels:
+          service.contrail.juniper.net/externalNetwork: default-external
+    custom-external:
+      namespaceSelector:
+        matchLabels:
+          customNamespaceKey: custom-namespace-value
+      networkSelector:
+        matchLabels:
+          customNetworkKey: custom-network-value
+    custom-external-in-service-namespace:
+      networkSelector:
+        matchLabels:
+          customExternalInServiceNetworkKey: custom-external-in-service-network-value

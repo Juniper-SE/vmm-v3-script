@@ -1,0 +1,250 @@
+server (SVR1, SVR2, SVR3, SVR4, SVR5, SVR6)  configuration
+------------------------------
+
+#export MAC=56:04:24:00:3c:0d
+export MAC=`ip link show dev eth0 | grep ether | tr -s ' ' | cut -d ' ' -f 3`
+export HNAME=svr7
+export IPV4=192.168.21.7/24
+export IPV6=fc00:dead:beef:a021::1000:7/64
+export GW4=192.168.21.254
+export GW6=fc00:dead:beef:a021::1
+
+sudo hostname ${HNAME}
+hostname | sudo tee /etc/hostname
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+      dhcp4: no
+    eth1:
+      dhcp4: no
+  bonds:
+    bond0:
+      macaddress: ${MAC}
+      interfaces:
+        - eth0
+        - eth1
+      parameters:
+         mode: 802.3ad
+      addresses: [ ${IPV4}, ${IPV6} ]
+      routes:
+      - to: 0.0.0.0/0
+        via: ${GW4}
+      - to: ::/0
+        via: ${GW6}
+      nameservers:
+        addresses: [8.8.8.8,8.8.4.4]
+EOF
+
+uuidgen | sed -e "s/-//g" | sudo tee /etc/machine-id
+
+------------------------
+
+
+KVM1/KVM2/KVM3/KMV4/KVM5/KVM6
+------------------------------
+
+export BRNAME=ovs0
+export MAC=`ip link show dev eth1 | grep ether | tr -s ' ' | cut -d ' ' -f 3`
+sudo ovs-vsctl add-br ${BRNAME}
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  ethernets:
+    eth1:
+      dhcp4: no
+      mtu: 9000
+    eth2:
+      dhcp4: no
+      mtu: 9000
+  bridges:
+    ovs0:
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: ${MAC}
+      mtu: 9000
+      interfaces:
+        - eth1
+        - eth2
+      parameters:
+         mode: 802.3ad
+EOF
+
+
+
+export BRNAME=ovs201
+export MAC=`ip link show dev eth2 | grep ether | tr -s ' ' | cut -d ' ' -f 3`
+sudo ovs-vsctl add-br ${BRNAME}
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  ethernets:
+    eth2:
+      dhcp4: no
+      mtu: 9000
+    eth3:
+      dhcp4: no
+      mtu: 9000
+  bridges:
+    ovs0:
+      openvswitch: {}
+      interfaces:
+      - bond0
+  bonds:
+    bond0:
+      macaddress: ${MAC}
+      mtu: 9000
+      interfaces:
+        - eth2
+        - eth3
+      parameters:
+         mode: 802.3ad
+EOF
+
+---------------------------
+VM configuration for alpine
+---------------------------
+
+
+export VM=server1
+export VLAN=101
+export DISK=${VM}.img
+export LAN=ovs1
+export IPV4=192.168.201.101/24
+export IPV6=fc00:dead:beef:a201::1000:101/64
+export GW4=192.168.201.254
+export GW6=fc00:dead:beef:a201::1
+cp alpine.qcow2 ${VM}.img
+cat << EOF | tee ${VM}.sh
+#!/bin/bash
+virt-install --name ${VM} \
+  --disk ./${DISK},device=disk,bus=virtio \
+  --ram 256 --vcpu 1 --osinfo alpinelinux3.18 \
+  --network=bridge:${LAN},model=virtio,virtualport_type=openvswitch \
+  --xml "./devices/interface/vlan/tag/@id=${VLAN}" \
+  --xml "./devices/interface/target/@dev=${VM}_e0" \
+  --console pty,target_type=serial \
+  --noautoconsole \
+  --hvm --accelerate \
+  --vnc \
+  --virt-type=kvm \
+  --boot hd --noreboot
+EOF
+
+
+chmod +x ${VM}.sh
+
+sudo modprobe nbd max_part=8
+sudo qemu-nbd --connect /dev/nbd0 ./${VM}.img
+mkdir tmp
+sudo mount /dev/nbd0p3 ./tmp/
+cat << EOF | sudo tee  tmp/etc/network/interfaces
+auto lo
+iface lo inet loopback
+auto eth0
+iface eth0 inet static
+address ${IPV4}
+gateway ${GW4}
+iface eth0 inet6 static
+address ${IPV6}
+gateway ${GW6}
+EOF
+
+cat << EOF | sudo tee tmp/etc/hostname
+${VM}
+EOF
+
+cat << EOF | sudo tee tmp/etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+EOF
+
+sudo umount ./tmp
+sudo qemu-nbd --disconnect /dev/nbd0
+rmdir ./tmp
+sleep 2
+sudo rmmod nbd
+
+
+---------------------------
+VM configuration for debian
+---------------------------
+
+
+export VM=debian1
+export VLAN=1001
+export DISK=${VM}.img
+export LAN=ovs1
+export IPV4=192.168.201.101/24
+export IPV6=fc00:dead:beef:a201::1000:101/64
+export GW4=192.168.201.1
+export GW6=fc00:dead:beef:a201::1
+cp debian.qcow2 ${VM}.img
+cat << EOF | tee ${VM}.sh
+#!/bin/bash
+virt-install --name ${VM} \
+  --disk ./${DISK},device=disk,bus=virtio \
+  --ram 4096 --vcpu 1 --osinfo debian12 \
+  --network=bridge:${LAN},model=virtio,virtualport_type=openvswitch \
+  --xml "./devices/interface/vlan/tag/@id=${VLAN}" \
+  --xml "./devices/interface/target/@dev=${VM}_e0" \
+  --console pty,target_type=serial \
+  --noautoconsole \
+  --hvm --accelerate \
+  --vnc \
+  --virt-type=kvm \
+  --boot hd --noreboot
+EOF
+
+
+chmod +x ${VM}.sh
+
+sudo modprobe nbd max_part=8
+sudo qemu-nbd --connect /dev/nbd0 ./${VM}.img
+mkdir tmp
+sudo mount /dev/nbd0p1 ./tmp/
+sudo rm tmp/etc/netplan/*
+cat << EOF | sudo tee  tmp/etc/netplan/01_net.yaml
+network:
+  ethernets:
+    eth0:
+        addresses: [ ${IPV4}, ${IPV6} ]
+        routes:
+        - to: default
+          via: ${GW4}
+        - to: default
+          via: ${GW6}
+        nameservers:
+          addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+EOF
+
+cat << EOF | sudo tee tmp/etc/hostname
+${VM}
+EOF
+
+sudo umount ./tmp
+sudo qemu-nbd --disconnect /dev/nbd0
+rmdir ./tmp
+sleep 2
+sudo rmmod nbd
+
+option dhcp6.next-hop-rt-prefix code 242 = { ip6-address, unsigned integer 16, unsigned integer 16, unsigned integer 32, unsigned integer 8, unsigned integer 8, ip6-address };
+
+option dhcp6.next-hop-rt-prefix fc00:dead:beef:a101::1 243 22 9000 0 1 ::;
+
+
+del interface ge-0/0/1.1002
+del interface ge-0/0/2.1002
+del security zones security-zone trust interfaces ge-0/0/1.1002
+del security zones security-zone trust interfaces ge-0/0/2.1002
+set security zones security-zone trust interfaces ge-0/0/1.501 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.501 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.501 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.501 host-inbound-traffic protocols bgp
+
+
+set routing-options static route 0/0 next-hop 172.16.254.1 resolve
+set routing-options static route 0/0 next-hop 172.16.254.2 resolve

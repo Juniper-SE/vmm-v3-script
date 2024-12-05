@@ -1,0 +1,25 @@
+---
+- name: Get device configuration
+  hosts:
+    - all
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    password: pass01
+    backup_dir: "./config1"
+    conf_file: "{{ backup_dir }}/{{ inventory_hostname }}.conf"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: create backup directory
+      file:
+        path: "{{ backup_dir }}"
+        state: directory
+    - name: get device configuration
+      juniper_junos_config:
+         host: "{{ ansible_host }}"
+         user: "{{ username }}"
+         password: "{{ password }}"
+         dest: "{{ conf_file}}"
+         retrieve: committed

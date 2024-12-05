@@ -1,0 +1,58 @@
+set interfaces {{interface}} unit {{vlan_id}} vlan-id {{vlan_id}}
+set interfaces {{interface}} unit {{vlan_id}} encapsulation vlan-bridge
+set routing-instances {{vrf_name}} instance-type mac-vrf
+set routing-instances {{vrf_name}} interface {{interface}}.{{vlan_id}}
+set routing-instances {{vrf_name}} vrf-target {{vrf_target}}
+set routing-instances {{vrf_name}} protocols evpn
+set routing-instances {{vrf_name}} vlans bd1 vlan-id {{vlan_id}}
+set routing-instances {{vrf_name}} vlans bd1 interface {{interface}}.{{vlan_id}}
+
+
+set routing-instances EVPN1 instance-type mac-vrf
+set routing-instances EVPN1 protocols evpn
+set routing-instances EVPN1 bridge-domains bd1 vlan-id 1
+set routing-instances EVPN1 bridge-domains bd1 interface ge-0/0/0.1001
+set routing-instances EVPN1 service-type vlan-based
+set routing-instances EVPN1 interface ge-0/0/0.1001
+set routing-instances EVPN1 vrf-target target:4200001001L:2001
+
+
+set routing-instances EVPN1 instance-type mac-vrf
+set routing-instances EVPN1 protocols evpn
+set routing-instances EVPN1 vlans bd1 vlan-id 1001
+set routing-instances EVPN1 vlans bd1 interface ge-0/0/0.1001
+set routing-instances EVPN1 service-type vlan-based
+set routing-instances EVPN1 vrf-target target:4200001001L:2001
+
+
+
+
+set interfaces ge-0/0/0 unit 1001 encapsulation vlan-bridge
+set interfaces ge-0/0/0 unit 1001 vlan-id 1001
+
+set routing-instances EVPN1 instance-type mac-vrf
+set routing-instances EVPN1 protocols evpn
+set routing-instances EVPN1 bridge-domains bd1 vlan-id 1
+set routing-instances EVPN1 bridge-domains bd1 interface ge-0/0/0.1001
+set routing-instances EVPN1 service-type vlan-based
+set routing-instances EVPN1 vrf-target target:4200001001L:2001
+
+
+
+set routing-instances EVPN1 instance-type mac-vrf
+set routing-instances EVPN1 protocols evpn
+set routing-instances EVPN1 bridge-domains bd1 vlan-id none
+set routing-instances EVPN1 bridge-domains bd1 interface ge-0/0/0.1002
+set routing-instances EVPN1 service-type vlan-based
+set routing-instances EVPN1 vrf-target target:4200001001L:2001
+
+
+
+set routing-instances EVPN1 instance-type mac-vrf
+set routing-instances EVPN1 protocols evpn
+set routing-instances EVPN1 bridge-domains bd1 vlan-id none
+set routing-instances EVPN1 bridge-domains bd1 interface ge-0/0/0.1001
+set routing-instances EVPN1 service-type vlan-based
+set routing-instances EVPN1 vrf-target target:4200001001L:2001
+
+

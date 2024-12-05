@@ -1,0 +1,24 @@
+DEFAULT  Reply-Message := 'User default'
+        ERX-virtual-Router-Name := 'isp2',
+        Fall-Through = Yes
+
+cpe1  Cleartext-Password := 'pass01'
+        ERX-virtual-Router-Name := 'isp1'
+cpe2  Cleartext-Password := 'pass01'
+        ERX-virtual-Router-Name := 'isp2'
+cpe3  Cleartext-Password := 'pass03'
+        ERX-virtual-Router-Name := 'isp3'
+cpe4  Cleartext-Password := 'pass04'
+        ERX-virtual-Router-Name := 'isp1'
+cpe5  Cleartext-Password := 'pass05'
+        ERX-virtual-Router-Name := 'isp2'
+cpe6  Cleartext-Password := 'pass06'
+        ERX-virtual-Router-Name := 'isp3'
+cpe7  Cleartext-Password := 'pass07'
+        ERX-virtual-Router-Name := 'isp1'
+cpe8  Cleartext-Password := 'pass08'
+        ERX-virtual-Router-Name := 'isp2'
+cpe9  Cleartext-Password := 'pass09'
+        ERX-virtual-Router-Name := 'isp3'
+
+

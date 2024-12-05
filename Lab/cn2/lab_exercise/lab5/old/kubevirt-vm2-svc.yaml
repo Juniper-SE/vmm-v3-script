@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vmi-vm2-ssh-svc
+  namespace: kubevirt-demo
+spec:
+  ports:
+  - name: ssh22
+    protocol: TCP
+    port: 22
+    targetPort: 22
+  - name: ssh443
+    protocol: TCP
+    port: 443
+    targetPort: 443
+#    nodePort: 32022
+  selector:
+    special: vmi-vm2
+  type: LoadBalancer

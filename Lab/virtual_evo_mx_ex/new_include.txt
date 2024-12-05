@@ -1,0 +1,30 @@
+#define EVOvArdbegRE(CHAS_NAME,BOOT_DISK) \
+    bridge XCAT(CHAS_NAME, _FPC1_RPIO_BRG) {};\
+    bridge XCAT(CHAS_NAME, _FPC1_PFE_BRG) {};\
+    vm STRINGIZE (CATENATE3 (CHAS_NAME, _RE, EVOVPTX_RE0)) {\
+        hostname XCAT(CHAS_NAME, _node0);\
+        cdrom_boot BOOT_DISK;\
+        memory EVOvArdbeg_RE_MEMORY;\
+        ncpus EVOvArdbeg_RE_NCPU;\
+        REsetvar(CHAS_NAME)\
+        REinstall\
+        interface "em0" {\
+            bridge "external";\
+            ext_vlanid 0;\
+        };\
+        interface "em1" {\
+            bridge XCAT(CHAS_NAME, _FPC1_PFE_BRG);\
+            ext_vlanid 0;\
+        };\
+        interface "em2" {\
+            bridge XCAT(CHAS_NAME, _FPC1_RPIO_BRG);\
+                ext_vlanid 0;\
+        interface "em3" {\
+            bridge XCAT(CHAS_NAME, _FPC1_RPIO_BRG);\
+                ext_vlanid 0;\
+        };\
+        interface "em4" {\
+            bridge "external";\
+                ext_vlanid 0;\
+        };\
+    };

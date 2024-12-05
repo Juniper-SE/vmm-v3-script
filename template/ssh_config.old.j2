@@ -1,0 +1,55 @@
+### by vmm-v3-script ###
+Host *
+    StrictHostKeyChecking no
+
+{% if jumphost -%}
+host jumphost
+    hostname {{ jumphost }}
+    user {{ user }}
+    IdentityFile ~/.ssh/{{ ssh_key }}
+{% endif -%}
+host vmm 
+    {% if jumphost -%}
+    ProxyCommand ssh -W {{ vmm }}:22 jumphost
+    {% else -%}
+    hostname {{vmm}}
+    {% endif -%}
+    user {{ user }}
+    IdentityFile ~/.ssh/{{ ssh_key }}
+host gw
+    {% if jumphost -%}
+    ProxyCommand ssh -W {{ gw.ip }}:22 jumphost
+    {% else -%}
+    hostname {{gw.ip}}
+    {% endif -%}
+    user {{ gw.user }}
+    IdentityFile ~/.ssh/{{ ssh_key_host }}
+host proxy 
+    {% if jumphost -%}
+    ProxyCommand ssh -W {{ gw.ip }}:22 jumphost
+    {% else -%}
+    hostname {{gw.ip}}
+    {% endif -%}
+    user {{ gw.user }}
+    IdentityFile ~/.ssh/{{ ssh_key_host }}
+    {% if gw.dyn_port -%}
+    DynamicForward {{gw.dyn_port}}
+    {% endif %}
+    {% if gw.forward_port -%}
+    {% for p1 in gw.forward_port -%}
+    LocalForward {{ p1 }}    
+    {% endfor -%}
+    {% endif %}
+
+{% for n in node -%}
+host {{ n }}
+    ProxyCommand ssh -W {{ node[n].ip }}:22 gw
+    user {{ node[n].user }}
+    IdentityFile ~/.ssh/{{ ssh_key_host }}
+
+{% endfor -%}
+
+
+
+
+

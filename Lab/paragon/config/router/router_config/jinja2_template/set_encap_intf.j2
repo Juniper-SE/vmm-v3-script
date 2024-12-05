@@ -1,0 +1,6 @@
+set interfaces {{interface}} encapsulation flexible-ethernet-services
+set interfaces {{interface}} flexible-vlan-tagging
+delete interfaces {{interface}} unit 0
+set protocols mpls ipv6-tunneling
+set interfaces et-0/0/2.0 family inet6
+set interfaces et-0/0/3.0 family inet6

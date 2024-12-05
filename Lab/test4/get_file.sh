@@ -1,0 +1,1 @@
+curl -L -O https://aka.ms/dotnet-core-applaunch?framework=Microsoft.AspNetCore.App&framework_version=3.1.0&arch=x64&rid=ubuntu.22.04-x64

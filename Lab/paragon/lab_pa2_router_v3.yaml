@@ -1,0 +1,449 @@
+---
+name: net1
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod26-vmm.englab.juniper.net
+  # jumpserver: ttqc-shell002.juniper.net
+  #jumpserver: ttsv-shell001.juniper.net
+  user: irzan
+  #adpassword: ThisIsAnaMabokCoy
+  #vmmpassword: sksksksk
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  ubuntu2: images/ubuntu24.04_containerd.qcow2
+  bridge: images/bridge.qcow2
+  #vmx: images/vJunos-router-23.2R1.15.qcow2
+  vjunos_router: images/vJunos-router-24.2R1.17.qcow2
+  #vjunos_evolved: images/vJunosEvolved-23.4R2-S2.1-EVO.qcow2
+  vmx: images/junos-vmx-x86-64-23.2R2.21.vmdk
+  #pa2: images/paragon-2.1.0-disk1.qcow2
+  #paagent: images/paa-test-agent_4.4.0.9.qcow2
+junos_login:
+  login: admin
+  password: pass01
+# pcep_server: 172.16.255.6
+# paragon_ingest: 172.16.255.3
+# snmp: 
+#   server: 172.16.255.4
+#   ro_community: public
+# wg:
+#   tunnel_ip:
+#   - 192.168.199.0/31
+#   - 192.168.199.1/31
+#   prefix_allowed:
+#   - 172.16.11.0/24 x
+fabric:
+  #subnet: 10.100.0.0/24
+  topology:
+    - [ 0x0, pe1, ge-0/0/3, p1, ge-0/0/2 ]
+    - [ 0x0, pe1, ge-0/0/4, p2, ge-0/0/2 ]
+    - [ 0x0, pe2, ge-0/0/3, p1, ge-0/0/3 ]
+    - [ 0x0, pe2, ge-0/0/4, p2, ge-0/0/3 ]
+    - [ 0x0, pe3, ge-0/0/3, p1, ge-0/0/4 ]
+    - [ 0x0, pe3, ge-0/0/4, p2, ge-0/0/4 ]
+    - [ 0x0, p1, ge-0/0/5, p2, ge-0/0/5 ]
+#   # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+#   # value for the field status:
+#   # bit 0 : ipv4
+#   # bit 1 : ipv6
+#   # bit 2 : iso
+#   # bit 3 : mpls
+#   # bit 4 : isis
+#   # bit 5 : rsvp
+#   # bit 6 : ldp
+#   # bit 7 : delay_measurement_rpm
+#   # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+#   # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+#   # ingress controller: 172.16.255.1
+#   # NGIX ingress controller: 172.16.255.2
+#   # insight : 172.16.255.3
+#   # SNMP trap: 172.16.255.4
+#   # Netflow : 172.16.255.5
+#   # PCE serveR: 172.16.255.6
+#     - [ 0x7d, pe1, ge-0/0/2, p1, ge-0/0/0 ]
+#     - [ 0x7d, pe1, ge-0/0/3, p2, ge-0/0/0 ]
+#     - [ 0x7d, pe2, ge-0/0/3, p1, ge-0/0/1 ]
+#     - [ 0x7d, pe2, ge-0/0/2, p2, ge-0/0/1 ]
+#     - [ 0x7d, p1, ge-0/0/2, p2, ge-0/0/2 ]
+#     - [ 0x7d, p1, ge-0/0/3, p3, ge-0/0/3 ]
+#     - [ 0x7d, p1, ge-0/0/4, p3, ge-0/0/4 ]
+#     - [ 0x7d, p1, ge-0/0/5, p5, ge-0/0/1 ]
+#     - [ 0x7d, p2, ge-0/0/3, p5, ge-0/0/2 ]
+#     - [ 0x7d, p3, ge-0/0/2, p4, ge-0/0/2 ]
+#     - [ 0x7d, p3, ge-0/0/0, pe3, ge-0/0/2 ]
+#     - [ 0x7d, p3, ge-0/0/1, pe4, ge-0/0/2 ]
+#     - [ 0x7d, p3, ge-0/0/5, p5, ge-0/0/3 ]
+#     - [ 0x7d, p4, ge-0/0/0, pe3, ge-0/0/3 ]
+#     - [ 0x7d, p4, ge-0/0/1, pe4, ge-0/0/3 ]
+#     - [ 0x7d, p4, ge-0/0/3, p5, ge-0/0/4 ]
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.254/24
+        dhcp_range: 172.16.10.1-172.16.10.200
+      em2: 
+        bridge: to_net
+        dhcp_range: 10.100.2.1-10.100.2.100
+        family:
+          inet: 10.100.2.254/24
+          static:
+          - to: 10.1.0.0/16
+            via: 10.100.2.1
+      em3: 
+        bridge: to_ext
+        family:
+          inet: 10.100.5.254/24
+  pe1:
+    type: mx240
+    os: vmx
+    ztp: yes
+    mgmt_instc: 0
+    mgmt_dhcp: 1
+    #pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24
+          gateway4: 172.16.10.254
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.1/32
+      #     iso: 49.0001.0101.0000.1001.00
+      #   protocol:
+      #     isis: passive
+      ge-0/0/0:
+        bridge: pe1ge0
+      ge-0/0/1:
+        bridge: pe1ge1
+      ge-0/0/2:
+        bridge: pe1ge2
+  pe2:
+    type: mx240
+    os: vmx
+    ztp: yes
+    mgmt_instc: 0
+    mgmt_dhcp: 1
+    #pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.2/24
+          gateway4: 172.16.10.254
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.2/32
+      #     iso: 49.0001.0101.0000.1002.00
+      #   protocol:
+      #     isis: passive
+      ge-0/0/0:
+        bridge: pe2ge0
+        ## mtu: 9000
+      ge-0/0/1:
+        bridge: pe2ge1
+      ge-0/0/2:
+        bridge: pe2ge2
+  pe3:
+    type: mx240
+    os: vmx
+    ztp: yes
+    mgmt_instc: 0
+    mgmt_dhcp: 1
+    # pcep: yes
+    # bgpls:
+    #   as: 4200009001
+    #   local: 10.100.1.5
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.3/24
+          gateway4: 172.16.10.254
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.5/32
+      #     iso: 49.0001.0101.0000.1005.00
+      #   protocol:
+      #     isis: passive
+      ge-0/0/0:
+        bridge: pe3ge0
+        ## mtu: 9000
+      ge-0/0/1:
+        bridge: pe3ge1
+      ge-0/0/2:
+        bridge: pe3ge2
+      ge-0/0/5:
+        bridge: to_ext
+  p1:
+    type: mx240
+    os: vmx
+    ztp: yes
+    mgmt_instc: 0
+    mgmt_dhcp: 1
+    #pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.4/24
+          gateway4: 172.16.10.254
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.3/32
+      #     iso: 49.0001.0101.0000.1003.00
+      #   protocol:
+      #     isis: passive
+      ge-0/0/0:
+        bridge: p1ge0
+        ## mtu: 9000
+      ge-0/0/1:
+        bridge: p1ge1
+        # family:
+        #   inet: 10.100.130.254/24
+        #   iso: null
+        # protocol:
+        #   isis: null
+      ge-0/0/6:
+        bridge: to_net
+  p2:
+    type: mx240
+    os: vmx
+    ztp: yes
+    mgmt_instc: 0
+    mgmt_dhcp: 1
+    #pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.5/24
+          gateway4: 172.16.10.254
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.4/32
+      #     iso: 49.0001.0101.0000.1004.00
+      #   protocol:
+      #     isis: passive
+      # ge-0/0/0:
+      #   bridge: p2ge0
+      #   ## mtu: 9000
+      ge-0/0/0:
+        bridge: p2ge0
+      ge-0/0/1:
+        bridge: p2ge1
+        # family:
+        #   inet: 10.100.131.254/24
+        #   iso: null
+        # protocol:
+        #   isis: null
+  # crpd:
+  #   type: pctiny
+  #   os: ubuntu2
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: mgmt
+  #       family:
+  #         inet: 172.16.10.6/24
+  #         gateway4: 172.16.10.254
+  #     em1: 
+  #       bridge: to_net
+  #       family:
+  #         inet: 10.100.2.1/24
+  #         gateway4: 10.100.2.254
+  client:
+    type: pchpv2
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.100/24
+          gateway4: 172.16.10.254
+      em1:
+        bridge: pe1ge0
+      em2:
+        bridge: pe2ge0
+      em3:
+        bridge: pe3ge0
+      em4:
+        bridge: p1ge0
+      em5:
+        bridge: p2ge0
+  pe1agent1:
+    type: pctiny
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.101/24
+      em1:
+        bridge: pe1ge1
+        family:
+          inet: 10.100.128.10/24
+          gateway4: 10.100.128.1
+      em2:
+        bridge: pe1ge2
+  pe2agent1:
+    type: pctiny
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.102/24
+      em1:
+        bridge: pe2ge1
+        family:
+          inet: 10.100.129.1/24
+          gateway4: 10.100.129.254
+      em2:
+        bridge: pe2ge2
+  pe3agent1:
+    type: pctiny
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.103/24
+      em1:
+        bridge: pe3ge1
+        family:
+          inet: 10.100.130.1/24
+          gateway4: 10.100.130.254
+      em2:
+        bridge: pe2ge2
+  # p1agent1:
+  #   type: pctiny
+  #   os: ubuntu2
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: mgmt
+  #       family:
+  #         inet: 172.16.10.104/24
+  #     em1:
+  #       bridge: p1ge1
+  #       family:
+  #         inet: 10.100.131.1/24
+  #         gateway4: 10.100.131.254
+  # p2agent1:
+  #   type: pctiny
+  #   os: ubuntu2
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: mgmt
+  #       family:
+  #         inet: 172.16.10.105/24
+  #     em1:
+  #       bridge: p2ge1
+  #       family:
+  #         inet: 10.100.132.1/24
+  #         gateway4: 10.100.132.254
+  # pe1agent2:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0:
+  #       bridge: pe1ge1
+  # pe2agent2:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0:
+  #       bridge: pe2ge1
+  # pe3agent2:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0:
+  #       bridge: pe3ge1
+  # p1agent2:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0:
+  #       bridge: p1ge1
+  # p2agent2:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0:
+  #       bridge: p2ge1
+  br1:
+    type: bridge
+    os: bridge
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.106/24
+          gateway4: 172.16.10.254
+      em1:
+        node: [pe1, ge-0/0/3, pe1p1 ]
+      em2:
+        node: [p1, ge-0/0/2, pe1p1 ]
+      em3:
+        node: [pe1, ge-0/0/4, pe1p2 ]
+      em4:
+        node: [p2, ge-0/0/2, pe1p2 ]
+      em5:
+        node: [pe2, ge-0/0/3, pe2p1 ]
+      em6:
+        node: [p1, ge-0/0/3, pe2p1 ]
+      em7:
+        node: [pe2, ge-0/0/4, pe2p2 ]
+      em8:
+        node: [p2, ge-0/0/3, pe2p2 ]
+      em9:
+        node: [pe3, ge-0/0/3, pe3p1 ]
+      em10:
+        node: [p1, ge-0/0/4, pe3p1 ]
+      em11:
+        node: [pe3, ge-0/0/4, pe3p2 ]
+      em12:
+        node: [p2, ge-0/0/4, pe3p2 ]
+      em13:
+        node: [p1, ge-0/0/5, p1p2 ]
+      em14:
+        node: [p2, ge-0/0/5, p1p2 ]
+

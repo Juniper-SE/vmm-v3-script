@@ -1,0 +1,7 @@
+paramiko
+pathlib
+jinja2
+PyYaml
+pexpect
+scp
+passlib

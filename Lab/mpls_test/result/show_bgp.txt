@@ -1,0 +1,62 @@
+irzan-mbp:mpls_test irzan$ ssh PE-X "show bgp summary"
+Threading mode: BGP I/O
+Default eBGP mode: advertise - accept, receive - accept
+Groups: 1 Peers: 2 Down peers: 0
+Table          Tot Paths  Act Paths Suppressed    History Damp State    Pending
+bgp.evpn.0
+                       4          4          0          0          0          0
+Peer                     AS      InPkt     OutPkt    OutQ   Flaps Last Up/Dwn State|#Active/Received/Accepted/Damped...
+192.168.0.2           64512        199        173       0       0     1:16:00 Establ
+  VRF-A-L3.evpn.0: 1/1/1/0
+  bgp.evpn.0: 1/1/1/0
+192.168.0.3           64512        200        175       0       0     1:16:00 Establ
+  VRF-A-L3.evpn.0: 3/3/3/0
+  bgp.evpn.0: 3/3/3/0
+irzan-mbp:mpls_test irzan$
+
+
+irzan-mbp:mpls_test irzan$ ssh PE-Y "show bgp summary"
+Threading mode: BGP I/O
+Default eBGP mode: advertise - accept, receive - accept
+Groups: 1 Peers: 2 Down peers: 0
+Table          Tot Paths  Act Paths Suppressed    History Damp State    Pending
+bgp.evpn.0
+                      10         10          0          0          0          0
+Peer                     AS      InPkt     OutPkt    OutQ   Flaps Last Up/Dwn State|#Active/Received/Accepted/Damped...
+192.168.0.1           64512        176        199       0       1     1:16:27 Establ
+  __default_evpn__.evpn.0: 0/0/0/0
+  bgp.evpn.0: 3/3/3/0
+  VRF-A-L3.evpn.0: 3/3/3/0
+  VRF-B-L2.evpn.0: 0/0/0/0
+  VRF-C-L2.evpn.0: 0/0/0/0
+192.168.0.3           64512        202        202       0       0     1:16:41 Establ
+  __default_evpn__.evpn.0: 0/0/0/0
+  bgp.evpn.0: 7/7/7/0
+  VRF-A-L3.evpn.0: 3/3/3/0
+  VRF-B-L2.evpn.0: 1/1/1/0
+  VRF-C-L2.evpn.0: 3/3/3/0
+irzan-mbp:mpls_test irzan$
+
+irzan-mbp:mpls_test irzan$ ssh PE-Z "show bgp summary"
+Threading mode: BGP I/O
+Default eBGP mode: advertise - accept, receive - accept
+Groups: 1 Peers: 2 Down peers: 0
+Table          Tot Paths  Act Paths Suppressed    History Damp State    Pending
+bgp.evpn.0
+                       8          8          0          0          0          0
+Peer                     AS      InPkt     OutPkt    OutQ   Flaps Last Up/Dwn State|#Active/Received/Accepted/Damped...
+192.168.0.1           64512        178        200       0       1     1:16:45 Establ
+  __default_evpn__.evpn.0: 0/0/0/0
+  bgp.evpn.0: 3/3/3/0
+  VRF-A-L3.evpn.0: 3/3/3/0
+  VRF-B-L2.evpn.0: 0/0/0/0
+  VRF-C-L2.evpn.0: 0/0/0/0
+192.168.0.2           64512        204        201       0       1     1:16:59 Establ
+  __default_evpn__.evpn.0: 0/0/0/0
+  bgp.evpn.0: 5/5/5/0
+  VRF-A-L3.evpn.0: 1/1/1/0
+  VRF-B-L2.evpn.0: 1/1/1/0
+  VRF-C-L2.evpn.0: 3/3/3/0
+irzan-mbp:mpls_test irzan$
+
+

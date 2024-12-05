@@ -1,0 +1,320 @@
+---
+name: seclabedit
+pod: 
+  type: vmm
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  jumpserver: ttqc-shell001.juniper.net
+  user: irzan
+  adpassword: YourActiveDirectoryPassword
+  vmmpassword: YourVMMLabPassword
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  jspace: images/space.qcow2
+  sdi: images/sdi.qcow2
+  ubuntu: images/ubuntu20.04.qcow2
+  desktop: images/desktop.qcow2
+  vmx: images/vmx/junos-vmx-x86-64-23.2R1.13.vmdk
+  vsrx: images/vsrx/junos-vsrx3-x86-64-23.2R1.13.qcow2
+  bridge: images/bridge.qcow2
+  vjunos_switch: images/vJunos-switch-23.2R1.14.qcow2
+  vjunos_router: images/vJunos-router-23.2R1.14.qcow2
+  vjunos_evolved: images/vJunosEvolved-23.2R1.15.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family: 
+           inet: 172.16.10.1/24
+        dhcp_range: 172.16.10.200-172.16.10.220
+      em2: 
+        bridge: ipfbge4
+        family:
+          inet: 172.16.11.7/31
+      em3: 
+        bridge: ext
+        family:
+          inet: 172.16.12.1/24
+        dhcp_range: 172.16.12.10-172.16.12.20
+      em4: 
+        bridge: nms
+        family:
+          inet: 172.16.2.1/24
+      em5:
+        bridge: swge0
+  jspace:
+    type: pchpv1
+    os: jspace
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: nms
+        family:
+          inet: 172.16.2.10/24
+          gateway4: 172.16.2.1
+      em1: 
+        bridge: nms
+      em2: 
+        bridge: nms
+      em3: 
+        bridge: nms
+  sdi:
+    type: pchpv1
+    os: sdi
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: nms
+        family:
+          inet: 172.16.2.12/24
+          gateway4: 172.16.2.1
+      em1: 
+        bridge: nms
+      em2: 
+        bridge: nms
+      em3: 
+        bridge: nms
+  server1:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.200/24
+      em1: 
+        bridge: swge2
+        family:
+          inet: 172.16.13.100/24
+          gateway4: 172.16.13.1
+  client1a:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.201/24
+      em1: 
+        bridge: swge3
+        family:
+          inet: 172.16.14.11/24
+          gateway4: 172.16.14.1
+  client1b:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.202/24
+      em1: 
+        bridge: swge4
+        family:
+          inet: 172.16.14.12/24
+          gateway4: 172.16.14.1
+  client2:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.203/24
+      em1: 
+        bridge: srx2ge1
+        ipv4: 172.16.15.10/24
+        gateway4: 172.16.15.1
+  client3:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.204/24
+      em1: 
+        bridge: srx2ge1
+        ipv4: 172.16.16.10/24
+        gateway4: 172.16.16.1
+  client4:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.205/24
+      em1: 
+        bridge: ext
+        ipv4: 172.16.12.14/24
+        gateway4: 172.16.12.1
+  external:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.206/24
+      em1: 
+        bridge: ext
+        family:
+          inet: 172.16.12.15/24
+          gateway4: 172.16.12.1
+  sw:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family: 
+          inet: 172.16.10.101/24
+      ge-0/0/0: 
+        bridge: swge0
+      ge-0/0/1: 
+        bridge: swge1
+      ge-0/0/2:
+        bridge: swge2
+      ge-0/0/3: 
+        bridge: swge3
+      ge-0/0/4: 
+        bridge: swge4
+      ge-0/0/5: 
+        bridge: swge5
+      ge-0/0/6: 
+        bridge: swge6
+      ge-0/0/7: 
+        bridge: swge7
+      ge-0/0/8: 
+        bridge: swge8
+  ipfb:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.102/24
+      ge-0/0/0: 
+        bridge: ipfbge0
+      ge-0/0/1: 
+        bridge: ipfbge1
+      ge-0/0/2: 
+        bridge: ipfbge2
+        family:
+          inet: 172.16.11.2/31
+      ge-0/0/3: 
+        bridge: ipfbge3
+        family:
+          inet: 172.16.11.4/31
+      ge-0/0/4: 
+        bridge: ipfbge4
+        family:
+          inet: 172.16.11.6/31
+  srx1a:
+    type: vsrx
+    os: vsrx
+    vnc: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.103/24
+      ge-0/0/0:
+        bridge: cl1 
+      ge-0/0/1:
+        bridge: fab1
+      ge-0/0/2:
+        bridge: ipfbge0
+      ge-0/0/3:
+        bridge: swge5
+      ge-0/0/4:
+        bridge: swge7
+  srx1b:
+    type: vsrx
+    os: vsrx
+    vnc: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.104/24
+      ge-0/0/0:
+        bridge: cl1 
+      ge-0/0/1:
+        bridge: fab1
+      ge-0/0/2:
+        bridge: ipfbge1
+      ge-0/0/3:
+        bridge: swge6
+      ge-0/0/4:
+        bridge: swge8
+  srx2:
+    type: vsrx
+    os: vsrx
+    vnc: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.105/24
+      ge-0/0/0:
+        bridge: ipfbge2
+        family:
+          inet: 172.16.11.3/31 
+      ge-0/0/1:
+        bridge: srx2ge1
+        family:
+          inet: 172.16.15.1/24
+  srx3:
+    type: vsrx
+    os: vsrx
+    vnc: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.106/24
+      ge-0/0/0:
+        bridge: ipfbge3
+        family:
+          inet: 172.16.11.5/31 
+      ge-0/0/1:
+        bridge: srx2ge1
+        family:
+          inet: 172.16.16.1/24
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+    

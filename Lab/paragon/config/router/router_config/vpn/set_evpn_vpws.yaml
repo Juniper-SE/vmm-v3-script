@@ -1,0 +1,25 @@
+---
+- name: Upload config into router
+  hosts:
+    - pe1
+    - pe4
+  roles:
+    - juniper.junos
+  vars:
+    conf_dir: tmp
+    username: admin
+    conf_file: "{{ conf_dir }}/{{ ansible_host }}.conf"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: create config based on template
+      template:
+        src: jinja2/set_vpws.j2
+        dest: "{{ conf_file }}"
+    - name: upload config into router
+      juniper_junos_config:
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        file: "{{ conf_file}}"
+        config_mode: "exclusive"
+        load: "set"

@@ -1,0 +1,30 @@
+edit
+delete protocols bgp group overlay-ipv6-ebgp multihop ttl
+set protocols bgp group overlay-ipv6-ebgp multihop no-nexthop-change 
+commit
+
+
+set routing-instances MAC-VRF-1 route-distinguisher 10.1.100.3:1
+set routing-instances MAC-VRF-1 vrf-target target:64512:1001
+set routing-instances MAC-VRF-1 vrf-target auto
+
+
+set interfaces ae11 esi 00:00:00:00:00:00:51:00:00:01
+set interfaces ae11 esi all-active
+set interfaces ae11 aggregated-ether-options lacp active
+set interfaces ae11 aggregated-ether-options lacp system-id 00:00:51:00:00:01
+set interfaces ae11 unit 0 family ethernet-switching interface-mode access
+set interfaces ae11 unit 0 family ethernet-switching vlan members 10
+set interfaces xe-0/0/2 ether-options 802.3ad ae11
+
+
+set routing-instances MAC-VRF-1 interface ae11.0
+set routing-instances MAC-VRF-1 vlans VNI_1000 vlan-id 10
+set routing-instances MAC-VRF-1 vlans VNI_1000 vxlan vni 1000
+
+
+
+set interfaces xe-0/0/11 ether-options 802.3ad ae11
+
+
+set routing-instances mgmt_junos routing-options static route 0.0.0/0 next-hop 172.16.16.1

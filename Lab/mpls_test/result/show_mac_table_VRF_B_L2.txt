@@ -1,0 +1,66 @@
+# MAC address table on PE-Y and PE-Z
+
+irzan-mbp:mpls_test irzan$ ssh PE-Y "show evpn mac-table instance VRF-B-L2"
+
+MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+    O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+Routing instance : VRF-B-L2
+ Bridging domain : __VRF-B-L2__, VLAN : none
+   MAC                 MAC      Logical          NH     MAC         active
+   address             flags    interface        Index  property    source
+   56:04:1b:00:55:a6   D        ge-0/0/1.0
+   56:04:1b:00:86:13   DC                        1048575            192.168.0.3
+irzan-mbp:mpls_test irzan$
+
+irzan-mbp:mpls_test irzan$ ssh PE-Z "show evpn mac-table instance VRF-B-L2"
+
+MAC flags       (S -static MAC, D -dynamic MAC, L -locally learned, C -Control MAC
+    O -OVSDB MAC, SE -Statistics enabled, NM -Non configured MAC, R -Remote PE MAC, P -Pinned MAC)
+
+Routing instance : VRF-B-L2
+ Bridging domain : __VRF-B-L2__, VLAN : none
+   MAC                 MAC      Logical          NH     MAC         active
+   address             flags    interface        Index  property    source
+   56:04:1b:00:55:a6   DC                        1048577            192.168.0.2
+   56:04:1b:00:86:13   D        ge-0/0/0.0
+irzan-mbp:mpls_test irzan$
+
+# IP address of nodes in VRF-B
+
+vrfb1:~$ ip addr show dev eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 56:04:1b:00:55:a6 brd ff:ff:ff:ff:ff:ff
+    inet 10.1.1.4/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5404:1bff:fe00:55a6/64 scope link
+       valid_lft forever preferred_lft forever
+vrfb1:~$
+
+
+vrfb2:~$ ip addr show dev eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 56:04:1b:00:86:13 brd ff:ff:ff:ff:ff:ff
+    inet 10.1.1.5/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5404:1bff:fe00:8613/64 scope link
+       valid_lft forever preferred_lft forever
+vrfb2:~$
+
+
+# Connectivity between nodes on VRF-B
+
+vrfb1:~$ ping 10.1.1.5 -c 5
+PING 10.1.1.5 (10.1.1.5): 56 data bytes
+64 bytes from 10.1.1.5: seq=0 ttl=42 time=3.110 ms
+64 bytes from 10.1.1.5: seq=1 ttl=42 time=3.028 ms
+64 bytes from 10.1.1.5: seq=2 ttl=42 time=2.984 ms
+64 bytes from 10.1.1.5: seq=3 ttl=42 time=3.445 ms
+64 bytes from 10.1.1.5: seq=4 ttl=42 time=3.693 ms
+
+--- 10.1.1.5 ping statistics ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip min/avg/max = 2.984/3.252/3.693 ms
+vrfb1:~$
+
+

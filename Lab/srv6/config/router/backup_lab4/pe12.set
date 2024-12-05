@@ -1,0 +1,106 @@
+
+set version 23.4R1.10
+set system host-name pe12
+set system root-authentication encrypted-password "$1$8TihsAFu$rDdcF43j0CypFk7t980qf."
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$8TihsAFu$rDdcF43j0CypFk7t980qf."
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBUA+4YJwqE2rqwweZ3NG7GpXF3JqIxFbnDxraW8//QWjHLGVgn+jFbXFB3T/yLYpIRAh8SsAw6M6pZXzGd3oiltENLkoN5YGI1yW0bCTsS/Z4BoW/iuPR2rYQqhA+NPi9OZO/opVbJ+VIdfm+fugWPSVpduBiJN20P9iEF1zCW4EmWZn3qkl25LjVSBVMiwn+crcsCHUub3xDRicgTOOINFo4lZy03Fsa3PoqpxXv18FhNi3pVWmV2n3vIckWt8BbaPWMTFZmERHkVb4Y15GsHwcQxb6gm3h8Do4QgURbujCUJQhpJT4BRdD8kja1NQK4lbcPq6l9rF3YM7aQkscB16nCplWcgdnxI7eN//FA4ovvx7d57i43Y7GzSlQE87kcIDDQ1eCesYOfg9EfqCFSVWV0hbhc2Ap6YCoc0R9POpG1n0LO+o++h0J0bkLUWsIiQLb3LiC91FnP3giK5MEzdJ+maJcjIyGlTth52s01nLdT4gQDgTURqIpfL8L0HWE= irzan@irzan-mbp"
+set system services netconf ssh
+set system services ssh root-login allow
+set system services ssh sftp-server
+set system services extension-service request-response grpc clear-text port 32767
+set system management-instance
+set system syslog user * any emergency
+set system syslog file interactive-commands interactive-commands any
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set chassis network-services enhanced-ip
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 mtu 9000
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 192.168.255.3/31
+set interfaces ge-0/0/0 unit 101 family inet6 address fc00:dead:beef:ffff::3/127
+set interfaces ge-0/0/0 unit 102 vlan-id 102
+set interfaces ge-0/0/0 unit 102 family inet address 192.168.255.11/31
+set interfaces ge-0/0/0 unit 102 family inet6 address fc00:dead:beef:ffff::11/127
+set interfaces ge-0/0/0 unit 103 encapsulation vlan-bridge
+set interfaces ge-0/0/0 unit 103 vlan-id 103
+set interfaces ge-0/0/0 unit 111 encapsulation vlan-ccc
+set interfaces ge-0/0/0 unit 111 vlan-id 111
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 unit 0 family iso
+set interfaces ge-0/0/1 unit 0 family inet6 address fc00:dead:beef:fffe::4/127
+set interfaces ge-0/0/2 mtu 9000
+set interfaces ge-0/0/2 unit 0 family iso
+set interfaces ge-0/0/2 unit 0 family inet6 address fc00:dead:beef:fffe::6/127
+set interfaces fxp0 unit 0 family inet address 172.16.10.2/24
+set interfaces lo0 unit 0 family inet address 192.168.255.212/32
+set interfaces lo0 unit 0 family iso address 49.0001.1921.6800.0012.00
+set interfaces lo0 unit 0 family inet6 address fc00:dead:beef:ffff::ffff:12/128
+set policy-options policy-statement LB term 1 then load-balance per-flow
+set policy-options policy-statement LB term 1 then accept
+set policy-options policy-statement from_evpn term 1 from protocol evpn
+set policy-options policy-statement from_evpn term 1 then accept
+set policy-options policy-statement to_int term 1 then next-hop self
+set policy-options policy-statement to_int term 1 then accept
+set routing-instances EVPN1 instance-type mac-vrf
+set routing-instances EVPN1 protocols evpn encapsulation srv6
+set routing-instances EVPN1 protocols evpn source-packet-routing srv6 locator SRV6-LOC-1
+set routing-instances EVPN1 protocols evpn source-packet-routing srv6 locator end-dt2-sid
+set routing-instances EVPN1 bridge-domains bd10 domain-type bridge
+set routing-instances EVPN1 bridge-domains bd10 vlan-id 103
+set routing-instances EVPN1 bridge-domains bd10 interface ge-0/0/0.103
+set routing-instances EVPN1 service-type vlan-based
+set routing-instances EVPN1 interface ge-0/0/0.103
+set routing-instances EVPN1 vrf-target target:65412:1002
+set routing-instances EVPN2 instance-type evpn-vpws
+set routing-instances EVPN2 protocols evpn interface ge-0/0/0.111 vpws-service-id local 1
+set routing-instances EVPN2 protocols evpn interface ge-0/0/0.111 vpws-service-id remote 1
+set routing-instances EVPN2 protocols evpn interface ge-0/0/0.111 vpws-service-id source-packet-routing srv6 locator SRV6-LOC-1
+set routing-instances EVPN2 protocols evpn encapsulation srv6
+set routing-instances EVPN2 interface ge-0/0/0.111
+set routing-instances EVPN2 vrf-target target:65412:2001
+set routing-instances VRF1 instance-type vrf
+set routing-instances VRF1 protocols bgp group to_ce1 export from_evpn
+set routing-instances VRF1 protocols bgp group to_ce1 neighbor 192.168.255.10 peer-as 4200001012
+set routing-instances VRF1 protocols bgp group to_ce1 neighbor fc00:dead:beef:ffff::10 family inet6 any
+set routing-instances VRF1 protocols bgp group to_ce1 neighbor fc00:dead:beef:ffff::10 peer-as 4200001012
+set routing-instances VRF1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set routing-instances VRF1 protocols evpn ip-prefix-routes encapsulation srv6
+set routing-instances VRF1 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRV6-LOC-1 end-dt46-sid
+set routing-instances VRF1 interface ge-0/0/0.102
+set routing-instances VRF1 vrf-target target:65412:1001
+set routing-instances VRF1 vrf-table-label
+set routing-options source-packet-routing srv6 locator SRV6-LOC-1 fc00:dead:beef:ff12::/64
+set routing-options route-distinguisher-id 192.168.255.212
+set routing-options resolution preserve-nexthop-hierarchy
+set routing-options router-id 192.168.255.212
+set routing-options autonomous-system 4200000001
+set routing-options forwarding-table export LB
+set protocols bgp group to_ce neighbor 192.168.255.2 peer-as 4200001002
+set protocols bgp group to_ce neighbor fc00:dead:beef:ffff::2 peer-as 4200001002
+set protocols bgp group to_int type internal
+set protocols bgp group to_int local-address fc00:dead:beef:ffff::ffff:12
+set protocols bgp group to_int family inet unicast extended-nexthop
+set protocols bgp group to_int family inet unicast advertise-srv6-service
+set protocols bgp group to_int family inet unicast accept-srv6-service
+set protocols bgp group to_int family inet6 unicast advertise-srv6-service
+set protocols bgp group to_int family inet6 unicast accept-srv6-service
+set protocols bgp group to_int family evpn signaling advertise-srv6-service
+set protocols bgp group to_int family evpn signaling accept-srv6-service
+set protocols bgp group to_int export to_int
+set protocols bgp group to_int neighbor fc00:dead:beef:ffff::ffff:3
+set protocols bgp source-packet-routing srv6 locator SRV6-LOC-1 end-dt46-sid
+set protocols bgp rfc6514-compliant-safi129
+set protocols bgp multipath list-nexthop
+set protocols isis interface ge-0/0/1.0 level 1 disable
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/2.0 level 1 disable
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface lo0.0 level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis source-packet-routing srv6 locator SRV6-LOC-1 end-sid fc00:dead:beef:ff12::
+set protocols lldp interface all
+set protocols lldp interface fxp0 disable

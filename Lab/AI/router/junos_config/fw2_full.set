@@ -1,0 +1,161 @@
+set security address-book global address subnet21v6 fc00:dead:beef:a021::/64
+set security address-book global address vm2kvm5v6 fc00:dead:beef:a022::1000:152/128
+set security address-book global address vm3kvm6v6 fc00:dead:beef:a022::1000:163/128
+set security address-book global address vm4kvm5v6 fc00:dead:beef:a023::1000:154/128
+set security address-book global address vm6kvm5v6 fc00:dead:beef:a016::1000:110/128
+
+set security address-book global address svr7 192.168.21.7/32
+set security address-book global address vm2kvm5v4 192.168.22.152/32
+set security address-book global address vm3kvm6v4 192.168.22.163/32
+set security address-book global address vm4kvm5v4 192.168.23.154/32
+set security address-book global address vm6kvm5v4 192.168.16.110/32
+
+
+set security nat source pool pool1 address 172.16.201.3/32
+set security nat source rule-set rs1 from zone trust
+set security nat source rule-set rs1 to zone untrust
+set security nat source rule-set rs1 rule r1 match source-address 0.0.0.0/0
+set security nat source rule-set rs1 rule r1 then source-nat pool pool1
+set security nat destination pool vm2kvm5v4 address 192.168.22.152/32 port 22
+set security nat destination pool vm3kvm6v4 address 192.168.22.163/32 port 22
+set security nat destination pool vm4kvm5v4 address 192.168.23.154/32 port 22
+set security nat destination pool vm6kvm5v4 address 192.168.16.110/32 port 22
+set security nat destination pool svr7 address 192.168.21.7/32 port 22
+
+set security nat destination rule-set r1 from zone untrust
+set security nat destination rule-set r1 rule r0 match destination-address 172.16.201.4/32
+set security nat destination rule-set r1 rule r0 match destination-port 9020
+set security nat destination rule-set r1 rule r0 then destination-nat pool svr7
+set security nat destination rule-set r1 rule r1 match destination-address 172.16.201.4/32
+set security nat destination rule-set r1 rule r1 match destination-port 9021
+set security nat destination rule-set r1 rule r1 then destination-nat pool vm2kvm5v4
+set security nat destination rule-set r1 rule r2 match destination-address 172.16.201.4/32
+set security nat destination rule-set r1 rule r2 match destination-port 9022
+set security nat destination rule-set r1 rule r2 then destination-nat pool vm3kvm6v4
+set security nat destination rule-set r1 rule r3 match destination-address 172.16.201.4/32
+set security nat destination rule-set r1 rule r3 match destination-port 9023
+set security nat destination rule-set r1 rule r3 then destination-nat pool vm4kvm5v4
+set security nat destination rule-set r1 rule r4 match destination-address 172.16.201.4/32
+set security nat destination rule-set r1 rule r4 match destination-port 9024
+set security nat destination rule-set r1 rule r4 then destination-nat pool vm6kvm5v4
+
+set security policies from-zone trust to-zone trust policy default-permit
+set security policies from-zone trust to-zone trust policy default-permit match source-address any
+set security policies from-zone trust to-zone trust policy default-permit match destination-address any
+set security policies from-zone trust to-zone trust policy default-permit match application any
+set security policies from-zone trust to-zone trust policy default-permit then permit
+set security policies from-zone trust to-zone untrust policy default-permit match source-address any
+set security policies from-zone trust to-zone untrust policy default-permit match destination-address any
+set security policies from-zone trust to-zone untrust policy default-permit match application any
+set security policies from-zone trust to-zone untrust policy default-permit then permit
+
+set security policies from-zone untrust to-zone trust policy allow_v6_0 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v6_0 match destination-address subnet21v6
+set security policies from-zone untrust to-zone trust policy allow_v6_0 match application any
+set security policies from-zone untrust to-zone trust policy allow_v6_0 then permit
+
+set security policies from-zone untrust to-zone trust policy allow_v6_1 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v6_1 match destination-address vm2kvm5v6
+set security policies from-zone untrust to-zone trust policy allow_v6_1 match application junos-ssh 
+set security policies from-zone untrust to-zone trust policy allow_v6_1 then permit
+set security policies from-zone untrust to-zone trust policy allow_v6_2 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v6_2 match destination-address vm3kvm6v6
+set security policies from-zone untrust to-zone trust policy allow_v6_2 match application junos-ssh 
+set security policies from-zone untrust to-zone trust policy allow_v6_2 then permit
+set security policies from-zone untrust to-zone trust policy allow_v6_3 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v6_3 match destination-address vm4kvm5v6
+set security policies from-zone untrust to-zone trust policy allow_v6_3 match application junos-ssh 
+set security policies from-zone untrust to-zone trust policy allow_v6_3 then permit
+set security policies from-zone untrust to-zone trust policy allow_v6_4 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v6_4 match destination-address vm6kvm5v6
+set security policies from-zone untrust to-zone trust policy allow_v6_4 match application junos-ssh 
+set security policies from-zone untrust to-zone trust policy allow_v6_4 then permit
+
+set security policies from-zone untrust to-zone trust policy allow_v4_0 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v4_0 match destination-address svr7
+set security policies from-zone untrust to-zone trust policy allow_v4_0 match application any
+set security policies from-zone untrust to-zone trust policy allow_v4_0 then permit
+
+set security policies from-zone untrust to-zone trust policy allow_v4_1 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v4_1 match destination-address vm2kvm5v4
+set security policies from-zone untrust to-zone trust policy allow_v4_1 match application any
+set security policies from-zone untrust to-zone trust policy allow_v4_1 then permit
+
+set security policies from-zone untrust to-zone trust policy allow_v4_2 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v4_2 match destination-address vm3kvm6v4
+set security policies from-zone untrust to-zone trust policy allow_v4_2 match application any
+set security policies from-zone untrust to-zone trust policy allow_v4_2 then permit
+set security policies from-zone untrust to-zone trust policy allow_v4_3 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v4_3 match destination-address vm4kvm5v4
+set security policies from-zone untrust to-zone trust policy allow_v4_3 match application any
+set security policies from-zone untrust to-zone trust policy allow_v4_3 then permit
+set security policies from-zone untrust to-zone trust policy allow_v4_4 match source-address any 
+set security policies from-zone untrust to-zone trust policy allow_v4_4 match destination-address vm6kvm5v4
+set security policies from-zone untrust to-zone trust policy allow_v4_4 match application any
+set security policies from-zone untrust to-zone trust policy allow_v4_4 then permit
+
+
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/1.1002 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.1002 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.1002 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.1002 host-inbound-traffic protocols bgp
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic protocols bgp
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.16.2/24
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:ff16::2/64
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 1001  vlan-id 1001
+set interfaces ge-0/0/1 unit 1001 family inet address 10.1.101.33/31
+set interfaces ge-0/0/1 unit 1001 family inet6 address fc00:dead:beef:ff01::33/127
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 1001  vlan-id 1001
+set interfaces ge-0/0/2 unit 1001 family inet address 10.1.101.35/31
+set interfaces ge-0/0/2 unit 1001 family inet6 address fc00:dead:beef:ff01::35/127
+
+set interfaces ge-0/0/1 unit 1002  vlan-id 1002
+set interfaces ge-0/0/1 unit 1002 family inet address 10.1.101.41/31
+set interfaces ge-0/0/1 unit 1002 family inet6 address fc00:dead:beef:ff01::41/127
+set interfaces ge-0/0/2 unit 1002  vlan-id 1002
+set interfaces ge-0/0/2 unit 1002 family inet address 10.1.101.43/31
+set interfaces ge-0/0/2 unit 1002 family inet6 address fc00:dead:beef:ff01::43/127
+
+set policy-options policy-statement to_dc term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_dc term 1 then accept
+set policy-options policy-statement to_dc term 2 from route-filter ::/0 exact
+set policy-options policy-statement to_dc term 2 then accept
+set policy-options policy-statement to_dc term default then reject
+
+set policy-options policy-statement to_gw_v4 term 1 from protocol static
+set policy-options policy-statement to_gw_v4 term 1 from route-filter 172.16.201.0/24 orlonger
+set policy-options policy-statement to_gw_v4 term 1 then accept
+set policy-options policy-statement to_gw_v4 term default then reject
+set policy-options policy-statement to_gw_v6 term 1 from route-filter fc00:dead:beef:a023::/64 orlonger
+set policy-options policy-statement to_gw_v6 term 1 then accept
+set policy-options policy-statement to_gw_v6 term default then reject
+set protocols bgp group to_ext neighbor 172.16.16.254 export to_gw_v4
+set protocols bgp group to_ext neighbor 172.16.16.254 peer-as 4200009000
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff family inet6 any
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff peer-as 4200009000
+set protocols bgp group to_dc2 export to_dc neighbor 10.1.101.32 peer-as 4200002001
+set protocols bgp group to_dc2 export to_dc neighbor 10.1.101.34 peer-as 4200002002
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::32 peer-as 4200002001
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::32 family inet6 any
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::34 peer-as 4200002002
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::34 family inet6 any
+
+
+set protocols bgp group to_dc2 export to_dc neighbor 10.1.101.40 peer-as 4200002001
+set protocols bgp group to_dc2 export to_dc neighbor 10.1.101.42 peer-as 4200002002
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::40 peer-as 4200002001
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::40 family inet6 any
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::42 peer-as 4200002002
+set protocols bgp group to_dc2 export to_dc neighbor fc00:dead:beef:ff01::42 family inet6 any
+
+set protocols lldp interface all
+set routing-options autonomous-system 4200009002
+set routing-options static route 172.16.201.3/32 discard
+set routing-options static route 172.16.201.4/32 discard

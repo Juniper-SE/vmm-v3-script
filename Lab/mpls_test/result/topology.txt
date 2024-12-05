@@ -1,0 +1,37 @@
+admin@PE-Z# run show lldp neighbors
+Local Interface    Parent Interface    Chassis Id                               Port info          System Name
+ge-0/0/4           -                   2c:6b:f5:3e:a8:c0                        528                 CE-2
+ge-0/0/3           -                   2c:6b:f5:98:25:c0                        531                 PE-Y
+ge-0/0/2           -                   2c:6b:f5:ab:ed:c0                        529                 PE-X
+
+[edit]
+admin@PE-Z#
+
+admin@PE-Y> show lldp neighbors
+Local Interface    Parent Interface    Chassis Id                               Port info          System Name
+ge-0/0/4           -                   2c:6b:f5:7b:94:c0                        530                 PE-Z
+ge-0/0/3           -                   2c:6b:f5:ab:ed:c0                        528                 PE-X
+
+admin@PE-Y>
+
+admin@PE-X> show lldp neighbors
+Local Interface    Parent Interface    Chassis Id                               Port info          System Name
+ge-0/0/0           -                   2c:6b:f5:2f:5e:c0                        528                 CE-1
+ge-0/0/2           -                   2c:6b:f5:7b:94:c0                        529                 PE-Z
+ge-0/0/1           -                   2c:6b:f5:98:25:c0                        530                 PE-Y
+
+admin@PE-X>
+
+
+admin@CE-1> show lldp neighbors
+Local Interface    Parent Interface    Chassis Id                               Port info          System Name
+ge-0/0/1           -                   2c:6b:f5:ab:ed:c0                        527                 PE-X
+
+admin@CE-1>
+
+admin@CE-2> show lldp neighbors
+Local Interface    Parent Interface    Chassis Id                               Port info          System Name
+ge-0/0/1           -                   2c:6b:f5:7b:94:c0                        531                 PE-Z
+
+admin@CE-2>
+

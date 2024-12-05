@@ -1,0 +1,147 @@
+interfaces {
+	{% for intf in intf -%}
+	{{ intf }} {
+			unit 0 {
+				family inet;
+				family inet6;
+			}
+		}
+	{% endfor -%}
+	lo0 {
+	unit 0 {
+		family inet6 {
+			address {{ lo0 }};
+		}
+	}
+	}
+}
+policy-options {
+	{% if type == 'spine' -%}
+	policy-statement EVPN_OUT {
+        term EVPN_OUT-10 {
+            then {
+                community add EVPN_TIER;
+                accept;
+            }
+        }
+    }
+    policy-statement FABRIC_OUT {
+        term FABRIC_OUT-10 {
+            then {
+                community add FABRIC_TIER;
+                accept;
+            }
+        }
+    }
+	{% elif type == 'leaf' -%}
+	policy-statement EVPN_OUT {
+        term EVPN_OUT-10 {
+            from community EVPN_TIER;
+            then reject;
+        }
+        term EVPN_OUT-20 {
+            then accept;
+        }
+    }
+    policy-statement FABRIC_OUT {
+        term FABRIC_OUT-10 {
+            from community FABRIC_TIER;
+            then reject;
+        }
+        term FABRIC_OUT-20 {
+            then accept;
+        }
+    }
+	
+	{% endif -%}
+	
+    policy-statement lb {
+        then {
+            load-balance per-packet;
+        }
+    }
+	community EVPN_TIER members 0:14;
+    community FABRIC_TIER members 0:15;
+    as-list a-list members {{ as_list }};
+}
+routing-options {
+    router-id {{ router_id }};
+	route-distinguisher-id {{ router_id }};
+	autonomous-system {{ bgp.local_as }};
+    forwarding-table {
+        export lb;
+		ecmp-fast-reroute;
+        chained-composite-next-hop {
+            ingress {
+                evpn;
+            }
+        }
+    }
+}
+protocols {
+    router-advertisement {
+		{% for intf in intf -%}
+        interface {{ intf }}.0;
+		{% endfor -%}
+    }
+    bgp {
+        group auto-disc {
+            family inet6 {
+                unicast;
+            }
+            export FABRIC_OUT;
+            multipath {
+                multiple-as;
+            }
+            dynamic-neighbor FABRIC {
+                peer-auto-discovery {
+                    family inet6 {
+                        ipv6-nd;
+                    }
+					{% for intf in intf -%}
+					interface {{ intf }}.0;
+					{% endfor -%}
+                }
+            }
+            peer-as-list a-list;
+        }
+        group overlay-ipv6-ebgp {
+            type external;
+            multihop {
+                no-nexthop-change;
+            }
+			export EVPN_OUT;
+            local-address {{ lo0 }};
+            family evpn {
+                signaling;
+            }
+            multipath {
+                multiple-as;
+            }
+			{% for neigh in bgp.neighbor -%}
+			neighbor {{ neigh.remote_peer }} {
+                peer-as {{ neigh.remote_as }};
+            }
+
+			{% endfor -%}
+        }
+        multipath {
+            multiple-as;
+        }
+    }
+}
+
+{% if type == 'leaf' -%}
+chassis {
+    aggregated-devices {
+        ethernet {
+            device-count 8;
+        }
+    }
+}
+forwarding-options {
+    evpn-vxlan {
+        shared-tunnels;
+    }
+}
+{% endif -%}

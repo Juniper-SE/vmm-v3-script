@@ -1,0 +1,75 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: external
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: Subnet
+metadata:
+  name: purple
+  namespace: external
+  annotations:
+    core.juniper.net/display-name: purple-subnet
+spec:
+  cidr: "172.16.1.0/24"
+  defaultGateway: 172.16.1.1
+---
+apiVersion: core.contrail.juniper.net/v1alpha1
+kind: VirtualNetwork
+metadata:
+  name: purple
+  namespace: external
+  annotations:
+    core.juniper.net/display-name: Sample Virtual Network
+    core.juniper.net/description:
+      VirtualNetwork is a collection of end points (interface or ip(s) or MAC(s))
+      that can communicate with each other by default. It is a collection of
+      subnets whose default gateways are connected by an implicit router
+spec:
+  v4SubnetReference:
+    apiVersion: core.contrail.juniper.net/v1alpha1
+    kind: Subnet
+    namespace: external
+    name: purple
+  #routeTargetList:
+  # - target:64512:20012
+  exportRouteTargetList:
+    - target:64512:10003
+  importRouteTargetList:
+    - target:64512:10000
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+  namespace: external
+  annotations:
+    k8s.v1.cni.cncf.io/networks: purple
+spec:
+  containers: 
+    - name: client
+      image: 172.16.14.10:5000/webserver:0.1
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      command: [ 'sh']
+      args: ['-c','ip route delete default; ip route add default via 172.16.1.1; python3 /workingdir/webserver.py']
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod2
+  namespace: external
+  annotations:
+    k8s.v1.cni.cncf.io/networks: purple
+spec:
+  containers: 
+    - name: client
+      image: 172.16.14.10:5000/webserver:0.1
+      imagePullPolicy: Always
+      securityContext:
+        privileged: true
+      command: [ 'sh']
+      args: ['-c','ip route delete default; ip route add default via 172.16.1.1; python3 /workingdir/webserver.py']
+

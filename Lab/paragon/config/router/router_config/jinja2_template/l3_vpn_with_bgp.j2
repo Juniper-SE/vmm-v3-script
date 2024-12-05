@@ -1,0 +1,17 @@
+set interfaces {{interface}} unit {{vlan_id}} vlan-id {{vlan_id}}
+set interfaces {{interface}} unit {{vlan_id}} family inet address {{ipv4_address}}
+{% if ipv6_address %}
+set interfaces {{interface}} unit {{vlan_id}} family inet6 address {{ipv6_address}}
+{% endif %}
+set routing-instances {{vrf_name}} instance-type vrf
+set routing-instances {{vrf_name}} vrf-table-label
+set routing-instances {{vrf_name}} interface {{interface}}.{{vlan_id}}
+set routing-instances {{vrf_name}} vrf-target {{vrf_target}}
+set routing-instances {{vrf_name}} protocols bgp group to_site2 neighbor {{ipv4_peer}} family inet any
+set routing-instances {{vrf_name}} protocols bgp group to_site2 neighbor {{ipv4_peer}} peer-as {{peer_as}}
+set routing-instances {{vrf_name}} protocols bgp group to_site2 neighbor {{ipv4_peer}} local-as {{ local_as }}
+{% if ipv6_peer %}
+set routing-instances {{vrf_name}} protocols bgp group to_site2 neighbor {{ipv6_peer}} family inet6 any
+set routing-instances {{vrf_name}} protocols bgp group to_site2 neighbor {{ipv6_peer}} peer-as {{peer_as}}
+set routing-instances {{vrf_name}} protocols bgp group to_site2 neighbor {{ipv6_peer}} local-as {{ local_as }}
+{% endif %}

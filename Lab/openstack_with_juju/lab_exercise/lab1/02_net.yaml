@@ -1,0 +1,21 @@
+network:
+  ethernets:
+    eth1:
+       addresses: [ 172.16.11.1/24 ]
+       mtu: 9000
+    eth2:
+       addresses: [ 172.16.12.0/31 ]
+       mtu: 9000
+       routes:
+         - to: 172.16.255.1/32
+           via: 172.16.12.1
+           metric: 1
+    eth3:
+       dhcp4: false
+    eth4:
+       addresses: [ 172.16.13.1/24 ]
+  vlans:
+    vlan1:
+       addresses: [ 172.16.12.2/31]
+       id: 1
+       link: eth3

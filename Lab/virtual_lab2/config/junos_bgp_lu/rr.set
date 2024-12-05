@@ -1,0 +1,28 @@
+
+set version 20220615.145010_builder.r1265308
+set system root-authentication encrypted-password "$6$qFwSk$BN4MsXsQPgTz0tKGoOEO0wFMqx5AD3pcuVPs2F5wHSBIWC5CrZikOgJdFQCfqubEtqd7g1poRbK1YjyR4DQyO1"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$pH6AZ$Dtpnscvl8vakBT8zEWowujSUEFLzPxc/emdwr61nLMJerFqPPO8n48MqchMjH6lu/IDESXUH1lnGkrjaLIBwv0"
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/+8rkgOc76z0m7Cierw4qUs6bahYgQP4/hyPZGmb/mukCSn7ZvbUM27fX1nRbbP8Z0t+ruF8A5kP5jHOXILCTe2K5+JE9aHbkae5ztSwhxZSYxcSPtN0r8G/B57/4cw5QV7yKjSlQiLXf2EMfIt27/ZGeE402Tntz5v41wsj8C9PtBZvSMcgBWYu/HfE94ShSqsUNvg+FzKaVGhPB4mOzsApPF7Y/zopk7ADB6VkBdqUSblauU0a4aDy/3cwGR2NwOGXcszGzNYU4H6AlIsribpQPXkVs/v6b4NRHzAuKVk2FLLneeWsEKIqCZIWjzJj2ck4aWCM3NkoE86ndbRNyFaaxs67KpzPvPlAOwHU8gINyhzDfVi68xeiN9p8ybj3fI/Vw1W70i4wN2rL1PSupnnPNAX0Ijd9ulmhbAJyO+cjuoURLUR56EjJUYfddzRRRjQO0IMKNPDw0BFFxbt4gc1OnC6bJh2odHb/xbXaVCo361kz2IBoeZ3yFVpTcJH8= irzan@irzan-mbp"
+set system services ssh
+set system services netconf ssh
+set interfaces lo0 unit 0 family inet address 10.100.1.255/32
+set interfaces lo0 unit 0 family iso address 49.0001.0101.0000.1255.00
+set routing-options rib inet.3 static route 0.0.0.0/0 discard
+set routing-options rib inet6.3 static route ::/0 discard
+set routing-options router-id 10.100.1.255
+set routing-options autonomous-system 64512
+set protocols bgp group to_pe type internal
+set protocols bgp group to_pe local-address 10.100.1.255
+set protocols bgp group to_pe family inet any
+set protocols bgp group to_pe family inet-vpn any
+set protocols bgp group to_pe family inet6 labeled-unicast
+set protocols bgp group to_pe family inet6-vpn any
+set protocols bgp group to_pe cluster 10.100.1.255
+set protocols bgp group to_pe neighbor 10.100.1.1
+set protocols bgp group to_pe neighbor 10.100.1.2
+set protocols bgp group to_pe neighbor 10.100.1.3
+set protocols bgp group to_pe neighbor 10.100.1.4
+set protocols isis interface eth1 point-to-point
+set protocols isis interface lo.0

@@ -1,0 +1,219 @@
+#####################################################################
+# Select components to install
+
+# Main infra subcomponents
+install_kubernetes: true
+install_metallb: true
+
+# Install applications addons:
+install_addons: true
+install_addons_database: true
+
+# Install common infrastructure:
+#   kubernetes cluster, CNI, common services
+install_infra: true
+
+# Install Pathfinder product
+install_northstar: true
+
+# Install Pathfinder netflowd (optional)
+install_netflowd: true
+
+# Install Paragon UI
+install_paragon_ui: true
+
+# Install Insights product
+install_healthbot: true
+
+# Install EMS product
+install_ems: true
+
+# Install chrony NTP
+install_chrony: true
+
+# NGINX Ingress Controller (used for Pathfinder services, such as netflowd and pceserver)
+install_nginx_ingress: true
+
+#####################################################################
+# Required configuration values
+#
+# Configure virtual IP address for kubernetes API in multi master configuraiton.
+# For single master, use the address of the first master
+# kubernetes_master_address:
+
+# Configure ethernet interface for cluster internal communication
+# Defaults to default-ipv4 interface (i.e. target of default route)
+kubernetes_system_interface: '{{ default_interface }}'
+
+# Optionally allow scheduling of application workloads on master node
+allow_master_scheduling: true
+
+# LoadBalancer
+# List of IP address ranges or prefixes owned by metallb, e.g.:
+# metallb_addresses:
+#  - 10.0.0.1-10.0.0.20
+#  - 10.0.0.192/26
+metallb_addresses:
+  - 172.16.25.1-172.16.25.1
+  - 172.16.20.1-172.16.20.6
+
+# alternatively, for metallb in L3 (BGP) mode, enable the following:
+metallb_mode: l3
+metallb_asn: 65412
+metallb_peer_asn: 65450
+metallb_peer_address: 172.16.11.1
+
+# Ports to be checked on system if they are open or not
+port_list: 8080 6443 2379 2380 179 10250 8443 7005 80 443 7804 7000 4189 67 514 1114 4000 162 9345
+
+# NTP configuration, configure reachable NTP servers
+chrony_config_server:
+  - anyntp.juniper.net
+
+# Ingress Controller
+# service type and LoadBalancer settings
+ingress_service_type: LoadBalancer
+ingress_service_annotations: {}
+# ingress service config to preserve source ip. Valid values are Cluster(default) or Local.
+ingress_external_traffic_policy: Local
+#  metallb.universe.tf/allow-shared-ip: default
+
+# Fixed IP addresses for Web interface. The addresses must be in a pool
+# managed by MetalLB.
+ingress_vip:
+  - 172.16.25.1
+  - 172.16.20.1
+
+# Fixed IP address for device callback. This must be one of the addresses
+# assigned to the ingress controller
+callback_vip: 172.16.20.1
+
+# Fixed IPv6 address for device callback. This must be one of the addresses
+# assigned to the ingress controller
+callback_vip6: ''
+
+
+#####################################################################
+# Pathfinder application configuration
+
+northstar_image_pull_policy: IfNotPresent
+
+# Hostname of Pathfinder web server, must resolve to ingress_vip
+northstar_web_hostname: 172.16.25.1
+
+# Virtual IP address of PCEP server. The address must be in a pool managed
+# by MetalLB and must be different from ingress_vip
+# northstar_pceserver_vip: 10.0.0.2
+northstar_pceserver_vip: 172.16.20.6
+northstar_pceserver_replicas: 1
+northstar_pceserver_proxy: .
+
+
+# multus
+install_multus: true
+# if not specified multus_interface will be set to kubernetes default interface
+multus_interface: ''
+multus_bridge_name: macvlan-bridge
+# Static route for PCEserver and CRPD to the router
+# example:
+# multus_routes:
+#   - dst: 192.168.1.0/24 
+#     gateway: 2.2.2.1
+#   - dst: 192.168.2.0/24 
+#     gateway: 2.2.2.1  
+multus_routes:
+  - dst: ' '
+    gateway: ' '
+
+
+# set to true to enable PCEP MD5
+northstar_pceserver_md5_ip: ''
+
+
+# Virtual IP address of nginx-ingress-controller. The address must be in a pool managed
+# by MetalLB and must be different from ingress_vip
+# nginx_controller_vip: 10.0.0.2
+nginx_controller_vip: 172.16.20.2
+nginx_controller_replicas: 1
+nginx_service_annotations:
+  metallb.universe.tf/allow-shared-ip: nginx-ingress
+
+# northstar/netflowd
+# The netflowd service needs to be accessible from outside the cluster. This can be
+# accomplished by putting either nginx-ingress in-front of netflowd (default config), with
+# northstar_netflowd_proxy: true
+# or removing the northstar_netflowd_proxy line
+# and configuring the virtual IP address in northstar_netflowd_vip
+northstar_netflowd_service_type: LoadBalancer
+northstar_netflowd_traffic_policy: Local
+northstar_netflowd_vip: 172.16.20.5
+northstar_netflowd_replicas: 1
+
+# northstar/pcviewer (Pathfinder planner)
+# If pcviewer needs to be accessible from outside the cluster, configure
+# northstar_pcviewer_service_type: LoadBalancer
+# and configure virtual IP address in northstar_pcviewer_vip
+northstar_pcviewer_service_type: ClusterIP
+northstar_pcviewer_vip: ''
+
+# northstar migration
+northstar_db_migration_directory: /var/local/ns_db_migration
+
+# CRPD (BPG-LS peer)
+# Use PVC
+# crpd_use_pvc: "{{ install_rook }}"
+crpd_use_pvc: '{{ install_rook }}'
+crpd_pvc_storageclass: rook-cephfs
+
+# Autonomous System number
+crpd_autonomous_system: '64500'
+# set to true to enable BGP-LS MD5 from cRPDs
+crpd_md5_ip: ''
+# BGP md5 authentication key
+crpd_auth_key: northstar
+
+# List of BGP neighbors. The BGP neighbors need to be configured to allow
+# incoming connections from all nodes in the kubernetes cluster.
+# e.g.
+#crpd_neighbors:
+#  - 10.0.1.1
+crpd_neighbors:
+  - 172.16.14.254
+
+# Default Web admin password
+northstar_web_admin_password: ''
+
+# Optional flag to install debugutils
+install_northstar_debugutils: true
+
+# Pathfinder license
+northstar_license: |
+  expire_date=6/7/2024
+  usercount=5
+  viewercount=10
+  node_limit=250
+  card=micro_service
+  MAC=FF:EE:DD:CC:BB:AA
+  customer=MICRO_SERVICE
+  S-NS-PLNR-BSC=gWTqDmZKRnaCLgHaVYncKg
+  S-NS-PLNR-PRM=TWRhUihDeZLjFDXAeMhhcY
+  S-NS-SDN-BSC=ZIVamtZDhiHCLgHaVYncKg
+  S-NS-SDN-STD=LDYYjugBUpZYXMIjSbqaRj
+  S-NS-SDN-PRM=gdPdcxcSjjXjFWJPTUmeYU
+
+#####################################################################
+# Insights application configuration
+#
+healthbot_vip: 172.16.20.3
+healthbot_service_annotations:
+  metallb.universe.tf/allow-shared-ip: default
+
+healthbot_snmp_proxy_vip: 172.16.20.4
+
+# maximum time to wait for comonents to start up in minutes
+max_wait: 15
+
+#####################################################################
+redundant_registry: true
+user_registry_vip: 172.16.11.5
+config_loki_node: 172.16.11.4

@@ -1,0 +1,37 @@
+  bonds:
+    bond0:
+       mtu: 1400
+       addresses:
+         - 192.168.102.102/24
+       gateway4: 192.168.102.1
+       nameservers:
+           addresses: [ 172.16.13.0]
+       interfaces:
+         - eth1
+         - eth2
+       parameters:
+         mode: 802.3ad
+
+  bonds:
+    bond0:
+       interfaces:
+         - eth1
+         - eth2
+       macaddress:  56:68:a5:de:ad:08
+       parameters:
+         mode: 802.3ad
+         gratuitious-arp: 5
+       addresses:
+         - 192.168.102.18/24
+       gateway4: 192.168.102.1
+       nameservers:
+          addresses: [ 172.16.11.0 ]
+       mtu: 1350
+
+DC1 :
+spine1, 10.255.1.0, 65001
+spine2, 10.255.1.1, 65002
+
+DC2 :
+sw1, 10.255.2.5, 65106
+sw2, 10.255.2.6, 65107

@@ -1,0 +1,7 @@
+set interfaces {{ansible_host.interface}} unit {{ansible_host.vlan_id}} vlan-id {{ansible_host.vlan_id}}
+set interfaces {{ansible_host.interface}} unit {{ansible_host.vlan_id}} encapsulation vlan-bridge
+set routing-instances {{ansible_host.vrf_name}} instance-type evpn
+set routing-instances {{ansible_host.vrf_name}} interface {{ansible_host.interface}}.{{ansible_host.vlan_id}}
+set routing-instances {{ansible_host.vrf_name}} vrf-target {{ansible_host.vrf_target}}
+set routing-instances {{ansible_host.vrf_name}} protocols evpn
+set routing-instances {{ansible_host.vrf_name}} vlan-id none

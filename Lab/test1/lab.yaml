@@ -1,0 +1,185 @@
+---
+name: test1
+pod: 
+  type: vmm
+  # if your account can access vmm lab directly, then you can comment out jumpserver
+  #jumpserver: ttsv-shell110.juniper.net
+  #vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod39-vmm.englab.juniper.net
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  user: irzan
+  # adpassword: AnaMabokCoys
+  # vmmpassword: AnaMabokCoys
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  vsrx: images/junos-vsrx3-x86-64-23.4R1.9.qcow2
+  aos: images/aos_server_4.2.2-2.qcow2
+  aos_ztp: images/apstra-ztp-4.2.1-21.qcow2
+  aos_flow: images/apstra-flow-4.2.1-ubuntu-22.04-amd64-6.4.2.qcow2
+  vjunos_switch: images/vJunos-switch-23.4R1.10.qcow2
+  vjunos_router: images/vJunos-router-23.4R1.10.qcow2
+junos_login:
+  login: admin
+  password: pass01
+fabric:
+  subnet: 10.100.255.0/24
+  subnet6: fc00:dead:beef:aaaa::/64
+  topology:
+#   # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+#   # value for the field status:
+#   # bit 0 : inet
+#   # bit 1 : ipv6
+#   # bit 2 : iso
+#   # bit 3 : mpls
+#   # bit 4 : isis
+#   # bit 5 : rsvp
+#   # bit 6 : ldp
+#   # bit 7 : delay_measurement_rpm
+#   # 0x3d means enable family inet, iso and mpls, and enable protocol isis and rsvp
+#   # 0xbd means enable family inet, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+    - [ 0x17, r1, ge-0/0/1, r2, ge-0/0/1 ]
+    - [ 0x17, r1, ge-0/0/2, r3, ge-0/0/0 ]
+    - [ 0x17, r2, ge-0/0/2, r3, ge-0/0/1 ]
+# wg:
+  # gw_ip: 192.168.199.0/31
+  # ws_ip: 192.168.199.1/31
+  # prefix_allowed:
+  # - 172.16.10.0/24
+  # - 172.16.11.0/24 
+  # - 172.16.12.0/24 
+  # - 172.16.13.0/24 
+  # - 172.16.255.0/24
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24
+          # static:
+          # - to: 172.16.11.0/24
+          #   via: 172.16.10.254
+          # - to: 172.16.12.0/24
+          #   via: 172.16.10.254
+          # - to: 172.16.13.0/24
+          #   via: 172.16.10.254
+        dhcp_range: 172.16.10.10-172.16.10.254
+      # em2:
+      #   bridge: ext
+      #   family:
+      #     inet: 172.16.15.1/24
+      #     inet6: fc00:dead:beef:ff15::1/64
+      # em3:
+      #   bridge: ext1
+      #   mtu: 9000
+      #   family:
+      #     inet: 172.16.16.254/24
+      #     inet6: fc00:dead:beef:ff16::FFFF/64
+      # em4:
+      #   bridge: vxgw
+      #   mtu: 9000
+  r1:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.201/24
+      lo0:
+        family:
+          inet: 192.168.255.1
+          inet6: fc00:dead:beef:ffff::1
+          iso: 49.0001.0101.0000.1001.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: lan1
+        family:
+          inet: 192.168.101.1/24
+          inet6: fc00:dead:beef:a101::1/64
+        protocol:
+          isis: passive
+  r2:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.201/24
+        protocol:
+          isis: passive
+      lo0:
+        family:
+          inet: 192.168.255.2
+          iso: 49.0001.0101.0000.1002.00
+          inet6: fc00:dead:beef:ffff::2
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: lan2
+        family:
+          inet: 192.168.102.1/24
+          inet6: fc00:dead:beef:a102::1/64
+        protocol:
+          isis: passive
+  r3:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.201/24
+      lo0:
+        family:
+          inet: 192.168.255.3
+          iso: 49.0001.0101.0000.1003.00
+          inet6: fc00:dead:beef:ffff::3
+        protocol:
+          isis: passive
+  pc1:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.11/24
+      em1: 
+        bridge: lan1
+        family:
+          inet: 192.168.101.11/24
+          gateway4: 192.168.101.1
+          inet6: fc00:dead:beef:a101::1000:1/64
+          gateway6: fc00:dead:beef:a101::1
+  pc2:
+    type: pcsmall
+    os: ubuntu
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.12/24
+      em1: 
+        bridge: lan2
+        family:
+          inet: 192.168.102.11/24
+          gateway4: 192.168.102.1
+          inet6: fc00:dead:beef:a102::1000:1/64
+          gateway6: fc00:dead:beef:a102::1
+  

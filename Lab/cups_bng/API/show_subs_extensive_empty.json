@@ -1,0 +1,22 @@
+{
+    "subscribers-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/24.2R0/junos-subscribers"}, 
+        "subscriber" : [
+        {
+            "attributes" : {"junos:style" : "count"}, 
+            "number-of-subscribers" : [
+            {
+                "data" : "0"
+            }
+            ], 
+            "number-of-active-subscribers" : [
+            {
+                "data" : "0"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}
