@@ -1593,19 +1593,27 @@ def create_hd2(d1):
 	os_type=['ubuntu','ubuntu2','centos','debian']
 	dest_dir=d1['pod']['home_dir'] +'/vm/' + d1['name'] + "/"
 	vm_with_hd2 = {}
-	retval=""
+	vm_with_hd3 = {}
 	for i in d1['vm'].keys():
 		if d1['vm'][i]['os'] in os_type:
 			if 'hd2' in d1['vm'][i].keys():
 				vm_with_hd2[i]=d1['vm'][i]['hd2']
+			if 'hd3' in d1['vm'][i].keys():
+				vm_with_hd3[i]=d1['vm'][i]['hd3']
+	cmd_list=""
 	if vm_with_hd2:
-		cmd_list=""
 		for i in vm_with_hd2.keys():
 			ds=vm_with_hd2[i]
-			str_tmp1 = f"qemu-img create -f vmdk {dest_dir}{i}-disk2.img {ds}"
+			str_tmp1 = f"qemu-img create -f vmdk {dest_dir}{i}_disk2.img {ds}"
 			cmd_list += f"{str_tmp1};"
-		retval=cmd_list
-	return retval
+	if vm_with_hd3:
+		for i in vm_with_hd3.keys():
+			ds=vm_with_hd3[i]
+			str_tmp1 = f"qemu-img create -f vmdk {dest_dir}{i}_disk3.img {ds}"
+			cmd_list += f"{str_tmp1};"
+	#print("create disk2 and disk3")
+	#print(cmd_list)
+	return cmd_list
 		
 def start(d1):
 	if d1['pod']['type'] == 'vmm':
@@ -1615,6 +1623,8 @@ def start(d1):
 		print('-----')
 		print("stop and unbind the existing topology")
 		cmd1=create_hd2(d1)
+		print("create hd2/hd3 ")
+		#print(cmd1)
 		if cmd1:
 			s1,s2,s3=ssh.exec_command(cmd1)
 			for i in s2.readlines():
@@ -1735,16 +1745,30 @@ def create_lab_config(d1):
 		path1 = f"{d1['pod']['home_dir']}/vm/{d1['name']}/{i}.conf"
 		#print(f"path1 ")
 		dsk2 = f"{d1['pod']['home_dir']}/vm/{d1['name']}/{i}_disk2.img"
+		dsk3 = f"{d1['pod']['home_dir']}/vm/{d1['name']}/{i}_disk3.img"
 		if not d2['vm']:
 			if d1['vm'][i]['os'] == 'pa2':
 				d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,  'install':path1, 'intf':{}}}
 			else:
-				d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk, 'install':path1, 'intf':{}}}
+				if 'hd2' in d1['vm'][i].keys():
+					if 'hd3' in d1['vm'][i].keys():
+						print(f"vm ${i} has hd3")
+						d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}}
+					else:
+						d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}}
+				else:
+					d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk, 'install':path1, 'intf':{}}}
 		else:
 			if d1['vm'][i]['os'] == 'pa2':
 				d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'disk2': dsk2,'install':path1,'intf':{}}
 			else:
-				d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'install':path1,'intf':{}}
+				if 'hd2' in d1['vm'][i].keys():
+					if 'hd3' in d1['vm'][i].keys():
+						d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}
+					else:
+						d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}
+				else:
+					d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'install':path1,'intf':{}}
 		intf_list={}
 		#if d1['vm'][i]['type'] in param1.pc_type:
 		k = 0

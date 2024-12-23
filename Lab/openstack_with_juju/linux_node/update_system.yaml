@@ -16,27 +16,64 @@
       upgrade: dist
       cache_valid_time: 3600
       force_apt_get: true
-  - name: install nfs server
-    when: inventory_hostname in 'node4'
+- name: install and configure OS node
+  hosts:
+  - node0
+  - node1
+  - node2
+  - node3
+  become: yes
+  become_method: sudo
+  vars:
+    intf: "{{ ansible_default_ipv4.interface }}"
+    intf_data:
+      "ip_address": "{{ansible_default_ipv4.address}}/{{ansible_default_ipv4.prefix}}"
+      "gateway" : "{{ansible_default_ipv4.gateway}}"
+  tasks:
+  - name: installing openvswitch
     apt:
-      name: nfs-kernel-server
+      name: "{{ item }}"
       state: present
-  - name: create directory
-    when: inventory_hostname in 'node4'
-    file:
-      path: /media/nfsshare
-      mode: 0777
-      state: directory
-      owner: nobody
-      group: nogroup
-  - name: add into /etc/exports
-    when: inventory_hostname in 'node4'
-    blockinfile:
-      state: present
-      insertafter: EOF
-      dest: /etc/exports
-      marker: "#<!-- add services ANSIBLE MANAGED BLOCK -->"
-      content : |
-        /media/nfsshare *(rw,sync,no_subtree_check)
-        /media/nfsshare/webserver *(rw,sync,no_subtree_check)
-
+      update_cache: yes
+    loop:
+      - openvswitch-switch
+      - openvswitch-common
+  - name: change network configuration
+    copy:
+      dest: /etc/netplan/01_net.yaml
+      content: |
+        network:
+          ethernets:
+            {{intf}}:
+              mtu: 9000
+              dhcp4: false
+          bridges:
+            br0:
+              openvswitch: {}
+              interfaces:
+                - {{intf}}
+              addresses:
+                - {{intf_data.ip_address}}
+              routes:
+              - to: default
+                via: {{intf_data.gateway}}
+              nameservers:
+                addresses:
+                  - 10.49.32.95
+                  - 10.49.32.97
+- name: reboot
+  hosts:
+  - node0
+  - node1
+  - node2
+  - node3
+  - client
+  - juju
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: reboot node
+    ansible.builtin.reboot:
+      msg: "Rebooting machine in 5 seconds"
+  
+  

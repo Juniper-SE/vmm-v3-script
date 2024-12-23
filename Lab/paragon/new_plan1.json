@@ -84,8 +84,8 @@
             "name": "pe1",
             "node_type": "paper-node",
             "profiles": [],
-            "serial": "VM67511B95AC",
-            "site_id": "14279aab-80c8-4433-ab73-1416f1358b28"
+            "serial": "VM675227CA5E",
+            "site_id": "df7e0372-d15d-46ae-b3f1-01ee980bd08b"
           },
           {
             "hostname": "pe2",
@@ -137,8 +137,8 @@
             "name": "pe2",
             "node_type": "paper-node",
             "profiles": [],
-            "serial": "VM67511B9235",
-            "site_id": "e4785ccf-462d-4262-bd05-501711d44c1d"
+            "serial": "VM675227CA43",
+            "site_id": "ad4946d5-90fb-4fda-9112-daa49d4b6be1"
           },
           {
             "hostname": "pe3",
@@ -191,8 +191,8 @@
             "name": "pe3",
             "node_type": "paper-node",
             "profiles": [],
-            "serial": "VM67511B997C",
-            "site_id": "47f961bb-2238-47fd-b727-35e7828c5adb"
+            "serial": "VM675227CA82",
+            "site_id": "0f25fa33-1936-4780-a106-dd4020fe4b6c"
           },
           {
             "hostname": "p1",
@@ -280,8 +280,8 @@
             "name": "p1",
             "node_type": "paper-node",
             "profiles": [],
-            "serial": "VM67511B901F",
-            "site_id": "1f690acd-0a97-4c28-83fb-4a072b9d5612"
+            "serial": "VM675227CDA5",
+            "site_id": "26465ae4-66a5-4957-82c1-729c1d5a4166"
           },
           {
             "hostname": "p2",
@@ -355,8 +355,8 @@
             "name": "p2",
             "node_type": "paper-node",
             "profiles": [],
-            "serial": "VM67511B9406",
-            "site_id": "a475a1e3-f8a0-40ed-b028-e3ac62e87f91"
+            "serial": "VM675227CBD8",
+            "site_id": "0f719068-4e46-4f22-bb05-573155d48806"
           }
         ]
       },

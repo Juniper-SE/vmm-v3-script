@@ -1,5 +1,5 @@
 ---
-name: net1
+name: test4
 pod: 
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net

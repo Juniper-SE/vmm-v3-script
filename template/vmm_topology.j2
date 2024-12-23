@@ -45,6 +45,9 @@ config "{{name}}" {
        {% if vm[v].disk2 -%}
        disk "hdb" "{{vm[v].disk2}}";
        {% endif -%}
+       {% if vm[v].disk3 -%}
+       disk "hdc" "{{vm[v].disk3}}";
+       {% endif -%}
        ncpus {{vm[v]['type'].ncpus }};
        memory {{vm[v]['type'].memory }};
        setvar {{vm[v]['type'].setvar }};

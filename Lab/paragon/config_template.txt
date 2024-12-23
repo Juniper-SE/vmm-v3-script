@@ -1,33 +1,38 @@
 configure
-{% if interfaces %}
-{% for intf in interfaces %}
-set groups template1 protocols isis interface {{intf}}.0 point-to-point
-set groups template1 protocols isis interface {{intf}}.0 family inet bfd-liveness-detection minimum-interval 100
-set groups template1 protocols rsvp interface {{intf}}.0
-set groups template1 protocols lldp interface {{intf}}.0
-set groups template1 interface {{intf}} mtu 9000
-{% endfor %}
-{% endif %}
+set groups template1 policy-options policy-statement to_isis term 1 from protocol static
+set groups template1 policy-options policy-statement to_isis term 1 from route-filter 0.0.0.0/0 exact
+set groups template1 policy-options policy-statement to_isis term 1 then accept
+set groups template1 routing-options static route 0.0.0.0/0 next-hop 10.100.2.254
+set groups template1 protocols isis export to_isis
 set apply-groups template1
 commit
 
+configure
+set groups template2 policy-options policy-statement TE term 1 from family traffic-engineering
+set groups template2 policy-options policy-statement TE term 1 then accept
+set groups template2 routing-options autonomous-system {{ ASN }}
+set groups template2 protocols bgp group bgpls type internal
+set groups template2 protocols bgp group bgpls description "Peering to Paragon Automation"
+set groups template2 protocols bgp group bgpls local-address {{ localAddr }}
+set groups template2 protocols bgp group bgpls passive
+set groups template2 protocols bgp group bgpls family traffic-engineering unicast
+set groups template2 protocols bgp group bgpls export TE
+set groups template2 protocols bgp group bgpls allow 0.0.0.0/0
+set groups template2 protocols mpls traffic-engineering database import policy TE
+set apply-groups template2
+commit
+
+configure
+{% for intf in interfaces %}
+set groups template3 protocols isis interface {{intf}} point-to-point
+{% endfor %}
+set apply-groups template3
+commit
 
 
 configure
-set groups template_p1 policy-options policy-statement TE term 1 from family traffic-engineering
-set groups template_p1 policy-options policy-statement TE term 1 then accept
-set groups template_p1 routing-options autonomous-system {{ ASN }}
-set groups template_p1 protocols bgp group bgpls type internal
-set groups template_p1 protocols bgp group bgpls description "Peering to Paragon Automation"
-set groups template_p1 protocols bgp group bgpls local-address {{ localAddr }}
-set groups template_p1 protocols bgp group bgpls passive
-set groups template_p1 protocols bgp group bgpls family traffic-engineering unicast
-set groups template_p1 protocols bgp group bgpls export TE
-set groups template_p1 protocols bgp group bgpls allow 0.0.0.0/0
-set groups template_p1 protocols mpls traffic-engineering database import policy TE
-set groups template1_p1 routing-options static route 172.16.11.0/24 next-hop 10.100.2.254
-set groups template1_p1 policy-options policy-statement from_static term 1 from protocol static
-set groups template1_p1 policy-options policy-statement from_static term 1 then accept
-set groups template1_p1 protocols isis export from_static
-set apply-groups template1_p1
+{% for intf in interfaces %}
+set groups template3 protocols lldp interface {{intf}}
+{% endfor %}
+set apply-groups template3
 commit

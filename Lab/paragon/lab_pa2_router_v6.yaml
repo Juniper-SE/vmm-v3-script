@@ -4,7 +4,7 @@ pod:
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod26-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan
@@ -36,15 +36,15 @@ junos_login:
 #   prefix_allowed:
 #   - 172.16.11.0/24 x
 fabric:
-  #subnet: 10.100.0.0/24
+  subnet: 10.1.100.0/24
   topology:
-    - [ 0x0, pe1, ge-0/0/3, p1, ge-0/0/2 ]
-    - [ 0x0, pe1, ge-0/0/4, p2, ge-0/0/2 ]
-    - [ 0x0, pe2, ge-0/0/3, p1, ge-0/0/3 ]
-    - [ 0x0, pe2, ge-0/0/4, p2, ge-0/0/3 ]
-    - [ 0x0, pe3, ge-0/0/3, p1, ge-0/0/4 ]
-    - [ 0x0, pe3, ge-0/0/4, p2, ge-0/0/4 ]
-    - [ 0x0, p1, ge-0/0/5, p2, ge-0/0/5 ]
+    - [ 0x7d, pe1, ge-0/0/3, p1, ge-0/0/2 ]
+    - [ 0x7d, pe1, ge-0/0/4, p2, ge-0/0/2 ]
+    - [ 0x7d, pe2, ge-0/0/3, p1, ge-0/0/3 ]
+    - [ 0x7d, pe2, ge-0/0/4, p2, ge-0/0/3 ]
+    - [ 0x7d, pe3, ge-0/0/3, p1, ge-0/0/4 ]
+    - [ 0x7d, pe3, ge-0/0/4, p2, ge-0/0/4 ]
+    - [ 0x7d, p1, ge-0/0/5, p2, ge-0/0/5 ]
 #   # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
 #   # value for the field status:
 #   # bit 0 : ipv4
@@ -107,7 +107,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    mgmt_instc: 0
+    mgmt_instc: 1
     mgmt_dhcp: 1
     #pcep: yes
     # bgpls:
@@ -119,12 +119,12 @@ vm:
         family:
           inet: 172.16.10.1/24
           gateway4: 172.16.10.254
-      # lo0:
-      #   family:
-      #     inet: 10.100.1.1/32
-      #     iso: 49.0001.0101.0000.1001.00
-      #   protocol:
-      #     isis: passive
+      lo0:
+        family:
+          inet: 10.1.255.2/32
+          iso: 49.0001.0100.0125.5001.00
+        protocol:
+          isis: passive
       ge-0/0/0:
         bridge: pe1ge0
       ge-0/0/1:
@@ -135,7 +135,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    mgmt_instc: 0
+    mgmt_instc: 1
     mgmt_dhcp: 1
     #pcep: yes
     # bgpls:
@@ -147,12 +147,12 @@ vm:
         family:
           inet: 172.16.10.2/24
           gateway4: 172.16.10.254
-      # lo0:
-      #   family:
-      #     inet: 10.100.1.2/32
-      #     iso: 49.0001.0101.0000.1002.00
-      #   protocol:
-      #     isis: passive
+      lo0:
+        family:
+          inet: 10.1.255.2/32
+          iso: 49.0001.0100.0125.5002.00
+        protocol:
+          isis: passive
       ge-0/0/0:
         bridge: pe2ge0
         ## mtu: 9000
@@ -164,7 +164,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    mgmt_instc: 0
+    mgmt_instc: 1
     mgmt_dhcp: 1
     # pcep: yes
     # bgpls:
@@ -176,12 +176,12 @@ vm:
         family:
           inet: 172.16.10.3/24
           gateway4: 172.16.10.254
-      # lo0:
-      #   family:
-      #     inet: 10.100.1.5/32
-      #     iso: 49.0001.0101.0000.1005.00
-      #   protocol:
-      #     isis: passive
+      lo0:
+        family:
+          inet: 10.1.255.3/32
+          iso: 49.0001.0100.0125.5003.00
+        protocol:
+          isis: passive
       ge-0/0/0:
         bridge: pe3ge0
         ## mtu: 9000
@@ -195,7 +195,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    mgmt_instc: 0
+    mgmt_instc: 1
     mgmt_dhcp: 1
     #pcep: yes
     # bgpls:
@@ -207,12 +207,12 @@ vm:
         family:
           inet: 172.16.10.4/24
           gateway4: 172.16.10.254
-      # lo0:
-      #   family:
-      #     inet: 10.100.1.3/32
-      #     iso: 49.0001.0101.0000.1003.00
-      #   protocol:
-      #     isis: passive
+      lo0:
+        family:
+          inet: 10.1.255.4/32
+          iso: 49.0001.0100.0125.5004.00
+        protocol:
+          isis: passive
       ge-0/0/0:
         bridge: p1ge0
         ## mtu: 9000
@@ -229,7 +229,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    mgmt_instc: 0
+    mgmt_instc: 1
     mgmt_dhcp: 1
     #pcep: yes
     # bgpls:
@@ -241,12 +241,12 @@ vm:
         family:
           inet: 172.16.10.5/24
           gateway4: 172.16.10.254
-      # lo0:
-      #   family:
-      #     inet: 10.100.1.4/32
-      #     iso: 49.0001.0101.0000.1004.00
-      #   protocol:
-      #     isis: passive
+      lo0:
+        family:
+          inet: 10.1.255.5/32
+          iso: 49.0001.0100.0125.5005.00
+        protocol:
+          isis: passive
       # ge-0/0/0:
       #   bridge: p2ge0
       #   ## mtu: 9000
