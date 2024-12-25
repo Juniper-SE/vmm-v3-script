@@ -45,7 +45,6 @@
         network:
           ethernets:
             {{intf}}:
-              mtu: 9000
               dhcp4: false
           bridges:
             br0:

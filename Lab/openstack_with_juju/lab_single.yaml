@@ -18,10 +18,24 @@ images:
   #ubuntu: images/ubuntu22.04.qcow2
   ubuntu: images/ubuntu22.04.qcow2
   desktop: images/desktop.qcow2
+  #vjunos_switch: images/vJunos-switch-23.4R2-S2.1.qcow2
   # vmx_re: images/vmx/junos-vmx-x86-64-22.2R1.9.vmdk
 junos_login:
   login: admin
   password: pass01
+wg:
+  gw_ip: 192.168.199.0/31;fc00:dead:beef:ffcc::1000:0/127
+  ws_ip: 192.168.199.1/31;fc00:dead:beef:ffcc::1000:1/127
+  prefix_allowed:
+  # - 172.16.10.0/24
+  # - 172.16.11.0/24 
+  # - 172.16.12.0/24 
+  # - 172.16.13.0/24 
+  - 172.16.11.0/24
+  - 192.168.111.0/24
+  - 192.168.112.0/24
+  - 192.168.113.0/24
+  - fc00:dead:beef::/56
 vm:
   gw:
     type: gw
@@ -38,9 +52,21 @@ vm:
         bridge: lan2
         family:
           inet: 172.16.12.1/24
+          inet6: fc00:dead:beef:a012::1/64
         dhcp_range: 172.16.12.100-172.16.12.254
-      em4: 
-        bridge: lan3
+      # em3: 
+      #   bridge: lan3
+  # sw1:
+  #   type: vjunos_switch
+  #   os: vjunos_switch
+  #   ztp: yes
+  #   interfaces:
+  #     mgmt: 
+  #       bridge: lan1
+  #       family:
+  #         inet: 172.16.11.120/24 
+  #     ge-0/0/0: 
+  #       bridge: d1s1p0
   client:
     type: pcsmall
     os: ubuntu
@@ -70,9 +96,8 @@ vm:
         bridge: lan2
         family:
           inet: 172.16.12.100/24
+          inet6: fc00:dead:beef:a012::100/64
           gateway4: 172.16.12.1
-      em1: 
-        bridge: lan4
   node0:
     type: pchpv1
     os: ubuntu

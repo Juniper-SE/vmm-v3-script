@@ -1,0 +1,6 @@
+ovn-chassis:
+   bridge-interface-mappings: br0:eth0
+   ovn-bridge-mappings: physnet1:br0
+neutron-api:
+   neutron-security-groups: true
+   flat-network-providers: physnet1
