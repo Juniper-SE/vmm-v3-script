@@ -1,0 +1,23 @@
+---
+- name: Get Device Information
+  hosts:
+  - all
+  connection: juniper.device.pyez
+  gather_facts: no
+
+  vars:
+    user: admin
+    playbook_dir: "./"
+
+  vars_files:
+    - vault-vars.yaml
+
+  tasks:
+    - name: Retrieve facts from Junos devices
+      juniper.device.facts:  
+        savedir: "{{ playbook_dir }}"
+
+    - name: Get hardware inventory
+      juniper.device.command:
+        commands: "show chassis hardware"
+        dest_dir: "{{ playbook_dir }}"

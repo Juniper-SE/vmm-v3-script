@@ -1,0 +1,36 @@
+set groups evpn1 routing-options autonomous-system 4200000001
+set groups evpn1 protocols bgp group to_rr type internal
+set groups evpn1 protocols bgp group to_rr local-address 192.168.255.14
+set groups evpn1 protocols bgp group to_rr family evpn signaling
+set groups evpn1 protocols bgp group to_rr neighbor 192.168.255.1
+set groups evpn1 protocols bgp group to_rr neighbor 192.168.255.2
+set apply-groups evpn1
+
+
+set groups evpn1 interfaces ge-0/0/0 flexible-vlan-tagging
+set groups evpn1 interfaces ge-0/0/0 mtu 9000
+set groups evpn1 interfaces ge-0/0/0 encapsulation flexible-ethernge-services
+set groups evpn1 interfaces ge-0/0/0 unit 101 vlan-id 101
+set groups evpn1 interfaces ge-0/0/0 unit 101 family inet address 172.16.255.6/31
+set groups evpn1 interfaces ge-0/0/0 unit 101 family inet6 address fc00:dead:beef:ffff::6/127
+
+set groups evpn1 policy-options policy-statement from_evpn term 1 from protocol evpn
+set groups evpn1 policy-options policy-statement from_evpn term 1 then accept
+set groups evpn1 routing-instances cust1 instance-type vrf
+set groups evpn1 routing-instances cust1 protocols bgp group to_ce3 export from_evpn
+set groups evpn1 routing-instances cust1 protocols bgp group to_ce3 neighbor fc00:dead:beef:ffff::7 peer-as 4200001004
+set groups evpn1 routing-instances cust1 protocols bgp group to_ce3 neighbor 172.16.255.7 peer-as 4200001004
+set groups evpn1 routing-instances cust1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups evpn1 routing-instances cust1 interface ge-0/0/0.101
+set groups evpn1 routing-instances cust1 vrf-target target:1000:101
+set groups evpn1 routing-instances cust1 vrf-table-label
+
+
+set groups evpn1 interfaces ge-0/0/0 unit 113 encapsulation vlan-bridge
+set groups evpn1 interfaces ge-0/0/0 unit 113 vlan-id 113
+set groups evpn1 routing-instances evpn1 instance-type mac-vrf
+set groups evpn1 routing-instances evpn1 protocols evpn
+set groups evpn1 routing-instances evpn1 service-type vlan-based
+set groups evpn1 routing-instances evpn1 vrf-target target:2000:111
+set groups evpn1 routing-instances evpn1 vlans vlan113 vlan-id 113
+set groups evpn1 routing-instances evpn1 vlans vlan113 interface et-0/0/0.113

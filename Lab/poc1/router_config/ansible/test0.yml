@@ -1,0 +1,14 @@
+---
+- name: Get Device Facts
+  hosts: all
+  connection: local
+  gather_facts: no
+    
+  tasks:
+    - name: Retrieve facts from a Junos device
+      juniper.device.facts:
+        savedir: "{{ playbook_dir }}"
+    - name: Print version
+      ansible.builtin.debug:
+        var: junos.version
+
