@@ -1,0 +1,1286 @@
+{
+  "customer_id": "fc1a57ed-d6df-11ef-a61e-2a82ff2a4702",
+  "design_id": "infrastructure",
+  "design_version": "0.13.25",
+  "fh_config": {
+    "edited-by": "irzan@juniper.net",
+    "errors": "failed to render template infrastructure_v0.13.25_junos.jinja2 for service order fc1a57ed-d6df-11ef-a61e-2a82ff2a4702_NIP1 for target network: [POST /internal/configtemplates/{app_id}/{template_id}/render][400] createrender_template_internal default  &{Detail:TemplateError: list object has no element 1}",
+    "status": "transform_failed"
+  },
+  "infrastructure_ntw": {
+    "default_interface_profiles": [],
+    "default_node_profiles": [
+      "DP1"
+    ],
+    "interface_profiles": {
+      "interface_profile": [
+        {
+          "isis": {
+            "level": "level1-2"
+          },
+          "ldp": {
+            "ldp_synchronization": true
+          },
+          "name": "interface_profile_WAN_1",
+          "rsvp": {},
+          "templates": []
+        },
+        {
+          "isis": {
+            "level": "level1-2"
+          },
+          "name": "Interface_profile_LAN1",
+          "templates": []
+        }
+      ]
+    },
+    "network_nodes": {
+      "network_node": [
+        {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf57f5c00",
+          "hostname": "pe1",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.1/31"
+                },
+                "link": "link_p1_pe1",
+                "name": "ge-0/0/1",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.9/31"
+                },
+                "link": "link_p2_pe1",
+                "name": "ge-0/0/2",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to agent1",
+                "ipv4_address": {
+                  "explicit": "10.1.11.1/24"
+                },
+                "name": "ge-0/0/3",
+                "profiles": [
+                  "Interface_profile_LAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.1"
+          },
+          "mac_address": "2c:6b:f5:7f:5c:00",
+          "model": "vMX",
+          "name": "pe1",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Physical stage 'modify' workflow failed",
+                "state_info": {
+                  "state": "node-state-onboard-failed"
+                },
+                "time": "2025-01-20T05:16:19.739639+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:15:05.791867+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:15:02.548296+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:14:59.918284+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:14:57.426227+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:14:53.923334+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:14:36.825714+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:14:36.486510+00:00"
+              },
+              {
+                "reason": "Planned site 46fc6647-2e0e-45e0-bfd3-cdd352585101 and actual site 46fc6647-2e0e-45e0-bfd3-cdd352585101 matched for node pe1",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:14:36.117014+00:00"
+              }
+            ],
+            "state_info": {
+              "onboard_failed": {
+                "message": "Physical stage 'modify' workflow failed",
+                "phys_stage": {
+                  "sub_state": "phys-modify"
+                },
+                "stage": "stage-phys"
+              },
+              "state": "node-state-onboard-failed"
+            },
+            "subsystems": {
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [],
+          "serial": "VM678DD29CF0",
+          "site_id": "46fc6647-2e0e-45e0-bfd3-cdd352585101"
+        },
+        {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf52b7500",
+          "hostname": "pe2",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.3/31"
+                },
+                "link": "link_p1_pe2",
+                "name": "ge-0/0/1",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.11/31"
+                },
+                "link": "link_p2_pe2",
+                "name": "ge-0/0/2",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to agent2",
+                "ipv4_address": {
+                  "explicit": "10.1.12.1/24"
+                },
+                "name": "ge-0/0/3",
+                "profiles": [
+                  "Interface_profile_LAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.2"
+          },
+          "mac_address": "2c:6b:f5:2b:75:00",
+          "model": "vMX",
+          "name": "pe2",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Physical stage 'modify' workflow failed",
+                "state_info": {
+                  "state": "node-state-onboard-failed"
+                },
+                "time": "2025-01-20T05:18:11.403906+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:58.299318+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:55.519279+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:53.157500+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:49.645235+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:46.818059+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:31.619068+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:31.267016+00:00"
+              },
+              {
+                "reason": "Planned site ee726adb-d90a-41c7-b525-b118799bfd13 and actual site ee726adb-d90a-41c7-b525-b118799bfd13 matched for node pe2",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:16:30.907906+00:00"
+              }
+            ],
+            "state_info": {
+              "onboard_failed": {
+                "message": "Physical stage 'modify' workflow failed",
+                "phys_stage": {
+                  "sub_state": "phys-modify"
+                },
+                "stage": "stage-phys"
+              },
+              "state": "node-state-onboard-failed"
+            },
+            "subsystems": {
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [],
+          "serial": "VM678DD29B5D",
+          "site_id": "ee726adb-d90a-41c7-b525-b118799bfd13"
+        },
+        {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf5285700",
+          "hostname": "pe",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.5/31"
+                },
+                "link": "link_p1_pe3",
+                "name": "ge-0/0/1",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.13/31"
+                },
+                "link": "link_p2_pe3",
+                "name": "ge-0/0/2",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to agent3",
+                "ipv4_address": {
+                  "explicit": "10.1.13.1/24"
+                },
+                "name": "ge-0/0/3",
+                "profiles": [
+                  "Interface_profile_LAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.3"
+          },
+          "mac_address": "2c:6b:f5:28:57:00",
+          "model": "vMX",
+          "name": "pe3",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Physical stage 'modify' workflow failed",
+                "state_info": {
+                  "state": "node-state-onboard-failed"
+                },
+                "time": "2025-01-20T05:21:04.847048+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:51.019811+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:47.867265+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:45.151025+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:42.604995+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:39.467677+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:23.971073+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:23.613771+00:00"
+              },
+              {
+                "reason": "Planned site 95684dae-bf84-477c-9a33-69a34815ece3 and actual site 95684dae-bf84-477c-9a33-69a34815ece3 matched for node pe3",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:19:23.213772+00:00"
+              }
+            ],
+            "state_info": {
+              "onboard_failed": {
+                "message": "Physical stage 'modify' workflow failed",
+                "phys_stage": {
+                  "sub_state": "phys-modify"
+                },
+                "stage": "stage-phys"
+              },
+              "state": "node-state-onboard-failed"
+            },
+            "subsystems": {
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [],
+          "serial": "VM678DD29995",
+          "site_id": "95684dae-bf84-477c-9a33-69a34815ece3"
+        },
+        {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf544e200",
+          "hostname": "p1",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.6/31"
+                },
+                "link": "link_p1_p1",
+                "name": "ge-0/0/0",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.0/31"
+                },
+                "link": "link_p1_pe1",
+                "name": "ge-0/0/1",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.2/31"
+                },
+                "link": "link_p1_pe2",
+                "name": "ge-0/0/2",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.4/31"
+                },
+                "link": "link_p1_pe3",
+                "name": "ge-0/0/3",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PA2",
+                "ipv4_address": {
+                  "explicit": "10.100.2.1/24"
+                },
+                "name": "ge-0/0/4",
+                "profiles": [
+                  "Interface_profile_LAN1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.4"
+          },
+          "mac_address": "2c:6b:f5:44:e2:00",
+          "model": "vMX",
+          "name": "p1",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Physical stage 'modify' workflow failed",
+                "state_info": {
+                  "state": "node-state-onboard-failed"
+                },
+                "time": "2025-01-20T05:22:56.642027+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:43.083872+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:40.080971+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:37.485195+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:34.949612+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:32.319851+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:17.409108+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:17.050211+00:00"
+              },
+              {
+                "reason": "Planned site b81ef51e-c21a-44d4-b63c-1186cafa4588 and actual site b81ef51e-c21a-44d4-b63c-1186cafa4588 matched for node p1",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:21:16.663986+00:00"
+              }
+            ],
+            "state_info": {
+              "onboard_failed": {
+                "message": "Physical stage 'modify' workflow failed",
+                "phys_stage": {
+                  "sub_state": "phys-modify"
+                },
+                "stage": "stage-phys"
+              },
+              "state": "node-state-onboard-failed"
+            },
+            "subsystems": {
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [],
+          "serial": "VM678DD29A7A",
+          "site_id": "b81ef51e-c21a-44d4-b63c-1186cafa4588"
+        },
+        {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf59c3700",
+          "hostname": "p2",
+          "installation": {
+            "duration": 20
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.7/31"
+                },
+                "link": "link_p1_p1",
+                "name": "ge-0/0/0",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.8/31"
+                },
+                "link": "link_p2_pe1",
+                "name": "ge-0/0/1",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.10/31"
+                },
+                "link": "link_p2_pe2",
+                "name": "ge-0/0/2",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.12/31"
+                },
+                "link": "link_p2_pe3",
+                "name": "ge-0/0/3",
+                "profiles": [
+                  "interface_profile_WAN_1"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.5"
+          },
+          "mac_address": "2c:6b:f5:9c:37:00",
+          "model": "vMX",
+          "name": "p2",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Physical stage 'modify' workflow failed",
+                "state_info": {
+                  "state": "node-state-onboard-failed"
+                },
+                "time": "2025-01-20T05:24:48.858042+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:35.193851+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:32.537677+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:30.078056+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:27.102014+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:24.493034+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:08.277500+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:07.907018+00:00"
+              },
+              {
+                "reason": "Planned site c8d345df-051f-4a07-93cd-64df87780b55 and actual site c8d345df-051f-4a07-93cd-64df87780b55 matched for node p2",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-01-20T05:23:07.507559+00:00"
+              }
+            ],
+            "state_info": {
+              "onboard_failed": {
+                "message": "Physical stage 'modify' workflow failed",
+                "phys_stage": {
+                  "sub_state": "phys-modify"
+                },
+                "stage": "stage-phys"
+              },
+              "state": "node-state-onboard-failed"
+            },
+            "subsystems": {
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [],
+          "serial": "VM678DD29BE8",
+          "site_id": "c8d345df-051f-4a07-93cd-64df87780b55"
+        }
+      ]
+    },
+    "node_profiles": {
+      "node_profile": [
+        {
+          "analytics": {
+            "traffic_engineering": {}
+          },
+          "ipv6_tunneling": {
+            "enabled": true
+          },
+          "isis": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "iso_net_address": {
+            "area_id": "01",
+            "system_id": {
+              "auto": [
+                null
+              ]
+            }
+          },
+          "labels": [],
+          "ldp": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "name": "DP1",
+          "per_flow_load_balancing": {
+            "enabled": true
+          },
+          "router_id": {
+            "auto": {}
+          },
+          "templates": [],
+          "trust": {
+            "enabled": true
+          }
+        }
+      ]
+    }
+  },
+  "instance_id": "NIP1",
+  "instance_status": "reserved",
+  "instance_uuid": "8f0caccb-d6e0-11ef-8ce2-a67e3d805287",
+  "operation": "modify",
+  "order_id": "3276646f-d6ed-11ef-a61e-2a82ff2a4702",
+  "order_status": {
+    "components": [
+      {
+        "component_data": [
+          {
+            "message": "placed",
+            "status": "success",
+            "time": "2025-01-20T05:23:52Z"
+          }
+        ],
+        "component_type": "placement"
+      },
+      {
+        "component_data": [
+          {
+            "message": "transform service order to device config",
+            "status": "failed",
+            "support_hint": "failed to render template infrastructure_v0.13.25_junos.jinja2 for service order fc1a57ed-d6df-11ef-a61e-2a82ff2a4702_NIP1 for target network: [POST /internal/configtemplates/{app_id}/{template_id}/render][400] createrender_template_internal default  &{Detail:TemplateError: list object has no element 1}",
+            "time": "2025-01-20T05:24:01Z"
+          },
+          {
+            "message": "transform service order to device config",
+            "status": "failed",
+            "support_hint": "failed to render template infrastructure_v0.13.25_junos.jinja2 for service order fc1a57ed-d6df-11ef-a61e-2a82ff2a4702_NIP1 for target network: [POST /internal/configtemplates/{app_id}/{template_id}/render][400] createrender_template_internal default  &{Detail:TemplateError: list object has no element 1}",
+            "time": "2025-01-20T05:24:15Z"
+          },
+          {
+            "message": "transform service order to device config",
+            "status": "failed",
+            "support_hint": "failed to render template infrastructure_v0.13.25_junos.jinja2 for service order fc1a57ed-d6df-11ef-a61e-2a82ff2a4702_NIP1 for target network: [POST /internal/configtemplates/{app_id}/{template_id}/render][400] createrender_template_internal default  &{Detail:TemplateError: list object has no element 1}",
+            "time": "2025-01-20T05:24:29Z"
+          },
+          {
+            "message": "transform service order to device config",
+            "status": "failed",
+            "support_hint": "failed to render template infrastructure_v0.13.25_junos.jinja2 for service order fc1a57ed-d6df-11ef-a61e-2a82ff2a4702_NIP1 for target network: [POST /internal/configtemplates/{app_id}/{template_id}/render][400] createrender_template_internal default  &{Detail:TemplateError: list object has no element 1}",
+            "time": "2025-01-20T05:24:43Z"
+          }
+        ],
+        "component_type": "device"
+      }
+    ],
+    "status": "failed",
+    "workflow_trace": [
+      {
+        "message": "task completed successfully",
+        "runs": 2,
+        "status": "success",
+        "task": "prepare_order",
+        "time": "2025-01-20T05:23:08.331473+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.phys_branch",
+        "time": "2025-01-20T05:23:11.498584+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.get_trust_baseline",
+        "time": "2025-01-20T05:23:20.760643+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.record_trust_baseline",
+        "time": "2025-01-20T05:23:24.565504+00:00"
+      },
+      {
+        "message": "software image not specified",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.software_update",
+        "time": "2025-01-20T05:23:27.153706+00:00"
+      },
+      {
+        "message": "No request id provided in node instance data, no software to upgrade",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.software_update_launch_check",
+        "time": "2025-01-20T05:23:30.128092+00:00"
+      },
+      {
+        "message": "No request id provided in node instance data, no software to upgrade",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.software_update_connect_check",
+        "time": "2025-01-20T05:23:32.607352+00:00"
+      },
+      {
+        "message": " No device EMS templates configured. No interface EMS templates configured.",
+        "runs": 1,
+        "status": "success",
+        "task": "phys_stage.ems_templates_check",
+        "time": "2025-01-20T05:23:35.252778+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.get_and_update_topo_resource",
+        "time": "2025-01-20T05:23:46.484005+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.upload_network_resources",
+        "time": "2025-01-20T05:23:49.621154+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.place_service_order",
+        "time": "2025-01-20T05:23:53.138046+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.transform_service_order",
+        "time": "2025-01-20T05:23:55.310948+00:00"
+      },
+      {
+        "message": "task failed",
+        "runs": 1,
+        "status": "failed",
+        "task": "common_fh.apply_device_config_subset",
+        "time": "2025-01-20T05:24:43.342056+00:00"
+      },
+      {
+        "message": "Physical stage 'modify' workflow failed",
+        "runs": 1,
+        "status": "failed",
+        "task": "phys_stage.phys_modify",
+        "time": "2025-01-20T05:24:48.866755+00:00"
+      }
+    ]
+  },
+  "org_id": "be9771f1-aed1-4f28-89b5-f9dd3a63b78f",
+  "place": [],
+  "placement": {},
+  "upload_time": "2025-01-20T05:24:49Z",
+  "version": "1.0.0",
+  "workflow_id": "onboard-infrastructure-0_13_25",
+  "workflow_run_id": "manual__2025-01-20T05:14:32.504027+00:00"
+}

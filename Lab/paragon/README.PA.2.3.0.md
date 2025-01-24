@@ -1,11 +1,11 @@
-# How setup Paragon 2.2.0 Lab on VMM
+# How setup Paragon 2.3.0 Lab on VMM
 ## topology
 
 ![topology](images/topology_lab.jpg)
 
 ## note
-Tested with paragon automation 2.0.0
-based on this [documentation](https://www.juniper.net/documentation/us/en/software/juniper-paragon-automation2.0.0/installation-guide/index.html).
+Tested with paragon automation 2.3.0
+based on this [documentation](https://www.juniper.net/documentation/us/en/software/juniper-paragon-automation2.3.0/installation-guide/index.html).
 
 ## Devices in the lab
 
@@ -14,7 +14,7 @@ based on this [documentation](https://www.juniper.net/documentation/us/en/softwa
 - Bridge : br1, br2, br3 , br4( linux bridge between junos node to simulate link failure, delay and packet loss) (linux alpine)
 
 - Kubernetes cluster for Paragon Automation
-    - Node1, Node2, Node3, Node4 : Paragon 2.2.0 Virtual Appliance
+    - Node1, Node2, Node3, Node4 : Paragon 2.3.0 Virtual Appliance
 
 
 ## Credential to access devices
@@ -28,8 +28,8 @@ based on this [documentation](https://www.juniper.net/documentation/us/en/softwa
     - user: admin
     - password: pass01
 
-## Getting disk image for Paragon 2.2.0
-As for the current version of Paragon Automation platform, version 2.2.0, the disk image is as only available as OVA package.
+## Getting disk image for Paragon 2.3.0
+As for the current version of Paragon Automation platform, version 2.3.0, the disk image is as only available as OVA package.
 
 To install paragon virtual appliance on vmm, it requires the disk image, in VMDK or QCOW format.
 
@@ -283,9 +283,6 @@ The client is using linux container (LXC) running on node **client**
 
 
 
-
-
-
 ## configure wireguard
 The following step is to setup wireguard to allow direct access into the lab, for example to access the paragon dashboard directly
 
@@ -334,7 +331,6 @@ The following step is to setup wireguard to allow direct access into the lab, fo
        set paragon cluster nodes kubernetes 3 address 172.16.11.13
        set paragon cluster nodes kubernetes 4 address 172.16.11.14
        set paragon cluster ntp ntp-servers ntp.juniper.net
-       set paragon cluster install ignore-iops-check true
        set paragon cluster common-services ingress ingress-vip 172.16.11.1
        set paragon cluster applications active-assurance test-agent-gateway-vip 172.16.11.2
        set paragon cluster applications web-ui web-admin-user "irzan@juniper.net"

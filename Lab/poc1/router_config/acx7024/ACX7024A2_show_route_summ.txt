@@ -1,0 +1,51 @@
+Autonomous system number: 4200000000
+Router ID: 192.168.255.2
+
+Highwater Mark (All time / Time averaged watermark)
+    RIB unique destination routes: 748728 at 2025-01-05 07:02:16 / 0
+    RIB routes                   : 736301 at 2025-01-05 07:02:16 / 0
+    FIB routes                   : 256015 at 2025-01-05 06:55:25 / 0
+    VRF type routing instances   : 2 at 2025-01-05 06:21:37
+
+inet.0: 42678 destinations, 42678 routes (42678 active, 0 holddown, 0 hidden)
+              Direct:      4 routes,      4 active
+               Local:      3 routes,      3 active
+                 BGP:  42668 routes,  42668 active
+              Static:      1 routes,      1 active
+               IS-IS:      1 routes,      1 active
+                 LDP:      1 routes,      1 active
+
+inet.3: 1 destinations, 1 routes (1 active, 0 holddown, 0 hidden)
+                 LDP:      1 routes,      1 active
+
+vrf1.inet.0: 42669 destinations, 42669 routes (42669 active, 0 holddown, 0 hidden)
+              Direct:      1 routes,      1 active
+               Local:      1 routes,      1 active
+                 BGP:  21333 routes,  21333 active
+                EVPN:  21334 routes,  21334 active
+
+vrf2.inet.0: 42669 destinations, 42669 routes (42669 active, 0 holddown, 0 hidden)
+              Direct:      1 routes,      1 active
+               Local:      1 routes,      1 active
+                 BGP:  21333 routes,  21333 active
+                EVPN:  21334 routes,  21334 active
+
+iso.0: 1 destinations, 1 routes (1 active, 0 holddown, 0 hidden)
+              Direct:      1 routes,      1 active
+
+mpls.0: 10 destinations, 10 routes (10 active, 0 holddown, 0 hidden)
+                MPLS:      6 routes,      6 active
+                 LDP:      2 routes,      2 active
+                 VPN:      2 routes,      2 active
+
+bgp.evpn.0: 85336 destinations, 85336 routes (85336 active, 0 holddown, 0 hidden)
+                 BGP:  42668 routes,  42668 active
+                EVPN:  42668 routes,  42668 active
+
+vrf1.evpn.0: 42668 destinations, 42668 routes (42668 active, 0 holddown, 0 hidden)
+                 BGP:  21334 routes,  21334 active
+                EVPN:  21334 routes,  21334 active
+
+vrf2.evpn.0: 42668 destinations, 42668 routes (42668 active, 0 holddown, 0 hidden)
+                 BGP:  21334 routes,  21334 active
+                EVPN:  21334 routes,  21334 active

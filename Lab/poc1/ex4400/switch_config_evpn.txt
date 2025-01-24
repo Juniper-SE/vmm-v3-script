@@ -1,0 +1,107 @@
+# Switch S1 
+
+set groups config4 interfaces xe-0/2/1 mtu 9000
+set groups config4 interfaces xe-0/2/1 unit 0 family inet address 10.0.0.0/31
+set groups config4 interfaces lo0 unit 0 family inet address 10.0.255.1/32
+
+set groups config4 interfaces xe-0/2/0 mtu 9000
+set groups config4 interfaces xe-0/2/0 unit 0 family ethernet-switching interface-mode access
+set groups config4 interfaces xe-0/2/0 unit 0 family ethernet-switching vlan members 101
+set groups config4 interfaces xe-0/2/0 unit 0 family ethernet-switching storm-control default
+
+set groups config4 policy-options policy-statement underlay_export term 1 from protocol direct
+set groups config4 policy-options policy-statement underlay_export term 1 from interface lo0.0
+set groups config4 policy-options policy-statement underlay_export term 1 then accept
+
+
+
+set groups config4 policy-options policy-statement MY-FABRIC-IMPORT term 1 from community COM-VNI-10101
+set groups config4 policy-options policy-statement MY-FABRIC-IMPORT term 1 then accept
+set groups config4 policy-options policy-statement MY-FABRIC-IMPORT term default then reject
+
+
+set groups config4 policy-options community COM-VNI-10101 members target:1000:101
+
+set groups config4 routing-options router-id 10.0.255.1
+
+set groups config4 protocols bgp group to_s2_underlay multipath multiple-as
+set groups config4 protocols bgp group to_s2_underlay neighbor 10.0.0.1 export underlay_export
+set groups config4 protocols bgp group to_s2_underlay neighbor 10.0.0.1 peer-as 2
+set groups config4 protocols bgp group to_s2_underlay neighbor 10.0.0.1 local-as 1
+
+set groups config4 protocols bgp group to_s1_overlay type internal
+set groups config4 protocols bgp group to_s1_overlay local-address 10.0.255.1
+set groups config4 protocols bgp group to_s1_overlay family evpn signaling
+set groups config4 protocols bgp group to_s1_overlay local-as 1000
+set groups config4 protocols bgp group to_s1_overlay neighbor 10.0.255.2
+
+set groups config4 protocols evpn encapsulation vxlan
+set groups config4 protocols evpn multicast-mode ingress-replication
+set groups config4 protocols evpn vni-options vni 10101 vrf-target target:1000:101
+set groups config4 protocols evpn extended-vni-list 10101
+set groups config4 switch-options vtep-source-interface lo0.0
+set groups config4 switch-options route-distinguisher 10.0.255.1:1
+set groups config4 switch-options vrf-import MY-FABRIC-IMPORT
+set groups config4 switch-options vrf-target target:1000:1
+
+
+set groups config4 vlans vlan101 vlan-id 101
+set groups config4 vlans vlan101 vxlan vni 10101
+
+
+# Switch S2
+
+set groups config4 interfaces xe-0/2/1 mtu 9000
+set groups config4 interfaces xe-0/2/1 unit 0 family inet address 10.0.0.1/31
+set groups config4 interfaces lo0 unit 0 family inet address 10.0.255.2/32
+
+set groups config4 interfaces xe-0/2/0 mtu 9000
+set groups config4 interfaces xe-0/2/0 unit 0 family ethernet-switching interface-mode access
+set groups config4 interfaces xe-0/2/0 unit 0 family ethernet-switching vlan members 101
+set groups config4 interfaces xe-0/2/0 unit 0 family ethernet-switching storm-control default
+
+set groups config4 policy-options policy-statement underlay_export term 1 from protocol direct
+set groups config4 policy-options policy-statement underlay_export term 1 from interface lo0.0
+set groups config4 policy-options policy-statement underlay_export term 1 then accept
+
+
+
+set groups config4 policy-options policy-statement MY-FABRIC-IMPORT term 1 from community COM-VNI-10101
+set groups config4 policy-options policy-statement MY-FABRIC-IMPORT term 1 then accept
+set groups config4 policy-options policy-statement MY-FABRIC-IMPORT term default then reject
+
+
+set groups config4 policy-options community COM-VNI-10101 members target:1000:101
+
+set groups config4 routing-options router-id 10.0.255.2
+
+set groups config4 protocols bgp group to_s2_underlay multipath multiple-as
+set groups config4 protocols bgp group to_s2_underlay neighbor 10.0.0.0 export underlay_export
+set groups config4 protocols bgp group to_s2_underlay neighbor 10.0.0.0 peer-as 1
+set groups config4 protocols bgp group to_s2_underlay neighbor 10.0.0.0 local-as 2
+
+set groups config4 protocols bgp group to_s1_overlay type internal
+set groups config4 protocols bgp group to_s1_overlay local-address 10.0.255.2
+set groups config4 protocols bgp group to_s1_overlay family evpn signaling
+set groups config4 protocols bgp group to_s1_overlay local-as 1000
+set groups config4 protocols bgp group to_s1_overlay neighbor 10.0.255.1
+
+set groups config4 protocols evpn encapsulation vxlan
+set groups config4 protocols evpn multicast-mode ingress-replication
+set groups config4 protocols evpn vni-options vni 10101 vrf-target target:1000:101
+set groups config4 protocols evpn extended-vni-list 10101
+set groups config4 switch-options vtep-source-interface lo0.0
+set groups config4 switch-options route-distinguisher 10.0.255.2:1
+set groups config4 switch-options vrf-import MY-FABRIC-IMPORT
+set groups config4 switch-options vrf-target target:1000:1
+
+
+set groups config4 vlans vlan101 vlan-id 101
+set groups config4 vlans vlan101 vxlan vni 10101
+
+
+
+
+
+
+

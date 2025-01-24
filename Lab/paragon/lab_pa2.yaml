@@ -19,7 +19,7 @@ images:
   #ubuntu: images/ubuntu22.04.qcow2
   #bridge: images/bridge.qcow2
   #vjunos_router: images/vJunos-router-24.2R1.17.qcow2
-  pa2: images/paragon.qcow2
+  pa2: images/paragon-2.3.0-disk1.vmdk
   #paagent: images/paa-test-agent_4.4.0.9.qcow2
 junos_login:
   login: admin
@@ -84,6 +84,7 @@ vm:
         bridge: control
         family:
           inet: 172.16.11.254/24
+          inet6: fc00:dead:beef:a011::1/64
   node1:
     type: pchpv0
     os: pa2
@@ -93,6 +94,7 @@ vm:
         bridge: control
         family:
           inet: 172.16.11.11/24
+          inet6: fc00:dead:beef:a011::11/64
           gateway4: 172.16.11.254
   node2:
     type: pchpv0
@@ -103,6 +105,7 @@ vm:
         bridge: control
         family:
           inet: 172.16.11.12/24
+          inet6: fc00:dead:beef:a011::12/64
           gateway4: 172.16.11.254
   node3:
     type: pchpv0
@@ -113,6 +116,7 @@ vm:
         bridge: control
         family:
           inet: 172.16.11.13/24
+          inet6: fc00:dead:beef:a011::13/64
           gateway4: 172.16.11.254
   node4:
     type: pchpv0
@@ -123,5 +127,6 @@ vm:
         bridge: control
         family:
           inet: 172.16.11.14/24
+          inet6: fc00:dead:beef:a011::13/64
           gateway4: 172.16.11.254
 

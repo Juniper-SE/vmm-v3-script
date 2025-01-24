@@ -4,7 +4,7 @@ pod:
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod26-vmm.englab.juniper.net
+  vmmserver: q-pod35-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan
@@ -16,11 +16,11 @@ pod:
   #ntp: 172.16.10.1
 images:
   gw: images/gw.qcow2
-  ubuntu: images/ubuntu22.04.qcow2
+  ubuntu: images/ubuntu24.04.qcow2
   ubuntu2: images/ubuntu24.04_containerd.qcow2
   bridge: images/bridge.qcow2
   #vjunos_router: images/vJunos-router-24.2R1.17.qcow2
-  vjunos_router: images/vJunos-router-24.2R1-S1.10.qcow2
+  vjunos_router: images/vJunos-router-23.4R2-S2.1.qcow2
 junos_login:
   login: admin
   password: pass01
@@ -121,7 +121,7 @@ vm:
           gateway4: 172.16.10.254
       lo0:
         family:
-          inet: 10.1.255.2/32
+          inet: 10.1.255.1/32
           iso: 49.0001.0100.0125.5001.00
         protocol:
           isis: passive
@@ -225,6 +225,8 @@ vm:
         #   isis: null
       ge-0/0/6:
         bridge: to_net
+        family:
+          inet: 10.100.2.1/24
   p2:
     type: vjunos_router
     os: vjunos_router

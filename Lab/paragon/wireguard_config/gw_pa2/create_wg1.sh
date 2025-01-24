@@ -11,3 +11,4 @@ AllowedIPs=192.168.198.1/32,10.100.2.0/24,172.16.10.0/24,192.168.255.0/24,10.1.0
 EOF
 sudo systemctl enable wg-quick@wg1
 sudo systemctl start wg-quick@wg1
+

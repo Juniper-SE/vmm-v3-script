@@ -1,0 +1,69 @@
+### by vmm-v3-script ###
+Host *
+    StrictHostKeyChecking no
+
+host vmm 
+    hostname q-pod35-vmm.englab.juniper.net
+    user irzan
+    IdentityFile ~/.ssh/key1
+host gw
+    hostname 10.52.136.188
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host proxy 
+    hostname 10.52.136.188
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+    DynamicForward 1080
+
+host pe1
+    ProxyCommand ssh -W 172.16.10.1:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host pe2
+    ProxyCommand ssh -W 172.16.10.2:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host pe3
+    ProxyCommand ssh -W 172.16.10.3:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host p1
+    ProxyCommand ssh -W 172.16.10.4:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host p2
+    ProxyCommand ssh -W 172.16.10.5:22 gw
+    user admin
+    IdentityFile ~/.ssh/keyhost
+
+host client
+    ProxyCommand ssh -W 172.16.10.100:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host pe1agent1
+    ProxyCommand ssh -W 172.16.10.101:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host pe2agent1
+    ProxyCommand ssh -W 172.16.10.102:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host pe3agent1
+    ProxyCommand ssh -W 172.16.10.103:22 gw
+    user ubuntu
+    IdentityFile ~/.ssh/keyhost
+
+host br1
+    ProxyCommand ssh -W 172.16.10.104:22 gw
+    user alpine
+    IdentityFile ~/.ssh/keyhost
+
