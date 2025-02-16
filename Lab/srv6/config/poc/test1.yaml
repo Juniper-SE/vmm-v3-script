@@ -1,0 +1,11 @@
+---
+- name: Get device facts
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Retrieve device facts and save to file
+      juniper.device.facts:        
+        savedir: "{{ playbook_dir }}"
+

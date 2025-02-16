@@ -86,18 +86,20 @@ PublicKey={{gw_key.1}}
 EndPoint={{eth0_gw}}:443
 AllowedIPs={{allowed_ip_ws}}
 """
+	
 	#print("in the function")
 	#print(d1.keys())
 	try:
 		if 'wg' in d1.keys():
 			#print("wireguard is configured")
-			result1 = subprocess.check_output("wg", shell=True).decode("utf-8").strip()
+			result1 = subprocess.check_output("/opt/homebrew/bin/wg", shell=True).decode("utf-8").strip()
 			if 'tunnel_ip' not in d1['wg'].keys():
 				dummy1['gw_ip'] = '192.168.199.0/31;fc00:dead:beef:ffcc::1000:0/127'
 				dummy1['ws_ip'] = '192.168.199.1/31;fc00:dead:beef:ffcc::1000:1/127'
 			else:
 				dummy1['gw_ip'] = d1['wg']['gw_ip']
 				dummy1['ws_ip'] = d1['wg']['ws_ip']
+			
 			dummy1['gw_key'] = generate_wireguard_keys()
 			dummy1['ws_key'] = generate_wireguard_keys()
 			# print(dummy1['gw_key'],dummy1['ws_key'])
@@ -1770,6 +1772,10 @@ def create_lab_config(d1):
 				else:
 					d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'install':path1,'intf':{}}
 		intf_list={}
+		if 'efi' in d1['vm'][i].keys():
+			if d1['vm'][i]['efi'] == 'yes' or d1['vm'][i]['efi']:
+				d2['vm'][i]['efi'] = 1
+				#print(f"host {i}  has efi, value of efi {d2['vm'][i]['efi']}")
 		#if d1['vm'][i]['type'] in param1.pc_type:
 		k = 0
 		#print(f"vm {i}")

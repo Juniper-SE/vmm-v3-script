@@ -1,0 +1,13 @@
+[all]
+pe11
+pe12
+pe13
+pe14
+p1
+p2
+p3
+p4
+p5
+p15
+[all:vars]
+ansible_python_interpreter=python3

@@ -85,7 +85,7 @@ export GWv6=192.168.11.254
 
 
 echo "Creating VM ${LXC_NAME}"
-lxc copy lxc ${LXC_NAME}
+lxc copy client ${LXC_NAME}
 lxc query --request PATCH /1.0/instances/${LXC_NAME} --data "{
   \"devices\": {
     \"eth0\" :{
@@ -114,7 +114,7 @@ cat << EOF | tee ./resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
-lxc file push ./interface.conf ${LXC_NAME}/etc/resolv.conf
+lxc file push ./resolv.conf ${LXC_NAME}/etc/resolv.conf
 
 
 ## alpine on KVM with ovs

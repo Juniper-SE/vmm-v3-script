@@ -1,8 +1,0 @@
-[all]
-desktop ansible_host=172.16.14.14
-svr4 ansible_host=172.16.10.114
-svr8 ansible_host=172.16.10.118
-svr9 ansible_host=172.16.10.119
-[all:vars]
-ansible_common_args='-o StrictHostKeyChecking -p ProxyCommand="ssh -W %h:%p -q ttsv-shell110.juniper.net"'
-ssh_ansible_ssh_user=ubuntu

@@ -1,10 +1,10 @@
 ---
-name: srv6
+name: lab1  
 pod: 
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod08-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan
@@ -23,11 +23,13 @@ images:
   bridge: images/bridge.qcow2
   #vjunos_switch: images/vJunos-switch-23.2R1.14.qcow2
   #vjunos_router: images/vJunos-router-23.4R1.10.qcow2
-  vjunos_evolved: images/vJunos-router-24.2R1-S2.5.qcow2
+  #vjunos_router: images/vJunos-router-24.2R1-S2.5.qcow2
   #vjunos_router: images/vJunos-router-24.2R1.17.qcow2
   #pa2: images/paragon-2.1.0-disk1.qcow2
-  #vjunos_evolved: images/vJunosEvolved-24.2R1-S1.2-EVO.qcow2
-  paagent: images/paa-test-agent_4.4.0.9.qcow2
+  #vjunos_evolved: images/vJunosEvolved-23.4R2-S2.1.qcow2
+  vjunos_evolved: images/vJunosEvolved-24.2R1-S2.4.qcow2
+  # vjunos_evolved: images/vJunosEvolved-24.2R1-S2.4.qcow2
+  #paagent: images/paa-test-agent_4.4.0.9.qcow2
   #vjunos_evolved: images/vJunosEvolved-23.2R1-S1.8-EVO.qcow2
 junos_login:
   login: admin
@@ -38,26 +40,26 @@ junos_login:
 #   server: 172.16.255.4
 #   ro_community: public
 fabric:
-  #subnet: 10.100.0.0/24
+  subnet: 10.100.0.0/24
   #subnet6: fc00:dead:beef:fffe::/64
   topology:
-  - [ 0x16, pe11, ge-0/0/1, p1, ge-0/0/0 ]
-  - [ 0x16, pe11, ge-0/0/2, p2, ge-0/0/0 ]
-  - [ 0x16, pe12, ge-0/0/1, p1, ge-0/0/1 ]
-  - [ 0x16, pe12, ge-0/0/2, p2, ge-0/0/1 ]
-  - [ 0x16, pe13, ge-0/0/1, p4, ge-0/0/0 ]
-  - [ 0x16, pe13, ge-0/0/2, p5, ge-0/0/0 ]
-  - [ 0x16, pe14, ge-0/0/1, p4, ge-0/0/1 ]
-  - [ 0x16, pe14, ge-0/0/2, p5, ge-0/0/1 ]
-  - [ 0x16, p1, ge-0/0/2, p2, ge-0/0/2 ]
-  - [ 0x16, p4, ge-0/0/2, p5, ge-0/0/2 ]
-  - [ 0x16, p1, ge-0/0/3, p3, ge-0/0/0 ]
-  - [ 0x16, p2, ge-0/0/3, p3, ge-0/0/1 ]
-  - [ 0x16, p2, ge-0/0/4, p5, ge-0/0/3 ]
-  - [ 0x16, p3, ge-0/0/2, p4, ge-0/0/3 ]
-  - [ 0x16, p3, ge-0/0/3, p5, ge-0/0/2 ]
-  - [ 0x16, pe15, ge-0/0/1, p3, ge-0/0/4 ]
-  - [ 0x16, p3, ge-0/0/5, crpd, em1 ]
+  - [ 0x17d, pe11, et-0/0/1, p1, et-0/0/0 ]
+  - [ 0x17d, pe11, et-0/0/2, p2, et-0/0/0 ]
+  - [ 0x17d, pe12, et-0/0/1, p1, et-0/0/1 ]
+  - [ 0x17d, pe12, et-0/0/2, p2, et-0/0/1 ]
+  - [ 0x17d, pe13, et-0/0/1, p4, et-0/0/0 ]
+  - [ 0x17d, pe13, et-0/0/2, p5, et-0/0/0 ]
+  - [ 0x17d, pe14, et-0/0/1, p4, et-0/0/1 ]
+  - [ 0x17d, pe14, et-0/0/2, p5, et-0/0/1 ]
+  - [ 0x17d, p1, et-0/0/2, p2, et-0/0/2 ]
+  - [ 0x17d, p4, et-0/0/2, p5, et-0/0/2 ]
+  - [ 0x17d, p1, et-0/0/3, p3, et-0/0/0 ]
+  - [ 0x17d, p2, et-0/0/3, p3, et-0/0/1 ]
+  - [ 0x17d, p2, et-0/0/4, p5, et-0/0/3 ]
+  - [ 0x17d, p3, et-0/0/2, p4, et-0/0/3 ]
+  - [ 0x17d, p3, et-0/0/3, p5, et-0/0/4 ]
+  - [ 0x17d, pe15, et-0/0/1, p3, et-0/0/4 ]
+  - [ 0x17d, p3, et-0/0/5, crpd, em1 ]
 #   # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
 #   # value for the field status:
 #   # bit 0 : ipv4
@@ -77,22 +79,22 @@ fabric:
 #   # SNMP trap: 172.16.255.4
 #   # Netflow : 172.16.255.5
 #   # PCE serveR: 172.16.255.6
-#     - [ 0x7d, pe1, ge-0/0/2, p1, ge-0/0/0 ]
-#     - [ 0x7d, pe1, ge-0/0/3, p2, ge-0/0/0 ]
-#     - [ 0x7d, pe2, ge-0/0/3, p1, ge-0/0/1 ]
-#     - [ 0x7d, pe2, ge-0/0/2, p2, ge-0/0/1 ]
-#     - [ 0x7d, p1, ge-0/0/2, p2, ge-0/0/2 ]
-#     - [ 0x7d, p1, ge-0/0/3, p3, ge-0/0/3 ]
-#     - [ 0x7d, p1, ge-0/0/4, p3, ge-0/0/4 ]
-#     - [ 0x7d, p1, ge-0/0/5, p5, ge-0/0/1 ]
-#     - [ 0x7d, p2, ge-0/0/3, p5, ge-0/0/2 ]
-#     - [ 0x7d, p3, ge-0/0/2, p4, ge-0/0/2 ]
-#     - [ 0x7d, p3, ge-0/0/0, pe3, ge-0/0/2 ]
-#     - [ 0x7d, p3, ge-0/0/1, pe4, ge-0/0/2 ]
-#     - [ 0x7d, p3, ge-0/0/5, p5, ge-0/0/3 ]
-#     - [ 0x7d, p4, ge-0/0/0, pe3, ge-0/0/3 ]
-#     - [ 0x7d, p4, ge-0/0/1, pe4, ge-0/0/3 ]
-#     - [ 0x7d, p4, ge-0/0/3, p5, ge-0/0/4 ]
+#     - [ 0x7d, pe1, et-0/0/2, p1, et-0/0/0 ]
+#     - [ 0x7d, pe1, et-0/0/3, p2, et-0/0/0 ]
+#     - [ 0x7d, pe2, et-0/0/3, p1, et-0/0/1 ]
+#     - [ 0x7d, pe2, et-0/0/2, p2, et-0/0/1 ]
+#     - [ 0x7d, p1, et-0/0/2, p2, et-0/0/2 ]
+#     - [ 0x7d, p1, et-0/0/3, p3, et-0/0/3 ]
+#     - [ 0x7d, p1, et-0/0/4, p3, et-0/0/4 ]
+#     - [ 0x7d, p1, et-0/0/5, p5, et-0/0/1 ]
+#     - [ 0x7d, p2, et-0/0/3, p5, et-0/0/2 ]
+#     - [ 0x7d, p3, et-0/0/2, p4, et-0/0/2 ]
+#     - [ 0x7d, p3, et-0/0/0, pe3, et-0/0/2 ]
+#     - [ 0x7d, p3, et-0/0/1, pe4, et-0/0/2 ]
+#     - [ 0x7d, p3, et-0/0/5, p5, et-0/0/3 ]
+#     - [ 0x7d, p4, et-0/0/0, pe3, et-0/0/3 ]
+#     - [ 0x7d, p4, et-0/0/1, pe4, et-0/0/3 ]
+#     - [ 0x7d, p4, et-0/0/3, p5, et-0/0/4 ]
 wg:
   tunnel_ip:
   - 192.168.199.0/31
@@ -120,27 +122,12 @@ vm:
         family: 
           inet: 172.16.11.254/24
           inet6: fc00:dead:beef:aa15::1000:ffff/64
-          static:
-          - to: 192.168.255.0/24
-            via: 172.16.11.15
-          - to: 10.100.11.0/24
-            via: 172.16.11.15
-          - to: 10.100.12.0/24
-            via: 172.16.11.15
-          - to: 10.100.13.0/24
-            via: 172.16.11.15
-          - to: 10.100.14.0/24
-            via: 172.16.11.15
-          - to: fc00:dead:beef:ffff::/64
-            via: fc00:dead:beef:aa15::1000:15
-          - to: fc00:dead:beef:aa00::/56
-            via: fc00:dead:beef:aa15::1000:15
   pe11:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.11
-    srv6-locator: fc00:dead:beef:ff11::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -148,23 +135,22 @@ vm:
           inet: 172.16.10.1/24 
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:11/128
           iso:  49.0001.1921.6800.0011.00
           inet: 192.168.255.211/32 
         protocol:
           isis: passive
-      ge-0/0/0:
+      et-0/0/0:
         bridge: pe11ge0
         mtu: 9000
-      ge-0/0/3:
+      et-0/0/3:
         bridge: pe11ge3
         mtu: 9000
   pe12:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.12
-    srv6-locator: fc00:dead:beef:ff12::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -172,23 +158,22 @@ vm:
           inet: 172.16.10.2/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:12/128
           iso:  49.0001.1921.6800.0012.00
           inet: 192.168.255.212/32 
         protocol:
           isis: passive
-      ge-0/0/0:
+      et-0/0/0:
         bridge: pe12ge0
         mtu: 9000
-      ge-0/0/3:
+      et-0/0/3:
         bridge: pe12ge3
         mtu: 9000
   pe13:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.13
-    srv6-locator: fc00:dead:beef:ff13::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -196,23 +181,22 @@ vm:
           inet: 172.16.10.3/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:13/128
           iso:  49.0001.1921.6800.0013.00
           inet: 192.168.255.213/32 
         protocol:
           isis: passive
-      ge-0/0/0:
+      et-0/0/0:
         bridge: pe13ge0
         mtu: 9000
-      ge-0/0/3:
+      et-0/0/3:
         bridge: pe13ge3
         mtu: 9000
   pe14:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.14
-    srv6-locator: fc00:dead:beef:ff14::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -220,23 +204,22 @@ vm:
           inet: 172.16.10.4/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:14/128
           iso:  49.0001.1921.6800.0014.00
           inet: 192.168.255.214/32 
         protocol:
           isis: passive
-      ge-0/0/0:
+      et-0/0/0:
         bridge: pe14ge0
         mtu: 9000
-      ge-0/0/3:
+      et-0/0/3:
         bridge: pe14ge3
         mtu: 9000
   pe15:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.15
-    srv6-locator: fc00:dead:beef:ff15::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -244,26 +227,25 @@ vm:
           inet: 172.16.10.5/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:15/128
           iso:  49.0001.1921.6800.0015.00
           inet: 192.168.255.215/32 
         protocol:
           isis: passive
-      ge-0/0/0:
+      et-0/0/0:
         bridge: ext
         family:
           inet: 172.16.11.15/24
           inet6: fc00:dead:beef:aa15::1000:15/64
         protocol:
           isis: passive
-      ge-0/0/2:
+      et-0/0/2:
         bridge: pe15ge2
   p1:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.1
-    srv6-locator: fc00:dead:beef:ff01::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -271,17 +253,16 @@ vm:
           inet: 172.16.10.11/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:01/128
           iso:  49.0001.1921.6800.0001.00
           inet: 192.168.255.201/32 
         protocol:
           isis: passive
   p2:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.2
-    srv6-locator: fc00:dead:beef:ff02::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -289,17 +270,16 @@ vm:
           inet: 172.16.10.12/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:02/128
           iso:  49.0001.1921.6800.0002.00
           inet: 192.168.255.202/32
         protocol:
           isis: passive
   p3:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.3
-    srv6-locator: fc00:dead:beef:ff03::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -307,17 +287,16 @@ vm:
           inet: 172.16.10.13/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:03/128
           iso:  49.0001.1921.6800.0003.00
           inet: 192.168.255.203/32
         protocol:
           isis: passive
   p4:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.4
-    srv6-locator: fc00:dead:beef:ff04::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -325,17 +304,16 @@ vm:
           inet: 172.16.10.14/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:04/128
           iso:  49.0001.1921.6800.0004.00
           inet: 192.168.255.204/32
         protocol:
           isis: passive
   p5:
-    type: vjunos_router
-    os: vjunos_router
+    type: vjunos_evolved
+    os: vjunos_evolved
     ztp: yes
-    router-id: 192.168.0.5
-    srv6-locator: fc00:dead:beef:ff05::/64
+    vnc: yes
+    efi: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -343,7 +321,6 @@ vm:
           inet: 172.16.10.15/24
       lo0:
         family:
-          inet6: fc00:dead:beef:ffff::ffff:05/128
           inet: 192.168.255.205/32
           iso:  49.0001.1921.6800.0005.00
         protocol:
@@ -358,17 +335,33 @@ vm:
           inet: 172.16.10.31/24
           gateway4: 172.16.10.254
       em1:
-        node: [p1, ge-0/0/3, p1p3 ]
+        node: [p1, et-0/0/3, p1p3 ]
       em2:
-        node: [p3, ge-0/0/0, p1p3 ]
+        node: [p3, et-0/0/0, p1p3 ]
       em3:
-        node: [p1, ge-0/0/2, p1p2 ]
+        node: [p1, et-0/0/2, p1p2 ]
       em4:
-        node: [p2, ge-0/0/2, p1p2 ]
+        node: [p2, et-0/0/2, p1p2 ]
       em5:
-        node: [p2, ge-0/0/3, p2p3 ]
+        node: [p2, et-0/0/3, p2p3 ]
       em6:
-        node: [p3, ge-0/0/1, p2p3 ]
+        node: [p3, et-0/0/1, p2p3 ]
+      em7:
+        node: [p2, et-0/0/4, p2p5 ]
+      em8:
+        node: [p5, et-0/0/3, p2p5 ]
+      em9:
+        node: [p3, et-0/0/2, p3p4 ]
+      em10:
+        node: [p4, et-0/0/3, p3p4 ]
+      em11:
+        node: [p3, et-0/0/3, p3p5 ]
+      em12:
+        node: [p5, et-0/0/4, p3p5 ]
+      em13:
+        node: [p4, et-0/0/2, p4p5 ]
+      em14:
+        node: [p5, et-0/0/2, p4p5 ]
   br2:
     type: bridge
     os: bridge
@@ -379,17 +372,21 @@ vm:
           inet: 172.16.10.32/24
           gateway4: 172.16.10.254
       em1:
-        node: [p3, ge-0/0/2, p3p4 ]
+        node: [pe11, et-0/0/1, pe11p1 ]
       em2:
-        node: [p4, ge-0/0/3, p3p4 ]
+        node: [p1, et-0/0/0, pe11p1 ]
       em3:
-        node: [p3, ge-0/0/3, p3p5 ]
+        node: [pe11, et-0/0/2, pe11p2 ]
       em4:
-        node: [p5, ge-0/0/3, p3p5 ]
+        node: [p2, et-0/0/0, pe11p2 ]
       em5:
-        node: [p4, ge-0/0/2, p4p5 ]
+        node: [pe12, et-0/0/1, pe12p1 ]
       em6:
-        node: [p5, ge-0/0/2, p4p5 ]
+        node: [p1, et-0/0/1, pe12p1 ]
+      em7:
+        node: [pe12, et-0/0/2, pe12p2 ]
+      em8:
+        node: [p2, et-0/0/1, pe12p2 ]
   br3:
     type: bridge
     os: bridge
@@ -400,46 +397,21 @@ vm:
           inet: 172.16.10.33/24
           gateway4: 172.16.10.254
       em1:
-        node: [pe11, ge-0/0/1, pe11p1 ]
+        node: [pe13, et-0/0/1, pe13p4 ]
       em2:
-        node: [p1, ge-0/0/0, pe11p1 ]
+        node: [p4, et-0/0/0, pe13p4 ]
       em3:
-        node: [pe11, ge-0/0/2, pe11p2 ]
+        node: [pe13, et-0/0/2, pe13p5 ]
       em4:
-        node: [p2, ge-0/0/0, pe11p2 ]
+        node: [p5, et-0/0/0, pe13p5 ]
       em5:
-        node: [pe12, ge-0/0/1, pe12p1 ]
+        node: [pe14, et-0/0/1, pe14p4 ]
       em6:
-        node: [p1, ge-0/0/1, pe12p1 ]
+        node: [p4, et-0/0/1, pe14p4 ]
       em7:
-        node: [pe12, ge-0/0/2, pe12p2 ]
+        node: [pe14, et-0/0/2, pe14p5 ]
       em8:
-        node: [p2, ge-0/0/1, pe12p2 ]
-  br4:
-    type: bridge
-    os: bridge
-    interfaces:
-      em0: 
-        bridge: mgmt
-        family:
-          inet: 172.16.10.34/24
-          gateway4: 172.16.10.254
-      em1:
-        node: [pe13, ge-0/0/1, pe13p4 ]
-      em2:
-        node: [p4, ge-0/0/0, pe13p4 ]
-      em3:
-        node: [pe13, ge-0/0/2, pe13p5 ]
-      em4:
-        node: [p5, ge-0/0/0, pe13p5 ]
-      em5:
-        node: [pe14, ge-0/0/1, pe14p4 ]
-      em6:
-        node: [p4, ge-0/0/1, pe14p4 ]
-      em7:
-        node: [pe14, ge-0/0/2, pe14p5 ]
-      em8:
-        node: [p5, ge-0/0/1, pe14p5 ]
+        node: [p5, et-0/0/1, pe14p5 ]
   client:
     type: pchpv2
     os: ubuntu
@@ -483,21 +455,19 @@ vm:
     type: pcsmall
     os: ubuntu2
     vnc: yes
-    router-id: 192.168.0.16
-    srv6-locator: fc00:dead:beef:ff16::/64
     interfaces:
       em0: 
         bridge: mgmt
         family:
           inet: 172.16.10.21/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet6: fc00:dead:beef:ffff::ffff:16/128
-          iso:  49.0001.1921.6800.0016.00
-          inet: 192.168.255.216/32 
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet6: fc00:dead:beef:ffff::ffff:16/128
+      #     iso:  49.0001.1921.6800.0016.00
+      #     inet: 192.168.255.216/32 
+      #   protocol:
+      #     isis: passive
   nms:
     type: pcmedium
     os: ubuntu
