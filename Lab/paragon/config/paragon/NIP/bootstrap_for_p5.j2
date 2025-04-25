@@ -1,0 +1,20 @@
+configure
+set groups junos_bootstrap interfaces ge-0/0/0 unit 0 family inet address 172.16.14.5/24
+set groups junos_bootstrap routing-options static route 0/0 next-hop 172.16.14.254
+set groups junos_bootstrap policy-options policy-statement from_static term 1 from protocol static
+set groups junos_bootstrap policy-options policy-statement from_static term 1 from route-filter 0.0.0.0/0 exact
+set groups junos_bootstrap policy-options policy-statement from_static term 1 then accept
+set groups junos_bootstrap protocols isis export from_static
+set groups junos_bootstrap protocols bgp group bgp_ls type internal
+set groups junos_bootstrap protocols bgp group bgp_ls local-as 65201
+set groups junos_bootstrap protocols bgp group bgp_ls description "Paragon BGP-TE Peering"
+set groups junos_bootstrap protocols bgp group bgp_ls family traffic-engineering unicast
+set groups junos_bootstrap protocols bgp group bgp_ls passive
+set groups junos_bootstrap protocols bgp group bgp_ls allow 0.0.0.0/0
+set groups junos_bootstrap protocols bgp group bgp_ls local-address 10.1.255.15
+set groups junos_bootstrap protocols bgp group bgp_ls export TE
+set groups junos_bootstrap policy-options policy-statement TE term 1 from family traffic-engineering
+set groups junos_bootstrap policy-options policy-statement TE term 1 then accept
+set groups junos_bootstrap protocols mpls traffic-engineering database import policy TE
+set apply-groups junos_bootstrap
+commit

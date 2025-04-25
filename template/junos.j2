@@ -73,6 +73,7 @@ interfaces {
       }
     }
 }
+
 {% elif type == 'vjunos_router' -%}
 chassis {
     network-services enhanced-ip;
@@ -90,7 +91,7 @@ interfaces {
       }
     }
 }
-{% elif type == 'vjunos_evolved'  -%}
+{% elif type == 'vjunos_evolved' or type == 'vjunos_evolvedBX'  -%}
 chassis {
     network-services enhanced-mode;
 }
@@ -279,7 +280,7 @@ protocols {
 protocols {
    lldp {
       interface all;
-      {% if type == 'vjunos_evolved' -%}
+      {% if type == 'vjunos_evolved' or type == 'vjunos_evolvedBX'  -%}
       interface re0:mgmt-0 {
         disable;
       }

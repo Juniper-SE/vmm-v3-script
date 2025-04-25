@@ -3,7 +3,7 @@ home_dir='/vmm/data/user_disks/'
 kvm_dir='/disk2/vm/'
 pc_type=['gw','pctiny','pcsmall','pcmedium','pcbig','pcxbig','pchpv0','pchpv1','pchpv2','pchpv3','bridge','cpe','paagent','ssrc','ssrr','aos','aos_ztp']
 junos_template='junos.j2'
-junos_type=['vsrx','vmx','mx240','mx480','mx960','vjunos_switch','vjunos_router','vjunos_evolved']
+junos_type=['vsrx','vmx','mx240','mx480','mx960','vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX']
 # vm_type_old={
 #    'gw': {'ncpus' : 2,'memory':4096},
 #    'paagent': {'ncpus' : 1,'memory':1024},
@@ -48,6 +48,7 @@ vm_type={
    'vjunos_switch' : {'ncpus' : 4,'memory':8196,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=1,product=VM-VEX"'},
    'vjunos_router' : {'ncpus' : 4,'memory':8196,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=1,product=VM-VMX,family=lab"'},
    'vjunos_evolved': {'ncpus' : 4,'memory':8196,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=0,vendor=Bochs,version=Bochs -smbios type=3,manufacturer=Bochs -smbios type=1,manufacturer=Bochs,product=Bochs,serial=chassis_no=0:slot=0:type=1:assembly_id=0x0D20:platform=251:master=0:channelized=no"'},
+   'vjunos_evolvedBX': {'ncpus' : 4,'memory':8196,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=0,vendor=Bochs,version=Bochs -smbios type=3,manufacturer=Bochs -smbios type=1,manufacturer=Bochs,product=Bochs,serial=chassis_no=0:slot=0:type=1:assembly_id=0x0DA9:platform=272:master=0:channelized=no"'},
    'vsrx': {'ncpus' : 2,'memory':4096,'setvar':'"qemu_args" "-cpu qemu64,+vmx,+ssse3,+sse4_1,+sse4_2,+aes,+avx,+pat,+pclmulqdq,+rdtscp,+syscall,+tsc-deadline,+x2apic,+xsave"'},
    'vmx' : {'i2cid': 161}, 
    'mx240' : {'i2cid': 48}, 
@@ -55,8 +56,8 @@ vm_type={
    'mx960' : {'i2cid': 21}
 }
 # vm_os=['centos','ubuntu','vmx','vqfx','vsrx','evo','mx960','mx480','mx240','wrt']
-vm_os=['gw','alpine','centos','rhel','ubuntu','ubuntu2','debian','desktop','vmx','jspace','sdi','pa2',
-       'vsrx','vjunos_switch','vjunos_router','vjunos_evolved','wrt','aos','aos_ztp','aos_flow','bridge','paagent','ssr']
+# vm_os=['gw','alpine','centos','rhel','ubuntu','ubuntu2','debian','desktop','vmx','jspace','sdi','pa2',
+#        'vsrx','vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX','wrt','aos','aos_ztp','aos_flow','bridge','paagent','ssr']
 tmp_dir="./tmp/"
 vmm_group="vmm-default"
 esxi_ds_size=100

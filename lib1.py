@@ -267,7 +267,7 @@ def read_config(config):
 
 def change_ztp(d1):
 	for i in d1['vm'].keys():
-		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved']:
+		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX']:
 			if 'ztp' not in d1['vm'][i].keys():
 				d1['vm'][i]['ztp'] = False
 				
@@ -707,7 +707,7 @@ def checking_config_syntax(d1):
 		# 	return 0
 	# checking interface
 	for i in d1['vm'].keys():
-		if (d1['vm'][i]['type'] in param1.vm_type.keys()) and (d1['vm'][i]['type'] not in ['vmx','vjunos_evolved','vsrx','mx240','mx480','mx960','vjunos_switch','vjunos_router']):
+		if (d1['vm'][i]['type'] in param1.vm_type.keys()) and (d1['vm'][i]['type'] not in ['vmx','vjunos_evolved','vjunos_evolvedBX','vsrx','mx240','mx480','mx960','vjunos_switch','vjunos_router']):
 			for j in d1['vm'][i]['interfaces'].keys():
 				if 'em' not in j:
 					print("ERROR for VM ",i)
@@ -927,7 +927,7 @@ def get_ip_vm(d1,i):
 
 
 def get_dhcp_config(d1):
-	dhcp_yes=['centos','rhel','ubuntu','ubuntu2','debian','esxi','bridge','desktop','paagent','vjunos_switch','vjunos_router','vjunos_evolved','aos','aos_flow','aos_ztp']
+	dhcp_yes=['centos','rhel','ubuntu','ubuntu2','debian','esxi','bridge','desktop','paagent','vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX','aos','aos_flow','aos_ztp']
 	dhcp_list=[]
 	retval={}
 	t1={}
@@ -941,7 +941,7 @@ def get_dhcp_config(d1):
 						d1['vm'][i]['interfaces']['em0']['mac']=get_mac_vm(d1,i)
 						dhcp_list.append(i)
 			elif 'mgmt' in d1['vm'][i]['interfaces']:
-				if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved'] and d1['vm'][i]['ztp']:
+				if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX'] and d1['vm'][i]['ztp']:
 					if 'family' in d1['vm'][i]['interfaces']['mgmt']:
 						if 'inet' in d1['vm'][i]['interfaces']['mgmt']['family']:
 							d1['vm'][i]['interfaces']['mgmt']['mac']=get_mac_vm(d1,i)
@@ -1203,7 +1203,7 @@ def set_gw(d1):
 	# 		print(f"upload file {i}.conf")
 	# 		sftp.put(file2,dst2)
 	for i in d1['vm'].keys():
-		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved'] and d1['vm'][i]['ztp']:
+		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX'] and d1['vm'][i]['ztp']:
 			src1 = f"{param1.tmp_dir}{i}.conf"
 			dst1 = f"tftp/{i}.conf"
 			sftp=ssh.open_sftp()
@@ -1452,7 +1452,7 @@ def get_mac_vjunos(d1):
 	mac_vjunos={}
 	for i in d1['vm'].keys():
 		# if d1['vm'][i]['os'] == 'vjunos_switch':
-		if d1['vm'][i]['os'] == 'vjunos_switch' or d1['vm'][i]['os'] == 'evo' or d1['vm'][i]['os'] == 'vjunos_evolved':
+		if d1['vm'][i]['os'] == 'vjunos_switch' or d1['vm'][i]['os'] == 'evo' or d1['vm'][i]['os'] == 'vjunos_evolved' or d1['vm'][i]['os'] == 'vjunos_evolvedBX':
 			print(f"Getting mac of {i}")
 			mac_vjunos[i]={}
 			mac_vjunos[i]['mac']=get_mac_vm(d1,i)
@@ -1809,7 +1809,7 @@ def create_lab_config(d1):
 						if j == 'mgmt':
 							intf1 = 'vio0'
 						elif j.split('-')[0] in ['ge','et','xe']:
-							if d1['vm'][i]['type'] == 'vjunos_evolved':
+							if d1['vm'][i]['type'] == 'vjunos_evolved' or d1['vm'][i]['type'] == 'vjunos_evolvedBX':
 								if 'vm_type' in d1['vm'][i].keys():
 									if d1['vm'][i]['vm_type'] == 0:
 										idx = int(j.split('/')[2]) + 5
@@ -2088,6 +2088,8 @@ def create_junos_config(d1,i):
 	# 	dummy1['type']='evo'
 	elif d1['vm'][i]['os'] == 'vjunos_evolved':
 		dummy1['type']='vjunos_evolved'
+	elif d1['vm'][i]['os'] == 'vjunos_evolvedBX':
+		dummy1['type']='vjunos_evolvedBX'
 	# dummy1['gateway4']=d1['vm']['gw']['interfaces']['em1']['family']['inet'].split('/')[0]
 	dummy1['gateway4'] = get_gateway4(d1,i)
 	dummy1['mgmt_ip']=d1['vm'][i]['interfaces']['mgmt']['family']['inet']
@@ -2381,7 +2383,7 @@ def init_junos(d1,vm=""):
 	print("this is for init junos")
 	list_of_jvm=[]
 	for i in d1['vm'].keys():
-		if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos-router','vjunos_evolved']:
+		if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos-router','vjunos_evolved','vjunos_evolvedBX']:
 			list_of_jvm.append(i)
 	if list_of_jvm:
 		if vm:
@@ -2441,7 +2443,7 @@ def config_junos(d1,vm=""):
 		print("this is put configuration into vEX and vEVO")
 		list_of_jvm=[]
 		for i in d1['vm'].keys():
-			if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos_router','vjunos_evolved']:
+			if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos_router','vjunos_evolved','vjunos_evolvedBX']:
 				list_of_jvm.append(i)
 		if list_of_jvm:
 			print("list of virtual junos ",list_of_jvm)
@@ -2513,11 +2515,11 @@ def send_init(d1,i):
 				# ["exit","root@:~ #"],
 				# ["exit","login:"]
 			## [f"set system login user {d1['junos_login']['login']} authentication ssh-rsa \"{d1['pod']['ssh_key']}\"","root#"],
-	elif d1['vm'][i]['os'] in  ['evo','vjunos_evolved']:
+	elif d1['vm'][i]['os'] in  ['evo','vjunos_evolved','vjunos_evolvedBX']:
 		junos_status=1
 		if d1['vm'][i]['os'] == 'evo':
 			c1=f"ssh vmm 'vmm serial -t {i}_RE0'"
-		elif d1['vm'][i]['os'] == 'vjunos_evolved':
+		elif d1['vm'][i]['os'] == 'vjunos_evolved' or d1['vm'][i]['os'] == 'vjunos_evolvedBX':
 			c1=f"ssh vmm 'vmm serial -t {i}'"
 		print(f"COMMAND {c1}")
 		s_e = [

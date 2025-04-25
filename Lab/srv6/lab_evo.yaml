@@ -4,7 +4,7 @@ pod:
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod08-vmm.englab.juniper.net
+  vmmserver: q-pod30-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan

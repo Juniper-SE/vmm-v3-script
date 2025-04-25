@@ -1,0 +1,10 @@
+configure
+set groups junos_bootstrap system name-server 10.49.32.95
+set groups junos_bootstrap system name-server 10.49.32.97
+set groups junos_bootstrap system ntp server ntp.juniper.net
+set groups junos_bootstrap protocols lldp interface all
+set groups junos_bootstrap protocols lldp interface fxp0 disable
+set groups junos_bootstrap protocols isis interface <*> point-to-point
+set apply-groups junos_bootstrap
+commit
+

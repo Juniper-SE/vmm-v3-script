@@ -1,0 +1,26 @@
+---
+- name: Upload config into router
+  hosts:
+    - all
+#  roles:
+#    - juniper.junos
+  vars:
+    username: admin
+    conf_dir: "./v10"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.set"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper.device.config:
+         host: "{{ ansible_host }}"
+         user: "{{ username }}"
+         # file: "{{ conf_file}}"
+         config_mode: "exclusive"
+         format: "set"
+         # load: "set"
+         lines:
+          # - "delete apply-groups mpls"
+          # - "set apply-groups sr"
+          - set system name-server 10.49.32.95
+          - set system name-server 10.49.32.97

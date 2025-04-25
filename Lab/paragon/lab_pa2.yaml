@@ -4,7 +4,7 @@ pod:
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod26-vmm.englab.juniper.net
+  vmmserver: q-pod39-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan
@@ -19,7 +19,7 @@ images:
   #ubuntu: images/ubuntu22.04.qcow2
   #bridge: images/bridge.qcow2
   #vjunos_router: images/vJunos-router-24.2R1.17.qcow2
-  pa2: images/paragon-2.3.0-disk1.vmdk
+  pa2: images/paragon-2.4.0.g289fc89956-disk1.vmdk
   #paagent: images/paa-test-agent_4.4.0.9.qcow2
 junos_login:
   login: admin
@@ -36,6 +36,7 @@ wg:
   prefix_allowed:
   - 172.16.11.0/24 
   - 172.16.255.0/24
+  - 172.16.12.0/24 
 # fabric:
 #   subnet: 10.100.0.0/24
 #   topology:

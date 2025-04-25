@@ -8,12 +8,11 @@ The scripts has been modified to work with VMM 3.0
 ## update on the script
 new features has been added into the scripts :
 
-~~- allow access into the VMM lab using the jump host. Please edit the lab.yaml to specify which VMM lab that you want to use and the jump host to access that lab.~~
 - vpn is no longer required, everything is handled by zscaler connect
 - jump host is no longer required
 - using jinja2 template to create configuration for junos devices. Currently it support configuration for the following :
-    * address family : inet, inet6  (work in progress), iso, mpls
-    * protocols : isis, mpls, rsvp, ldp, pcep, bgp-ls
+    * address family : inet, inet6, , iso, mpls
+    * protocols : isis, mpls, rsvp, ldp, pcep, bgp-ls, srv6
 - topology of point-to-point connection between junos devices can be generated automatically, for both bridge assignment and address (ipv4/ipv6) allocation
 - On VMM 3.0, configuration of PC's VM is no longer written to the disk image when the VM was started for the first time, so on this script, the configuration of the PC is pushed using ssh, therefore PC VMs must be assigned with IP address
 - the IP address assignment to the PC VMs is done using dhcp with node GW as the dhcp server
@@ -21,9 +20,11 @@ new features has been added into the scripts :
 
 
 ## The supported VMs :
+- vJunos Switch
+- vJunos Router
+- vJunos Evolved
 - vMX
 - vSRX
-- vEVO/vPTX
 - Apstra fabric controller
 - PC with ubuntu OS 
 - PC with centos OS
@@ -69,7 +70,7 @@ please edit this file for the following :
 - the jump host to access the VMM lab
 - the ssh key to access jumphost, vmm server and the VMs inside the topology. 
 - JNPR Lab Domain password (to access vmm server)
-  - if you don't to hardcode your VMM password into file lab.yaml, your can set environment variable VMMPASSWORD with your JNPRLAB domain password
+  - if you don't want to hardcode your VMM password into file lab.yaml, your can set environment variable VMMPASSWORD with your JNPRLAB domain password
 
         export VMMPASSWORD="what ever is your password"
 

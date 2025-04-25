@@ -1,3 +1,4 @@
+#!/bin/bash
 CRPD_NAME=${HOSTNAME}
 # CRPD_IMAGE="localhost/crpd:22.2R1.9"
 CRPD_IMAGE="${1}"

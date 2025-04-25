@@ -1,0 +1,901 @@
+
+ Blueprints DC1 Staged Physical Selection
+Search...
+Has Uncommitted Changes
+Selected Rack
+All
+Selected Node
+spine1 (Spine)
+Topology Label
+Name
+
+Show All Neighbors
+
+spine1
+
+et-0/0/0
+
+et-0/0/1
+
+et-0/0/2
+
+et-0/0/3
+
+et-0/0/4
+
+et-0/0/5
+
+et-0/0/6
+
+et-0/0/7
+
+et-0/0/8
+
+et-0/0/9
+
+et-0/0/10
+
+et-0/0/11
+
+et-0/0/12
+
+et-0/0/13
+
+et-0/0/14
+
+et-0/0/15
+
+et-0/0/16
+
+et-0/0/17
+racktype1b_001_leaf1
+et-0/0/0
+racktype1b_001_leaf2
+et-0/0/0
+racktype1b_002_leaf1
+et-0/0/0
+racktype1b_002_leaf2
+et-0/0/0
+racktype1b_003_leaf1
+et-0/0/0
+racktype1b_003_leaf2
+et-0/0/0
+racktype1b_004_leaf1
+et-0/0/0
+racktype1b_004_leaf2
+et-0/0/0
+racktype1b_005_leaf1
+et-0/0/0
+racktype1b_005_leaf2
+et-0/0/0
+racktype1b_006_leaf1
+et-0/0/0
+racktype1b_006_leaf2
+et-0/0/0
+racktype1b_007_leaf1
+et-0/0/0
+racktype1b_007_leaf2
+et-0/0/0
+racktype1b_008_leaf1
+et-0/0/0
+racktype1b_008_leaf2
+et-0/0/0
+racktype2_001_leaf1
+et-0/0/0
+racktype2_002_leaf1
+et-0/0/0
+spine1 
+Role: Spine
+Deploy Mode
+Not Set
+S/N
+Not assigned
+Hostname
+spine1
+Config
+Rendered
+Incremental
+Device Context
+Active Tasks: 0
+Policy
+spine1 Rendered Config Preview
+system {
+    host-name spine1;
+}
+chassis {
+    fpc 0 {
+        pic 0 {
+            port 0 {
+                speed 100g;
+            }
+            port 1 {
+                speed 100g;
+            }
+            port 2 {
+                speed 100g;
+            }
+            port 3 {
+                speed 100g;
+            }
+            port 4 {
+                speed 100g;
+            }
+            port 5 {
+                speed 100g;
+            }
+            port 6 {
+                speed 100g;
+            }
+            port 7 {
+                speed 100g;
+            }
+            port 8 {
+                speed 100g;
+            }
+            port 9 {
+                speed 100g;
+            }
+            port 10 {
+                speed 100g;
+            }
+            port 11 {
+                speed 100g;
+            }
+            port 12 {
+                speed 100g;
+            }
+            port 13 {
+                speed 100g;
+            }
+            port 14 {
+                speed 100g;
+            }
+            port 15 {
+                speed 100g;
+            }
+            port 16 {
+                speed 100g;
+            }
+            port 17 {
+                speed 100g;
+            }
+        }
+    }
+}
+interfaces {
+    replace: et-0/0/0 {
+        description "facing_racktype1b-001-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.20/31;
+            }
+        }
+    }
+    replace: et-0/0/1 {
+        description "facing_racktype1b-001-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.22/31;
+            }
+        }
+    }
+    replace: et-0/0/2 {
+        description "facing_racktype1b-002-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.24/31;
+            }
+        }
+    }
+    replace: et-0/0/3 {
+        description "facing_racktype1b-002-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.26/31;
+            }
+        }
+    }
+    replace: et-0/0/4 {
+        description "facing_racktype1b-003-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.28/31;
+            }
+        }
+    }
+    replace: et-0/0/5 {
+        description "facing_racktype1b-003-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.30/31;
+            }
+        }
+    }
+    replace: et-0/0/6 {
+        description "facing_racktype1b-004-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.32/31;
+            }
+        }
+    }
+    replace: et-0/0/7 {
+        description "facing_racktype1b-004-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.34/31;
+            }
+        }
+    }
+    replace: et-0/0/8 {
+        description "facing_racktype1b-005-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.36/31;
+            }
+        }
+    }
+    replace: et-0/0/9 {
+        description "facing_racktype1b-005-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.38/31;
+            }
+        }
+    }
+    replace: et-0/0/10 {
+        description "facing_racktype1b-006-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.40/31;
+            }
+        }
+    }
+    replace: et-0/0/11 {
+        description "facing_racktype1b-006-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.42/31;
+            }
+        }
+    }
+    replace: et-0/0/12 {
+        description "facing_racktype1b-007-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.44/31;
+            }
+        }
+    }
+    replace: et-0/0/13 {
+        description "facing_racktype1b-007-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.46/31;
+            }
+        }
+    }
+    replace: et-0/0/14 {
+        description "facing_racktype1b-008-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.48/31;
+            }
+        }
+    }
+    replace: et-0/0/15 {
+        description "facing_racktype1b-008-leaf2:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.50/31;
+            }
+        }
+    }
+    replace: et-0/0/16 {
+        description "facing_racktype2-001-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.52/31;
+            }
+        }
+    }
+    replace: et-0/0/17 {
+        description "facing_racktype2-002-leaf1:et-0/0/0";
+        mtu 9216;
+        unit 0 {
+            family inet {
+                mtu 9170;
+                address 172.16.0.54/31;
+            }
+        }
+    }
+    replace: et-0/0/18 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/19 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/20 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/21 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/22 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/23 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/24 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/25 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/26 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/27 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/28 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/29 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/30 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: et-0/0/31 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: xe-0/0/32 {
+        unit 0 {
+           family inet;
+        }
+    }
+    replace: xe-0/0/33 {
+        unit 0 {
+           family inet;
+        }
+    }
+    lo0 {
+        unit 0 {
+            family inet {
+                address 172.16.0.0/32;
+            }
+            family inet6 {
+                address fc01:a05:fab::10/128;
+            }
+        }
+    }
+}
+forwarding-options {
+    vxlan-routing {
+        overlay-ecmp;
+    }
+}
+routing-options {
+    router-id 172.16.0.0;
+    autonomous-system 4200000000;
+    graceful-restart;
+    forwarding-table {
+        export PFE-LB;
+        ecmp-fast-reroute;
+    }
+}
+protocols {
+    bgp {
+        log-updown;
+        graceful-restart {
+            dont-help-shared-fate-bfd-down;
+        }
+        multipath;
+        group l3clos-s {
+            type external;
+            multipath {
+                multiple-as;
+            }
+            bfd-liveness-detection {
+                minimum-interval 1000;
+                multiplier 3;
+            }
+            vpn-apply-export;
+            neighbor 172.16.0.21 {
+                description "facing_racktype1b-001-leaf1";
+                local-address 172.16.0.20;
+                peer-as 4200000002;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.23 {
+                description "facing_racktype1b-001-leaf2";
+                local-address 172.16.0.22;
+                peer-as 4200000003;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.25 {
+                description "facing_racktype1b-002-leaf1";
+                local-address 172.16.0.24;
+                peer-as 4200000004;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.27 {
+                description "facing_racktype1b-002-leaf2";
+                local-address 172.16.0.26;
+                peer-as 4200000005;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.29 {
+                description "facing_racktype1b-003-leaf1";
+                local-address 172.16.0.28;
+                peer-as 4200000006;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.31 {
+                description "facing_racktype1b-003-leaf2";
+                local-address 172.16.0.30;
+                peer-as 4200000007;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.33 {
+                description "facing_racktype1b-004-leaf1";
+                local-address 172.16.0.32;
+                peer-as 4200000008;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.35 {
+                description "facing_racktype1b-004-leaf2";
+                local-address 172.16.0.34;
+                peer-as 4200000009;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.37 {
+                description "facing_racktype1b-005-leaf1";
+                local-address 172.16.0.36;
+                peer-as 4200000010;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.39 {
+                description "facing_racktype1b-005-leaf2";
+                local-address 172.16.0.38;
+                peer-as 4200000011;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.41 {
+                description "facing_racktype1b-006-leaf1";
+                local-address 172.16.0.40;
+                peer-as 4200000012;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.43 {
+                description "facing_racktype1b-006-leaf2";
+                local-address 172.16.0.42;
+                peer-as 4200000013;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.45 {
+                description "facing_racktype1b-007-leaf1";
+                local-address 172.16.0.44;
+                peer-as 4200000014;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.47 {
+                description "facing_racktype1b-007-leaf2";
+                local-address 172.16.0.46;
+                peer-as 4200000015;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.49 {
+                description "facing_racktype1b-008-leaf1";
+                local-address 172.16.0.48;
+                peer-as 4200000016;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.51 {
+                description "facing_racktype1b-008-leaf2";
+                local-address 172.16.0.50;
+                peer-as 4200000017;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.53 {
+                description "facing_racktype2-001-leaf1";
+                local-address 172.16.0.52;
+                peer-as 4200000018;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+            neighbor 172.16.0.55 {
+                description "facing_racktype2-002-leaf1";
+                local-address 172.16.0.54;
+                peer-as 4200000019;
+                family inet {
+                    unicast;
+                }
+                export ( SPINE_TO_LEAF_FABRIC_OUT && BGP-AOS-Policy );
+            }
+        }
+        group l3clos-s-evpn {
+            type external;
+            multipath {
+                multiple-as;
+            }
+            multihop {
+                no-nexthop-change;
+                ttl 1;
+            }
+            family evpn {
+                signaling {
+                    loops 2;
+                }
+            }
+            bfd-liveness-detection {
+                minimum-interval 3000;
+                multiplier 3;
+            }
+            vpn-apply-export;
+            neighbor 172.16.0.2 {
+                description "facing_racktype1b-001-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000002;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.3 {
+                description "facing_racktype1b-001-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000003;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.4 {
+                description "facing_racktype1b-002-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000004;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.5 {
+                description "facing_racktype1b-002-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000005;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.6 {
+                description "facing_racktype1b-003-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000006;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.7 {
+                description "facing_racktype1b-003-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000007;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.8 {
+                description "facing_racktype1b-004-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000008;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.9 {
+                description "facing_racktype1b-004-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000009;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.10 {
+                description "facing_racktype1b-005-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000010;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.11 {
+                description "facing_racktype1b-005-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000011;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.12 {
+                description "facing_racktype1b-006-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000012;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.13 {
+                description "facing_racktype1b-006-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000013;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.14 {
+                description "facing_racktype1b-007-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000014;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.15 {
+                description "facing_racktype1b-007-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000015;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.16 {
+                description "facing_racktype1b-008-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000016;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.17 {
+                description "facing_racktype1b-008-leaf2-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000017;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.18 {
+                description "facing_racktype2-001-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000018;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+            neighbor 172.16.0.19 {
+                description "facing_racktype2-002-leaf1-evpn-overlay";
+                local-address 172.16.0.0;
+                peer-as 4200000019;
+                family evpn {
+                    signaling;
+                }
+                export ( SPINE_TO_LEAF_EVPN_OUT );
+            }
+        }
+    }
+    lldp {
+        port-id-subtype interface-name;
+        port-description-type interface-description;
+        neighbour-port-info-display port-id;
+        interface all;
+    }
+    replace: rstp {
+        disable;
+    }
+}
+policy-options {
+    community DEFAULT_DIRECT_V4 {
+        members [ 1:20007 21001:26000 ];
+    }
+    community DEFAULT_DIRECT_V6 {
+        members [ 1:20008 21001:26000 ];
+    }
+    community FROM_SPINE_EVPN_TIER {
+        members [ 0:14 ];
+    }
+    community FROM_SPINE_FABRIC_TIER {
+        members [ 0:15 ];
+    }
+    policy-statement AllPodNetworks {
+        term AllPodNetworks-10 {
+            from {
+                family inet;
+                protocol direct;
+            }
+            then {
+                community add DEFAULT_DIRECT_V4;
+                accept;
+            }
+        }
+        term AllPodNetworks-20 {
+            from {
+                family inet6;
+                protocol direct;
+            }
+            then {
+                community add DEFAULT_DIRECT_V6;
+                accept;
+            }
+        }
+        term AllPodNetworks-100 {
+            then reject;
+        }
+    }
+    policy-statement BGP-AOS-Policy {
+        term BGP-AOS-Policy-10 {
+            from {
+                policy AllPodNetworks;
+            }
+            then accept;
+        }
+        term BGP-AOS-Policy-20 {
+            from {
+                protocol bgp;
+            }
+            then accept;
+        }
+        term BGP-AOS-Policy-100 {
+            then reject;
+        }
+    }
+    policy-statement SPINE_TO_LEAF_EVPN_OUT {
+        term SPINE_TO_LEAF_EVPN_OUT-10 {
+            then {
+                community add FROM_SPINE_EVPN_TIER;
+                accept;
+            }
+        }
+    }
+    policy-statement SPINE_TO_LEAF_FABRIC_OUT {
+        term SPINE_TO_LEAF_FABRIC_OUT-10 {
+            then {
+                community add FROM_SPINE_FABRIC_TIER;
+                accept;
+            }
+        }
+    }
+    policy-statement PFE-LB {
+        then {
+            load-balance per-packet;
+        }
+    }
+}
+

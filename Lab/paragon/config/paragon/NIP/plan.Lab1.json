@@ -1,0 +1,890 @@
+{
+  "design_id": "infrastructure",
+  "infrastructure_ntw": {
+    "default_interface_profiles": [],
+    "default_node_profiles": [],
+    "interface_profiles": {
+      "interface_profile": [
+        {
+          "isis": {
+            "level": "level2"
+          },
+          "name": "interface_profie_to_crpd",
+          "templates": []
+        },
+        {
+          "isis": {
+            "level": "level2"
+          },
+          "ldp": {
+            "ldp_synchronization": true
+          },
+          "name": "Interface_profile_WAN",
+          "rsvp": {
+            "link_protection": true
+          },
+          "templates": []
+        }
+      ]
+    },
+    "labels": {
+      "label": [
+        {
+          "name": "P"
+        },
+        {
+          "name": "PE"
+        }
+      ]
+    },
+    "network_nodes": {
+      "network_node": [
+        {
+          "hostname": "p1",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.1/31"
+                },
+                "link": "PE1_P1",
+                "name": "ge-0/0/0.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.5/31"
+                },
+                "link": "PE2_P1",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.16/31"
+                },
+                "link": "P1_P2",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P3 link A",
+                "ipv4_address": {
+                  "explicit": "10.1.0.18/31"
+                },
+                "link": "P1_P3_link_A",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P3 link B",
+                "ipv4_address": {
+                  "explicit": "10.1.0.20/31"
+                },
+                "link": "P1_P3_Link_B",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P5",
+                "ipv4_address": {
+                  "explicit": "10.1.0.22/31"
+                },
+                "link": "P1_P5",
+                "name": "ge-0/0/5.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.11"
+          },
+          "model": "VMX",
+          "name": "p1",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_P"
+          ],
+          "serial": "VM6809A2070D",
+          "site_id": "ccc7f653-7c2c-452c-a603-f52593832d13",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "p2",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.3/31"
+                },
+                "link": "PE1_P2",
+                "name": "ge-0/0/0.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.7/31"
+                },
+                "link": "PE2_P2",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.17/31"
+                },
+                "link": "P1_P2",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P5",
+                "ipv4_address": {
+                  "explicit": "10.1.0.24/31"
+                },
+                "link": "P2_P5",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.12"
+          },
+          "model": "VMX",
+          "name": "p2",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_P"
+          ],
+          "serial": "VM6809A1FD84",
+          "site_id": "9184c8c6-6f88-40bf-8d9f-5cb5468458ad",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "pe4",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.12/31"
+                },
+                "link": "PE4_P3",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P4",
+                "ipv4_address": {
+                  "explicit": "10.1.0.14/31"
+                },
+                "link": "PE4_P4",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.4"
+          },
+          "model": "VMX",
+          "name": "pe4",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_PE"
+          ],
+          "serial": "VM6809A203EA",
+          "site_id": "0bc124c3-ec4a-459d-9f1e-2bda1e1511f9",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "p4",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.11/31"
+                },
+                "link": "PE3_P4",
+                "name": "ge-0/0/0.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE4",
+                "ipv4_address": {
+                  "explicit": "10.1.0.15/31"
+                },
+                "link": "PE4_P4",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.27/31"
+                },
+                "link": "P3_P4",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P5",
+                "ipv4_address": {
+                  "explicit": "10.1.0.28/31"
+                },
+                "link": "P4_P5",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.14"
+          },
+          "model": "VMX",
+          "name": "p4",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_P"
+          ],
+          "serial": "VM6809A20788",
+          "site_id": "cf9f3430-bec1-4537-8805-ba86fb914400",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "p5",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.23/31"
+                },
+                "link": "P1_P5",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.25/31"
+                },
+                "link": "P2_P5",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.31/31"
+                },
+                "link": "P3_P5",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P4",
+                "ipv4_address": {
+                  "explicit": "10.1.0.29/31"
+                },
+                "link": "P4_P5",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to CRPD",
+                "ipv4_address": {
+                  "explicit": "172.16.15.1/31"
+                },
+                "name": "ge-0/0/5.0",
+                "profiles": [
+                  "interface_profie_to_crpd"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.15"
+          },
+          "model": "VMX",
+          "name": "p5",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_P5"
+          ],
+          "serial": "VM6809A1FB6C",
+          "site_id": "fbdf4808-5c6e-4ca4-bb3d-881818c61099",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "p3",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.9/31"
+                },
+                "link": "PE3_P3",
+                "name": "ge-0/0/0.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to PE4",
+                "ipv4_address": {
+                  "explicit": "10.1.0.13/31"
+                },
+                "link": "PE4_P3",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P4",
+                "ipv4_address": {
+                  "explicit": "10.1.0.26/31"
+                },
+                "link": "P3_P4",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1 link A",
+                "ipv4_address": {
+                  "explicit": "10.1.0.19/31"
+                },
+                "link": "P1_P3_link_A",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1 link B",
+                "ipv4_address": {
+                  "explicit": "10.1.0.21/31"
+                },
+                "link": "P1_P3_Link_B",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P5",
+                "ipv4_address": {
+                  "explicit": "10.1.0.30/31"
+                },
+                "link": "P3_P5",
+                "name": "ge-0/0/5.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.13"
+          },
+          "model": "VMX",
+          "name": "p3",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_P"
+          ],
+          "serial": "VM6809A2058F",
+          "site_id": "9a3bc4cc-0b36-4ba0-ab52-e8618af4e044",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "pe3",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P3",
+                "ipv4_address": {
+                  "explicit": "10.1.0.8/31"
+                },
+                "link": "PE3_P3",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P4",
+                "ipv4_address": {
+                  "explicit": "10.1.0.10/31"
+                },
+                "link": "PE3_P4",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.3"
+          },
+          "model": "VMX",
+          "name": "pe3",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_PE"
+          ],
+          "serial": "VM6809A1FD18",
+          "site_id": "f66a7617-812f-4478-a02f-e30e26cd40a4",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "pe2",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.4/31"
+                },
+                "link": "PE2_P1",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.6/31"
+                },
+                "link": "PE2_P2",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.2"
+          },
+          "model": "VMX",
+          "name": "pe2",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_PE"
+          ],
+          "serial": "VM6809A1F5E3",
+          "site_id": "5fe374c2-1396-4eec-a41c-e30137f5b4db",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "hostname": "pe1",
+          "installation": {
+            "duration": 0
+          },
+          "interfaces": {
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P1",
+                "ipv4_address": {
+                  "explicit": "10.1.0.0/31"
+                },
+                "link": "PE1_P1",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "description": "connection to P2",
+                "ipv4_address": {
+                  "explicit": "10.1.0.2/31"
+                },
+                "link": "PE1_P2",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "Interface_profile_WAN"
+                ]
+              }
+            ]
+          },
+          "ipv4_loopback": {
+            "explicit": "10.1.255.1"
+          },
+          "model": "VMX",
+          "name": "pe1",
+          "node_type": "real-node",
+          "profiles": [
+            "Device_profile_PE"
+          ],
+          "serial": "VM6809A1FA40",
+          "site_id": "904e91ef-1c5b-489a-bc85-9fb8825e4994",
+          "vendor": "Juniper Networks"
+        }
+      ]
+    },
+    "node_profiles": {
+      "node_profile": [
+        {
+          "analytics": {
+            "routing": {
+              "bgp": {
+                "ribs": {
+                  "enabled": true
+                },
+                "state": true
+              }
+            },
+            "traffic_engineering": {}
+          },
+          "ipv6_tunneling": {
+            "enabled": false
+          },
+          "isis": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "iso_net_address": {
+            "area_id": "49.0001",
+            "system_id": {
+              "auto": [
+                null
+              ]
+            }
+          },
+          "labels": [
+            "P"
+          ],
+          "ldp": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "name": "Device_profile_P",
+          "per_flow_load_balancing": {
+            "enabled": true
+          },
+          "router_id": {
+            "auto": {}
+          },
+          "templates": [
+            "260a4da1-6eb9-4c70-bf9d-892e0c46507b"
+          ],
+          "trust": {
+            "enabled": true
+          }
+        },
+        {
+          "analytics": {
+            "routing": {
+              "bgp": {
+                "ribs": {
+                  "enabled": true
+                },
+                "state": true
+              }
+            },
+            "traffic_engineering": {}
+          },
+          "ipv6_tunneling": {
+            "enabled": false
+          },
+          "isis": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "iso_net_address": {
+            "area_id": "49.0001",
+            "system_id": {
+              "auto": [
+                null
+              ]
+            }
+          },
+          "labels": [
+            "P"
+          ],
+          "ldp": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "name": "Device_profile_P5",
+          "per_flow_load_balancing": {
+            "enabled": true
+          },
+          "router_id": {
+            "auto": {}
+          },
+          "templates": [
+            "260a4da1-6eb9-4c70-bf9d-892e0c46507b",
+            "612ac1ce-cfea-4d7e-91be-494aca10c563"
+          ],
+          "trust": {
+            "enabled": true
+          }
+        },
+        {
+          "analytics": {
+            "routing": {
+              "bgp": {
+                "ribs": {
+                  "enabled": true
+                },
+                "state": true
+              }
+            },
+            "traffic_engineering": {}
+          },
+          "autonomous_system": 65200,
+          "bgp": {
+            "groups": {
+              "group": [
+                {
+                  "name": "to_RR",
+                  "neighbors": {
+                    "ipv4": {
+                      "address_family": [
+                        "l3vpn-ipv4-unicast",
+                        "l3vpn-ipv6-unicast",
+                        "l2vpn-evpn"
+                      ],
+                      "addresses": [
+                        "10.1.255.20"
+                      ],
+                      "labels": []
+                    },
+                    "ipv6": {
+                      "address_family": [],
+                      "addresses": [],
+                      "labels": []
+                    }
+                  },
+                  "peer_autonomous_system": 65200,
+                  "type": "internal"
+                }
+              ]
+            }
+          },
+          "ipv6_tunneling": {
+            "enabled": true
+          },
+          "isis": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "iso_net_address": {
+            "area_id": "49.0001",
+            "system_id": {
+              "auto": [
+                null
+              ]
+            }
+          },
+          "labels": [
+            "PE"
+          ],
+          "ldp": {
+            "ipv4": true,
+            "ipv6": true
+          },
+          "name": "Device_profile_PE",
+          "pcep": {
+            "pce_address": "172.16.12.3"
+          },
+          "per_flow_load_balancing": {
+            "enabled": true
+          },
+          "router_id": {
+            "auto": {}
+          },
+          "templates": [
+            "260a4da1-6eb9-4c70-bf9d-892e0c46507b"
+          ],
+          "trust": {
+            "enabled": true
+          }
+        }
+      ]
+    }
+  },
+  "instance_id": "Lab1",
+  "org_id": "a544c3ae-1c3a-4916-a6fc-0f8a48527405",
+  "place": [],
+  "placement": {}
+}

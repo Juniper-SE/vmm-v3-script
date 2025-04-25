@@ -1,10 +1,10 @@
 ---
-name: net1
+name: pa2_net
 pod: 
   type: vmm
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
-  vmmserver: q-pod35-vmm.englab.juniper.net
+  vmmserver: q-pod13-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan
@@ -16,13 +16,12 @@ pod:
   #ntp: 172.16.10.1
 images:
   gw: images/gw.qcow2
-  ubuntu: images/ubuntu22.04.qcow2
-  ubuntu2: images/ubuntu24.04_crio.qcow2
+  ubuntu: images/ubuntu24.04.qcow2
+  ubuntu2: images/ubuntu24.04_containerd.qcow2
   bridge: images/bridge.qcow2
-  vjunos_router: images/vJunos-router-24.2R1.17.qcow2
-  vjunos_evolved: images/vJunosEvolved-23.4R2-S2.1-EVO.qcow2
+  vjunos_router: images/vJunos-router-24.2R1-S2.5.qcow2
   #pa2: images/paragon-2.1.0-disk1.qcow2
-  paagent: images/paa-test-agent_4.4.0.9.qcow2
+  #paagent: images/paa-test-agent_4.4.0.9.qcow2
 junos_login:
   login: admin
   password: pass01
@@ -58,22 +57,22 @@ fabric:
   # SNMP trap: 172.16.255.4
   # Netflow : 172.16.255.5
   # PCE serveR: 172.16.255.6
-    - [ 0x7d, pe1, ge-0/0/2, p1, ge-0/0/0 ]
-    - [ 0x7d, pe1, ge-0/0/3, p2, ge-0/0/0 ]
-    - [ 0x7d, pe2, et-0/0/3, p1, ge-0/0/1 ]
-    - [ 0x7d, pe2, et-0/0/2, p2, ge-0/0/1 ]
-    - [ 0x7d, p1, ge-0/0/2, p2, ge-0/0/2 ]
-    - [ 0x7d, p1, ge-0/0/3, p3, ge-0/0/3 ]
-    - [ 0x7d, p1, ge-0/0/4, p3, ge-0/0/4 ]
-    - [ 0x7d, p1, ge-0/0/5, p5, ge-0/0/1 ]
-    - [ 0x7d, p2, ge-0/0/3, p5, ge-0/0/2 ]
-    - [ 0x7d, p3, ge-0/0/2, p4, ge-0/0/2 ]
-    - [ 0x7d, p3, ge-0/0/0, pe3, ge-0/0/2 ]
-    - [ 0x7d, p3, ge-0/0/1, pe4, et-0/0/2 ]
-    - [ 0x7d, p3, ge-0/0/5, p5, ge-0/0/3 ]
-    - [ 0x7d, p4, ge-0/0/0, pe3, ge-0/0/3 ]
-    - [ 0x7d, p4, ge-0/0/1, pe4, et-0/0/3 ]
-    - [ 0x7d, p4, ge-0/0/3, p5, ge-0/0/4 ]
+    - [ 0x0, pe1, ge-0/0/2, p1, ge-0/0/0 ]
+    - [ 0x0, pe1, ge-0/0/3, p2, ge-0/0/0 ]
+    - [ 0x0, pe2, ge-0/0/2, p1, ge-0/0/1 ]
+    - [ 0x0, pe2, ge-0/0/3, p2, ge-0/0/1 ]
+    - [ 0x0, pe3, ge-0/0/2, p3, ge-0/0/0 ]
+    - [ 0x0, pe3, ge-0/0/3, p4, ge-0/0/0 ]
+    - [ 0x0, pe4, ge-0/0/2, p3, ge-0/0/1 ]
+    - [ 0x0, pe4, ge-0/0/3, p4, ge-0/0/1 ]
+    - [ 0x0, p1, ge-0/0/2, p2, ge-0/0/2 ]
+    - [ 0x0, p1, ge-0/0/3, p3, ge-0/0/3 ]
+    - [ 0x0, p1, ge-0/0/4, p3, ge-0/0/4 ]
+    - [ 0x0, p1, ge-0/0/5, p5, ge-0/0/1 ]
+    - [ 0x0, p2, ge-0/0/3, p5, ge-0/0/2 ]
+    - [ 0x0, p3, ge-0/0/2, p4, ge-0/0/2 ]
+    - [ 0x0, p3, ge-0/0/5, p5, ge-0/0/3 ]
+    - [ 0x0, p4, ge-0/0/3, p5, ge-0/0/4 ]
 vm:
   gw:
     type: gw
@@ -92,14 +91,14 @@ vm:
         family:
           inet: 172.16.14.254/24
           static:
-          - to: 10.100.0.0/24
-            via: 172.16.14.1
-          - to: 10.100.1.0/24
-            via: 172.16.14.1
+          - to: 10.1.0.0/16
+            via: 172.16.14.5
   pe1:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
+    mgmt_dhcp: yes
+    mgmt_instc: no
     #pcep: yes
     # bgpls:
     #   as: 64500
@@ -110,12 +109,12 @@ vm:
         family:
           inet: 172.16.10.1/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.1/32
-          iso: 49.0001.0101.0000.1001.00
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.1/32
+      #     iso: 49.0001.0101.0000.1001.00
+      #   protocol:
+      #     isis: passive
       ge-0/0/0:
         bridge: pe1ge0
         mtu: 9000
@@ -123,9 +122,11 @@ vm:
         bridge: pe1ge1
         mtu: 9000
   pe2:
-    type: vjunos_evolved
-    os: vjunos_evolved
+    type: vjunos_router
+    os: vjunos_router
     ztp: yes
+    mgmt_dhcp: yes
+    mgmt_instc: no
     #pcep: yes
     # bgpls:
     #   as: 64500
@@ -136,38 +137,36 @@ vm:
         family:
           inet: 172.16.10.2/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.2/32
-          iso: 49.0001.0101.0000.1002.00
-        protocol:
-          isis: passive
-      et-0/0/0:
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.2/32
+      #     iso: 49.0001.0101.0000.1002.00
+      #   protocol:
+      #     isis: passive
+      ge-0/0/0:
         bridge: pe2ge0
         mtu: 9000
-      et-0/0/1:
+      ge-0/0/1:
         bridge: pe2ge1
         mtu: 9000
   pe3:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    #pcep: yes
-    # bgpls:
-    #   as: 64500
-    #   local: 10.100.1.1
+    mgmt_dhcp: yes
+    mgmt_instc: no
     interfaces:
       mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.3/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.3/32
-          iso: 49.0001.0101.0000.1003.00
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.3/32
+      #     iso: 49.0001.0101.0000.1003.00
+      #   protocol:
+      #     isis: passive
       ge-0/0/0:
         bridge: pe3ge0
         mtu: 9000
@@ -175,135 +174,125 @@ vm:
         bridge: pe3ge1
         mtu: 9000
   pe4:
-    type: vjunos_evolved
-    os: vjunos_evolved
+    type: vjunos_router
+    os: vjunos_router
     ztp: yes
-    #pcep: yes
-    # bgpls:
-    #   as: 64500
-    #   local: 10.100.1.1
+    mgmt_dhcp: yes
+    mgmt_instc: no
     interfaces:
       mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.4/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.4/32
-          iso: 49.0001.0101.0000.1004.00
-        protocol:
-          isis: passive
-      et-0/0/0:
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.4/32
+      #     iso: 49.0001.0101.0000.1004.00
+      #   protocol:
+      #     isis: passive
+      ge-0/0/0:
         bridge: pe4ge0
         mtu: 9000
-      et-0/0/1:
+      ge-0/0/1:
         bridge: pe4ge1
         mtu: 9000
   p1:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    # pcep: yes
-    # bgpls:
-    #   as: 64500
-    #   local: 10.100.1.11
+    mgmt_dhcp: yes
+    mgmt_instc: no
     interfaces:
       mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.11/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.11/32
-          iso: 49.0001.0101.0000.1011.00
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.11/32
+      #     iso: 49.0001.0101.0000.1011.00
+      #   protocol:
+      #     isis: passive
   p2:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    #pcep: yes
-    # bgpls:
-    #   as: 64500
-    #   local: 10.100.1.1
+    mgmt_dhcp: yes
+    mgmt_instc: no
     interfaces:
       mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.12/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.12/32
-          iso: 49.0001.0101.0000.1012.00
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.12/32
+      #     iso: 49.0001.0101.0000.1012.00
+      #   protocol:
+      #     isis: passive
   p3:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    #pcep: yes
-    # bgpls:
-    #   as: 64500
-    #   local: 10.100.1.1
+    mgmt_dhcp: yes
+    mgmt_instc: no
     interfaces:
       mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.13/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.13/32
-          iso: 49.0001.0101.0000.1013.00
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.13/32
+      #     iso: 49.0001.0101.0000.1013.00
+      #   protocol:
+      #     isis: passive
   p4:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    #pcep: yes
-    # bgpls:
-    #   as: 64500
-    #   local: 10.100.1.1
+    mgmt_dhcp: yes
+    mgmt_instc: no
     interfaces:
       mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.14/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.14/32
-          iso: 49.0001.0101.0000.1014.00
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.14/32
+      #     iso: 49.0001.0101.0000.1014.00
+      #   protocol:
+      #     isis: passive
   p5:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    pcep: yes
-    bgpls:
-      as: 4200001001
-      local: 10.100.1.15
+    mgmt_dhcp: yes
+    mgmt_instc: no
     interfaces:
       mgmt: 
         bridge: mgmt
         family:
           inet: 172.16.10.15/24
           gateway4: 172.16.10.254
-      lo0:
-        family:
-          inet: 10.100.1.15/32
-          iso: 49.0001.0101.0000.1015.00
-        protocol:
-          isis: passive
+      # lo0:
+      #   family:
+      #     inet: 10.100.1.15/32
+      #     iso: 49.0001.0101.0000.1015.00
+      #   protocol:
+      #     isis: passive
       ge-0/0/0:
         bridge: to_net
-        family:
-          inet: 172.16.14.1/24
+        # family:
+        #   inet: 172.16.14.1/24
+      ge-0/0/5:
+        bridge: to_crpd
   crpd:
     type: pcsmall
     os: ubuntu2
@@ -314,6 +303,10 @@ vm:
         family:
           inet: 172.16.14.3/24
           gateway4: 172.16.14.254
+      em1: 
+        bridge: to_crpd
+        family:
+          inet: 172.16.15.0/31
   client:
     type: pchpv2
     os: ubuntu
@@ -358,11 +351,11 @@ vm:
       em4:
         node: [p2, ge-0/0/0, pe1p2 ]
       em5:
-        node: [pe2, et-0/0/3, pe2p1 ]
+        node: [pe2, ge-0/0/2, pe2p1 ]
       em6:
         node: [p1, ge-0/0/1, pe2p1 ]
       em7:
-        node: [pe2, et-0/0/2, pe2p2 ]
+        node: [pe2, ge-0/0/3, pe2p2 ]
       em8:
         node: [p2, ge-0/0/1, pe2p2 ]
       em9:
@@ -424,53 +417,53 @@ vm:
       em6:
         node: [p4, ge-0/0/0, pe3p4 ]
       em7:
-        node: [pe4, et-0/0/2, pe4p3 ]
+        node: [pe4, ge-0/0/2, pe4p3 ]
       em8:
         node: [p3, ge-0/0/1, pe4p3 ]
       em9:
-        node: [pe4, et-0/0/3, pe4p4 ]
+        node: [pe4, ge-0/0/3, pe4p4 ]
       em10:
         node: [p4, ge-0/0/1, pe4p4 ]
-  agent1:
-    type: paagent
-    os: paagent
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: pe1ge1
-  agent2a:
-    type: paagent
-    os: paagent
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: pe2ge1
-  agent2b:
-    type: pcsmall
-    os: ubuntu2
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: pe2ge1
-  agent3:
-    type: paagent
-    os: paagent
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: pe3ge1
-  agent4a:
-    type: paagent
-    os: paagent
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: pe4ge1
-  agent4b:
-    type: pcsmall
-    os: ubuntu2
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: pe4ge1
+  # agent1:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: pe1ge1
+  # agent2a:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: pe2ge1
+  # agent2b:
+  #   type: pcsmall
+  #   os: ubuntu2
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: pe2ge1
+  # agent3:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: pe3ge1
+  # agent4a:
+  #   type: paagent
+  #   os: paagent
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: pe4ge1
+  # agent4b:
+  #   type: pcsmall
+  #   os: ubuntu2
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: pe4ge1
 

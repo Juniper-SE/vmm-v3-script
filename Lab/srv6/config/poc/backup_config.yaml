@@ -6,8 +6,8 @@
   #   - juniper.junos
   vars:
     username: admin
-    backup_dir: "../v2"
-    conf_file: "{{ backup_dir }}/{{ inventory_hostname }}.conf"
+    backup_dir: "./v10"
+    conf_file: "{{ backup_dir }}/{{ inventory_hostname }}.set"
   connection: local
   gather_facts: no
   tasks:
@@ -21,3 +21,4 @@
          user: "{{ username }}"
          dest: "{{ conf_file}}"
          retrieve: committed
+         format: set

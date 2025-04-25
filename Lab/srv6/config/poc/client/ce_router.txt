@@ -1,0 +1,155 @@
+# cecust10pe11
+
+ipv6 forwarding
+
+!
+router bgp 4200010011
+ no bgp ebgp-requires-policy
+ neighbor 172.16.11.0 remote-as 4200001001
+ neighbor fc00:dead:beef:a011:: remote-as 4200001001
+ !
+ address-family ipv4 unicast
+  network 192.168.11.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network fc00:dead:beef:1a11::/64
+  neighbor fc00:dead:beef:a011:: activate
+ exit-address-family
+exit
+!
+end
+
+# cecust10pe13
+
+ipv6 forwarding
+router bgp 4200010013
+ no bgp ebgp-requires-policy
+ neighbor 172.16.11.2 remote-as 4200001001
+ neighbor fc00:dead:beef:a011::2 remote-as 4200001001
+ !
+ address-family ipv4 unicast
+  network 192.168.13.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network fc00:dead:beef:1a13::/64
+  neighbor fc00:dead:beef:a011::2 activate
+ exit-address-family
+exit
+!
+end
+
+
+# cepe11
+
+ipv6 forwarding
+no router bgp 4200010013
+router bgp 4200050011
+ no bgp ebgp-requires-policy
+ neighbor 172.16.11.0 remote-as 4200001001
+ neighbor fc00:dead:beef:b011::0 remote-as 4200001001
+ !
+ address-family ipv4 unicast
+  network 192.168.211.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network fc00:dead:beef:b211::/64
+  neighbor fc00:dead:beef:b011::0 activate
+ exit-address-family
+exit
+!
+end
+end
+
+# cepe13
+
+ipv6 forwarding
+router bgp 4200050013
+ no bgp ebgp-requires-policy
+ neighbor 172.16.11.2 remote-as 4200001001
+ neighbor fc00:dead:beef:b011::2 remote-as 4200001001
+ !
+ address-family ipv4 unicast
+  network 192.168.213.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network fc00:dead:beef:b213::/64
+  neighbor fc00:dead:beef:b011::2 activate
+ exit-address-family
+exit
+!
+end
+end
+
+
+# cepe12
+
+ipv6 forwarding
+router bgp 4200050012
+ no bgp ebgp-requires-policy
+ neighbor 172.16.11.4 remote-as 4200001001
+ neighbor fc00:dead:beef:b011::4 remote-as 4200001001
+ !
+ address-family ipv4 unicast
+  network 192.168.212.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network fc00:dead:beef:b212::/64
+  neighbor fc00:dead:beef:b011::4 activate
+ exit-address-family
+exit
+!
+end
+end
+
+# cepe14
+
+ipv6 forwarding
+no router bgp 4200050012
+router bgp 4200050014
+ no bgp ebgp-requires-policy
+ neighbor 172.16.11.6 remote-as 4200001001
+ neighbor fc00:dead:beef:b011::6 remote-as 4200001001
+ !
+ address-family ipv4 unicast
+  network 192.168.214.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network fc00:dead:beef:b214::/64
+  neighbor fc00:dead:beef:b011::6 activate
+ exit-address-family
+exit
+!
+end
+end
+
+
+
+# gw
+
+ipv6 forwarding
+router bgp 4200050001
+ no bgp ebgp-requires-policy
+ neighbor 172.16.15.15 remote-as 4200001001
+ neighbor fc00:dead:beef:aa15::1000:15 remote-as 4200001001
+ !
+ address-family ipv4 unicast
+   network 0.0.0.0
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  neighbor fc00:dead:beef:aa15::1000:15 activate
+  network ::/0
+ exit-address-family
+exit
+!
+end
+end
+
+
+

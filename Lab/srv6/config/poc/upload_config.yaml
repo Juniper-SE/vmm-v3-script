@@ -2,20 +2,20 @@
 - name: Upload config into router
   hosts:
     - all
-  roles:
-    - juniper.junos
+#  roles:
+#    - juniper.junos
   vars:
     username: admin
-    conf_dir: "../node"
-    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.conf"
+    conf_dir: "./v10"
+    conf_file: "{{ conf_dir }}/{{ inventory_hostname }}.set"
   connection: local
   gather_facts: no
   tasks:
     - name: upload config into router
-      juniper_junos_config:
+      juniper.device.config:
          host: "{{ ansible_host }}"
          user: "{{ username }}"
          file: "{{ conf_file}}"
          config_mode: "exclusive"
          load: "merge"
-         format: "text"
+         format: "set"

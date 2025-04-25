@@ -1,0 +1,20 @@
+---
+- name: Upload config into router
+  hosts:
+    - all
+  vars:
+    username: admin
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper.device.config:
+         host: "{{ ansible_host }}"
+         user: "{{ username }}"
+         config_mode: "exclusive"
+         load: "set"
+         lines:
+          # - "delete apply-groups mpls"
+          # - "set apply-groups sr"
+          - "set protocols lldp interface fxp0 disable"
+          - "set protocols lldp interface all"
