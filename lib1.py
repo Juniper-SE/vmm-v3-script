@@ -2115,13 +2115,19 @@ def create_junos_config(d1,i):
 			dummy1['mgmt_instc'] = 0
 	else:
 		dummy1['mgmt_instc'] = 1
-	if 	'router-id' in d1['vm'][i].keys():	
-		dummy1['router_id']  = d1['vm'][i]['router-id']
+	# if 	'router-id' in d1['vm'][i].keys():	
+	# 	dummy1['router_id']  = d1['vm'][i]['router-id']
+	if 'isis_dm' in d1.keys():
+		if d1['isis_dm']:
+			dummy1['isis_dm']=True
+	if 'lo0' in d1['vm'][i]['interfaces'].keys():
+		if 'family' in d1['vm'][i]['interfaces']['lo0'].keys():
+			if 'inet' in d1['vm'][i]['interfaces']['lo0'].keys():
+				dummy1['router_id']  = d1['vm'][i]['interfaces']['lo0']['inet'].split('/')[0]
 	if 	'srv6-locator' in d1['vm'][i].keys():
 		dummy1['srv6_locator'] = d1['vm'][i]['srv6-locator']
 		dummy1['srv6_end_sid'] = d1['vm'][i]['srv6-locator'].split('/')[0]
-	if 'bgpls' in d1['vm'][i].keys():
-			dummy1['bgpls']={'as' : d1['vm'][i]['bgpls']['as'],'local' : d1['vm'][i]['bgpls']['local']}
+	
 	if 'snmp' in d1.keys():
 		dummy1['snmp'] = { 'server' : d1['snmp']['server'],'ro_comm' : d1['snmp']['ro_community'] }
 	if "lo0" in d1['vm'][i]['interfaces'].keys():
@@ -2134,6 +2140,8 @@ def create_junos_config(d1,i):
 					if d1['vm'][i]['pcep']=='yes' or d1['vm'][i]['pcep']==True:
 						if 'pcep_server' in d1.keys():
 							dummy1['pcep']={'server': d1['pcep_server'],'local': d1['vm'][i]['interfaces']['lo0']['family']['inet'].split('/')[0] }
+				if 'bgpls' in d1['vm'][i].keys():
+					dummy1['bgpls']={'as' : d1['vm'][i]['bgpls']['as'],'local' : d1['vm'][i]['interfaces']['lo0']['family']['inet'].split('/')[0]}
 	for j in d1['vm'][i]['interfaces'].keys():
 		if j != 'mgmt':
 			if j[0:2] not in  [ 'em','vi']:

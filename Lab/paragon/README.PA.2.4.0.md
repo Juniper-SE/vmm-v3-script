@@ -145,21 +145,21 @@ The following step is to setup wireguard to allow direct access into the lab, fo
 
 1. on node **gw**, access console for frr
 
-        sudo vtysh 
+       sudo vtysh 
 
 2. put this configuration into FRR
 
-        config t
-        router bgp 65100
-        no bgp ebgp-requires-policy
-        neighbor 172.16.11.11 remote-as 65101
-        neighbor 172.16.11.12 remote-as 65101
-        neighbor 172.16.11.13 remote-as 65101
-        neighbor 172.16.11.14 remote-as 65101
-        exit
-        !
-        end
-        write mem
+       config t
+       router bgp 65100
+       no bgp ebgp-requires-policy
+       neighbor 172.16.11.11 remote-as 65101
+       neighbor 172.16.11.12 remote-as 65101
+       neighbor 172.16.11.13 remote-as 65101
+       neighbor 172.16.11.14 remote-as 65101
+       exit
+       !
+       end
+       write mem
 
 
 ## create paragon cluster
@@ -180,9 +180,6 @@ The following step is to setup wireguard to allow direct access into the lab, fo
        set paragon cluster applications web-ui web-admin-user "irzan@juniper.net"   
        set paragon cluster applications web-ui web-admin-password "J4k4rt4#170845" 
        set paragon cluster applications pathfinder pce-server pce-server-vip 172.16.12.3
-       set paragon cluster applications routingbot routingbot-crpd-vip 172.16.12.4
-       set paragon cluster applications aiops install-aiml true
-       set paragon cluster applications aiops enable-device-health true
        set paragon cluster install enable-l3-vip true
        set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.11 
        set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.12
@@ -190,6 +187,9 @@ The following step is to setup wireguard to allow direct access into the lab, fo
        set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.14
        commit
        exit
+       set paragon cluster applications routingbot routingbot-crpd-vip 172.16.12.4
+       set paragon cluster applications aiops install-aiml true
+       set paragon cluster applications aiops enable-device-health true
 
 
 3. Create the configuration file by running this command on paragon shell

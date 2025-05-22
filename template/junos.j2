@@ -221,13 +221,37 @@ interfaces {
 {% endfor -%}
 }
 {% endif -%}
+{% if isis_dm -%}
+services {
+    rpm {
+        twamp {
+            server {
+                authentication-mode none;
+                light;
+            }
+        }
+    }
+}
+{% endif -%}
 {% if protocols -%}
 protocols { 
 	{% if protocols -%}
         {% for prot in protocols -%}
             {{prot}} {
                 {% if protocols[prot] -%}
+                    {% if prot == 'mpls' -%}
+                    statistics {
+                        interval 10;
+                    }
+                    sensor-based-stats;
+                    {% endif -%}
                     {% if prot == 'isis' -%}
+                    {% if isis_dm -%}
+                    traffic-engineering {
+                        l3-unicast-topology;
+                        advertisement always;
+                    }
+                    {% endif -%}
                     level 2 {
                         authentication-key "$9$H.fQ69A0BE9CK8LxsYTzF/9AtuO1Ec"; ## SECRET-DATA
                         authentication-type md5;
@@ -251,6 +275,10 @@ protocols {
                             {% if prot == 'isis' -%}
                                 interface  {{intf}}.0 {
                                     level 1 disable;
+                                    {% if isis_dm and intf != 'lo0' -%}
+                                    delay-measurement;
+                                    {% endif -%}
+
                                     {% if intf != 'lo0' -%}
                                         family inet {
                                             bfd-liveness-detection {
@@ -303,7 +331,7 @@ routing-options {
             locator SRV6-LOC-1 {{srv6_locator}};
         }
     }
-    {%endif%}
+    {%endif%}   
     forwarding-table {
         export LB;
     }
@@ -320,12 +348,7 @@ policy-options {
 }
 {% endif -%}
 
-
-
 {% if bgpls -%}
-routing-options {
-    autonomous-system {{ bgpls.as }};
-}
 policy-options {
     policy-statement TE {
         term 1 {
@@ -345,10 +368,11 @@ protocols {
         }
     }
     bgp {
-        group northstar {
+        group bgpls {
             type internal;
-            description "NorthStar BGP-TE Peering";
+            description "BGP-LS Peering";
             local-address {{ bgpls.local }};
+            local-as {{ bgpls.as }};
             passive;
             family traffic-engineering {
                 unicast;
@@ -366,7 +390,7 @@ protocols {
         lsp-external-controller pccd;
     }
     pcep {
-        pce northstar1 {
+        pce pce1 {
             local-address {{ pcep.local }};
             destination-ipv4-address {{ pcep.server }};
             destination-port 4189;
@@ -439,17 +463,6 @@ services {
             server-name ns;
             export-name ns;
             resource /junos/services/segment-routing/traffic-engineering/tunnel/ingress/usage/;
-        }
-    }
-}
-
-protocols {
-    mpls {
-        sensor-based-stats;
-    }
-    source-packet-routing {
-        telemetry {
-            statistics;
         }
     }
 }

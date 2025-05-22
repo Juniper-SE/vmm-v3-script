@@ -1,9 +1,9 @@
 #!/bin/bash 
 # for i in mdn1 pdg1 plb1 btm1 jkt1 bdg1 smg1 ygy1 sby1 mlg1 dps1 mks1 bjm1 ptk1
 # for i in pe1 pe2 pe3 p1 p2
-for i in admin@pe{1..4} admin@p{1..5}
+for i in pe{1..4} p{1..5}
 do
-   SERNUM=`ssh ${i} "show chassis hardware | match Chassis" | tr -s " " | cut -d " " -f 2`
+   SERNUM=`ssh admin@${i} "show chassis hardware | match Chassis" | tr -s " " | cut -d " " -f 2`
    echo "node ${i} ${SERNUM}"
 done
 

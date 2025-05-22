@@ -7,3 +7,33 @@ node admin@p2 VM6804F8D575
 node admin@p3 VM6804F8D863
 node admin@p4 VM6804F8DE6E
 node admin@p5 VM6804F8DA2B
+
+configure
+delete apply-groups
+delete groups
+delete system commit synchronize
+commit
+exit
+exit
+
+
+
+set interfaces lo0 unit 0 family inet address 10.1.255.1/32
+set interfaces lo0 unit 0 family iso address 49.0001.0000.0000.0001.00
+set protocols isis interface et-0/0/4.0 point-to-point
+set protocols isis interface et-0/0/6.0 point-to-point
+set protocols isis interface et-0/0/7.0 point-to-point
+set protocols isis interface lo0.0 passive
+set protocols isis level 1 disable
+set interfaces et-0/0/4 mtu 9000
+set interfaces et-0/0/4 unit 0 family inet address 10.1.100.0/31
+set interfaces et-0/0/4 unit 0 family iso
+set interfaces et-0/0/6 mtu 9000
+set interfaces et-0/0/6 unit 0 family inet address 10.1.100.2/31
+set interfaces et-0/0/6 unit 0 family iso
+set interfaces et-0/0/7 mtu 9000
+set interfaces et-0/0/7 unit 0 family inet address 10.1.100.4/31
+set interfaces et-0/0/6 unit 0 family iso
+
+
+

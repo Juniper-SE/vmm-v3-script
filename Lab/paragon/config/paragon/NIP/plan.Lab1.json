@@ -142,7 +142,7 @@
             "Device_profile_P"
           ],
           "serial": "VM6809A2070D",
-          "site_id": "ccc7f653-7c2c-452c-a603-f52593832d13",
+          "site_id": "15d26d70-cb3f-4263-bc0c-5b85830f8a90",
           "vendor": "Juniper Networks"
         },
         {
@@ -220,7 +220,7 @@
             "Device_profile_P"
           ],
           "serial": "VM6809A1FD84",
-          "site_id": "9184c8c6-6f88-40bf-8d9f-5cb5468458ad",
+          "site_id": "370800fe-6cc9-45ff-bdf4-b47352e92e3c",
           "vendor": "Juniper Networks"
         },
         {
@@ -270,7 +270,7 @@
             "Device_profile_PE"
           ],
           "serial": "VM6809A203EA",
-          "site_id": "0bc124c3-ec4a-459d-9f1e-2bda1e1511f9",
+          "site_id": "e4554a04-1e45-4140-acad-2e22561dd0af",
           "vendor": "Juniper Networks"
         },
         {
@@ -348,7 +348,7 @@
             "Device_profile_P"
           ],
           "serial": "VM6809A20788",
-          "site_id": "cf9f3430-bec1-4537-8805-ba86fb914400",
+          "site_id": "507cf1d4-f256-4e5b-ad1a-10ee20fa9bd0",
           "vendor": "Juniper Networks"
         },
         {
@@ -439,7 +439,7 @@
             "Device_profile_P5"
           ],
           "serial": "VM6809A1FB6C",
-          "site_id": "fbdf4808-5c6e-4ca4-bb3d-881818c61099",
+          "site_id": "19edad56-28d7-4f50-94a7-7594eb361572",
           "vendor": "Juniper Networks"
         },
         {
@@ -544,8 +544,8 @@
           "profiles": [
             "Device_profile_P"
           ],
-          "serial": "VM6809A2058F",
-          "site_id": "9a3bc4cc-0b36-4ba0-ab52-e8618af4e044",
+          "serial": "VM680ADC1F34",
+          "site_id": "671c10c2-a05f-4d89-8d7c-607a456dd403",
           "vendor": "Juniper Networks"
         },
         {
@@ -595,7 +595,7 @@
             "Device_profile_PE"
           ],
           "serial": "VM6809A1FD18",
-          "site_id": "f66a7617-812f-4478-a02f-e30e26cd40a4",
+          "site_id": "81938bcb-20c5-49e2-a439-cb3f6463f6c2",
           "vendor": "Juniper Networks"
         },
         {
@@ -645,7 +645,7 @@
             "Device_profile_PE"
           ],
           "serial": "VM6809A1F5E3",
-          "site_id": "5fe374c2-1396-4eec-a41c-e30137f5b4db",
+          "site_id": "56ece326-2551-4e8d-9299-6e85a54d87d3",
           "vendor": "Juniper Networks"
         },
         {
@@ -695,7 +695,7 @@
             "Device_profile_PE"
           ],
           "serial": "VM6809A1FA40",
-          "site_id": "904e91ef-1c5b-489a-bc85-9fb8825e4994",
+          "site_id": "e3e0d4e0-c863-4721-88b5-2cab7743fed0",
           "vendor": "Juniper Networks"
         }
       ]
@@ -744,7 +744,7 @@
             "auto": {}
           },
           "templates": [
-            "260a4da1-6eb9-4c70-bf9d-892e0c46507b"
+            "cbdeda75-d455-445c-8b58-a9fd51944d80"
           ],
           "trust": {
             "enabled": true
@@ -792,8 +792,8 @@
             "auto": {}
           },
           "templates": [
-            "260a4da1-6eb9-4c70-bf9d-892e0c46507b",
-            "612ac1ce-cfea-4d7e-91be-494aca10c563"
+            "cbdeda75-d455-445c-8b58-a9fd51944d80",
+            "4aeb9f7f-d97a-4e86-b65c-772cab5cde12"
           ],
           "trust": {
             "enabled": true
@@ -874,7 +874,7 @@
             "auto": {}
           },
           "templates": [
-            "260a4da1-6eb9-4c70-bf9d-892e0c46507b"
+            "cbdeda75-d455-445c-8b58-a9fd51944d80"
           ],
           "trust": {
             "enabled": true
@@ -884,7 +884,7 @@
     }
   },
   "instance_id": "Lab1",
-  "org_id": "a544c3ae-1c3a-4916-a6fc-0f8a48527405",
+  "org_id": "63af7dab-7a4c-4edc-a07b-1366fb59abfc",
   "place": [],
   "placement": {}
 }
