@@ -5,7 +5,7 @@ pa_ip='172.16.12.1'
 email="irzan@juniper.net"
 password="J4k4rt4#170845"
 login_id=(email,password)
-org_id='94fdbf5a-222a-43f2-837c-c79418e4fc12'
+org_id='947375fa-d00b-4c57-a3b5-4ef1a197cffb'
 url = f"https://{pa_ip}/api/v1/orgs/{org_id}/sites"
 new_site=[
     {
@@ -99,8 +99,16 @@ new_site=[
         'address': 'Jl. Yos Sudarso No.9 001, Kotabaru, Kec. Gondokusuman, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55224'
     }
 ]
+site_data={}
 for i in new_site:
     print(f"Creating site {i['name']}")
     r=requests.post(url,verify=False,auth=login_id,json=i)
     print(f"status {r.status_code}")
-    print(f"content {r.content}")
+    d1=json.loads(r.content)
+    print(f"content {d1}")
+    print(f"site : {i['name']}, id : {d1['id']}")
+    site_data[i['name']]=d1['id']
+
+json_objects = json.dumps(site_data)
+with open("site_data.json","w") as f1:
+    f1.write(json_objects)
