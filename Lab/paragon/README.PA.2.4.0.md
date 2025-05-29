@@ -187,9 +187,11 @@ The following step is to setup wireguard to allow direct access into the lab, fo
        set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.14
        commit
        exit
-       set paragon cluster applications routingbot routingbot-crpd-vip 172.16.12.4
-       set paragon cluster applications aiops install-aiml true
-       set paragon cluster applications aiops enable-device-health true
+
+       # optioanl
+       # set paragon cluster applications routingbot routingbot-crpd-vip 172.16.12.4
+       # set paragon cluster applications aiops install-aiml true
+       # set paragon cluster applications aiops enable-device-health true
 
 
 3. Create the configuration file by running this command on paragon shell
@@ -427,5 +429,7 @@ The client is using linux container (LXC) running on node **client**
 Now you can start exploring Juniper Paragon 2.0.0
 
 you can use the following [document](pa_2.0.0/LabExercise.md) as guideline 
+
+## start and stop 
 
 

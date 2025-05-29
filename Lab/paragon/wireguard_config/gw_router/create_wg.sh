@@ -16,3 +16,5 @@ sudo systemctl start wg-quick@wg0
 
 sudo hostname gwpa2net
 hostname | sudo tee /etc/hostname
+
+

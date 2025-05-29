@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "1bdacde8-64c9-4aaa-ae31-325aef127e44",
+		"name": "Service Orchestration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "829664"
+	},
+	"item": [
+		{
+			"name": "Create Topology - Step 1.1 Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{Password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{User}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_id\": \"l3vpn-topology-cid\",\n    \"design_id\": \"topo\",\n    \"instance_id\": \"l3vpn-topology-iid\",\n    \"operation\": \"create\",\n    \"topo\": {\n        \"pop\": [\n            {\n                \"name\": \"6745739c-50dc-40b6-8ba1-72683d199362\",\n                \"pe\": [\n                    {\n                        \"name\": \"00000000-0000-0000-1000-8828fb0ef680\",\n                        \"access\": [\n                            {\n                                \"name\": \"et-0/0/5\",\n                                \"type\": \"ethernet\",\n                                \"speed\": 10000,\n                                \"ce\": \"ce1\"\n                            }\n                        ],\n                        \"bandwidth\": 40000000,\n                        \"routes\": 100000,\n                        \"mac_addrs\": 1000000\n                    }\n                ],\n                \"postal_code_matches\": [\n                    {\n                        \"name\": \"SVL\",\n                        \"regex\": \"10...\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"5e88fd56-7d15-4b92-965b-5fe6daf92f9d\",\n                \"pe\": [\n                    {\n                        \"name\": \"00000000-0000-0000-1000-8828fb0f6e80\",\n                        \"access\": [\n                            {\n                                \"name\": \"et-0/0/5\",\n                                \"type\": \"ethernet\",\n                                \"speed\": 10000,\n                                \"ce\": \"ce2\"\n                            }\n                        ],\n                        \"bandwidth\": 40000000,\n                        \"routes\": 100000,\n                        \"mac_addrs\": 1000000\n                    }\n                ],\n                \"postal_code_matches\": [\n                    {\n                        \"name\": \"BNG\",\n                        \"regex\": \"20...\"\n                    }\n                ]\n            },\n            {\n                \"name\": \"627164c6-92a5-47f1-a0b1-eb2bf5bda04b\",\n                \"pe\": [\n                    {\n                        \"name\": \"00000000-0000-0000-1000-485a0d56d018\",\n                        \"access\": [\n                            {\n                                \"name\": \"xe-0/0/0:1\",\n                                \"type\": \"ethernet\",\n                                \"speed\": 10000,\n                                \"ce\": \"ce4\"\n                            }\n                        ],\n                        \"bandwidth\": 40000000,\n                        \"routes\": 100000,\n                        \"mac_addrs\": 1000000\n                    }\n                ],\n                \"postal_code_matches\": [\n                    {\n                        \"name\": \"LAX\",\n                        \"regex\": \"30...\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{server}}:{{port}}/service-orchestration/api/v1/orgs/{{ORG}}/order",
+					"protocol": "https",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"service-orchestration",
+						"api",
+						"v1",
+						"orgs",
+						"{{ORG}}",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EXEC Topology Step 1.2 Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{Password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{User}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{server}}:{{port}}/service-orchestration/api/v1/orgs/{{ORG}}/order/customers/l3vpn-topology-cid/instances/l3vpn-topology-iid/exec",
+					"protocol": "https",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"service-orchestration",
+						"api",
+						"v1",
+						"orgs",
+						"{{ORG}}",
+						"order",
+						"customers",
+						"l3vpn-topology-cid",
+						"instances",
+						"l3vpn-topology-iid",
+						"exec"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create vpn resources Step 2.1 Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{Password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{User}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_id\": \"L3VPN-vpn\",\n    \"design_id\": \"vpn\",\n    \"instance_id\": \"vpn\",\n    \"operation\": \"create\",\n    \"vpn\": {\n        \"route_distinguisher\": [\n            {\n                \"count\": 1024,\n                \"name\": 1234\n            },\n            {\n                \"count\": 1024,\n                \"name\": 1235\n            }\n        ],\n        \"route_target\": [\n            {\n                \"count\": 1024,\n                \"name\": 1234\n            },\n            {\n                \"count\": 1024,\n                \"name\": 1235\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{server}}:{{port}}/service-orchestration/api/v1/orgs/{{ORG}}/order",
+					"protocol": "https",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"service-orchestration",
+						"api",
+						"v1",
+						"orgs",
+						"{{ORG}}",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EXEC vpn resources Step 2.2 Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{Password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{User}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://{{server}}:{{port}}/service-orchestration/api/v1/orgs/{{ORG}}/order/customers/L3VPN-vpn/instances/vpn/exec",
+					"protocol": "https",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"service-orchestration",
+						"api",
+						"v1",
+						"orgs",
+						"{{ORG}}",
+						"order",
+						"customers",
+						"L3VPN-vpn",
+						"instances",
+						"vpn",
+						"exec"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Placement Resources 3 Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{Password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{User}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{server}}:{{port}}/service-orchestration/api/v1/orgs/{{ORG}}/placement/network-elements",
+					"protocol": "https",
+					"host": [
+						"{{server}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"service-orchestration",
+						"api",
+						"v1",
+						"orgs",
+						"{{ORG}}",
+						"placement",
+						"network-elements"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

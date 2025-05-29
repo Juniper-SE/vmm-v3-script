@@ -1,0 +1,19 @@
+node P5
+
+set routing-options static route 0.0.0.0/0 next-hop 172.16.14.254
+set policy-options policy-statement from_static term 1 from protocol static
+set policy-options policy-statement from_static term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement from_static term 1 then accept
+set protocols isis export from_static
+
+
+node pe1/pe2/pe3/pe4
+set routing-options autonomous-system 65200
+set protocols bgp group to_crpd type internal
+set protocols bgp group to_crpd neighbor 10.100.255.20
+set protocols bgp group to_crpd local-address 10.100.255.4
+set protocols bgp group to_crpd family inet-vpn unicast
+set protocols bgp group to_crpd family inet6-vpn unicast
+set protocols bgp group to_crpd family evpn signaling
+set protocols mpls ipv6-tunneling
+
