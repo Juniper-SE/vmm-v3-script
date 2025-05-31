@@ -5,7 +5,7 @@ pa_ip='172.16.12.1'
 email="irzan@juniper.net"
 password="J4k4rt4#170845"
 login_id=(email,password)
-org_id='947375fa-d00b-4c57-a3b5-4ef1a197cffb'
+org_id='a87f0c1a-db12-447b-b535-84b271ce93df'
 url = f"https://{pa_ip}/api/v1/orgs/{org_id}/sites"
 new_site=[
     {

@@ -21,6 +21,7 @@ images:
   ubuntu2: images/ubuntu24.04_containerd.qcow2
   bridge: images/bridge.qcow2
   vjunos_router: images/vJunos-router-24.2R1-S2.5.qcow2
+  #vjunos_router: images/vJunos-router-24.4R1.9.qcow2
   pa2: images/paragon-2.4.1.g07a6939699-disk1.vmdk
   #paagent: images/paa-test-agent_4.4.0.9.qcow2
 junos_login:

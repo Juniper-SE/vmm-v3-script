@@ -59,8 +59,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DEF87C",
-                    "site_id": "42138a3b-b8dd-4e37-b027-7a9d78769b95",
+                    "serial": "VM68385CE149",
+                    "site_id": "ec184188-3473-4a74-851c-9bd453b24842",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -97,8 +97,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DEFBC4",
-                    "site_id": "03e603fc-e41a-4adc-af4d-38ed4d2891c1",
+                    "serial": "VM68385CE2D0",
+                    "site_id": "19aa80df-2036-4276-8ff7-62d572db9502",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -135,8 +135,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DF09F9",
-                    "site_id": "d9316301-6e61-4aff-8dfb-03d15436c89c",
+                    "serial": "VM68385CE6E8",
+                    "site_id": "a0cf48a4-9ea2-4927-be92-cde9a17b0611",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -173,8 +173,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DEFB9A",
-                    "site_id": "2b5ecbdf-cca2-4f39-b87e-aefcb6e8e99f",
+                    "serial": "VM68385CE1C4",
+                    "site_id": "ee716036-c57f-453f-a0b4-a54711bb4cc6",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -240,8 +240,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DF01B6",
-                    "site_id": "321f6dfd-1914-48e2-87de-0aa8d9699420",
+                    "serial": "VM68385CE930",
+                    "site_id": "6625eb14-9eae-4253-987c-0e9ac829bbdc",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -318,8 +318,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DF0044",
-                    "site_id": "f977bc13-3a5b-4165-8c20-eaad95251638",
+                    "serial": "VM68385CF08B",
+                    "site_id": "43a95128-1eb2-4be3-bd72-1ef176dfd9c3",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -396,8 +396,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DEFB39",
-                    "site_id": "081d92e5-9583-4d2e-a21a-e1e4279fd56e",
+                    "serial": "VM68385CE0E3",
+                    "site_id": "69a9a0a5-f7d5-42b1-9b05-c5e40d23f67d",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -454,8 +454,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DF067B",
-                    "site_id": "b74ab36f-7994-43e7-b7e1-290a27601c78",
+                    "serial": "VM68385CEAB6",
+                    "site_id": "a14081f4-fe59-45e2-a7cb-e1ff9d15ac78",
                     "vendor": "Juniper Networks"
                 },
                 {
@@ -512,8 +512,8 @@
                     "profiles": [
                         "lab1_DP"
                     ],
-                    "serial": "VM6835DF0CD1",
-                    "site_id": "c48126bd-f224-4a35-9fa4-0e71572aa573",
+                    "serial": "VM68385CE1C1",
+                    "site_id": "39811dad-460c-4619-a3c1-005e98cd6e3c",
                     "vendor": "Juniper Networks"
                 }
             ]
@@ -549,7 +549,6 @@
         }
     },
     "instance_id": "lab1",
-    "org_id": "8ca85d50-db53-4074-8453-703dd7f8d0a4",
     "place": [],
     "placement": {}
 }
