@@ -5,7 +5,7 @@ pod:
   #vmmserver: sv8-pod4-vmm.englab.juniper.net
   #jumpserver: ttsv-shell110.juniper.net
   #vmmserver: q-pod13-vmm.englab.juniper.net
-  vmmserver: q-pod13-vmm.englab.juniper.net
+  vmmserver: q-pod26-vmm.englab.juniper.net
   # jumpserver: ttqc-shell002.juniper.net
   #jumpserver: ttsv-shell001.juniper.net
   user: irzan
@@ -18,7 +18,7 @@ pod:
 images:
   gw: images/gw.qcow2
   ubuntu: images/ubuntu24.04.qcow2
-  ubuntu2: images/ubuntu24.04_containerd.qcow2
+  #ubuntu2: images/ubuntu24.04_containerd.qcow2
   bridge: images/bridge.qcow2
   vjunos_router: images/vJunos-router-24.2R1-S2.5.qcow2
   #vjunos_router: images/vJunos-router-24.4R1.9.qcow2
@@ -38,6 +38,7 @@ wg:
   - 172.16.11.0/24 
   - 172.16.10.0/24
   - 172.16.12.0/24 
+  - 10.100.255.0/24
 fabric:
   subnet: 10.100.0.0/24
   topology:
@@ -346,7 +347,7 @@ vm:
           isis: ptp
   crpd:
     type: pcsmall
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 

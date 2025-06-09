@@ -1,0 +1,86 @@
+---
+- name: Updating system
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: apt -y upgrade
+    apt:
+      update_cache: true
+      upgrade: dist
+      cache_valid_time: 3600
+      force_apt_get: true
+      state: latest
+# - name: install into crpd
+#   hosts:
+#     - crpd
+#   tasks:
+#   - name: upload install_crpd.sh
+#     ansible.builtin.blockinfile:
+#       path: /home/ubuntu/install_crpd.sh
+#       create: true
+#       block: |
+#         #!/bin/bash
+#         CRPD_NAME=${HOSTNAME}
+#         # CRPD_IMAGE="localhost/crpd:22.2R1.9"
+#         CRPD_IMAGE="${1}"
+#         sudo podman volume create ${CRPD_NAME}-config
+#         sudo podman volume create ${CRPD_NAME}-varlog
+#         sudo podman run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} --net=host --privileged -v ${CRPD_NAME}-config:/config -v ${CRPD_NAME}-varlog:/var/log -it ${CRPD_IMAGE}
+#   - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
+#     ansible.builtin.file:
+#       path: /home/ubuntu/install_crpd.sh
+#       state: touch
+#       mode: u=rwx,g=rx,o=rx
+- name: install into client
+  hosts:
+    - client
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install application
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+    loop:
+      - openvswitch-switch
+      - openvswitch-common
+      - lldpd
+      - bridge-utils
+- name: install into crpd
+  hosts:
+    - crpd
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install application
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+    loop:
+      - containerd 
+      - podman
+      - lldpd
+- name: rebooting host
+  hosts:
+  - crpd
+  - client
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: reboot node
+    ansible.builtin.reboot:
+# - name: rebooting gw
+#   hosts:
+#   - gw
+#   become: yes
+#   become_method: sudo
+#   tasks:
+#   - name: reboot node
+#     ansible.builtin.reboot:

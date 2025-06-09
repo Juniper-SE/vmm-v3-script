@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
 import json
 import pprint
-site_data_file = 'site_data.json'
-source_nip_file = 'brownfield_with_NIP_1/plan.lab1_brownfield.json'
-sernum_file = 'sernum.json'
-new_nip_file='plan.lab1.json'
+import yaml
+site_data_file = 'site_id.yaml'
+sernum_file = 'sernum.yaml'
+source_nip_file = 'plan.lab2_brownfield.json'
+new_nip_file='plan.lab2.json'
 print(f"reading site_data")
 with open(site_data_file) as f1:
-    site_data=json.load(f1)
+    site_data=yaml.load(f1,Loader=yaml.FullLoader)
 print(f"reading source_nip_file")
 with open(source_nip_file) as f1:
     nip = json.load(f1)
 print(f"reading sernum_fie")
 with open(sernum_file) as f1:
-    sernum = json.load(f1)
+    sernum = yaml.load(f1,Loader=yaml.FullLoader)
 
 nodes = nip['infrastructure_ntw']['network_nodes']['network_node']
 #pprint.pprint(nip)

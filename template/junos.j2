@@ -35,6 +35,7 @@ system {
             interactive-commands any;
         }
     }
+    default-address-selection;
 }
 {% if mgmt_instc == 1 -%}
 system {
@@ -191,7 +192,15 @@ interfaces {
         unit 0 {
         {% if interfaces[intf].inet -%}
             family inet {
+                {% if intf == "lo0" -%}
+                address {{interfaces[intf].inet}} {
+                    primary;
+                    preferred;
+                }
+                {% else -%}
                 address {{interfaces[intf].inet}};
+                {% endif -%}
+                
             }
         {% endif -%}
         {% if interfaces[intf].inet6 -%}

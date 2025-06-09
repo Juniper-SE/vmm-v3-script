@@ -1,7 +1,0 @@
-[all]
-client
-# crpd
-gw
-# registry
-[all:vars]
-ansible_python_interpreter=python3
