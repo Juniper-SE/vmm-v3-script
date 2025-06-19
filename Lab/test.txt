@@ -1,9 +1,0 @@
-set system host-name p1
-set system root-authentication encrypted-password "$1$2ZZLJ9KX$T8H/LdJf5JHYjRWMqC77e."
-set system login user admin uid 2000
-set system login user admin class super-user
-set system login user admin authentication encrypted-password "$1$2ZZLJ9KX$T8H/LdJf5JHYjRWMqC77e."
-set system service ssh 
-set system services ssh root-login allow
-set system services ssh sftp-server
-set interfaces re0:mgmt-0 unit 0 family inet address 172.16.10.1/24
