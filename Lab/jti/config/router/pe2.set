@@ -1,0 +1,18 @@
+set protocols bgp group to_pe1 local-address 10.100.255.2
+set protocols bgp group to_pe1 family evpn signaling
+set protocols bgp group to_pe1 peer-as 4200000001
+set protocols bgp group to_pe1 local-as 4200000001
+set protocols bgp group to_pe1 neighbor 10.100.255.1
+set routing-instances vrf1 instance-type vrf
+set routing-instances vrf1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set routing-instances vrf1 interface ge-0/0/0.102
+set routing-instances vrf1 vrf-target target:1000:1001
+set routing-instances vrf1 vrf-table-label
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 mtu 9000
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 unit 102 vlan-id 102
+set interfaces ge-0/0/0 unit 102 family inet address 10.200.102.1/24
+set interfaces ge-0/0/0 unit 102 family inet6 address fc00:dead:beef:a102::1/64
+set routing-options route-distinguisher-id 10.100.255.2
+set protocols router-advertisement interface ge-0/0/0.102 prefix fc00:dead:beef:a102::/64

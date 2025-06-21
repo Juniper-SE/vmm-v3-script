@@ -80,8 +80,8 @@ export VLAN=1011
 export OVS=ovs0
 export IPv4=192.168.11.141/24
 export GWv4=192.168.11.254
-export IPv6=192.168.11.102/24
-export GWv6=192.168.11.254
+export IPv6=fc00:dead:beef:a101::1000:11/64
+export GWv6=fc00:dead:beef:a101::1
 
 
 echo "Creating VM ${LXC_NAME}"

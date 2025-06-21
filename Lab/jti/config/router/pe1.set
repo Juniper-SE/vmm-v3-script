@@ -1,0 +1,47 @@
+set protocols bgp group to_pe2 local-address 10.100.255.1
+set protocols bgp group to_pe2 family evpn signaling
+set protocols bgp group to_pe2 peer-as 4200000001
+set protocols bgp group to_pe2 local-as 4200000001
+set protocols bgp group to_pe2 neighbor 10.100.255.2
+set routing-instances vrf1 instance-type vrf
+set routing-instances vrf1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set routing-instances vrf1 interface ge-0/0/0.101
+set routing-instances vrf1 vrf-target target:1000:1001
+set routing-instances vrf1 vrf-table-label
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 mtu 9000
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 10.200.101.1/24
+set interfaces ge-0/0/0 unit 101 family inet6 address fc00:dead:beef:a101::1/64
+set routing-options route-distinguisher-id 10.100.255.1
+set protocols router-advertisement interface ge-0/0/0.101 prefix fc00:dead:beef:a101::/64
+
+
+
+
+set system login user gnmi_user class super-user
+set system login user gnmi_user authentication encrypted-password "$6$q1GOFHO/$/TMk7rn4MVQTEc2WpxpO5.eSDPggrMN//TZKv1tx70tJuux7keIxblio744xSHB5u7bb8RU9fxAB132e//wLR."
+set system login user netconf_user class super-user
+set system login user netconf_user authentication encrypted-password "$6$/MByPA92$E6AQWOYP1GY6kTK0zq/BUmsueuI84gJZgsNEloZZYsO25yT9NdllxG1iryXu51nugfijP8RhDhrNAadHJdnlu/"
+set system services extension-service request-response grpc clear-text port 9339
+set system services extension-service request-response grpc max-connections 8
+set system services extension-service request-response grpc skip-authentication
+set system services netconf ssh
+set system services netconf rfc-compliant
+
+
+set services rpm twamp server authentication-mode none
+set services rpm twamp server light
+set services analytics streaming-server nms remote-address 172.16.13.102
+set services analytics streaming-server nms remote-port 30000
+set services analytics export-profile nms local-address 10.100.255.1
+set services analytics export-profile nms local-port 32101
+set services analytics export-profile nms reporting-rate 5
+set services analytics export-profile nms format gpb
+set services analytics export-profile nms transport udp
+set services analytics sensor sensor1 server-name nms
+set services analytics sensor sensor1 export-name nms
+set services analytics sensor sensor1 resource /junos/system/linecard/interface/logical/usage
+set services analytics sensor sensor2 server-name nms
+set services analytics sensor sensor2 export-name nms
