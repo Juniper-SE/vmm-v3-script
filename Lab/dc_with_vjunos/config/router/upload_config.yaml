@@ -2,8 +2,8 @@
 - name: Upload config into router
   hosts:
     - all
-  roles:
-    - juniper.junos
+  # roles:
+  #   - juniper.junos
   vars:
     username: admin
     password: pass01
@@ -13,7 +13,7 @@
   gather_facts: no
   tasks:
     - name: upload config into router
-      juniper_junos_config:
+      juniper.device.config:
         host: "{{ ansible_host }}"
         user: "{{ username }}"
         password: "{{ password }}"
