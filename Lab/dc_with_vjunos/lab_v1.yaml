@@ -16,7 +16,7 @@ pod:
 images:
   gw: images/gw.qcow2
   ubuntu: images/ubuntu24.04.qcow2
-  ubuntu2: images/ubuntu24.04-ovs-lxd.qcow2
+  # ubuntu2: images/ubuntu4.04-ovs-lxd.qcow2
   vsrx: images/junos-vsrx3-x86-64-24.4R1.9.qcow2
   desktop: images/desktop.qcow2
   # aos: images/aos_server_5.0.0-64.qcow2
@@ -165,13 +165,13 @@ vm:
         bridge: vxlangw
         mtu: 9000
       ge-0/0/1: 
-        bridge: d1s1p8
+        bridge: d1s1p10
       ge-0/0/2: 
-        bridge: d1s2p8
+        bridge: d1s2p10
       ge-0/0/3: 
-        bridge: d1s3p8
+        bridge: d1s3p10
       ge-0/0/4: 
-        bridge: d1s4p8
+        bridge: d1s4p10
   dc1spine1:
     type: vjunos_switch
     os: vjunos_switch
@@ -323,9 +323,9 @@ vm:
       ge-0/0/6: 
         bridge: d1l1p6
       ge-0/0/7: 
-        bridge: d1s1p9
+        bridge: d1l1p7
       ge-0/0/8: 
-        bridge: d1s2p9
+        bridge: d1l1p8
       ge-0/0/9: 
         bridge: d1l1p9
       ge-0/0/10: 
@@ -452,10 +452,14 @@ vm:
         bridge: d1l5p6
       ge-0/0/7: 
         bridge: d1l5p7
+      # ge-0/0/8: 
+      #   bridge: d1l5p8
+      # ge-0/0/9: 
+      #   bridge: d1l5p9
       ge-0/0/8: 
-        bridge: d1l5p8
+        bridge: d1s1p8
       ge-0/0/9: 
-        bridge: d1l5p9
+        bridge: d1s2p8
       ge-0/0/10: 
         bridge: d1s3p4
       ge-0/0/11: 
@@ -484,10 +488,14 @@ vm:
         bridge: d1l6p6
       ge-0/0/7: 
         bridge: d1l6p7
+      # ge-0/0/8: 
+      #   bridge: d1l6p8
+      # ge-0/0/9: 
+      #   bridge: d1l6p9
       ge-0/0/8: 
-        bridge: d1l6p8
+        bridge: d1s1p9
       ge-0/0/9: 
-        bridge: d1l6p9
+        bridge: d1s2p9
       ge-0/0/10: 
         bridge: d1s3p5
       ge-0/0/11: 
@@ -775,7 +783,7 @@ vm:
           gateway4: 172.16.55.254
   svr1a:
     type: pcsmall
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces: 
       em0: 
@@ -793,7 +801,7 @@ vm:
         bridge: d1l1p6
   svr2:
     type: pcsmall
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 
@@ -820,7 +828,7 @@ vm:
         bridge: d1l4p6
   svr4:
     type: pcsmall
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 
@@ -829,7 +837,7 @@ vm:
         bridge: d1l4p3
   svr5:
     type: pcsmall 
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 
@@ -838,7 +846,7 @@ vm:
         bridge: d1l6p3
   svr6:
     type: pcsmall 
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 
@@ -847,7 +855,7 @@ vm:
         bridge: d1l8p2
   svr7:
     type: pcsmall
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 
@@ -912,7 +920,7 @@ vm:
         bridge: d1l8p4
   svr8a:
     type: pcsmall
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 
@@ -930,7 +938,7 @@ vm:
         bridge: d2sw1p9
   svr9:
     type: pcsmall
-    os: ubuntu2
+    os: ubuntu
     vnc: yes
     interfaces:
       em0: 

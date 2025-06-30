@@ -1,11 +1,11 @@
 # node SVR
 #!/bin/bash
-VM=svr8b
-MAC=56:04:1a:00:80:46
-IPv4=192.168.22.8/24
-IPv6=fc00:dead:beef:a022::1000:8/64
-GWv4=192.168.22.254
-GWv6=fc00:dead:beef:a022::1
+VM=svr3b
+MAC=56:04:1b:00:54:d8
+IPv4=192.168.12.13/24
+IPv6=fc00:dead:beef:a012::1000:3/64
+GWv4=192.168.12.1
+GWv6=fc00:dead:beef:a0112:1
 sudo hostname ${VM}
 hostname | sudo tee /etc/hostname
 cat << EOF | sudo tee /etc/netplan/01_net.yaml
@@ -37,7 +37,7 @@ sudo netplan apply
 
 
 # node KVM
-MAC=56:04:1a:00:80:41
+MAC=56:04:1b:00:09:ff
 #!/bin/bash
 cat << EOF | sudo tee /etc/netplan/02_net.yaml
 network:
@@ -63,6 +63,7 @@ network:
       parameters:
          mode: 802.3ad
 EOF
+
 sudo netplan apply
 
 
@@ -75,13 +76,13 @@ lxc image copy --vm images:alpine/edge local: --alias alpineVM
 lxc launch alpine --name lxc
 
 
-export LXC_NAME=vm1
-export VLAN=1011
+export LXC_NAME=vm3kvm1
+export VLAN=12
 export OVS=ovs0
-export IPv4=192.168.11.141/24
-export GWv4=192.168.11.254
-export IPv6=fc00:dead:beef:a101::1000:11/64
-export GWv6=fc00:dead:beef:a101::1
+export IPv4=192.168.12.113/24
+export GWv4=192.168.12.1
+export IPv6=fc00:dead:beef:a013::1000:13/64
+export GWv6=fc00:dead:beef:a013::1
 
 
 echo "Creating VM ${LXC_NAME}"
@@ -106,7 +107,6 @@ iface eth0 inet static
     gateway ${GWv4}
 iface eth0 inet6 static
     address ${IPv6}
-    gateway ${GWv6}
 EOF
 
 lxc file push ./interface.conf ${LXC_NAME}/etc/network/interfaces
@@ -115,6 +115,7 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
 lxc file push ./resolv.conf ${LXC_NAME}/etc/resolv.conf
+lxc start ${LXC_NAME}
 
 
 ## alpine on KVM with ovs

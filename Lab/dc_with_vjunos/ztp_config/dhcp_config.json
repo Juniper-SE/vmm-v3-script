@@ -26,51 +26,51 @@
         ],
         "reservations": [
           {
-            "hw-address": "56:04:1b:00:3c:6f",
+            "hw-address": "56:04:1b:00:74:66",
             "ip-address": "172.16.11.111"
           },
           {
-            "hw-address": "56:04:1b:00:63:cf",
+            "hw-address": "56:04:1b:00:22:bc",
             "ip-address": "172.16.11.112"
           },
           {
-            "hw-address": "56:04:1b:00:4f:53",
+            "hw-address": "56:04:1b:00:51:36",
             "ip-address": "172.16.11.113"
           },
           {
-            "hw-address": "56:04:1b:00:0b:7b",
+            "hw-address": "56:04:1b:00:46:a8",
             "ip-address": "172.16.11.114"
           },
           {
-            "hw-address": "56:04:1b:00:02:c1",
+            "hw-address": "56:04:1b:00:74:a0",
             "ip-address": "172.16.11.115"
           },
           {
-            "hw-address": "56:04:1b:00:5f:d1",
+            "hw-address": "56:04:1b:00:73:bb",
             "ip-address": "172.16.11.116"
           },
           {
-            "hw-address": "56:04:1b:00:50:a4",
+            "hw-address": "56:04:1b:00:66:c4",
             "ip-address": "172.16.11.117"
           },
           {
-            "hw-address": "56:04:1b:00:0c:00",
+            "hw-address": "56:04:1b:00:03:07",
             "ip-address": "172.16.11.118"
           },
           {
-            "hw-address": "56:04:1b:00:61:f8",
+            "hw-address": "56:04:1b:00:44:b8",
             "ip-address": "172.16.11.101"
           },
           {
-            "hw-address": "56:04:1b:00:63:0e",
+            "hw-address": "56:04:1b:00:3a:32",
             "ip-address": "172.16.11.102"
           },
           {
-            "hw-address": "56:04:1b:00:5d:1c",
+            "hw-address": "56:04:1b:00:56:38",
             "ip-address": "172.16.11.103"
           },
           {
-            "hw-address": "56:04:1b:00:5a:3c",
+            "hw-address": "56:04:1b:00:4c:72",
             "ip-address": "172.16.11.104"
           }
         ],
@@ -94,11 +94,11 @@
         ],
         "reservations": [
           {
-            "hw-address": "56:04:1b:00:65:b2",
+            "hw-address": "56:04:1b:00:5d:7a",
             "ip-address": "172.16.12.101"
           },
           {
-            "hw-address": "56:04:1b:00:55:e9",
+            "hw-address": "56:04:1b:00:5a:3d",
             "ip-address": "172.16.12.102"
           }
         ],
