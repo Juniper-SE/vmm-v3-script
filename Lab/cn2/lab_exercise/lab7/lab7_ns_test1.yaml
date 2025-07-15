@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test1
+  annotations:
+    net.juniper.contrail.podnetwork: test1/vn1
+---
+apiVersion: core.contrail.juniper.net/v2
+kind: Subnet
+metadata:
+  namespace: test1
+  name: vn1-sn
+spec:
+  cidr: 192.168.10.0/24
+---
+apiVersion: core.contrail.juniper.net/v2
+kind: VirtualNetwork
+metadata:
+  namespace: test1
+  name: vn1
+spec:
+  podNetwork: true
+  fabricSNAT: true
+  v4SubnetReference:
+    apiVersion: core.contrail.juniper.net/v2
+    kind: Subnet
+    namespace: test1
+    name: vn1-sn

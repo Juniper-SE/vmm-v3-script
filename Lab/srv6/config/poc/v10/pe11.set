@@ -1,0 +1,386 @@
+set groups bgp routing-options autonomous-system 4200001001
+set groups bgp protocols bgp group to_rr type internal
+set groups bgp protocols bgp group to_rr local-address 192.168.255.211
+set groups bgp protocols bgp group to_rr family evpn signaling
+set groups bgp protocols bgp group to_rr neighbor 192.168.255.216
+set groups l3vpn interfaces ge-0/0/0 flexible-vlan-tagging
+set groups l3vpn interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set groups l3vpn interfaces ge-0/0/0 unit 1001 vlan-id 1001
+set groups l3vpn interfaces ge-0/0/0 unit 1001 family inet address 10.0.111.1/24
+set groups l3vpn interfaces ge-0/0/0 unit 1001 family inet6 address fc00:dead:beef:a111::1/64
+set groups l3vpn interfaces ge-0/0/0 unit 1002 vlan-id 1002
+set groups l3vpn interfaces ge-0/0/0 unit 1002 family inet address 10.0.121.1/24
+set groups l3vpn interfaces ge-0/0/0 unit 1002 family inet6 address fc00:dead:beef:a121::1/64
+set groups l3vpn interfaces ge-0/0/0 unit 1003 vlan-id 1003
+set groups l3vpn interfaces ge-0/0/0 unit 1003 family inet address 10.0.113.1/24
+set groups l3vpn interfaces ge-0/0/0 unit 1003 family inet6 address fc00:dead:beef:a113::1/64
+set groups l3vpn policy-options policy-statement export_cust1 term 1 then community add target_cust1
+set groups l3vpn policy-options policy-statement export_cust1 term 1 then community add color_path1
+set groups l3vpn policy-options policy-statement export_cust1 term 1 then accept
+set groups l3vpn policy-options policy-statement import_cust1 term 1 from community target_cust1
+set groups l3vpn policy-options policy-statement import_cust1 term 1 then accept
+set groups l3vpn policy-options policy-statement export_cust2 term 1 then community add target_cust2
+set groups l3vpn policy-options policy-statement export_cust2 term 1 then community add color_path2
+set groups l3vpn policy-options policy-statement export_cust2 term 1 then accept
+set groups l3vpn policy-options policy-statement import_cust2 term 1 from community target_cust2
+set groups l3vpn policy-options policy-statement import_cust2 term 1 then accept
+set groups l3vpn policy-options policy-statement export_cust3 term 1 then community add target_cust3
+set groups l3vpn policy-options policy-statement export_cust3 term 1 then accept
+set groups l3vpn policy-options policy-statement import_cust3 term 1 from community target_cust3
+set groups l3vpn policy-options policy-statement import_cust3 term 1 then accept
+set groups l3vpn policy-options community color_path1 members color:0:100
+set groups l3vpn policy-options community color_path2 members color:0:200
+set groups l3vpn policy-options community target_cust1 members target:1000:1001
+set groups l3vpn policy-options community target_cust2 members target:1000:1002
+set groups l3vpn policy-options community target_cust3 members target:1000:1003
+set groups l3vpn routing-instances cust1 instance-type vrf
+set groups l3vpn routing-instances cust1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups l3vpn routing-instances cust1 interface ge-0/0/0.1001
+set groups l3vpn routing-instances cust1 vrf-import import_cust1
+set groups l3vpn routing-instances cust1 vrf-export export_cust1
+set groups l3vpn routing-instances cust1 vrf-table-label
+set groups l3vpn routing-instances cust2 instance-type vrf
+set groups l3vpn routing-instances cust2 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups l3vpn routing-instances cust2 interface ge-0/0/0.1002
+set groups l3vpn routing-instances cust2 vrf-import import_cust2
+set groups l3vpn routing-instances cust2 vrf-export export_cust2
+set groups l3vpn routing-instances cust2 vrf-target target:1000:1002
+set groups l3vpn routing-instances cust2 vrf-table-label
+set groups l3vpn routing-instances cust3 instance-type vrf
+set groups l3vpn routing-instances cust3 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups l3vpn routing-instances cust3 interface ge-0/0/0.1003
+set groups l3vpn routing-instances cust3 vrf-import import_cust3
+set groups l3vpn routing-instances cust3 vrf-export export_cust3
+set groups l3vpn routing-instances cust3 vrf-table-label
+set groups l2evpn interfaces ge-0/0/0 flexible-vlan-tagging
+set groups l2evpn interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set groups l2evpn interfaces ge-0/0/0 unit 2001 encapsulation vlan-bridge
+set groups l2evpn interfaces ge-0/0/0 unit 2001 vlan-id 2001
+set groups l2evpn interfaces ge-0/0/0 unit 2002 encapsulation vlan-bridge
+set groups l2evpn interfaces ge-0/0/0 unit 2002 vlan-id 2002
+set groups l2evpn policy-options policy-statement export_evpn1 term 1 then community add target_evpn1
+set groups l2evpn policy-options policy-statement export_evpn1 term 1 then community add color_path1
+set groups l2evpn policy-options policy-statement export_evpn1 term 1 then accept
+set groups l2evpn policy-options policy-statement import_evpn1 term 1 from community target_evpn1
+set groups l2evpn policy-options policy-statement import_evpn1 term 1 then accept
+set groups l2evpn policy-options policy-statement export_evpn2 term 1 then community add target_evpn2
+set groups l2evpn policy-options policy-statement export_evpn2 term 1 then community add color_path2
+set groups l2evpn policy-options policy-statement export_evpn2 term 1 then accept
+set groups l2evpn policy-options policy-statement import_evpn2 term 1 from community target_evpn2
+set groups l2evpn policy-options policy-statement import_evpn2 term 1 then accept
+set groups l2evpn policy-options community color_path1 members color:0:100
+set groups l2evpn policy-options community color_path2 members color:0:200
+set groups l2evpn policy-options community target_evpn1 members target:1000:2001
+set groups l2evpn policy-options community target_evpn2 members target:1000:2002
+set groups l2evpn routing-instances evpn1 instance-type evpn
+set groups l2evpn routing-instances evpn1 protocols evpn
+set groups l2evpn routing-instances evpn1 interface ge-0/0/0.2001
+set groups l2evpn routing-instances evpn1 vrf-import import_evpn1
+set groups l2evpn routing-instances evpn1 vrf-export export_evpn1
+set groups l2evpn routing-instances evpn2 instance-type evpn
+set groups l2evpn routing-instances evpn2 protocols evpn
+set groups l2evpn routing-instances evpn2 interface ge-0/0/0.2002
+set groups l2evpn routing-instances evpn2 vrf-import import_evpn2
+set groups l2evpn routing-instances evpn2 vrf-export export_evpn2
+set groups mpls interfaces ge-0/0/0 mtu 9000
+set groups mpls interfaces ge-0/0/1 mtu 9000
+set groups mpls interfaces ge-0/0/1 unit 0 family inet address 10.100.0.0/31
+set groups mpls interfaces ge-0/0/1 unit 0 family iso
+set groups mpls interfaces ge-0/0/1 unit 0 family mpls
+set groups mpls interfaces ge-0/0/2 mtu 9000
+set groups mpls interfaces ge-0/0/2 unit 0 family inet address 10.100.0.2/31
+set groups mpls interfaces ge-0/0/2 unit 0 family iso
+set groups mpls interfaces ge-0/0/2 unit 0 family mpls
+set groups mpls interfaces lo0 unit 0 family inet address 192.168.255.211/32
+set groups mpls interfaces lo0 unit 0 family iso address 49.0001.1921.6800.0011.00
+set groups mpls policy-options policy-statement LB term 1 then load-balance per-flow
+set groups mpls policy-options policy-statement LB term 1 then accept
+set groups mpls routing-options route-distinguisher-id 192.168.255.211
+set groups mpls routing-options router-id 192.168.255.211
+set groups mpls routing-options forwarding-table export LB
+set groups mpls protocols isis interface ge-0/0/1.0 level 1 disable
+set groups mpls protocols isis interface ge-0/0/1.0 point-to-point
+set groups mpls protocols isis interface ge-0/0/1.0 family inet bfd-liveness-detection minimum-interval 100
+set groups mpls protocols isis interface ge-0/0/1.0 family inet6 bfd-liveness-detection minimum-interval 100
+set groups mpls protocols isis interface ge-0/0/2.0 level 1 disable
+set groups mpls protocols isis interface ge-0/0/2.0 point-to-point
+set groups mpls protocols isis interface ge-0/0/2.0 family inet bfd-liveness-detection minimum-interval 100
+set groups mpls protocols isis interface ge-0/0/2.0 family inet6 bfd-liveness-detection minimum-interval 100
+set groups mpls protocols isis interface lo0.0 level 1 disable
+set groups mpls protocols isis interface lo0.0 passive
+set groups mpls protocols isis level 2 authentication-key "$9$H.fQ69A0BE9CK8LxsYTzF/9AtuO1Ec"
+set groups mpls protocols isis level 2 authentication-type md5
+set groups mpls protocols ldp interface ge-0/0/1.0
+set groups mpls protocols ldp interface ge-0/0/2.0
+set groups mpls protocols mpls interface ge-0/0/1.0
+set groups mpls protocols mpls interface ge-0/0/2.0
+set groups mpls protocols rsvp interface ge-0/0/1.0
+set groups mpls protocols rsvp interface ge-0/0/2.0
+set groups sr interfaces ge-0/0/0 mtu 9000
+set groups sr interfaces ge-0/0/1 mtu 9000
+set groups sr interfaces ge-0/0/1 unit 0 family inet address 10.100.0.0/31
+set groups sr interfaces ge-0/0/1 unit 0 family iso
+set groups sr interfaces ge-0/0/1 unit 0 family mpls
+set groups sr interfaces ge-0/0/2 mtu 9000
+set groups sr interfaces ge-0/0/2 unit 0 family inet address 10.100.0.2/31
+set groups sr interfaces ge-0/0/2 unit 0 family iso
+set groups sr interfaces ge-0/0/2 unit 0 family mpls
+set groups sr interfaces lo0 unit 0 family inet address 192.168.255.211/32
+set groups sr interfaces lo0 unit 0 family iso address 49.0001.1921.6800.0011.00
+set groups sr policy-options policy-statement LB term 1 then load-balance per-flow
+set groups sr policy-options policy-statement LB term 1 then accept
+set groups sr routing-options route-distinguisher-id 192.168.255.211
+set groups sr routing-options router-id 192.168.255.211
+set groups sr routing-options forwarding-table export LB
+set groups sr protocols isis interface ge-0/0/1.0 level 1 disable
+set groups sr protocols isis interface ge-0/0/1.0 point-to-point
+set groups sr protocols isis interface ge-0/0/1.0 family inet bfd-liveness-detection minimum-interval 100
+set groups sr protocols isis interface ge-0/0/1.0 family inet6 bfd-liveness-detection minimum-interval 100
+set groups sr protocols isis interface ge-0/0/2.0 level 1 disable
+set groups sr protocols isis interface ge-0/0/2.0 point-to-point
+set groups sr protocols isis interface ge-0/0/2.0 family inet bfd-liveness-detection minimum-interval 100
+set groups sr protocols isis interface ge-0/0/2.0 family inet6 bfd-liveness-detection minimum-interval 100
+set groups sr protocols isis interface lo0.0 level 1 disable
+set groups sr protocols isis interface lo0.0 passive
+set groups sr protocols isis source-packet-routing srgb start-label 200000
+set groups sr protocols isis source-packet-routing srgb index-range 5000
+set groups sr protocols isis source-packet-routing node-segment ipv4-index 111
+set groups sr protocols isis level 2 authentication-key "$9$H.fQ69A0BE9CK8LxsYTzF/9AtuO1Ec"
+set groups sr protocols isis level 2 authentication-type md5
+set groups sr protocols isis level 2 wide-metrics-only
+set groups sr protocols isis backup-spf-options use-post-convergence-lfa
+set groups sr protocols mpls interface ge-0/0/1.0
+set groups sr protocols mpls interface ge-0/0/2.0
+set groups TE-mpls routing-options transport-class auto-create
+set groups TE-mpls routing-options transport-class name path1 color 100
+set groups TE-mpls routing-options transport-class name path2 color 200
+set groups TE-mpls protocols mpls label-switched-path LSP_to_pe13_via_path1 to 192.168.255.213
+set groups TE-mpls protocols mpls label-switched-path LSP_to_pe13_via_path1 primary path1
+set groups TE-mpls protocols mpls label-switched-path LSP_to_pe13_via_path1 transport-class path1
+set groups TE-mpls protocols mpls label-switched-path LSP_to_pe13_via_path2 to 192.168.255.213
+set groups TE-mpls protocols mpls label-switched-path LSP_to_pe13_via_path2 primary path2
+set groups TE-mpls protocols mpls label-switched-path LSP_to_pe13_via_path2 transport-class path2
+set groups TE-mpls protocols mpls path path1 192.168.255.201 strict
+set groups TE-mpls protocols mpls path path1 192.168.255.203 strict
+set groups TE-mpls protocols mpls path path1 192.168.255.204 strict
+set groups TE-mpls protocols mpls path path2 192.168.255.202 strict
+set groups TE-mpls protocols mpls path path2 192.168.255.205 strict
+set groups TE1 protocols mpls label-switched-path LSP_to_pe13_via_path1 to 192.168.255.213
+set groups TE1 protocols mpls label-switched-path LSP_to_pe13_via_path1 primary path1
+set groups TE1 protocols mpls label-switched-path LSP_to_pe13_via_path2 to 192.168.255.213
+set groups TE1 protocols mpls label-switched-path LSP_to_pe13_via_path2 primary path2
+set groups TE1 protocols mpls path path1 192.168.255.201 strict
+set groups TE1 protocols mpls path path1 192.168.255.203 strict
+set groups TE1 protocols mpls path path1 192.168.255.204 strict
+set groups TE1 protocols mpls path path2 192.168.255.202 strict
+set groups TE1 protocols mpls path path2 192.168.255.205 strict
+set groups TE-sr-2 interfaces ge-0/0/1 unit 0 family mpls maximum-labels 16
+set groups TE-sr-2 interfaces ge-0/0/2 unit 0 family mpls maximum-labels 16
+set groups TE-sr-2 policy-options policy-statement bgp_color_import then resolution-map ip_color
+set groups TE-sr-2 policy-options resolution-map ip_color mode ip-color
+set groups TE-sr-2 routing-options transport-class name path1 color 100
+set groups TE-sr-2 routing-options transport-class name path2 color 200
+set groups TE-sr-2 protocols bgp group to_rr import bgp_color_import
+set groups TE-sr-2 protocols source-packet-routing segment-list path1 p1 label 200101
+set groups TE-sr-2 protocols source-packet-routing segment-list path1 p3 label 200103
+set groups TE-sr-2 protocols source-packet-routing segment-list path1 p4 label 200104
+set groups TE-sr-2 protocols source-packet-routing segment-list path1 p13 label 200113
+set groups TE-sr-2 protocols source-packet-routing segment-list path2 p2 label 200102
+set groups TE-sr-2 protocols source-packet-routing segment-list path2 p5 label 200105
+set groups TE-sr-2 protocols source-packet-routing segment-list path2 pe13 label 200113
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path1 to 192.168.255.213
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path1 color 100
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path1 binding-sid 1000001
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path1 primary path1
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path2 to 192.168.255.213
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path2 color 200
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path2 binding-sid 1000002
+set groups TE-sr-2 protocols source-packet-routing source-routing-path to_pe13_path2 primary path2
+set groups TE-sr-2 protocols source-packet-routing use-transport-class
+set groups SRv6 interfaces ge-0/0/1 mtu 9000
+set groups SRv6 interfaces ge-0/0/1 unit 0 family iso
+set groups SRv6 interfaces ge-0/0/1 unit 0 family inet6
+set groups SRv6 interfaces ge-0/0/2 mtu 9000
+set groups SRv6 interfaces ge-0/0/2 unit 0 family iso
+set groups SRv6 interfaces ge-0/0/2 unit 0 family inet6
+set groups SRv6 interfaces lo0 unit 0 family inet address 192.168.255.211/32
+set groups SRv6 interfaces lo0 unit 0 family iso address 49.0001.1921.6800.0011.00
+set groups SRv6 interfaces lo0 unit 0 family inet6 address fc00:dead:beef:ffff::11/128
+set groups SRv6 policy-options policy-statement LB term 1 then load-balance per-flow
+set groups SRv6 policy-options policy-statement LB term 1 then accept
+set groups SRv6 routing-options source-packet-routing srv6 locator SRv6-LOC fc00:dead:beef:ff11::/64
+set groups SRv6 routing-options route-distinguisher-id 192.168.255.211
+set groups SRv6 routing-options resolution preserve-nexthop-hierarchy
+set groups SRv6 routing-options router-id 192.168.255.211
+set groups SRv6 routing-options forwarding-table export LB
+set groups SRv6 protocols bgp multipath list-nexthop
+set groups SRv6 protocols isis interface ge-0/0/1.0 level 1 disable
+set groups SRv6 protocols isis interface ge-0/0/1.0 point-to-point
+set groups SRv6 protocols isis interface ge-0/0/1.0 family inet6 bfd-liveness-detection minimum-interval 100
+set groups SRv6 protocols isis interface ge-0/0/2.0 level 1 disable
+set groups SRv6 protocols isis interface ge-0/0/2.0 point-to-point
+set groups SRv6 protocols isis interface ge-0/0/2.0 family inet6 bfd-liveness-detection minimum-interval 100
+set groups SRv6 protocols isis interface lo0.0 level 1 disable
+set groups SRv6 protocols isis interface lo0.0 passive
+set groups SRv6 protocols isis source-packet-routing srv6 locator SRv6-LOC end-sid fc00:dead:beef:ff11::
+set groups SRv6 protocols isis level 2 authentication-key "$9$H.fQ69A0BE9CK8LxsYTzF/9AtuO1Ec"
+set groups SRv6 protocols isis level 2 authentication-type md5
+set groups SRv6 protocols isis level 2 wide-metrics-only
+set groups SRv6 protocols lldp interface all
+set groups l3vpn_srv6 interfaces ge-0/0/0 flexible-vlan-tagging
+set groups l3vpn_srv6 interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1001 vlan-id 1001
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1001 family inet address 10.0.111.1/24
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1001 family inet6 address fc00:dead:beef:a111::1/64
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1002 vlan-id 1002
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1002 family inet address 10.0.121.1/24
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1002 family inet6 address fc00:dead:beef:a121::1/64
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1003 vlan-id 1003
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1003 family inet address 10.0.113.1/24
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1003 family inet6 address fc00:dead:beef:a113::1/64
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1010 vlan-id 1010
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1010 family inet address 172.16.11.0/31
+set groups l3vpn_srv6 interfaces ge-0/0/0 unit 1010 family inet6 address fc00:dead:beef:a011::0/127
+set groups l3vpn_srv6 policy-options policy-statement export_cust1 term 1 then community add target_cust1
+set groups l3vpn_srv6 policy-options policy-statement export_cust1 term 1 then community add color_path1
+set groups l3vpn_srv6 policy-options policy-statement export_cust1 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement import_cust1 term 1 from community target_cust1
+set groups l3vpn_srv6 policy-options policy-statement import_cust1 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement export_cust2 term 1 then community add target_cust2
+set groups l3vpn_srv6 policy-options policy-statement export_cust2 term 1 then community add color_path2
+set groups l3vpn_srv6 policy-options policy-statement export_cust2 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement import_cust2 term 1 from community target_cust2
+set groups l3vpn_srv6 policy-options policy-statement import_cust2 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement export_cust3 term 1 then community add target_cust3
+set groups l3vpn_srv6 policy-options policy-statement export_cust3 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement import_cust3 term 1 from community target_cust3
+set groups l3vpn_srv6 policy-options policy-statement import_cust3 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement export_cust10 term 1 then community add target_cust10
+set groups l3vpn_srv6 policy-options policy-statement export_cust10 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement import_cust10 term 1 from community target_cust10
+set groups l3vpn_srv6 policy-options policy-statement import_cust10 term 1 then accept
+set groups l3vpn_srv6 policy-options policy-statement from_evpn term 1 from protocol evpn
+set groups l3vpn_srv6 policy-options policy-statement from_evpn term 1 then accept
+set groups l3vpn_srv6 policy-options community color_path1 members color:0:100
+set groups l3vpn_srv6 policy-options community color_path2 members color:0:200
+set groups l3vpn_srv6 policy-options community target_cust1 members target:1000:1001
+set groups l3vpn_srv6 policy-options community target_cust2 members target:1000:1002
+set groups l3vpn_srv6 policy-options community target_cust3 members target:1000:1003
+set groups l3vpn_srv6 policy-options community target_cust10 members target:1000:1010
+set groups l3vpn_srv6 routing-instances cust1 instance-type vrf
+set groups l3vpn_srv6 routing-instances cust1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups l3vpn_srv6 routing-instances cust1 protocols evpn ip-prefix-routes encapsulation srv6
+set groups l3vpn_srv6 routing-instances cust1 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRv6-LOC end-dt46-sid
+set groups l3vpn_srv6 routing-instances cust1 interface ge-0/0/0.1001
+set groups l3vpn_srv6 routing-instances cust1 vrf-import import_cust1
+set groups l3vpn_srv6 routing-instances cust1 vrf-export export_cust1
+set groups l3vpn_srv6 routing-instances cust1 vrf-table-label
+set groups l3vpn_srv6 routing-instances cust2 instance-type vrf
+set groups l3vpn_srv6 routing-instances cust2 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups l3vpn_srv6 routing-instances cust2 protocols evpn ip-prefix-routes encapsulation srv6
+set groups l3vpn_srv6 routing-instances cust2 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRv6-LOC end-dt46-sid
+set groups l3vpn_srv6 routing-instances cust2 interface ge-0/0/0.1002
+set groups l3vpn_srv6 routing-instances cust2 vrf-import import_cust2
+set groups l3vpn_srv6 routing-instances cust2 vrf-export export_cust2
+set groups l3vpn_srv6 routing-instances cust2 vrf-target target:1000:1002
+set groups l3vpn_srv6 routing-instances cust2 vrf-table-label
+set groups l3vpn_srv6 routing-instances cust3 instance-type vrf
+set groups l3vpn_srv6 routing-instances cust3 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups l3vpn_srv6 routing-instances cust3 protocols evpn ip-prefix-routes encapsulation srv6
+set groups l3vpn_srv6 routing-instances cust3 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRv6-LOC end-dt46-sid
+set groups l3vpn_srv6 routing-instances cust3 interface ge-0/0/0.1003
+set groups l3vpn_srv6 routing-instances cust3 vrf-import import_cust3
+set groups l3vpn_srv6 routing-instances cust3 vrf-export export_cust3
+set groups l3vpn_srv6 routing-instances cust3 vrf-table-label
+set groups l3vpn_srv6 routing-instances cust10 instance-type vrf
+set groups l3vpn_srv6 routing-instances cust10 protocols bgp group to_ce export from_evpn
+set groups l3vpn_srv6 routing-instances cust10 protocols bgp group to_ce neighbor 172.16.11.1 peer-as 4200010011
+set groups l3vpn_srv6 routing-instances cust10 protocols bgp group to_ce neighbor fc00:dead:beef:a011::1 peer-as 4200010011
+set groups l3vpn_srv6 routing-instances cust10 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups l3vpn_srv6 routing-instances cust10 protocols evpn ip-prefix-routes encapsulation srv6
+set groups l3vpn_srv6 routing-instances cust10 protocols evpn ip-prefix-routes source-packet-routing srv6 locator SRv6-LOC end-dt46-sid
+set groups l3vpn_srv6 routing-instances cust10 interface ge-0/0/0.1010
+set groups l3vpn_srv6 routing-instances cust10 vrf-import import_cust10
+set groups l3vpn_srv6 routing-instances cust10 vrf-export export_cust10
+set groups l3vpn_srv6 routing-instances cust10 vrf-table-label
+set groups bgp_srv6 policy-options policy-statement nh term 1 from protocol direct
+set groups bgp_srv6 policy-options policy-statement nh term 1 from route-filter 192.168.255.0/24 longer
+set groups bgp_srv6 policy-options policy-statement nh term 1 then community add global
+set groups bgp_srv6 policy-options policy-statement nh term 1 then next-hop self
+set groups bgp_srv6 policy-options policy-statement nh term 1 then accept
+set groups bgp_srv6 policy-options policy-statement nh term default then next-hop self
+set groups bgp_srv6 policy-options policy-statement nh term default then accept
+set groups bgp_srv6 routing-options autonomous-system 4200001001
+set groups bgp_srv6 protocols bgp group to_rr type internal
+set groups bgp_srv6 protocols bgp group to_rr local-address fc00:dead:beef:ffff::11
+set groups bgp_srv6 protocols bgp group to_rr family inet unicast extended-nexthop
+set groups bgp_srv6 protocols bgp group to_rr family inet unicast advertise-srv6-service
+set groups bgp_srv6 protocols bgp group to_rr family inet unicast accept-srv6-service
+set groups bgp_srv6 protocols bgp group to_rr family inet6 unicast advertise-srv6-service
+set groups bgp_srv6 protocols bgp group to_rr family inet6 unicast accept-srv6-service
+set groups bgp_srv6 protocols bgp group to_rr family evpn signaling advertise-srv6-service
+set groups bgp_srv6 protocols bgp group to_rr family evpn signaling accept-srv6-service
+set groups bgp_srv6 protocols bgp group to_rr export nh
+set groups bgp_srv6 protocols bgp group to_rr neighbor fc00:dead:beef:ffff::16
+set groups bgp_srv6 protocols bgp rfc8950-compliant
+set groups l2evpn_srv6 interfaces ge-0/0/0 flexible-vlan-tagging
+set groups l2evpn_srv6 interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set groups l2evpn_srv6 interfaces ge-0/0/0 unit 2001 encapsulation vlan-bridge
+set groups l2evpn_srv6 interfaces ge-0/0/0 unit 2001 vlan-id 2001
+set groups l2evpn_srv6 interfaces ge-0/0/0 unit 2002 encapsulation vlan-bridge
+set groups l2evpn_srv6 interfaces ge-0/0/0 unit 2002 vlan-id 2002
+set groups l2evpn_srv6 policy-options policy-statement export_evpn1 term 1 then community add target_evpn1
+set groups l2evpn_srv6 policy-options policy-statement export_evpn1 term 1 then community add color_path1
+set groups l2evpn_srv6 policy-options policy-statement export_evpn1 term 1 then accept
+set groups l2evpn_srv6 policy-options policy-statement import_evpn1 term 1 from community target_evpn1
+set groups l2evpn_srv6 policy-options policy-statement import_evpn1 term 1 then accept
+set groups l2evpn_srv6 policy-options policy-statement export_evpn2 term 1 then community add target_evpn2
+set groups l2evpn_srv6 policy-options policy-statement export_evpn2 term 1 then community add color_path2
+set groups l2evpn_srv6 policy-options policy-statement export_evpn2 term 1 then accept
+set groups l2evpn_srv6 policy-options policy-statement import_evpn2 term 1 from community target_evpn2
+set groups l2evpn_srv6 policy-options policy-statement import_evpn2 term 1 then accept
+set groups l2evpn_srv6 policy-options community color_path1 members color:0:100
+set groups l2evpn_srv6 policy-options community color_path2 members color:0:200
+set groups l2evpn_srv6 policy-options community target_evpn1 members target:1000:2001
+set groups l2evpn_srv6 policy-options community target_evpn2 members target:1000:2002
+set groups l2evpn_srv6 routing-instances evpn1 instance-type mac-vrf
+set groups l2evpn_srv6 routing-instances evpn1 protocols evpn encapsulation srv6
+set groups l2evpn_srv6 routing-instances evpn1 protocols evpn source-packet-routing srv6 locator SRv6-LOC
+set groups l2evpn_srv6 routing-instances evpn1 protocols evpn source-packet-routing srv6 locator end-dt2-sid
+set groups l2evpn_srv6 routing-instances evpn1 bridge-domains vlan2001 interface ge-0/0/0.2001
+set groups l2evpn_srv6 routing-instances evpn1 service-type vlan-based
+set groups l2evpn_srv6 routing-instances evpn1 interface ge-0/0/0.2001
+set groups l2evpn_srv6 routing-instances evpn1 vrf-import import_evpn1
+set groups l2evpn_srv6 routing-instances evpn1 vrf-export export_evpn1
+set groups l2evpn_srv6 routing-instances evpn2 instance-type mac-vrf
+set groups l2evpn_srv6 routing-instances evpn2 protocols evpn encapsulation srv6
+set groups l2evpn_srv6 routing-instances evpn2 protocols evpn source-packet-routing srv6 locator SRv6-LOC
+set groups l2evpn_srv6 routing-instances evpn2 protocols evpn source-packet-routing srv6 locator end-dt2-sid
+set groups l2evpn_srv6 routing-instances evpn2 bridge-domains vlan2002 interface ge-0/0/0.2002
+set groups l2evpn_srv6 routing-instances evpn2 service-type vlan-based
+set groups l2evpn_srv6 routing-instances evpn2 interface ge-0/0/0.2002
+set groups l2evpn_srv6 routing-instances evpn2 vrf-import import_evpn2
+set groups l2evpn_srv6 routing-instances evpn2 vrf-export export_evpn2
+set groups l3_srv6 interfaces ge-0/0/0 flexible-vlan-tagging
+set groups l3_srv6 interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set groups l3_srv6 interfaces ge-0/0/0 unit 5001 vlan-id 51
+set groups l3_srv6 interfaces ge-0/0/0 unit 5001 family inet address 172.16.11.0/31
+set groups l3_srv6 interfaces ge-0/0/0 unit 5001 family inet6 address fc00:dead:beef:b011::0/127
+set groups l3_srv6 policy-options policy-statement only_global term 1 from community global
+set groups l3_srv6 policy-options policy-statement only_global term 1 then accept
+set groups l3_srv6 policy-options policy-statement only_global term default then reject
+set groups l3_srv6 policy-options policy-statement set_global then community add global
+set groups l3_srv6 policy-options community global members 1000:1
+set groups l3_srv6 protocols bgp group to_ce import set_global
+set groups l3_srv6 protocols bgp group to_ce export only_global
+set groups l3_srv6 protocols bgp group to_ce neighbor 172.16.11.1 peer-as 4200050011
+set groups l3_srv6 protocols bgp group to_ce neighbor fc00:dead:beef:b011::1 peer-as 4200050011
+set groups l3_srv6 protocols bgp source-packet-routing srv6 locator SRv6-LOC end-dt46-sid
+set apply-groups SRv6
+set apply-groups bgp_srv6
+set apply-groups l3vpn_srv6
+set apply-groups l2evpn_srv6
+set apply-groups l3_srv6
+set system name-server 8.8.8.8
+set system name-server 8.8.4.4
+

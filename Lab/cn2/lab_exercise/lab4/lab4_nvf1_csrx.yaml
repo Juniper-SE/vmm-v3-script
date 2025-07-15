@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nvf1
+  namespace: lab4
+  labels:
+    app: nvf1
+  annotations:
+    k8s.v1.cni.cncf.io/networks: blue,red
+    #core.juniper.networks/bgpaas-networks: blue, red
+spec:
+  containers: 
+    - name: csrx1
+      image: 172.16.14.10:5000/csrx:22.1R1.10
+      imagePullPolicy: Always
+      env: 
+      #- name: CSRX_ROOT_PASSWORD
+      #  value: "pass01"
+      - name: CSRX_FORWARD_MODE
+        value: routing
+      - name: CSRX_AUTO_ASSIGN_IP
+        value: "yes"
+      - name: CSRX_SIZE
+        value: "medium"
+      - name: CSRX_LICENSE_FILE
+        value: "/var/jail/csrx_license"
+      - name: CSRX_JUNOS_CONFIG
+        value: "/var/jail/csrx_config"
+      - name: CSRX_PACKET_DRIVER
+        value: "interrupt"
+      securityContext:
+        privileged: true
+      volumeMounts:
+      - name: disk
+        mountPath: "/dev"
+      - name: config
+        mountPath: "/var/jail"
+  volumes:
+  - name: disk
+    hostPath:
+     path: /dev
+     type: Directory
+  - name: config
+    configMap:
+      name: csrx-no-nat
+      items:
+      - key: csrx_config
+        path: csrx_config
+      - key: csrx_license
+        path: csrx_license
+  nodeName: node2
+

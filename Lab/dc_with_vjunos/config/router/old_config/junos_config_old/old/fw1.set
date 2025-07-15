@@ -1,0 +1,105 @@
+set system host-name fw1
+set system root-authentication encrypted-password "$1$X.Q52Yjv$qOBjPbq6AzlCCOGW/8ki7."
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$X.Q52Yjv$qOBjPbq6AzlCCOGW/8ki7."
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFReuXgpulMHOjBBhIcVpKmUh0ui/48gFlwoWNZJuuta7dFwgd3+SullAYCet3k6LG8UEltZbyytZuvqsesD9u6YV+o9op107Bl3vcEiHDmFklIBHIK3rWbnfKZYBKrgh2EIubIEq5K8oUpujH+E/L7Du8tMvrHPIVEVTA4D7n0vxMLRVVE/QBC5mTYfjeUuCjFfYpqhIvjNxdfnBrOM/O53J0eI018NjEiEW6mNU547X0zBSELD1+4Ft8as6MWftEB1Tr0w43HM7h6LHFCDfgRBf5rPqhJYngYV0DgbBwR8XIrNokDyNmu3T3f95+hrvyJ1uPX2NggIlnsHgc85Ymw+/VmEF8h0sjuIQV6k2N1nK123KCSv7bt6Q1OYWg5QNif7gndWRee48o54rLtaOMfkzRBQJoXcmvW/LdNxRmwqK3ekNhF232BJc7ZlFev7uO8qP5WeFzRfLQ/JNkriEWBE= irzan@irzan-mbp"
+set system services ssh root-login allow
+set system services ssh sftp-server
+set system services extension-service request-response grpc clear-text port 32767
+set system services netconf ssh
+set system management-instance
+set security address-book global address vm3kvm2 fc00:dead:beef:a202::1000:103/128
+set security address-book global address vm3kvm2v4 192.168.202.103/32
+set security address-book global address vm4kvm1v4 192.168.202.104/32
+set security address-book global address vm4kvm1 fc00:dead:beef:a202::1000:104/128
+set security nat source pool pool1 address 172.16.201.1/32
+set security nat source rule-set rs1 from zone trust
+set security nat source rule-set rs1 to zone untrust
+set security nat source rule-set rs1 rule r1 match source-address 0.0.0.0/0
+set security nat source rule-set rs1 rule r1 then source-nat pool pool1
+set security nat destination pool vm3kvm2v4_ssh address 192.168.202.103/32
+set security nat destination pool vm3kvm2v4_ssh address port 22
+set security nat destination pool vm4kvm1v4_ssh address 192.168.202.104/32
+set security nat destination pool vm4kvm1v4_ssh address port 22
+set security nat destination rule-set rs1 from zone untrust
+set security nat destination rule-set rs1 rule r1 match destination-address 172.16.201.2/32
+set security nat destination rule-set rs1 rule r1 match destination-port 9021
+set security nat destination rule-set rs1 rule r1 then destination-nat pool vm3kvm2v4_ssh
+set security nat destination rule-set rs1 rule r2 match destination-address 172.16.201.2/32
+set security nat destination rule-set rs1 rule r2 match destination-port 9022
+set security nat destination rule-set rs1 rule r2 then destination-nat pool vm4kvm1v4_ssh
+set security policies from-zone trust to-zone trust policy default-permit match source-address any
+set security policies from-zone trust to-zone trust policy default-permit match destination-address any
+set security policies from-zone trust to-zone trust policy default-permit match application any
+set security policies from-zone trust to-zone trust policy default-permit then permit
+set security policies from-zone trust to-zone untrust policy default-permit match source-address any
+set security policies from-zone trust to-zone untrust policy default-permit match destination-address any
+set security policies from-zone trust to-zone untrust policy default-permit match application any
+set security policies from-zone trust to-zone untrust policy default-permit then permit
+set security policies from-zone untrust to-zone trust policy allowv6_1 match source-address any
+set security policies from-zone untrust to-zone trust policy allowv6_1 match destination-address vm3kvm2
+set security policies from-zone untrust to-zone trust policy allowv6_1 match application junos-ssh
+set security policies from-zone untrust to-zone trust policy allowv6_1 then permit
+set security policies from-zone untrust to-zone trust policy allow2 match source-address any
+set security policies from-zone untrust to-zone trust policy allow2 match destination-address vm3kvm2v4
+set security policies from-zone untrust to-zone trust policy allow2 match application any
+set security policies from-zone untrust to-zone trust policy allow2 then permit
+set security policies from-zone untrust to-zone trust policy allow3 match source-address any
+set security policies from-zone untrust to-zone trust policy allow3 match destination-address vm4kvm1v4
+set security policies from-zone untrust to-zone trust policy allow3 match application any
+set security policies from-zone untrust to-zone trust policy allow3 then permit
+set security policies from-zone untrust to-zone trust policy allow6_2 match source-address any
+set security policies from-zone untrust to-zone trust policy allow6_2 match destination-address vm4kvm1
+set security policies from-zone untrust to-zone trust policy allow6_2 match application junos-ssh
+set security policies from-zone untrust to-zone trust policy allow6_2 then permit
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic protocols bgp
+set security zones security-zone untrust screen untrust-screen
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic protocols bgp
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.16.4/24
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:ff16::4/64
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 1001 vlan-id 1001
+set interfaces ge-0/0/1 unit 1001 family inet address 10.1.101.29/31
+set interfaces ge-0/0/1 unit 1001 family inet6 address fc00:dead:beef:ff01::29/127
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 1001 vlan-id 1001
+set interfaces ge-0/0/2 unit 1001 family inet address 10.1.101.31/31
+set interfaces ge-0/0/2 unit 1001 family inet6 address fc00:dead:beef:ff01::31/127
+set interfaces fxp0 unit 0 family inet address 172.16.10.211/24
+set policy-options policy-statement to_dc term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_dc term 1 then accept
+set policy-options policy-statement to_dc term 2 from route-filter ::/0 exact
+set policy-options policy-statement to_dc term 2 then accept
+set policy-options policy-statement to_dc term default then reject
+set policy-options policy-statement to_gw_v4 term 1 from protocol static
+set policy-options policy-statement to_gw_v4 term 1 from route-filter 172.16.201.0/24 orlonger
+set policy-options policy-statement to_gw_v4 term 1 then accept
+set policy-options policy-statement to_gw_v4 term default then reject
+set policy-options policy-statement to_gw_v6 term 1 from route-filter fc00:dead:beef:a201::/64 orlonger
+set policy-options policy-statement to_gw_v6 term 1 then accept
+set policy-options policy-statement to_gw_v6 term 2 from route-filter fc00:dead:beef:a202::/64 orlonger
+set policy-options policy-statement to_gw_v6 term 2 then accept
+set policy-options policy-statement to_gw_v6 term default then reject
+set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop 172.16.10.1
+set protocols bgp group to_ext neighbor 172.16.16.254 export to_gw_v4
+set protocols bgp group to_ext neighbor 172.16.16.254 peer-as 4200009000
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff family inet6 any
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff export to_gw_v6
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff peer-as 4200009000
+set protocols bgp group to_dc1 export to_dc
+set protocols bgp group to_dc1 neighbor 10.1.101.28 family inet any
+set protocols bgp group to_dc1 neighbor 10.1.101.28 peer-as 4200001105
+set protocols bgp group to_dc1 neighbor 10.1.101.30 family inet any
+set protocols bgp group to_dc1 neighbor 10.1.101.30 peer-as 4200001106
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::28 family inet6 any
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::28 peer-as 4200001105
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::30 family inet6 any
+set protocols bgp group to_dc1 neighbor fc00:dead:beef:ff01::30 peer-as 4200001106
+set protocols lldp interface all
+set routing-options autonomous-system 4200009004
+set routing-options static route 172.16.201.1/32 discard
+set routing-options static route 172.16.201.2/32 discard

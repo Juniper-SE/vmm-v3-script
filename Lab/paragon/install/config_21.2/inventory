@@ -1,0 +1,77 @@
+[master]
+node0
+# hostname of kubernetes master
+
+[node]
+node1
+node2
+node3
+# hostname(s) of kubernetes nodes
+
+[cluster:children]
+master
+node
+
+#
+# Configure hosts that run Cassandra
+#
+[cassandra_cluster]
+
+#
+# default: install cassandra on hosts of the
+# kubernetes cluster (remove, if you configure individual hosts)
+#
+[cassandra_cluster:children]
+node
+
+#
+# Configure hosts that run elasticsearch
+#
+[elasticsearch_cluster]
+
+#
+# default: install elasticsearch on hosts of the
+# kubernetes cluster (remove, if you configure individual hosts)
+#
+[elasticsearch_cluster:children]
+node
+
+#
+# Configure subset of nodes that provide local storage
+#
+[local_storage_nodes]
+
+#
+# default: all worker nodes can provide local storage
+#
+[local_storage_nodes:children]
+node
+
+[all:vars]
+ansible_user=ubuntu
+ansible_password=pass01
+ansible_ssh_private_key_file=/home/ubuntu/.ssh/id_rsa
+ansible_become_password=pass01
+# user name to connect to managed nodes using SSH
+# ansible_user=root
+#
+# SSH authentication options:
+# 1. use ssh-agent and `ssh-add` an authorized key (no configuration necessary)
+# 2. copy authorized ssh key to this directory and configure
+#    ansible_ssh_private_key_file
+# or
+# 3. configure ansible_password
+#
+# Passwords can be encrypted using ansible-vault:
+# `run -c <config-dir> ansible-vault encrypt_string`, use
+# `run -c <config-dir> deploy --ask-vault-password` to use encrypted passwords
+#
+# ansible_ssh_private_key_file="{{ inventory_dir }}/id_rsa"
+# ansible_password=
+#
+# If ansible_user is not root specify `sudo` password, if required
+# ansible_become_password=
+#
+# name of kubernetes cluster
+# kubernetes_cluster_name=
+#

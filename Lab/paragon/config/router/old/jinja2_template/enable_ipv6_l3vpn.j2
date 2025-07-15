@@ -1,0 +1,9 @@
+set protocols mpls ipv6-tunneling
+set interfaces ge-0/0/2.0 family inet6
+set interfaces ge-0/0/3.0 family inet6
+
+
+
+{%- for intf in intf_list %}
+set interfaces {{ intf }}.{{vlan}} family inet6
+{% endfor %}

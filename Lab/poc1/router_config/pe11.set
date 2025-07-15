@@ -1,0 +1,146 @@
+set apply-groups poc
+
+set groups poc routing-options autonomous-system 4200000001
+set groups poc protocols bgp group to_rr type internal
+set groups poc protocols bgp group to_rr local-address 192.168.255.11
+set groups poc protocols bgp group to_rr family evpn signaling
+set groups poc protocols bgp group to_rr neighbor 192.168.255.1
+set groups poc protocols bgp group to_rr neighbor 192.168.255.2
+
+set groups poc interfaces et-0/0/0 flexible-vlan-tagging
+set groups poc interfaces et-0/0/0 mtu 9000
+set groups poc interfaces et-0/0/0 encapsulation flexible-ethernet-services
+set groups poc interfaces et-0/0/0 unit 101 vlan-id 101
+set groups poc interfaces et-0/0/0 unit 101 family inet address 172.16.255.0/31
+set groups poc interfaces et-0/0/0 unit 101 family inet6 address fc00:dead:beef:ffff::0/127
+
+set groups poc policy-options policy-statement from_evpn term 1 from protocol evpn
+set groups poc policy-options policy-statement from_evpn term 1 then accept
+set groups poc routing-instances cust1 instance-type vrf
+set groups poc routing-instances cust1 protocols bgp group to_ce1 export from_evpn
+set groups poc routing-instances cust1 protocols bgp group to_ce1 neighbor fc00:dead:beef:ffff::1 peer-as 4200001001
+set groups poc routing-instances cust1 protocols bgp group to_ce1 neighbor 172.16.255.1 peer-as 4200001001
+set groups poc routing-instances cust1 protocols evpn ip-prefix-routes advertise direct-nexthop
+set groups poc routing-instances cust1 interface et-0/0/0.101
+set groups poc routing-instances cust1 vrf-target target:1000:101
+set groups poc routing-instances cust1 vrf-table-label
+
+
+
+
+set groups poc interfaces et-0/0/0 unit 111 vlan-id 111
+set groups poc interfaces et-0/0/0 unit 111 encapsulation vlan-bridge
+set groups poc routing-instances evpn1 instance-type mac-vrf
+set groups poc routing-instances evpn1 protocols evpn
+set groups poc routing-instances evpn1 service-type vlan-based
+set groups poc routing-instances evpn1 vrf-target target:2000:111
+set groups poc routing-instances evpn1 vlans vlan111 vlan-id 111
+set groups poc routing-instances evpn1 vlans vlan111 interface et-0/0/0.111
+
+
+set groups poc interfaces et-0/0/0 unit 201 vlan-id 201
+set groups poc interfaces et-0/0/0 unit 201 encapsulation vlan-bridge
+set groups poc interfaces et-0/0/0 unit 202 vlan-id 202
+set groups poc interfaces et-0/0/0 unit 202 encapsulation vlan-bridge
+set groups poc interfaces et-0/0/0 unit 203 vlan-id 203
+set groups poc interfaces et-0/0/0 unit 203 encapsulation vlan-bridge
+
+set groups poc routing-instances evpn2 instance-type mac-vrf
+set groups poc routing-instances evpn2 protocols evpn
+set groups poc routing-instances evpn2 service-type vlan-based
+set groups poc routing-instances evpn2 vrf-target target:2000:112
+set groups poc routing-instances evpn2 vlans vlan201 vlan-id 201
+set groups poc routing-instances evpn2 vlans vlan201 interface et-0/0/0.201
+set groups poc routing-instances evpn2 vlans vlan202 vlan-id 202
+set groups poc routing-instances evpn2 vlans vlan202 interface et-0/0/0.202
+set groups poc routing-instances evpn2 vlans vlan203 vlan-id 203
+set groups poc routing-instances evpn2 vlans vlan203 interface et-0/0/0.203
+
+
+set groups poc interfaces et-0/0/0 unit 301 vlan-id 301
+set groups poc interfaces et-0/0/0 unit 301 encapsulation vlan-ccc
+set groups poc interfaces et-0/0/0 unit 302 vlan-id 302
+set groups poc interfaces et-0/0/0 unit 302 encapsulation vlan-ccc
+set groups poc routing-instances evpn-vpws1 instance-type evpn-vpws
+set groups poc routing-instances evpn-vpws1 protocols evpn interface et-0/0/0.301 vpws-service-id local 3001
+set groups poc routing-instances evpn-vpws1 protocols evpn interface et-0/0/0.301 vpws-service-id remote 3101
+
+set groups poc routing-instances evpn-vpws1 interface et-0/0/0.301
+set groups poc routing-instances evpn-vpws1 vrf-target target:3000:1001
+set groups poc routing-instances evpn-vpws2 instance-type evpn-vpws
+set groups poc routing-instances evpn-vpws2 protocols evpn interface et-0/0/0.302 vpws-service-id local 3002
+set groups poc routing-instances evpn-vpws2 protocols evpn interface et-0/0/0.302 vpws-service-id remote 3102
+
+set groups poc routing-instances evpn-vpws2 vrf-target target:3000:1002
+set groups poc routing-instances evpn-vpws2 interface et-0/0/0.302
+
+
+
+
+
+
+set groups poc interfaces et-0/0/0 unit 411 vlan-id 411
+set groups poc interfaces et-0/0/0 unit 411 encapsulation vlan-ccc
+set groups poc interfaces et-0/0/0 unit 412 vlan-id 412
+set groups poc interfaces et-0/0/0 unit 412 encapsulation vlan-ccc
+set groups poc interfaces et-0/0/0 unit 413 vlan-id 413
+set groups poc interfaces et-0/0/0 unit 413 encapsulation vlan-ccc
+set groups poc interfaces et-0/0/0 unit 414 vlan-id 414
+set groups poc interfaces et-0/0/0 unit 414 encapsulation vlan-ccc
+
+set groups poc routing-instances evpn-vpws3 instance-type evpn-vpws
+set groups poc routing-instances evpn-vpws3 protocols evpn interface et-0/0/0.411 vpws-service-id local 4001
+set groups poc routing-instances evpn-vpws3 protocols evpn interface et-0/0/0.411 vpws-service-id remote 4002
+set groups poc routing-instances evpn-vpws3 protocols evpn interface et-0/0/0.412 vpws-service-id local 4003
+set groups poc routing-instances evpn-vpws3 protocols evpn interface et-0/0/0.412 vpws-service-id remote 4004
+set groups poc routing-instances evpn-vpws3 protocols evpn flexible-cross-connect-vlan-aware
+set groups poc routing-instances evpn-vpws3 vrf-target target:4000:101
+set groups poc routing-instances evpn-vpws3 interface et-0/0/0.411
+set groups poc routing-instances evpn-vpws3 interface et-0/0/0.412
+
+
+
+set groups poc routing-instances evpn-vpws4 instance-type evpn-vpws
+set groups poc routing-instances evpn-vpws4 protocols evpn interface et-0/0/0.413 vpws-service-id local 4005
+set groups poc routing-instances evpn-vpws4 protocols evpn interface et-0/0/0.413 vpws-service-id remote 4006
+set groups poc routing-instances evpn-vpws4 protocols evpn interface et-0/0/0.414 vpws-service-id local 4007
+set groups poc routing-instances evpn-vpws4 protocols evpn interface et-0/0/0.414 vpws-service-id remote 4008
+set groups poc routing-instances evpn-vpws4 protocols evpn flexible-cross-connect-vlan-aware
+set groups poc routing-instances evpn-vpws4 vrf-target target:4000:102
+set groups poc routing-instances evpn-vpws4 interface et-0/0/0.413
+set groups poc routing-instances evpn-vpws4 interface et-0/0/0.414
+
+
+set groups poc interfaces et-0/0/0 unit 511 vlan-id 511
+set groups poc interfaces et-0/0/0 unit 511 encapsulation vlan-bridge
+set groups poc interfaces et-0/0/0 unit 511 etree-ac-role root
+set groups poc routing-instances evpn3 instance-type mac-vrf
+set groups poc routing-instances evpn3 protocols evpn
+set groups poc routing-instances evpn3 protocols evpn evpn-etree
+set groups poc routing-instances evpn3 service-type vlan-based
+set groups poc routing-instances evpn3 vrf-target target:3000:511
+set groups poc routing-instances evpn3 vlans vlan511 vlan-id 511
+set groups poc routing-instances evpn3 vlans vlan511 interface et-0/0/0.511
+
+
+
+
+
+
+
+
+
+set groups poc routing-instances evpn-vpws4 protocols evpn flexible-cross-connect-vlan-aware
+set groups poc routing-instances evpn-vpws2 protocols evpn flexible-cross-connect-vlan-unaware
+
+
+
+
+
+
+
+set groups poc interfaces et-0/0/0 unit 111 etree-ac-role root
+set groups poc routing-instances evpn1 protocols evpn evpn-etree
+
+
+

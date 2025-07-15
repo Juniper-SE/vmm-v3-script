@@ -1,0 +1,26 @@
+routing-options {
+    rib inet.3 {
+        static {
+            route 0.0.0.0/0 discard;
+        }
+    }
+    autonomous-system {{ asn }};
+}
+protocols{
+   bgp {
+       group to_client {
+           local-address {{ local_addr }};
+           family inet-vpn {
+               any;
+           }
+           family inet6-vpn {
+               any;
+           }
+           type internal;
+           cluster {{ local_addr }};
+           {% for ip in neighbor -%}
+           neighbor {{ ip }};
+           {% endfor -%}
+       }
+   }
+}

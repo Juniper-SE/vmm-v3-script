@@ -1,0 +1,6 @@
+interface: ge-0/0/0
+vlan_id: 101
+ipv4_address: 192.168.101.1/24
+ipv6_address: fc00:dead:beef:a101::1/64
+vrf_name: VRF1
+vrf_target: target:4200000512L:1001

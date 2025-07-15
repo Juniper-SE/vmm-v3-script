@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client1
+spec:
+  containers:
+    - name: client
+      image: 172.16.14.10:5000/webserver:0.1
+      securityContext:
+        privileged: true
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client2
+spec:
+  containers:
+    - name: client
+      image: 172.16.14.10:5000/webserver:0.1
+      securityContext:
+        privileged: true
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client3
+spec:
+  containers:
+    - name: client
+      image: 172.16.14.10:5000/webserver:0.1
+      securityContext:
+        privileged: true

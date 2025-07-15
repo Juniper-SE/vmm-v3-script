@@ -1,0 +1,7 @@
+set interfaces {{interface}} unit {{vlan_id}} vlan-id {{vlan_id}}
+set interfaces {{interface}} unit {{vlan_id}} encapsulation vlan-bridge
+set routing-instances {{vrf_name}} instance-type evpn
+set routing-instances {{vrf_name}} interface {{interface}}.{{vlan_id}}
+set routing-instances {{vrf_name}} vrf-target {{vrf_target}}
+set routing-instances {{vrf_name}} protocols evpn
+set routing-instances {{vrf_name}} vlan-id none

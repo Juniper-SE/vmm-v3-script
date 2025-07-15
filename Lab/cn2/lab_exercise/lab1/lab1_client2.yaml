@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client1x
+spec:
+  containers:
+  - name: webserver
+    image: m1r24n/webserver:0.1
+    imagePullPolicy: Always 
+    securityContext:
+      privileged: true
+  nodeName: node1
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client2x
+spec:
+  containers:
+  - name: webserver
+    image: m1r24n/webserver:0.1
+    imagePullPolicy: Always 
+    securityContext:
+      privileged: true
+  nodeName: node2
+  
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client3x
+spec:
+  containers:
+  - name: webserver
+    image: m1r24n/webserver:0.1
+    imagePullPolicy: Always 
+    securityContext:
+      privileged: true
+  nodeName: node3

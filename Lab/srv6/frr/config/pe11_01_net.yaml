@@ -1,0 +1,33 @@
+network:
+  ethernets:
+    eth0:
+      addresses : ['172.16.10.1/24']
+      nameservers:
+         addresses: ['10.49.32.95', '10.49.32.97']
+       
+    eth3:
+      dhcp4: false
+      mtu: 9000
+       
+    eth1:
+      dhcp4: false
+      mtu: 9000
+      addresses: 
+        - 10.100.1.0/31
+        - fc00:dead:beef:1001::0/127
+       
+    eth2:
+      dhcp4: false
+      mtu: 9000
+      addresses: 
+        - 10.100.1.2/31
+        - fc00:dead:beef:1001::2/127
+  vlans:
+    eth3.101:
+      dhcp4: false
+      id: 101
+      link: eth3
+      addresses:
+        - 192.168.11.1/24
+        - fc00:dead:beef:a011::1/64  
+      

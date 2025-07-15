@@ -1,0 +1,124 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstance
+metadata:
+  labels:
+    special: vm5
+  name: vm5
+  namespace: lab5
+spec:
+  domain:
+    ioThreadsPolicy: auto
+    devices:
+      useVirtioTransitional: true
+      disks:
+      - name: containerdisk
+        disk:
+          bus: virtio
+      - name: cloudinitdisk
+        disk:
+          bus: virtio
+      interfaces:
+      - name: default
+        bridge: {}
+      - name: left
+        bridge: {}
+      - name: right
+        bridge: {}
+    cpu:
+      cores: 2
+      features:
+      #- name: "pbe"
+      #  policy: "require"
+      #- name: "tm2"
+      #  policy: "require"
+      #- name: "est"
+      #  policy: "require"
+      - name: "vmx"
+        policy: "require"
+      #- name: "osxsave"
+      #  policy: "require"
+      #- name: "smx"
+      #  policy: "require"
+      #- name: "ss"
+      #  policy: "require"
+      #- name: "ds"
+      #  policy: "require"
+      #- name: "vme"
+      #  policy: "require"
+      #- name: "dtes64"
+      #  policy: "require"
+      #- name: "monitor"
+      #  policy: "require"
+      #- name: "ht"
+      #  policy: "require"
+      #- name: "dca"
+      #  policy: "require"
+      #- name: "pcid"
+      #  policy: "require"
+      #- name: "tm"
+      #  policy: "require"
+      #- name: "pdcm"
+      #  policy: "require"
+      #- name: "pdpe1gb"
+      #  policy: "require"
+      #- name: "ds_cpl"
+      #  policy: "require"
+      #- name: "xtpr"
+      #  policy: "require"
+      - name: "acpi"
+        policy: "disable"
+      - name: "invtsc"
+        policy: "disable"
+    resources:
+      requests:
+        memory: 4096M
+        cpu: "2"
+      limits:
+        memory: 4096M
+        cpu: "2"
+  networks:
+  - name: default
+    pod: {}
+  - name: left
+    multus:
+       networkName: left
+  - name: right
+    multus:
+       networkName: right
+  volumes:
+  - name: containerdisk
+    containerDisk:
+      image: 172.16.14.10:5000/vsrx3:22.1R1.10
+      path: /junos-vsrx3-x86-64-22.1R1.10.qcow2
+  - name: cloudinitdisk
+    cloudInitNoCloud:
+    #cloudInitConfigDrive:
+      userData: |
+        #junos-config
+        system {
+          host-name vsrx1;
+          root-authentication {
+              encrypted-password "$1$d427HGT5$uKCbdETPZx3vVVrfLV5DG/"; 
+          }
+          login {
+              user admin {
+                  uid 2000;
+                  class super-user;
+                  authentication {
+                      encrypted-password "$1$G./g.S71$Liwx293.2P/NWHwY8M8Gy/";
+                  }
+              }
+          }
+          management-instance;
+        }
+        interfaces {
+            fxp0 {
+                unit 0 {
+                    family inet {
+                        dhcp;
+                    }
+                }
+            }
+        }
+
+   

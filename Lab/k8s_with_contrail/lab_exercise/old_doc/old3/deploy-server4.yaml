@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver4
+  namespace: ns-user4
+  labels:
+    app: webserver4
+    do: policy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver4
+  template:
+    metadata:
+      name: webserver4
+      labels:
+        app: webserver4
+    spec:
+      containers: 
+      - name: webserver4
+        image: contrailk8sdayone/contrail-webserver 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dbserver4 
+  namespace: ns-user4
+  labels:
+    app: dbserver4
+    do: policy
+spec:
+  containers: 
+    - name: dbserver4
+      image: contrailk8sdayone/contrail-webserver 
+      securityContext:
+        privileged: true
+      ports: 
+      - containerPort: 80

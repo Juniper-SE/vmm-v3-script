@@ -1,0 +1,9 @@
+alarmtemplate_id: null
+allow_mist: true
+created_time: 1749026562
+device_auth_type: local
+id: 1f575d66-fdd9-4ace-8f3b-d0e4cdc3905e
+modified_time: 1749026562
+msp_id: null
+name: vmm1
+session_expiry: 1440

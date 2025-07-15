@@ -1,0 +1,306 @@
+---
+- name: Updating system
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: apt -y upgrade
+    apt:
+      update_cache: true
+      upgrade: dist
+      cache_valid_time: 3600
+      force_apt_get: true
+- name: configure k8s nodes
+  hosts:
+    - node1
+    - node2
+    - node3
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install python3-pip
+    apt:
+      name: 
+        - python3-pip
+      state: latest
+  - name: edit ssh configuration
+    shell: | 
+      sed -i -e 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+      systemctl restart sshd
+      # sudo ln -s /usr/bin/pip3 /usr/bin/pip
+  - name: create file 
+    copy:
+      dest: /tmp/create_part.sh
+      content: |
+        #!/bin/bash
+        # sudo systemctl stop sshd
+        # sudo rm /etc/ssh/ssh_host*
+        # sudo ssh-keygen -q -f /etc/ssh/ssh_host_key -N '' -t rsa1
+        # sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
+        # sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa
+        # sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa -b 521
+        # sudo systemctl restart sshd
+        sudo mkdir /var/lib/docker
+        sudo mkdir /mnt/longhorn
+        echo "n
+
+
+        +64G
+        n
+
+
+        +40G
+        w
+        q
+        " | sudo fdisk /dev/sda
+
+        cat << EOF | sudo tee /etc/hosts
+        127.0.0.1 localhost
+        172.16.11.200 deployer
+        172.16.11.111 node1
+        172.16.11.112 node2
+        172.16.11.113 node3
+
+        # The following lines are desirable for IPv6 capable hosts
+        ::1 ip6-localhost ip6-loopback
+        fe00::0 ip6-localnet
+        ff00::0 ip6-mcastprefix
+        ff02::1 ip6-allnodes
+        ff02::2 ip6-allrouters
+        ff02::3 ip6-allhosts
+        EOF
+        
+        sudo mkfs.ext4 /dev/sda2
+        sleep 1
+        sudo mkfs.ext4 /dev/sda3
+        sleep 1
+        
+
+  - name: Change mode /tmp/create_part.sh
+    ansible.builtin.file:
+      path: /tmp/create_part.sh
+      mode: '0700'
+  - name: run script /tmp/create_part.sh
+    shell: | 
+      /tmp/create_part.sh
+      # rm /tmp/create_part.sh
+- name: installing software
+  hosts:
+    - radius
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install freeradius and postgresql
+    apt:
+      name: 
+        - freeradius
+        - postgresql
+        - freeradius-postgresql
+      state: latest
+- name: installing software
+  hosts:
+    - svr1
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install iperf
+    apt:
+      name: 
+        - iperf 
+        - iperf3 
+      state: latest
+  # - name: create configuration clients.conf
+  #   copy:
+  #     dest: "/etc/freeradius/3.0/clients.conf"
+  #     content: |
+  #       client localhost {
+  #         ipaddr = 127.0.0.1
+  #         proto = *
+  #         secret = testing123
+  #         require_message_authenticator = no
+  #         nas_type	 = other	# localhost isn't usually a NAS...
+  #         limit {
+  #           max_connections = 16
+  #           lifetime = 0
+  #           idle_timeout = 30
+  #         }
+  #       }
+  #
+  #       # IPv6 Client
+  #       client localhost_ipv6 {
+  #         ipv6addr	= ::1
+  #         secret		= testing123
+  #       }
+
+  #       client bng1 {
+  #         ipaddr = 172.16.12.1
+  #         secret = pass01
+  #       }
+  #       client bng2 {
+  #         ipaddr = 172.16.12.2
+  #         secret = pass01
+  #       }
+  #       client node1 {
+  #         ipaddr = 172.16.11.111
+  #         secret = pass01
+  #       }
+  #       client node2 {
+  #         ipaddr = 172.16.11.112
+  #         secret = pass01
+  #       }
+  #       client cups2 {
+  #         ipaddr = 172.16.1.1
+  #         secret = pass01
+  #       }
+  # - name: create configuration authorize.1
+  #   copy:
+  #     dest: "/etc/freeradius/3.0/mods-config/files/authorize.1"
+  #     content: |
+  #       DEFAULT  Reply-Message := 'User default'
+  #               ERX-virtual-Router-Name := 'isp2',
+  #               Fall-Through = Yes
+  #       cpe1  Cleartext-Password := 'pass01'
+  #               ERX-virtual-Router-Name := 'isp1'
+  #       cpe2  Cleartext-Password := 'pass01'
+  #               ERX-virtual-Router-Name := 'isp2'
+  #       cpe3  Cleartext-Password := 'pass03'
+  #               ERX-virtual-Router-Name := 'isp3'
+  #       cpe4  Cleartext-Password := 'pass04'
+  #               ERX-virtual-Router-Name := 'isp1'
+  #       cpe5  Cleartext-Password := 'pass05'
+  #               ERX-virtual-Router-Name := 'isp2'
+  #       cpe6  Cleartext-Password := 'pass06'
+  #               ERX-virtual-Router-Name := 'isp3'
+  #       cpe7  Cleartext-Password := 'pass07'
+  #               ERX-virtual-Router-Name := 'isp1'
+  #       cpe8  Cleartext-Password := 'pass08'
+  #               ERX-virtual-Router-Name := 'isp2'
+  #       cpe9  Cleartext-Password := 'pass09'
+  #               ERX-virtual-Router-Name := 'isp3'
+  # - name: create configuration authorize
+  #   copy:
+  #     dest: "/etc/freeradius/3.0/mods-config/files/authorize"
+  #     content: |
+  #       DEFAULT Simultaneous-Use := 1
+  #           ERX-Ingress-Policy-Name := 'lowest',
+  #           ERX-Egress-Policy-Name := 'lowest',
+  #           ERX-IPv6-Ingress-Policy-Name := 'lowestv6',
+  #           ERX-IPv6-Egress-Policy-Name := 'lowestv6',
+  #           Fall-Through = 1
+
+  #       cpe1  Cleartext-Password := 'pass01', Simultaneous-Use := 1
+  #           ERX-Ingress-Policy-Name := 'police-5M',
+  #           ERX-Egress-Policy-Name := 'police-5M',
+  #           ERX-IPv6-Ingress-Policy-Name := 'police-5Mv6',
+  #           ERX-IPv6-Egress-Policy-Name := 'police-5Mv6'
+  #       cpe2  Cleartext-Password := 'pass01'
+  #           ERX-Ingress-Policy-Name := 'police-1M',
+  #           ERX-Egress-Policy-Name := 'police-1M',
+  #           ERX-IPv6-Ingress-Policy-Name := 'police-1Mv6',
+  #           ERX-IPv6-Egress-Policy-Name := 'police-1Mv6'
+  #       cpe3  Cleartext-Password := 'pass01'
+  #           ERX-Ingress-Policy-Name := 'lowest',
+  #           ERX-Egress-Policy-Name := 'lowest',
+  #           ERX-IPv6-Ingress-Policy-Name := 'lowestv6',
+  #           ERX-IPv6-Egress-Policy-Name := 'lowestv6'
+  #       cpe4  Cleartext-Password := 'pass01'
+  #           ERX-Ingress-Policy-Name := 'super',
+  #           ERX-Egress-Policy-Name := 'super',
+  #           ERX-IPv6-Ingress-Policy-Name := 'superv6',
+  #           ERX-IPv6-Egress-Policy-Name := 'superv6'
+  # - name: restart freeradius
+  #   ansible.builtin.service:
+  #     name: freeradius
+  #     state: restarted
+  #     enabled: true
+# - name: installing frr
+#   hosts:
+#     - gw
+#   become: yes
+#   become_method: sudo
+#   tasks:
+#   - name: install frr
+#     apt:
+#       name: 
+#         - frr
+#       state: latest
+#   - name: create network configuration
+#     copy:
+#       dest: "/etc/netplan/03-net.yaml"
+#       content: |
+#         network:
+#           ethernets:
+#             eth3:
+#               dhcp4: false
+#             lo:
+#               addresses: [ 127.0.0.1/32, 0::1/128, 172.16.255.255/32,  2001:1010:dead:beef:ffff:ffff:ffff:1/128]
+#           vlans:
+#             vlan1:
+#               link: eth3
+#               id: 1
+#               addresses: [ 172.16.16.0/31, 2001:1010:dead:beef::1:0/127]
+#             vlan2:
+#               link: eth3
+#               id: 2
+#               addresses: [ 172.16.16.2/31, 2001:1010:dead:beef::1:2/127]
+#             vlan3:
+#               link: eth3
+#               id: 3
+#               addresses: [ 172.16.16.4/31, 2001:1010:dead:beef::1:4/127]
+#   - name: edit frr daemons configuration
+#     shell: | 
+#       sed -i -e 's/bgpd=no/bgpd=yes/' /etc/frr/daemons
+#       netplan apply
+#   - name: create frr configuration
+#     copy:
+#       dest: "/etc/frr/frr.conf"
+#       content: |
+#         frr defaults traditional
+#         hostname gw
+#         log syslog informational
+#         service integrated-vtysh-config
+#         !
+#         router bgp 65200
+#         neighbor 172.16.11.110 remote-as 65201
+#         neighbor 172.16.11.111 remote-as 65201
+#         neighbor 172.16.11.112 remote-as 65201
+#         neighbor 172.16.16.1 remote-as 64512
+#         neighbor 172.16.16.3 remote-as 64512
+#         neighbor 172.16.16.5 remote-as 64512
+#         neighbor 2001:1010:dead:beef::1:1 remote-as 64512
+#         neighbor 2001:1010:dead:beef::1:3 remote-as 64512
+#         neighbor 2001:1010:dead:beef::1:5 remote-as 64512
+#         !
+#         address-family ipv4 unicast
+#           network 0.0.0.0/0
+#         exit-address-family
+#         !
+#         address-family ipv6 unicast
+#           network ::/0
+#           neighbor 2001:1010:dead:beef::1:1 activate
+#           neighbor 2001:1010:dead:beef::1:3 activate
+#           neighbor 2001:1010:dead:beef::1:5 activate
+#         exit-address-family
+#         !
+#         line vty
+#         !
+#   - name: restart frr
+#     ansible.builtin.service:
+#       name: frr
+#       state: restarted
+#       enabled: true
+- name: rebooting host
+  hosts:
+  - non_gw
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: reboot node
+    ansible.builtin.reboot:
+

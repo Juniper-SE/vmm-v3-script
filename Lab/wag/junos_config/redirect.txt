@@ -1,0 +1,44 @@
+dynamic-profiles {
+    variables {
+        set url 
+    }
+    dhcp2 {
+        interfaces {
+            demux0 {
+                unit "$junos-interface-unit" {
+                    family inet {
+                        filter {
+                            input filter1v4;
+                        }
+                        service {
+                            input {
+                                service-set ss1 service-filter redir1;
+                            }
+                        }
+                    }
+                    family inet6 {
+                        filter {
+                            input filter1v6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    services {
+        captive-portal-content-delivery {
+            rule r1 {
+                match-direction input;
+                term 1 {
+                    then {
+                        redirect $url;
+                    }
+                }
+            }
+            profile p1 {
+                cpcd-rules r1;
+            }
+        }
+    }
+
+}

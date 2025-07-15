@@ -1,0 +1,68 @@
+---
+- name: Updating system
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: apt -y upgrade
+    apt:
+      update_cache: true
+      upgrade: dist
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: install application
+    when: inventory_hostname in groups['k8s']
+    apt:
+      pkg: 
+        - linux-image-5.4.0-135-generic
+        - nfs-common
+      state: present
+  - name: edit /etc/default/grub 
+    when: inventory_hostname in groups['k8s']
+    ansible.builtin.lineinfile:
+      path: /etc/default/grub
+      regexp: '^GRUB_DEFAULT=0'
+      line: 'GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.4.0-135-generic"'
+  - name: update grub
+    when: inventory_hostname in groups['k8s']
+    shell: | 
+      /usr/sbin/update-grub
+  - name: install nfs server
+    when: inventory_hostname in 'node4'
+    apt:
+      name: nfs-kernel-server
+      state: present
+  - name: create directory
+    when: inventory_hostname in 'node4'
+    file:
+      path: /media/nfsshare/webserver
+      mode: 0777
+      state: directory
+      owner: nobody
+      group: nogroup
+  - name: add into /etc/exports
+    when: inventory_hostname in 'node4'
+    blockinfile:
+      state: present
+      insertafter: EOF
+      dest: /etc/exports
+      marker: "#<!-- add services ANSIBLE MANAGED BLOCK -->"
+      content : |
+        /media/nfsshare *(rw,sync,no_subtree_check)
+        /media/nfsshare/webserver *(rw,sync,no_subtree_check)
+  - name: install python3-pip and qemu-utils
+    when: inventory_hostname in 'registry'
+    apt:
+      pkg:
+      - python3-pip
+      - qemu-utils
+      state: present
+  - name: reboot node
+    ansible.builtin.reboot:
+

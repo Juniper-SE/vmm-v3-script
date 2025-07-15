@@ -1,0 +1,1 @@
+kubectl create secret docker-registry contrail-registry --docker-server=hub.juniper.net/contrail --docker-username=${HUB_USER} --docker-password=${HUB_PASSWD} --docker-email=irzan@juniper.net -n kube-system

@@ -1,0 +1,244 @@
+---
+name: ssr
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  #jumpserver: ttqc-shell001.juniper.net
+  user: irzan
+  adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  desktop: images/desktop.qcow2
+  ssr: images/ssr.qcow2
+  vjunos_router: images/vJunos-router-23.4R1.10.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24
+        dhcp_range: 172.16.10.100-172.16.10.220
+      em2: 
+        bridge: isp1
+        mtu: 9000
+        family:
+          inet: 172.16.11.1/24
+          # static:
+          # - to: 172.17.0.0/16
+          #   via: 172.16.11.10
+        dhcp_range: 172.16.11.10-172.16.11.20
+      em3: 
+        bridge: isp2
+        mtu: 9000
+        family:
+          inet: 172.16.12.1/24
+          static:
+          - to: 172.18.0.0/16
+            via: 172.16.12.10
+        dhcp_range: 172.16.12.10-172.16.12.20
+      em4: 
+        bridge: control
+        family:
+          inet: 172.16.13.1/24
+      em5: 
+        bridge: extsvr
+        family:
+          inet: 172.16.14.1/24
+      em6: 
+        bridge: sp1_dc
+        mtu: 9000
+        family:
+          inet: 172.17.100.1/24
+  conductor:
+    type: ssrc
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.13.10/24
+          gateway4: 172.16.13.1
+  isp1:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: isp1
+        mtu: 9000
+        family:
+          inet: 172.16.11.10/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: sp1_r1
+        mtu: 9000
+        family:
+          inet: 172.17.1.1/24
+      em2: 
+        bridge: sp1_r2
+        mtu: 9000
+        family:
+          inet: 172.17.2.1/24
+      em3: 
+        bridge: sp1_r3
+        mtu: 9000
+        family:
+          inet: 172.17.3.1/24
+  isp2:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: isp2
+        mtu: 9000
+        family:
+          inet: 172.16.12.10/24
+          gateway4: 172.16.12.1
+      em1: 
+        bridge: sp2_r1
+        mtu: 9000
+        family:
+          inet: 172.18.1.1/24
+      em2: 
+        bridge: sp2_r2
+        mtu: 9000
+        family:
+          inet: 172.18.2.1/24
+      em3: 
+        bridge: sp2_r3
+        mtu: 9000
+        family:
+          inet: 172.18.3.1/24
+      em4: 
+        bridge: sp2_dc
+        mtu: 9000
+        family:
+          inet: 172.18.100.1/24
+  r1:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: mgmt
+      em1: 
+        bridge: sp1_r1
+      em2: 
+        bridge: sp2_r1
+      em3: 
+        bridge: r1lan
+  r2:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: mgmt
+      em1: 
+        bridge: sp1_r2
+      em2: 
+        bridge: sp2_r2
+      em3: 
+        bridge: r2lan
+  r3:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: mgmt
+      em1: 
+        bridge: sp1_r3 
+      em2: 
+        bridge: sp2_r3
+      em3: 
+        bridge: r3lan
+  dc:
+    type: ssrr
+    os: ssr
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: mgmt
+      em1: 
+        bridge: sp1_dc 
+      em2: 
+        bridge: sp2_dc
+      em3: 
+        bridge: dclan0
+      em4: 
+        bridge: dclan1
+      em5: 
+        bridge: to_dcr
+  DCrouter:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.110/24
+          gateway4: 172.16.10.1
+      ge-0/0/0: 
+        bridge: to_dcr
+        family:
+          inet: 172.16.15.0/31
+      ge-0/0/1: 
+        bridge: dcrlan
+        mtu: 9000
+  lxc1:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0:
+        bridge: mgmt
+        family:
+          inet: 172.16.10.111/24
+          gateway4: 172.16.10.1
+      em1:
+        bridge: r1lan
+        mtu: 9000
+      em2:
+        bridge: r2lan
+        mtu: 9000
+      em3:
+        bridge: r3lan
+        mtu: 9000
+      em4:
+        bridge: dclan0
+        mtu: 9000
+      em5:
+        bridge: dclan1
+        mtu: 9000
+      em6:
+        bridge: extsvr
+        mtu: 9000
+      em7:
+        bridge: sp1_r1
+        mtu: 9000
+      em8:
+        bridge: sp1_r2
+        mtu: 9000
+      em9:
+        bridge: sp1_r3
+        mtu: 9000
+      em10:
+        bridge: dcrlan
+        mtu: 9000

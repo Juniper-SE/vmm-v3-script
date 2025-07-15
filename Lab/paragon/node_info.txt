@@ -1,0 +1,92 @@
+the lab is installed on VMM, pod quicy 27, q-pod27-vmm
+
+gw:
+  - ip address: 10.53.111.221
+  - user/password: ubuntu/pass01
+  - jumphost into the lab
+
+paragon node
+  node1:
+    ip address: 172.16.11.2
+  node2: 
+    ip address: 172.16.11.3
+  node3:
+    ip address: 172.16.11.3
+  control:
+    ip address: 172.16.12.11 
+    ansible node to install paragon
+
+  username/password: ubuntu/pass01
+
+router/VMX:
+  PE1: 
+    fxp0: 172.16.10.1
+    lo0: 10.100.1.1
+  PE2: 
+    fxp0: 172.16.10.2
+    lo0: 10.100.1.2
+  PE3: 
+    fxp0: 172.16.10.3
+    lo0: 10.100.1.3
+  PE4: 
+    fxp0: 172.16.10.4
+    lo0: 10.100.1.4
+  P1: 
+    fxp0: 172.16.10.11
+    lo0: 10.100.1.11
+  P2: 
+    fxp0: 172.16.10.12
+    lo0: 10.100.1.12
+  P3: 
+    fxp0: 172.16.10.13
+    lo0: 10.100.1.13
+  P4: 
+    fxp0: 172.16.10.14
+    lo0: 10.100.1.14
+  P5: 
+    fxp0: 172.16.10.15
+    lo0: 10.100.1.15
+  
+  username/password: admin/pass01
+  ip address of loopback are reachable from paragon node.
+
+bridge node:
+  br1: 172.16.10.101
+  br2: 172.16.10.102
+  br3: 172.16.10.103
+
+  username/password: alpine/pass01
+
+  node br1 is hosting the following bridges
+  - pe1p2
+  - pe2p1
+  - pe1p1
+  - pe2p2
+  - p1p2 
+  node br2 is hosting the following bridges
+  - p3p5
+  - p1p3a
+  - p2p5
+  - p1p3b
+  - p1p5
+  - p4p5
+  node br3 is hosting the following bridges
+  - pe4p3
+  - pe3p3
+  - pe4p4
+  - p3p4
+  - pe3p4
+
+  for example to bring down both links between P1 and P3, it can be done by bring down bridge p1p3a and p1p3b.
+  on node br2, just the the following
+    sudo ip link set dev p1p3a down
+    sudo ip link set dev p1p3b down
+  to bring up the link 
+    sudo ip ink set dev p1p3a up
+    sudo ip link set dev p1p3b up
+
+VIP to access paragon dashboard : 172.16.255.1
+username/password: admin/^J4k4rt4#170845$
+
+to access the dashboard, just ssh forwarding to 172.16.255.1 port 443 to node gw
+

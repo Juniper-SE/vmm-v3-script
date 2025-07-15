@@ -1,0 +1,380 @@
+---
+name: bng
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  # if your account can access vmm server directly, then you can comment out the following line
+  #jumpserver: ttqc-shell002.juniper.net
+  user: irzan
+  #adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu24.04.qcow2
+  ubuntu2: images/ubuntu22.04.qcow2
+  desktop: images/desktop.qcow2
+  #vmx: images/vmx/junos-vmx-x86-64-23.1R1.8.vmdk
+  #vmx_re: images/vmx/junos-vmx-x86-64-21.4R3.15.vmdk
+  vjunos_router: images/vJunos-router-24.2R1-S2.5.qcow2
+  vjunos_switch: images/vJunos-switch-24.4R1.9.qcow2
+  #vmx: images/junos-vmx-x86-64-23.2R2.21.vmdk
+  #bridge: images/alpine.qcow2
+  wrt: images/openwrt.img
+junos_login:
+  login: admin
+  password: pass01
+wg:
+  gw_ip: 192.168.199.0/31;fc00:dead:beef:ffcc::1000:0/127
+  ws_ip: 192.168.199.1/31;fc00:dead:beef:ffcc::1000:1/127
+  prefix_allowed:
+  # - 172.16.10.0/24
+  # - 172.16.11.0/24 
+  # - 172.16.12.0/24 
+  # - 172.16.13.0/24 
+  - 172.16.15.0/24 
+  - 172.16.11.0/24
+  - 172.16.12.0/24
+  - fc00:dead:beef::/48
+fabric:
+  #subnet: 172.16.15.0/24
+  #subnet6: fc00:dead:beef:ffff::/64
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+    - [ 0x0, acs1, ge-0/0/0, acs, ge-0/0/0 ]
+    - [ 0x16, acs, ge-0/0/1, p1, ge-0/0/0 ]
+    - [ 0x16, p1, ge-0/0/1, bng1, ge-0/0/1 ]
+    - [ 0x16, p1, ge-0/0/2, bng2, ge-0/0/1 ]
+    - [ 0x16, bng1, ge-0/0/2, p2, ge-0/0/1 ]
+    - [ 0x16, bng2, ge-0/0/2, p2, ge-0/0/2 ]
+    - [ 0x16, p2, ge-0/0/0, pe1, ge-0/0/0 ]
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.1/24
+        dhcp_range: 172.16.11.100-172.16.11.254
+      em2:
+        bridge: net1
+        family:
+          inet: 172.16.12.254/24
+          inet6: fc00:dead:beef:fe12::ffff/64
+          # static:
+          #   - to: 172.16.255.1/32
+          #     via: 172.16.12.1
+          #   - to: 172.16.255.2/32
+          #     via: 172.16.12.2
+      em3:
+        bridge: net3
+      em4:
+        bridge: mgmt
+        family:
+          inet: 172.16.14.1/24
+        dhcp_range: 172.16.14.10-172.16.14.30
+      em5:
+        bridge: net5
+        family:
+          inet: 172.16.15.1/24
+          inet6: fc00:dead:beef:fe15::1/64
+  deployer:
+    type: pcsmall
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.200/24
+          gateway4: 172.16.11.1
+  radius:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.201/24
+          gateway4: 172.16.11.1
+  node0:
+    type: pchpv1
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.110/24
+          gateway4: 172.16.11.1
+  node1:
+    type: pchpv1
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.111/24
+          gateway4: 172.16.11.1
+  node2:
+    type: pchpv1
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.112/24
+          gateway4: 172.16.11.1
+  node3:
+    type: pchpv1
+    os: ubuntu2
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.113/24
+          gateway4: 172.16.11.1
+  svr1:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpnet
+        family:
+          inet: 172.16.11.114/24
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: net5
+        family:
+          inet: 172.16.15.2/24
+          inet6: fc00:dead:beef:fe15::5/64
+          gateway4: 172.16.15.1
+          gateway6: fc00:dead:beef:fe15::1
+  bng1:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    srv6-locator: fc00:dead:beef:ff01::/64
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.14.11/24
+      lo0:
+        family:
+          inet: 172.16.255.1/32
+          iso: 49.0001.1720.1625.5001.00
+          inet6: fc00:dead:beef:ffff::ffff:1/128
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: net1
+        family:
+          inet: 172.16.12.1/24
+          inet6: fc00:dead:beef:fe12::1/64
+      ge-0/0/3:
+        bridge: acs1bng1
+      ge-0/0/4:
+        bridge: net3
+  bng2:
+    type: vjunos_router
+    os: vjunos_router
+    srv6-locator: fc00:dead:beef:ff02::/64
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.14.12/24
+      lo0:
+        family:
+          inet: 172.16.255.2/32
+          inet6: fc00:dead:beef:ffff::ffff:2/128
+          iso: 49.0001.1720.1625.5002.00
+        protocol:
+          isis: passive
+      ge-0/0/0:
+        bridge: net1
+        family:
+          inet: 172.16.12.2/24
+          inet6: fc00:dead:beef:fe12::2/64
+      ge-0/0/3:
+        bridge: acs1bng2
+      ge-0/0/4:
+        bridge: net3
+  acs:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    srv6-locator: fc00:dead:beef:ff03::/64
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.14.13/24
+      lo0:
+        family:
+          inet: 172.16.255.3/32
+          iso: 49.0001.1720.1625.5003.00
+          inet6: fc00:dead:beef:ffff::ffff:3/128
+        protocol:
+          isis: passive
+  p1:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    srv6-locator: fc00:dead:beef:ff11::/64
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.14.14/24
+      lo0:
+        family:
+          inet: 172.16.255.4/32
+          iso: 49.0001.1720.1625.5004.00
+          inet6: fc00:dead:beef:ffff::ffff:4/128
+        protocol:
+          isis: passive
+  p2:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    srv6-locator: fc00:dead:beef:ff12::/64
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.14.15/24
+      lo0:
+        family:
+          inet: 172.16.255.5/32
+          iso: 49.0001.1720.1625.5005.00
+          inet6: fc00:dead:beef:ffff::ffff:5/128
+        protocol:
+          isis: passive
+  pe1:
+    type: vjunos_router
+    os: vjunos_router
+    ztp: yes
+    srv6-locator: fc00:dead:beef:ff20::/64
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.14.16/24
+      lo0:
+        family:
+          inet: 172.16.255.6/32
+          iso: 49.0001.1720.1625.5006.00
+          inet6: fc00:dead:beef:ffff::ffff:6/128
+        protocol:
+          isis: passive
+      ge-0/0/1:
+        bridge: net3
+  acs1:
+    type: vjunos_switch
+    os: vjunos_switch
+    ztp: yes
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.14.17/24
+      ge-0/0/1:
+        bridge: cpe1
+      ge-0/0/2:
+        bridge: cpe2
+      ge-0/0/3:
+        bridge: cpe3
+      ge-0/0/4:
+        bridge: cpe4
+      ge-0/0/5:
+        bridge: acs1bng1
+      ge-0/0/6:
+        bridge: acs1bng2
+  client1:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe1c
+  client2:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe2c
+  client3:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe3c
+  client4:
+    type: pcsmall
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: cpe4c
+  cpe1:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe1c
+      em1:
+        bridge: cpe1
+  cpe2:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe2c
+      em1:
+        bridge: cpe2
+  cpe3:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe3c
+      em1:
+        bridge: cpe3
+  cpe4:
+    type: cpe
+    os: wrt
+    interfaces:
+      em0: 
+        bridge: cpe4c
+      em1:
+        bridge: cpe4
+  
+  

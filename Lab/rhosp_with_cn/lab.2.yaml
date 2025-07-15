@@ -1,0 +1,318 @@
+---
+name: rhcn
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  jumpserver: ttqc-shell002.juniper.net
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  # vmmserver: q-pod08-vmm.englab.juniper.net
+  # the following entry can be commented out if your account can access vmm without using jump host
+  # jumpserver: ttqc-shell001.juniper.net
+  user: irzan
+  unixpassword:  NotUsedAnymore
+  adpassword:  MyBook
+  vmmpassword: AnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  rhel: images/rh84.qcow2
+  desktop: images/desktop.qcow2
+  vmx: images/vmx/junos-vmx-x86-64-23.1R1.8.vmdk
+  vjunos_ex: images/vjunos-switch-23.1R1.8.qcow2
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        # for external connectivity
+        bridge: lan1
+        family:
+          inet: 172.16.11.1/24
+        dhcp_range: 172.16.11.5-172.16.11.25
+      em2: 
+        # for provisioning
+        bridge: lan2
+        family:
+          inet: 172.16.12.1/24
+      em3: 
+        # for API
+        bridge: lan3
+        family:
+          inet: 172.16.13.1/24
+      em4: 
+        # for Contrail Networking
+        bridge: lan4
+        mtu: 9000
+        family:
+          inet: 172.16.14.1/24
+      em5: 
+        bridge: lan5
+        family:
+          inet: 172.16.15.1/24
+        dhcp_range: 172.16.15.10-172.16.15.100
+      em6:
+        bridge: wan1
+        mtu: 9000
+        family:
+          inet: 172.16.26.0/31
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.26.1
+  director:
+    type: pcmedium
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1 
+        family:
+          inet: 172.16.11.9/24 
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: lan2
+  os:
+    type: pchpv1
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.10/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        family:
+          inet: 172.16.12.10/24 
+      em2:
+        bridge: lan3
+        family:
+          inet: 172.16.13.10/24  
+  cc:
+    type: pchpv1
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.11/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        family:
+          inet: 172.16.12.11/24 
+      em2:
+        bridge: lan3
+        family:
+          inet: 172.16.13.11/24
+      em3:
+        bridge: lan4
+        mtu: 9000
+        family: 
+          inet: 172.16.14.11/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.14.1 
+  cadb:
+    type: pchpv2
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.12/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        family:
+          inet: 172.16.12.12/24 
+      em2:
+        bridge: lan3
+        family:
+          inet: 172.16.13.12/24
+      em3:
+        bridge: lan4
+        mtu: 9000
+        family: 
+          inet: 172.16.14.12/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.14.1 
+  can:
+    type: pchpv2
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.13/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        family:
+          inet: 172.16.12.13/24 
+      em2:
+        bridge: lan3
+        family:
+          inet: 172.16.13.13/24
+      em3:
+        bridge: lan4
+        mtu: 9000
+        family: 
+          inet: 172.16.14.13/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.14.1 
+  compute1:
+    type: pchpv1
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.21/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        family:
+          inet: 172.16.12.21/24 
+      em2:
+        bridge: lan3
+        family:
+          inet: 172.16.13.21/24
+      em3:
+        bridge: lan4
+        mtu: 9000
+        family: 
+          inet: 172.16.14.21/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.14.1  
+  compute2:
+    type: pchpv1
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.22/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        family:
+          inet: 172.16.12.22/24 
+      em2:
+        bridge: lan3
+        family:
+          inet: 172.16.13.22/24
+      em3:
+        bridge: lan4
+        mtu: 9000
+        family: 
+          inet: 172.16.14.22/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.14.1 
+  compute3:
+    type: pchpv1
+    os: rhel
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.23/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        family:
+          inet: 172.16.12.23/24 
+      em2:
+        bridge: lan3
+        family:
+          inet: 172.16.13.23/24
+      em3:
+        bridge: lan4
+        mtu: 9000
+        family: 
+          inet: 172.16.14.23/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.14.1  
+  sdngw:
+    type: mx240
+    os: vmx
+    interfaces:
+      mgmt:
+        bridge: lan1
+        family:
+          inet: 172.16.11.31/24 
+      lo0:
+        family:
+          inet: 172.16.255.1/32
+      ge-0/0/0: 
+        bridge: wan1
+        mtu: 9000
+        family:
+          inet: 172.16.26.1/31
+          static:
+          - to: 172.16.14.0/24
+            via: 172.16.26.0
+      ge-0/0/1:
+        bridge: lan5
+        family:
+          inet: 172.16.15.2/24
+      ge-0/0/2: 
+        bridge: ptp1
+  sw1:
+    type: vjunos_ex
+    os: vjunos_ex
+    interfaces:
+      mgmt: 
+        bridge: lan1
+        family:
+          inet: 172.16.11.32/24 
+      ge-0/0/0: 
+        bridge: ptp1
+      ge-0/0/1: 
+        bridge: sw1p1
+      ge-0/0/2: 
+        bridge: sw1p2
+  ext1:
+    type: pcsmall
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan5
+        family:
+          inet: 172.16.15.11/24
+          gateway: 172.16.15.1
+  ext2:
+    type: pcsmall
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: sw1p1
+  ext3:
+    type: pcsmall
+    os: ubuntu
+    interfaces:
+      em0: 
+        bridge: sw1p2

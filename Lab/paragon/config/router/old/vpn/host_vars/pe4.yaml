@@ -1,0 +1,34 @@
+interface: et-0/0/0
+# vlan_id: 101
+unit_id: 1101
+vlan_id: 1101
+vlan_id_list: 1001-1003
+vlan_id_ri: 101
+ipv4_address: 192.168.104.1/24
+ipv6_address: fc00:dead:beef:a104::1/64
+# ipv6_address: fc00:dead:beef:a101::1/64
+# vrf_name: VRF1
+vrf_name: EVPN3
+local_id: 1
+remote_id: 2
+# vrf_target: target:4200000512L:1001
+vrf_target: target:4200000512L:2104
+vrf_target_L3: target:4200000512L:3001
+vlan_name: bd1
+start_label: 1000
+index_range: 9000
+node_index_v4: 404
+intf:
+- [lo0, fc00:a110:4:ffff:4::4/128]
+- [et-0/0/3,	fc00:a110:ffff:1::12/127,fc00:a110:a3:4:113:0:0:0]
+- [et-0/0/2,	fc00:a110:ffff:1::14/127,fc00:a110:a3:4:112:0:0:0]
+ipv6_router_id: fc00:a110:4:ffff:4::4
+srv6_locator: fc00:a110:a3:4::/64
+srv6_end_sid: fc00:a110:a3:4:11:0::0
+disable_ri_list:
+- EVPN1
+- EVPN2
+- EVPN3
+- L3-EVPN2
+vpws_name: VPWS1
+

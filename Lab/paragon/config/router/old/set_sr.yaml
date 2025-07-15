@@ -1,0 +1,5 @@
+set protocols isis source-packet-routing
+set protocols isis source-packet-routing srgb start-label 1000
+set protocols isis source-packet-routing srgb index-range 9000
+set protocols isis source-packet-routing node-segment ipv4-index 401
+set protocols isis source-packet-routing node-segment ipv6-index 601

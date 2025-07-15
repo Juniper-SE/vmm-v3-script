@@ -1,0 +1,69 @@
+pe11# show ipv6 route vrf customer1
+Codes: K - kernel route, C - connected, S - static, R - RIPng,
+       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+       v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+VRF customer1:
+K>* ::/0 [255/8192] unreachable (ICMP unreachable) (vrf default), 00:14:47
+C>* fc00:dead:beef:a011::/64 is directly connected, eth3.101, 00:14:45
+B>r fc00:dead:beef:a012::/64 [20/0] via ::ffff:c0a8:ff0c (vrf default) (recursive), label 81, weight 1, 00:04:18
+  r                                   via 10.100.1.1, eth1 (vrf default), label 19/81, weight 1, 00:04:18
+  r                                   via 10.100.1.3, eth2 (vrf default), label 20/81, weight 1, 00:04:18
+C>* fe80::/64 is directly connected, eth3.101, 00:14:45
+pe11# 
+
+
+2024-08-13 05:27:45.309 [DEBG] bgpd: [WMCA1-27995] RID change : vrf VRF default(0), RTR ID 192.168.255.11
+2024-08-13 05:27:45.370 [DEBG] bgpd: [G7K80-KF0HM] Tx route delete VRF 8 192.168.12.0/24
+2024-08-13 05:27:45.370 [DEBG] bgpd: [G7K80-KF0HM] Tx route delete VRF 8 fc00:dead:beef:a012::/64
+pe11# 
+pe11# 
+2024-08-13 05:27:48.428 [DEBG] bgpd: [K9G3A-CJ5QQ] u16:s16 announcing routes upon coalesce timer expiry(1100 ms)
+2024-08-13 05:27:48.428 [DEBG] bgpd: [K9G3A-CJ5QQ] u17:s17 announcing routes upon coalesce timer expiry(1100 ms)
+2024-08-13 05:27:48.428 [DEBG] bgpd: [JQB4F-DXP0F] subgroup_announce_check: BGP_PATH_ANNC_NH_SELF, family=IPv4
+2024-08-13 05:27:48.428 [DEBG] bgpd: [K9G3A-CJ5QQ] u18:s18 announcing routes upon coalesce timer expiry(1100 ms)
+2024-08-13 05:27:48.429 [DEBG] bgpd: [JQB4F-DXP0F] subgroup_announce_check: BGP_PATH_ANNC_NH_SELF, family=IPv6
+2024-08-13 05:27:48.430 [DEBG] bgpd: [PCFFM-WMARW] 192.168.255.12(pe12) rcvd UPDATE wlen 0 attrlen 0 alen 0
+2024-08-13 05:27:48.430 [DEBG] bgpd: [G3V0W-FSWRC] bgp_best_path_select_defer: processing route for IPv4 Unicast : cnt 0
+2024-08-13 05:27:48.430 [INFO] bgpd: [M59KS-A3ZXZ] bgp_update_receive: rcvd End-of-RIB for IPv4 Unicast from 192.168.255.12 in vrf default
+2024-08-13 05:27:48.430 [DEBG] bgpd: [T5AAP-5GA85] 192.168.255.12(pe12) rcvd UPDATE w/ attr: , origin ?, localpref 100, metric 0, extcommunity RT:65001:100, path 
+2024-08-13 05:27:48.430 [DEBG] bgpd: [PCFFM-WMARW] 192.168.255.12(pe12) rcvd UPDATE wlen 0 attrlen 69 alen 0
+2024-08-13 05:27:48.430 [DEBG] bgpd: [YCKEM-GB33T] 192.168.255.12(pe12) rcvd RD 65001:100 192.168.12.0/24 label 80 IPv4 vpn
+2024-08-13 05:27:48.430 [DEBG] bgpd: [T5AAP-5GA85] 192.168.255.12(pe12) rcvd UPDATE w/ attr: , origin ?, localpref 100, metric 0, extcommunity RT:65001:100, path 
+2024-08-13 05:27:48.430 [DEBG] bgpd: [PCFFM-WMARW] 192.168.255.12(pe12) rcvd UPDATE wlen 0 attrlen 86 alen 0
+2024-08-13 05:27:48.430 [DEBG] bgpd: [YCKEM-GB33T] 192.168.255.12(pe12) rcvd RD 65001:100 fc00:dead:beef:a012::/64 label 81 IPv6 vpn
+2024-08-13 05:27:48.430 [DEBG] bgpd: [PCFFM-WMARW] 192.168.255.12(pe12) rcvd UPDATE wlen 0 attrlen 6 alen 0
+2024-08-13 05:27:48.430 [DEBG] bgpd: [G3V0W-FSWRC] bgp_best_path_select_defer: processing route for IPv4 VPN : cnt 0
+2024-08-13 05:27:48.430 [INFO] bgpd: [M59KS-A3ZXZ] bgp_update_receive: rcvd End-of-RIB for IPv4 VPN from 192.168.255.12 in vrf default
+2024-08-13 05:27:48.430 [DEBG] bgpd: [PCFFM-WMARW] 192.168.255.12(pe12) rcvd UPDATE wlen 0 attrlen 6 alen 0
+2024-08-13 05:27:48.430 [DEBG] bgpd: [G3V0W-FSWRC] bgp_best_path_select_defer: processing route for IPv6 VPN : cnt 0
+2024-08-13 05:27:48.430 [INFO] bgpd: [M59KS-A3ZXZ] bgp_update_receive: rcvd End-of-RIB for IPv6 VPN from 192.168.255.12 in vrf default
+2024-08-13 05:27:48.430 [DEBG] bgpd: [TN0HX-6G1RR] u17:s17 send UPDATE w/ attr: nexthop 0.0.0.0, localpref 100, metric 0, extcommunity RT:65001:100, originator 192.168.255.11, path 
+2024-08-13 05:27:48.430 [DEBG] bgpd: [H06SA-0JAPR] u17:s17 send MP_REACH for afi/safi IPv4/vpn
+2024-08-13 05:27:48.430 [DEBG] bgpd: [HVRWP-5R9NQ] u17:s17 send UPDATE RD 65001:100 192.168.11.0/24 label 80 IPv4 vpn
+2024-08-13 05:27:48.430 [DEBG] bgpd: [WEV7K-2GAQ5] u17:s17 send UPDATE len 92 (max message len: 65535) numpfx 1
+2024-08-13 05:27:48.430 [DEBG] bgpd: [MBFVT-8GSC6] u17:s17 192.168.255.12 send UPDATE w/ nexthop 192.168.255.11 and RD
+2024-08-13 05:27:48.430 [DEBG] bgpd: [TN0HX-6G1RR] u18:s18 send UPDATE w/ attr: nexthop 0.0.0.0, origin ?, mp_nexthop ::, localpref 100, metric 0, extcommunity RT:65001:100, originator 192.168.255.11, path 
+2024-08-13 05:27:48.430 [DEBG] bgpd: [H06SA-0JAPR] u18:s18 send MP_REACH for afi/safi IPv6/vpn
+2024-08-13 05:27:48.430 [DEBG] bgpd: [HVRWP-5R9NQ] u18:s18 send UPDATE RD 65001:100 fc00:dead:beef:a011::/64 label 81 IPv6 vpn
+2024-08-13 05:27:48.430 [DEBG] bgpd: [WEV7K-2GAQ5] u18:s18 send UPDATE len 109 (max message len: 65535) numpfx 1
+2024-08-13 05:27:48.430 [DEBG] bgpd: [NNG4V-WFG7M] u18:s18 192.168.255.12 send UPDATE w/ mp_nexthop ::ffff:c0a8:ff0b and RD
+2024-08-13 05:27:48.480 [DEBG] bgpd: [K423X-ETGCQ] group_announce_route_walkcb: afi=IPv4, safi=vpn, p=192.168.12.0/24
+2024-08-13 05:27:48.480 [DEBG] bgpd: [T5JFA-13199] subgroup_process_announce_selected: p=192.168.12.0/24, selected=0x558bfa510670
+2024-08-13 05:27:48.480 [DEBG] bgpd: [K423X-ETGCQ] group_announce_route_walkcb: afi=IPv6, safi=vpn, p=fc00:dead:beef:a012::/64
+2024-08-13 05:27:48.480 [DEBG] bgpd: [T5JFA-13199] subgroup_process_announce_selected: p=fc00:dead:beef:a012::/64, selected=0x558bfa575850
+2024-08-13 05:27:48.480 [DEBG] bgpd: [X11WM-VBA5R] bgp_zebra_announce: p=192.168.12.0/24, bgp_is_valid_label: 2
+2024-08-13 05:27:48.480 [DEBG] bgpd: [V15FP-4CPVK] Tx route add VRF 8 192.168.12.0/24 metric 0 tag 0 count 1 nhg 0
+2024-08-13 05:27:48.480 [DEBG] bgpd: [JQXM8-V0CKB]   nhop [1]: 192.168.255.12 if 0 VRF 0 wt 0 label 80  
+2024-08-13 05:27:48.480 [DEBG] bgpd: [JMVGR-VQ1M1] bgp_zebra_announce: 192.168.12.0/24: announcing to zebra (recursion set)
+2024-08-13 05:27:48.480 [DEBG] bgpd: [X11WM-VBA5R] bgp_zebra_announce: p=fc00:dead:beef:a012::/64, bgp_is_valid_label: 2
+2024-08-13 05:27:48.480 [DEBG] bgpd: [V15FP-4CPVK] Tx route add VRF 8 fc00:dead:beef:a012::/64 metric 0 tag 0 count 1 nhg 0
+2024-08-13 05:27:48.480 [DEBG] bgpd: [JQXM8-V0CKB]   nhop [1]: ::ffff:c0a8:ff0c if 0 VRF 0 wt 0 label 81  
+2024-08-13 05:27:48.480 [DEBG] bgpd: [JMVGR-VQ1M1] bgp_zebra_announce: fc00:dead:beef:a012::/64: announcing to zebra (recursion set)
+2024-08-13 05:27:48.492 [ERR!] zebra: [HSYZM-HV7HF] Extended Error: IPv6 routes can not use an IPv4 nexthop
+2024-08-13 05:27:48.492 [ERR!] zebra: [WVJCK-PPMGD][EC 4043309093] netlink-dp (NS 0) error: Invalid argument, type=RTM_NEWROUTE(24), seq=128, pid=3883356732
+2024-08-13 05:27:48.492 [WARN] zebra: [VYKYC-709DP] customer1(8:100):fc00:dead:beef:a012::/64: Route install failed
+pe11#

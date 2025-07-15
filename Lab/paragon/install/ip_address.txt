@@ -1,0 +1,8 @@
+? List of NTP servers :
+? Virtual IP address(es) for ingress controller :
+? Virtual IP address for Infrastructure Nginx Ingress Controller :
+? Virtual IP address for Insights services :
+? Virtual IP address for SNMP Trap receiver (optional) : 
+? Virtual IP address for Pathfinder Netflowd :
+? Virtual IP address for Pathfinder PCE server :
+

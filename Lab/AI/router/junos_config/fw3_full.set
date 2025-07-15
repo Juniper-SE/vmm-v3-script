@@ -1,0 +1,108 @@
+set security nat source pool pool1 address 172.16.201.5/32
+set security nat source rule-set rs1 from zone trust
+set security nat source rule-set rs1 to zone untrust
+set security nat source rule-set rs1 rule r1 match source-address 0.0.0.0/0
+set security nat source rule-set rs1 rule r1 then source-nat pool pool1
+
+set security policies from-zone trust to-zone trust policy default-permit
+set security policies from-zone trust to-zone trust policy default-permit match source-address any
+set security policies from-zone trust to-zone trust policy default-permit match destination-address any
+set security policies from-zone trust to-zone trust policy default-permit match application any
+set security policies from-zone trust to-zone trust policy default-permit then permit
+set security policies from-zone trust to-zone untrust policy default-permit match source-address any
+set security policies from-zone trust to-zone untrust policy default-permit match destination-address any
+set security policies from-zone trust to-zone untrust policy default-permit match application any
+set security policies from-zone trust to-zone untrust policy default-permit then permit
+
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.1001 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.1001 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/1.1002 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.1002 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.1002 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.1002 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/1.1003 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/1.1003 host-inbound-traffic protocols bgp
+set security zones security-zone trust interfaces ge-0/0/2.1003 host-inbound-traffic system-services ping
+set security zones security-zone trust interfaces ge-0/0/2.1003 host-inbound-traffic protocols bgp
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ping
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic protocols bgp
+
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.16.6/24
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:ff16::6/64
+
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 1001  vlan-id 1001
+set interfaces ge-0/0/1 unit 1001 family inet address 10.1.101.45/31
+set interfaces ge-0/0/1 unit 1001 family inet6 address fc00:dead:beef:ff01::45/127
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 1001  vlan-id 1001
+set interfaces ge-0/0/2 unit 1001 family inet address 10.1.101.47/31
+set interfaces ge-0/0/2 unit 1001 family inet6 address fc00:dead:beef:ff01::47/127
+
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 1002  vlan-id 1002
+set interfaces ge-0/0/1 unit 1002 family inet address 10.1.101.49/31
+set interfaces ge-0/0/1 unit 1002 family inet6 address fc00:dead:beef:ff01::49/127
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 1002  vlan-id 1002
+set interfaces ge-0/0/2 unit 1002 family inet address 10.1.101.51/31
+set interfaces ge-0/0/2 unit 1002 family inet6 address fc00:dead:beef:ff01::51/127
+
+set interfaces ge-0/0/1 unit 1003  vlan-id 1003
+set interfaces ge-0/0/1 unit 1003 family inet address 10.1.101.53/31
+set interfaces ge-0/0/1 unit 1003 family inet6 address fc00:dead:beef:ff01::53/127
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 1003  vlan-id 1003
+set interfaces ge-0/0/2 unit 1003 family inet address 10.1.101.55/31
+set interfaces ge-0/0/2 unit 1003 family inet6 address fc00:dead:beef:ff01::55/127
+
+set policy-options policy-statement to_dc term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement to_dc term 1 then accept
+set policy-options policy-statement to_dc term 2 from route-filter ::/0 exact
+set policy-options policy-statement to_dc term 2 then accept
+set policy-options policy-statement to_dc term default then reject
+set policy-options policy-statement to_gw_v4 term 1 from protocol static
+set policy-options policy-statement to_gw_v4 term 1 from route-filter 172.16.201.0/24 orlonger
+set policy-options policy-statement to_gw_v4 term 1 then accept
+set policy-options policy-statement to_gw_v4 term default then reject
+set policy-options policy-statement to_gw_v6 term 1 from route-filter fc00:dead:beef:a201::/64 orlonger
+set policy-options policy-statement to_gw_v6 term 1 then accept
+set policy-options policy-statement to_gw_v6 term 2 from route-filter fc00:dead:beef:a202::/64 orlonger
+set policy-options policy-statement to_gw_v6 term 2 then accept
+set policy-options policy-statement to_gw_v6 term 3 from route-filter fc00:dead:beef:a203::/64 orlonger
+set policy-options policy-statement to_gw_v6 term 3 then accept
+set policy-options policy-statement to_gw_v6 term default then reject
+set protocols bgp group to_ext neighbor 172.16.16.254 export to_gw_v4
+set protocols bgp group to_ext neighbor 172.16.16.254 peer-as 4200009000
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff family inet6 any
+set protocols bgp group to_ext neighbor fc00:dead:beef:ff16::ffff peer-as 4200009000
+
+set protocols lldp interface all
+set routing-options autonomous-system 4200009003
+set routing-options static route 172.16.201.5/32 discard
+
+set protocols bgp group to_campus1 export to_dc neighbor 10.1.101.44 peer-as 4200004000
+set protocols bgp group to_campus1 export to_dc neighbor 10.1.101.46 peer-as 4200004000
+
+set protocols bgp group to_dc1 export to_dc neighbor 10.1.101.28 peer-as 4200001105
+set protocols bgp group to_dc1 export to_dc neighbor 10.1.101.30 peer-as 4200001106
+
+set protocols bgp group to_dc1 export to_dc neighbor 10.1.101.36 peer-as 4200001105
+set protocols bgp group to_dc1 export to_dc neighbor 10.1.101.38 peer-as 4200001106
+
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::0 peer-as 4200001105
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::0 family inet6 any
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::2 peer-as 4200001106
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::2 family inet6 any
+
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::28 peer-as 4200001105
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::28 family inet6 any
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::30 peer-as 4200001106
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::30 family inet6 any
+
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::36 peer-as 4200001105
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::36 family inet6 any
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::38 peer-as 4200001106
+set protocols bgp group to_dc1 export to_dc neighbor fc00:dead:beef:ff01::38 family inet6 any

@@ -1,0 +1,33 @@
+---
+- name: Upload config into router
+  hosts: 
+  - leaf1
+  - leaf2
+  - leaf3
+  - leaf4
+  roles:
+    - juniper.junos
+  vars:
+    username: admin
+    password: admin
+    config_filename: "evpn_vxlan/{{ inventory_hostname }}.conf"
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: upload config into router
+      juniper_junos_config:
+        host: "{{ ansible_host }}"
+        user: "{{ username }}"
+        password: "{{ password}}"
+        file: "{{ config_filename}}"
+        config_mode: "exclusive"
+        load: "merge"
+        format: "text"
+    # - name: upload config into router
+    #   juniper.device.config:
+    #     user: "{{ username }}"
+    #     passwd: "{{ password }}"
+    #     src: "conf/{{inventory_hostname}}.conf"
+    #     config_mode: "exclusive"
+    #     load: "merge"
+    #     format: "text"

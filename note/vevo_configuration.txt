@@ -1,0 +1,101 @@
+	VM "p4_RE0":
+		config.hostname "p4_node0":
+		config.cdrom "/vmm/data/user_disks/irzan/images/evo/junos-evo-install-ptx-fixed-x86-64-22.2R1.12-EVO.iso (boot)":
+		uuid "8e3ed676-feb7-11ec-bed8-c3096963a7c3";
+		IF "em0":
+			bridge "mgmt"
+			ext_vlanid 0
+		IF "em1":
+			bridge "p4_FPC1_PFE_BRG"
+			ext_vlanid 0
+		IF "em2":
+			bridge "p4_FPC1_RPIO_BRG"
+			ext_vlanid 0
+		IF "em3":
+			bridge "p4_FPC1_RPIO_BRG"
+			ext_vlanid 0
+		IF "em4":
+			bridge "mgmt"
+			ext_vlanid 0
+		install "/vmm/bin/configs/quincy/junos/vmx.base.systest.conf" at "/root/junos.base.conf"
+		install "/vmm/bin/configs/quincy/junos/evovptx.junos.base.conf" at "/root/junos.base.conf"
+		install "/vmm/data/vmm-configs/common/vptxc/rc.vmm" at "/var/vmguest/rc.vmm"
+		install "/vmm/data/vmm-configs/common/vptxc/cli.load.config" at "/var/db/vmm/etc/cli.load.config"
+		install "/vmm/bin/configs/quincy/evo-mount/yp.conf" at "/etc/yp.conf"
+		install "/vmm/bin/configs/quincy/evo-mount/auto.evo" at "/etc/auto.evo"
+		install "/vmm/bin/configs/quincy/evo-mount/auto.evofiler" at "/etc/auto.evofiler"
+		install "/vmm/bin/configs/quincy/evo-mount/auto.master" at "/etc/auto.master"
+		install "/vmm/bin/configs/quincy/evo-mount/nisdomainname" at "/etc/nisdomainname"
+		install "/vmm/bin/configs/quincy/evo-mount/nsswitch.conf" at "/etc/nsswitch.conf"
+		install "/vmm/data/vmm-configs/common/vptxc/rc.vmm" at "/var/vmguest/rc.vmm"
+		install "/vmm/bin/configs/quincy/evo-mount/ssh_host_rsa_key" at "/home/root/.ssh/ssh_host_rsa_key"
+		install "/vmm/bin/configs/quincy/evo-mount/ssh_host_rsa_key.pub" at "/home/root/.ssh/ssh_host_rsa_key.pub"
+		setvar "temp_bootdisk_size" to "40G"
+		setvar "vm_chassname" to "p4_EVOvPTX1"
+		setvar "attach_usb" to "1"
+		setvar "vm_instance" to "0"
+		setvar "vm_chassisname" to "p4_EVOvPTX1"
+		setvar "vm_chassis_i2cid" to "251"
+		setvar "use_virtio_disk" to "1"
+		setvar "+qemu_args" to " -boot order=cd "
+		setvar "+qemu_args" to " -cpu host,+erms,+smep,+fsgsbase,+pdpe1gb,+rdrand,+f16c,+dca,+pcid,+pdcm,+xtpr,+tm2,+est,+smx,+vmx,+ds_cpl,+monitor,+dtes64,+pbe,+tm,+ht,+ss,+acpi,+ds,+vme,+aes,+avx,+pat,+pclmulqdq,+rdtscp,+syscall,+tsc-deadline,+x2apic,+xsave "
+		setvar "+qemu_args" to " "
+		setvar "+qemu_args" to "-smbios type=0,vendor=Bochs,version=Bochs "
+		setvar "+qemu_args" to " -smbios type=3,manufacturer=Bochs "
+		setvar "+qemu_args" to "-smbios type=1,manufacturer=Bochs,product=Bochs"
+		setvar "+qemu_args" to ",serial=chassis_no=0:slot="
+		setvar "+qemu_args" to "0"
+		setvar "+qemu_args" to ":type="
+		setvar "+qemu_args" to "1"
+		setvar "+qemu_args" to ":assembly_id="
+		setvar "+qemu_args" to "0x0d20"
+		setvar "+qemu_args" to ":platform="
+		setvar "+qemu_args" to "251"
+		setvar "+qemu_args" to ":master="
+		setvar "+qemu_args" to "0"
+		setvar "+qemu_args" to " "
+	VM "p4_CSPP":
+		config.hostname "p4_CSPP":
+		config.basedisk "/vmm/data/base_disks/junos/vevo/ubuntu_vm_evo.qcow2":
+		uuid "8e3ed6f8-feb7-11ec-b225-13ca8349c070";
+		IF "eth0":
+			bridge "external"
+			ext_vlanid 0
+		IF "eth1":
+			bridge "p4_FPC1_PFE_BRG"
+			ext_vlanid 0
+		IF "eth2":
+			bridge "p4_FPC1_RPIO_BRG"
+			ext_vlanid 0
+		IF "eth4":
+			bridge "mgmt"
+			ext_vlanid 0
+		IF "eth5":
+			bridge "ptp8"
+			ext_vlanid 0
+		IF "eth6":
+			bridge "ptp6"
+			ext_vlanid 0
+		IF "eth7":
+			bridge "ptp5"
+			ext_vlanid 0
+		install "/vmm/data/user_disks/evo_test/EVOvSCAPA//cosim_pp_service" at "/etc/init.d/cosim_pp_service"
+		install "/vmm/data/user_disks/evo_test/EVOvSCAPA//vptx_cspp_rc.local" at "/etc/rc.local"
+		install "/vmm/data/user_disks/evo_test/EVOvSCAPA//etc_network_interfaces_cspp" at "/etc/network/interfaces"
+		install "/vmm/data/user_disks/evo_test/EVOvSCAPA//vptx_cspp_bt.tar.bz2" at "/var/tmp/vptx_cspp.tar.bz2"
+		install "/vmm/data/user_disks/evo_test/EVOvArdbeg/vardbeg_cspp.conf" at "/var/tmp/cosim_pp.conf"
+		setvar "use_virtio_disk" to "1"
+		setvar "guest_os" to "ubuntu"
+		setvar "attach_usb" to "1"
+		setvar "+qemu_args" to " "
+		setvar "+qemu_args" to "-smbios type=1,product="
+		setvar "+qemu_args" to "0"
+		setvar "+qemu_args" to ",serial="
+		setvar "+qemu_args" to "/slotid="
+		setvar "+qemu_args" to "0"
+		setvar "+qemu_args" to "/assembly="
+		setvar "+qemu_args" to "0"
+		setvar "+qemu_args" to "/pic="
+		setvar "+qemu_args" to "0"
+		setvar "+qemu_args" to "@"
+		setvar "+qemu_args" to "0"

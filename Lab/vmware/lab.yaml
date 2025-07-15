@@ -1,0 +1,98 @@
+---
+name: vmware
+pod: 
+  type: vmm
+  vmmserver: q-pod25-vmm.englab.juniper.net
+  jumpserver: ttqc-shell11.juniper.net
+  user: irzan
+  adpassword:  YourData1
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ntp: 172.16.10.1
+images:
+  centos: images/centos300g.img
+  ubuntu1804: images/ubuntu1804.qcow2
+  ubuntu: images/ubuntu160406.img
+  vmx_re: images/vmx-20.3R1.8/junos-vmx-x86-64-20.3R1.8.vmdk
+  vmx_mpc: images/vmx-20.3R1.8/vFPC-20200819.vmdk
+  vqfx_re: images/vqfx/jinstall-vqfx-10-f-20.2R1.10.vmdk
+  vqfx_cosim: images/vqfx/vqfx-20.2R1-2019010209-pfe-qemu.vmdk
+  vsrx: images/vsrx/junos-vsrx3-x86-64-20.3R1.8.vmdk
+  vrr: images/vrr/junos-x86-64-19.4R2.6.vmdk
+  vcsa: images/vmware/vcsa67.vmdk
+  esxi1: images/vmware/esxi1.vmdk
+  esxi2: images/vmware/esxi2.vmdk
+  esxi3: images/vmware/esxi3.vmdk
+junos_login:
+  login: admin
+  password: pass01
+vm:
+  gw23:
+    type: gw
+    os: centos
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        ipv4: 172.16.10.1/24
+      em2: 
+        bridge: lan1
+      em3: 
+        bridge: lan2
+  vcsa:
+    type: vcsa
+    os: vcsa
+    vnc: yes
+    vsan: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.200/24 
+        gateway4: 172.16.10.1
+        dns: 172.16.10.1
+  esxi1:
+    type: esxi
+    os: esxi
+    vnc: yes
+    disk: 1
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.201/24 
+        gateway4: 172.16.10.1
+        dns: 172.16.10.1
+      em1: 
+        bridge: lan1
+      em2: 
+        bridge: lan2
+  esxi2:
+    type: esxi
+    os: esxi
+    vnc: yes
+    disk: 2
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.202/24 
+        gateway4: 172.16.10.1
+        dns: 172.16.10.1
+      em1: 
+        bridge: lan1
+      em2: 
+        bridge: lan2
+  esxi3:
+    type: esxi
+    os: esxi
+    vnc: yes
+    disk: 3
+    interfaces:
+      em0: 
+        bridge: mgmt
+        ipv4: 172.16.10.203/24 
+        gateway4: 172.16.10.1
+        dns: 172.16.10.1
+      em1: 
+        bridge: lan1
+      em2: 
+        bridge: lan2

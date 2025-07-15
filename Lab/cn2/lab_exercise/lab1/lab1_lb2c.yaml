@@ -1,0 +1,44 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver2c
+  annotations:
+    service.contrail.juniper.net/externalNetwork: public3
+spec:
+  selector:
+    app: webserver2c
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver2c
+  labels:
+    app: webserver2c
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver2c
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver2c]}
+  template:
+    metadata:
+      name: webserver2c
+      labels:
+        app: webserver2c
+    spec:
+      containers: 
+      - name: webserver2c
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: Always
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

@@ -1,0 +1,8 @@
+set routing-options autonomous-system 65200
+set protocols bgp group to_crpd type internal
+set protocols bgp group to_crpd neighbor 10.100.255.20
+set protocols bgp group to_crpd local-address 10.100.255.1
+set protocols bgp group to_crpd family inet-vpn unicast
+set protocols bgp group to_crpd family inet6-vpn unicast
+set protocols bgp group to_crpd family evpn signaling
+set protocols mpls ipv6-tunneling

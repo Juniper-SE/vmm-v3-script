@@ -1,0 +1,18 @@
+set interfaces {{interface}} unit {{unit_id}} vlan-id {{vlan_id}}
+set interfaces {{interface}} unit {{unit_id}} encapsulation vlan-bridge
+set routing-instances {{vrf_name}} instance-type mac-vrf
+set routing-instances {{vrf_name}} vrf-target {{vrf_target}}
+set routing-instances {{vrf_name}} protocols evpn
+set routing-instances {{vrf_name}} service-type vlan-based
+set routing-instances {{vrf_name}} vlans {{vlan_name}} vlan-id {{vlan_id_ri}}
+set routing-instances {{vrf_name}} vlans {{vlan_name}} interface {{interface}}.{{unit_id}}
+set routing-instances {{vrf_name}} vlans {{vlan_name}} l3-interface irb.{{unit_id}}
+set interfaces irb.{{unit_id}} family inet address {{ipv4_address}}
+{%if ipv6_address %}
+set interfaces irb.{{unit_id}} family inet6 address {{ipv6_address}}
+{%endif%} 
+set routing-instances L3-{{vrf_name}} instance-type vrf
+set routing-instances L3-{{vrf_name}} vrf-table-label
+set routing-instances L3-{{vrf_name}} interface irb.{{unit_id}}
+set routing-instances L3-{{vrf_name}} vrf-target {{vrf_target_L3}}
+set routing-instances L3-{{vrf_name}}  protocols evpn ip-prefix-routes advertise direct-nexthop

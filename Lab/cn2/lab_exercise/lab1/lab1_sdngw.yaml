@@ -1,0 +1,24 @@
+---
+apiVersion:  core.contrail.juniper.net/v1alpha1
+kind: BGPRouter
+metadata:
+  namespace: contrail
+  name: sdngw
+spec:
+  parent:
+    apiVersion: core.contrail.juniper.net/v1alpha1
+    kind:       RoutingInstance
+    name:       default
+    namespace:  contrail
+  bgpRouterParameters:
+    vendor: Juniper
+    routerType: router
+    address:  172.16.255.1
+    identifier: 172.16.255.1
+    addressFamilies:
+      family:
+        - inet-vpn
+        - e-vpn
+        - route-target
+        - inet6-vpn
+    autonomousSystem:  64512

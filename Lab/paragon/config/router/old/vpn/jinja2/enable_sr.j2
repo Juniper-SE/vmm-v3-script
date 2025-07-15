@@ -1,0 +1,5 @@
+set protocols isis source-packet-routing
+set protocols isis source-packet-routing srgb start-label {{ start_label }}
+set protocols isis source-packet-routing srgb index-range {{ index_range }}
+set protocols isis source-packet-routing node-segment ipv4-index {{ node_index_v4 }}
+set protocols isis level 2 wide-metrics-only

@@ -1,0 +1,16 @@
+---
+#Ingress using NGIX
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress_1
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+#  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: webserver3a
+      port: 
+        number: 80
+

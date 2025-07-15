@@ -1,0 +1,49 @@
+resource_registry:
+  OS::TripleO::Controller::Net::SoftwareConfig: ../../network/config/contrail/controller-nic-config.yaml
+  OS::TripleO::ContrailController::Net::SoftwareConfig: ../../network/config/contrail/contrail-controller-nic-config.yaml
+  OS::TripleO::ContrailControlOnly::Net::SoftwareConfig: ../../network/config/contrail/contrail-controller-nic-config.yaml
+  OS::TripleO::ContrailAnalytics::Net::SoftwareConfig: ../../network/config/contrail/contrail-controller-nic-config.yaml
+  OS::TripleO::ContrailAnalyticsDatabase::Net::SoftwareConfig: ../../network/config/contrail/contrail-controller-nic-config.yaml
+  OS::TripleO::Compute::Net::SoftwareConfig: ../../network/config/contrail/compute-nic-config.yaml
+  OS::TripleO::ComputeL3mh::Net::SoftwareConfig: ../../network/config/contrail/compute-nic-config-l3mh.yaml
+  OS::TripleO::ContrailDpdk::Net::SoftwareConfig: ../../network/config/contrail/contrail-dpdk-nic-config.yaml
+  OS::TripleO::ContrailSriov::Net::SoftwareConfig: ../../network/config/contrail/contrail-sriov-nic-config.yaml
+  OS::TripleO::ContrailTsn::Net::SoftwareConfig: ../../network/config/contrail/contrail-tsn-nic-config.yaml
+  OS::TripleO::ContrailControllerIssu::Net::SoftwareConfig: ../../network/config/contrail/contrail-controller-nic-config.yaml
+  OS::TripleO::ContrailAio::Net::SoftwareConfig: ../../network/config/contrail/compute-nic-config.yaml
+  OS::TripleO::ContrailAioL3mh::Net::SoftwareConfig: ../../network/config/contrail/compute-nic-config-l3mh.yaml
+
+parameter_defaults:
+  # Customize all these values to match the local environment
+  TenantNetCidr: 172.16.13.0/24
+  InternalApiNetCidr: 172.16.12.0/24
+  ExternalNetCidr: 172.16.11.0/24
+  StorageNetCidr: 172.16.21.0/24
+  StorageMgmtNetCidr: 172.16.22.0/24
+  # CIDR subnet mask length for provisioning network
+  ControlPlaneSubnetCidr: '24'
+  # Allocation pools
+  TenantAllocationPools: [{'start': '172.16.13.150', 'end': '172.16.13.200'}]
+  InternalApiAllocationPools: [{'start': '172.16.12.150', 'end': '172.16.12.200'}]
+  ExternalAllocationPools: [{'start': '172.16.11.150', 'end': '172.16.11.200'}]
+  StorageAllocationPools: [{'start': '172.16.21.150', 'end': '172.16.21.200'}]
+  StorageMgmtAllocationPools: [{'start': '172.16.22.150', 'end': '172.16.22.200'}]
+  # Routes
+  ControlPlaneDefaultRoute: 172.16.12.1
+  InternalApiDefaultRoute: 172.16.12.1
+  ExternalInterfaceDefaultRoute: 172.16.11.1
+  # Vlans
+  InternalApiNetworkVlanID: 710
+  ExternalNetworkVlanID: 720
+  StorageNetworkVlanID: 730
+  StorageMgmtNetworkVlanID: 740
+  # Services
+  EC2MetadataIp: 172.16.12.9  # Generally the IP of the Undercloud
+  DnsServers: ["8.8.8.8"]
+  NtpServer: ntp.juniper.net
+  # L3MH options
+  L3mhNetCidr: '10.10.10.0/24'
+  Tenant1L3mhNetCidr: '172.16.10.0/24'
+  Tenant2L3mhNetCidr: '172.16.20.0/24'
+  # Tenant1L3mhNetworkVlanID: 111
+  # Tenant2L3mhNetworkVlanID: 111

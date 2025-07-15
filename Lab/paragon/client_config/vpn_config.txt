@@ -1,0 +1,29 @@
+PE1
+----
+
+delete interfaces ge-0/0/0 unit 0
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 10.100.100.0/31
+
+set routing-instances cust1 interface ge-0/0/0.101
+set routing-instances cust1 instance-type vrf
+set routing-instances cust1 vrf-table-label
+set routing-instances cust1 protocols bgp group to_cust neighbor 10.100.100.1 peer-as 4200012001
+set routing-instances cust1 vrf-target target:1000:2001
+
+PE3
+---
+delete interfaces ge-0/0/0 unit 0
+set interfaces ge-0/0/0 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 unit 101 vlan-id 101
+set interfaces ge-0/0/0 unit 101 family inet address 10.100.100.2/31
+
+set routing-instances cust1 interface ge-0/0/0.101
+set routing-instances cust1 instance-type vrf
+set routing-instances cust1 vrf-table-label
+set routing-instances cust1 protocols bgp group to_cust neighbor 10.100.100.1 peer-as 4200012002
+set routing-instances cust1 vrf-target target:1000:2001
+

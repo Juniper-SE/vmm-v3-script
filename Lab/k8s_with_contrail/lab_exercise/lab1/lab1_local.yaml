@@ -1,0 +1,41 @@
+---
+#service-web-nodeport
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver0
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: webserver0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver0
+  labels:
+    app: webserver0
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver0
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver0]}
+  template:
+    metadata:
+      name: webserver0
+      labels:
+        app: webserver0
+    spec:
+      containers: 
+      - name: webserver0
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

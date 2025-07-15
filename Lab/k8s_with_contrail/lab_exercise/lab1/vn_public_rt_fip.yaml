@@ -1,0 +1,8 @@
+---
+api_server_host: 127.0.0.1
+# api_server_host: 172.16.11.10
+virtual_network: public
+pool_name: public-fip-pool
+namespace: default
+route_target_export: 64512:10001
+route_target_import: 64512:10000

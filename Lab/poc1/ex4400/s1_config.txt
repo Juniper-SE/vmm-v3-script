@@ -1,0 +1,78 @@
+set groups config1 interfaces xe-0/2/0 mtu 9000
+set groups config1 interfaces xe-0/2/0 unit 0 family ethernet-switching interface-mode trunk
+set groups config1 interfaces xe-0/2/0 unit 0 family ethernet-switching vlan members all
+set groups config1 interfaces xe-0/2/0 unit 0 family ethernet-switching storm-control default
+set groups config1 interfaces xe-0/2/1 mtu 9000
+set groups config1 interfaces xe-0/2/1 unit 0 family ethernet-switching interface-mode trunk
+set groups config1 interfaces xe-0/2/1 unit 0 family ethernet-switching vlan members all
+set groups config1 interfaces xe-0/2/1 unit 0 family ethernet-switching storm-control default
+set groups config1 vlans vlan101 vlan-id 101
+set groups config1 vlans vlan102 vlan-id 102
+set groups config1 vlans vlan103 vlan-id 103
+set groups config2 interfaces xe-0/2/0 flexible-vlan-tagging
+set groups config2 interfaces xe-0/2/0 mtu 9000
+set groups config2 interfaces xe-0/2/0 encapsulation extended-vlan-bridge
+set groups config2 interfaces xe-0/2/0 unit 10 vlan-id-list 101-103
+set groups config2 interfaces xe-0/2/0 unit 10 input-vlan-map push
+set groups config2 interfaces xe-0/2/0 unit 10 output-vlan-map pop
+set groups config2 interfaces xe-0/2/1 flexible-vlan-tagging
+set groups config2 interfaces xe-0/2/1 mtu 9000
+set groups config2 interfaces xe-0/2/1 encapsulation flexible-ethernet-services
+set groups config2 interfaces xe-0/2/1 unit 10 encapsulation vlan-bridge
+set groups config2 interfaces xe-0/2/1 unit 10 vlan-id 10
+set groups config2 vlans vlan10 interface xe-0/2/1.10
+set groups config2 vlans vlan10 interface xe-0/2/0.10
+set groups config3 interfaces xe-0/2/1 mtu 9000
+set groups config3 interfaces xe-0/2/1 unit 0 family inet address 10.0.0.0/31
+set groups config3 interfaces lo0 unit 0 family inet address 10.0.255.1/32
+set groups config3 interfaces xe-0/2/0 mtu 9000
+set groups config3 interfaces xe-0/2/0 unit 0 family ethernet-switching interface-mode trunk
+set groups config3 interfaces xe-0/2/0 unit 0 family ethernet-switching vlan members 101-103
+set groups config3 interfaces xe-0/2/0 unit 0 family ethernet-switching storm-control default
+set groups config3 policy-options policy-statement underlay_export term 1 from protocol direct
+set groups config3 policy-options policy-statement underlay_export term 1 from interface lo0.0
+set groups config3 policy-options policy-statement underlay_export term 1 then accept
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 1 from community COM-MY-FABRIC
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 1 then accept
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 2 from community COM-VNI-10101
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 2 then accept
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 3 from community COM-VNI-10102
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 3 then accept
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 4 from community COM-VNI-10103
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term 4 then accept
+set groups config3 policy-options policy-statement MY-FABRIC-IMPORT term default then reject
+set groups config3 policy-options community COM-MY-FABRIC members target:1:8888
+set groups config3 policy-options community COM-VNI-10101 members target:1000:101
+set groups config3 policy-options community COM-VNI-10102 members target:1000:102
+set groups config3 policy-options community COM-VNI-10103 members target:1000:103
+set groups config3 routing-options router-id 10.0.255.1
+set groups config3 routing-options forwarding-table chained-composite-next-hop ingress evpn
+set groups config3 protocols bgp group to_s2_underlay multipath multiple-as
+set groups config3 protocols bgp group to_s2_underlay neighbor 10.0.0.1 export underlay_export
+set groups config3 protocols bgp group to_s2_underlay neighbor 10.0.0.1 peer-as 2
+set groups config3 protocols bgp group to_s2_underlay neighbor 10.0.0.1 local-as 1
+set groups config3 protocols bgp group to_s2_underlay vpn-apply-export
+set groups config3 protocols bgp group to_s1_overlay type internal
+set groups config3 protocols bgp group to_s1_overlay local-address 10.0.255.1
+set groups config3 protocols bgp group to_s1_overlay family evpn signaling
+set groups config3 protocols bgp group to_s1_overlay local-as 1000
+set groups config3 protocols bgp group to_s1_overlay neighbor 10.0.255.2
+set groups config3 protocols bgp group to_s1_overlay vpn-apply-export
+set groups config3 protocols evpn encapsulation vxlan
+set groups config3 protocols evpn multicast-mode ingress-replication
+set groups config3 protocols evpn vni-options vni 10101 vrf-target target:1000:101
+set groups config3 protocols evpn vni-options vni 10102 vrf-target target:1000:102
+set groups config3 protocols evpn vni-options vni 10103 vrf-target target:1000:103
+set groups config3 protocols evpn extended-vni-list 10101
+set groups config3 protocols evpn extended-vni-list 10102
+set groups config3 protocols evpn extended-vni-list 10103
+set groups config3 switch-options vtep-source-interface lo0.0
+set groups config3 switch-options route-distinguisher 10.0.255.1:1
+set groups config3 switch-options vrf-import MY-FABRIC-IMPORT
+set groups config3 switch-options vrf-target target:1:8888
+set groups config3 vlans vlan101 vlan-id 101
+set groups config3 vlans vlan101 vxlan vni 10101
+set groups config3 vlans vlan102 vlan-id 102
+set groups config3 vlans vlan102 vxlan vni 10102
+set groups config3 vlans vlan103 vlan-id 103
+set groups config3 vlans vlan103 vxlan vni 10103

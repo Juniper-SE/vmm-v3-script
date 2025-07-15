@@ -1,0 +1,50 @@
+---
+#simple backend services
+apiVersion: networking.k8s.io/v1
+#apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress1
+spec:
+  rules:
+  - host: www.irzan.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver3e
+            port:
+              number: 80
+  - host: "www.m1r24n.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver3f
+            port:
+              number: 80
+  - http:
+      paths:
+      - path: /foo
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver3b
+            port:
+              number: 80
+      - path: /bar
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver3c
+            port:
+              number: 80
+  defaultBackend:
+    service:
+      name: webserver3a
+      port: 
+        number: 80

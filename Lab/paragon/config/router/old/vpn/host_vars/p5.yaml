@@ -1,0 +1,12 @@
+start_label: 1000
+index_range: 9000
+node_index_v4: 415
+intf:
+- [ lo0	, fc00:a110:15:ffff:15::15/128 ]
+- [ et-0/0/4	, fc00:a110:ffff:1::31/127,fc00:a110:a2:5:114:0:0:0 ]
+- [ et-0/0/3	, fc00:a110:ffff:1::29/127,fc00:a110:a2:5:113:0:0:0 ]
+- [ et-0/0/2	, fc00:a110:ffff:1::25/127,fc00:a110:a2:5:112:0:0:0 ]
+- [ et-0/0/1	, fc00:a110:ffff:1::17/127,fc00:a110:a2:5:111:0:0:0 ]
+ipv6_router_id: fc00:a110:15:ffff:15::15
+srv6_locator: fc00:a110:a2:5::/64
+srv6_end_sid: fc00:a110:a2:5:11:0::0

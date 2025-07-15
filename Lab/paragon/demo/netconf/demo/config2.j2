@@ -1,0 +1,21 @@
+routing-options {
+    autonomous-system {{ asn }};
+    route-distinguisher-id {{ local_addr }};
+}
+protocols{
+   bgp {
+       group to_rr {
+           local-address {{ local_addr }};
+           family inet-vpn {
+               any;
+           }
+           family inet6-vpn {
+               any;
+           }
+           type internal;
+           {% for ip in neighbor -%}
+           neighbor {{ ip }};
+           {% endfor -%}
+       }
+   }
+}

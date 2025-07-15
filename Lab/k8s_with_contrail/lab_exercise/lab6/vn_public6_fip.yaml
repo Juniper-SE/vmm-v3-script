@@ -1,0 +1,5 @@
+---
+api_server_host: 127.0.0.1
+virtual_network: public6
+pool_name: public6-fip-pool
+namespace: lab6

@@ -1,0 +1,121 @@
+{
+    "subscribers-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/24.2R0/junos-subscribers"}, 
+        "subscriber" : [
+        {
+            "attributes" : {"junos:style" : "detail"}, 
+            "access-type" : [
+            {
+                "data" : "PPPoE"
+            }
+            ], 
+            "user-name" : [
+            {
+                "data" : "cpe1"
+            }
+            ], 
+            "ip-address" : [
+            {
+                "data" : "172.16.201.3"
+            }
+            ], 
+            "ip-netmask" : [
+            {
+                "data" : "255.255.255.255"
+            }
+            ], 
+            "primary-dns-address" : [
+            {
+                "data" : "10.49.32.95"
+            }
+            ], 
+            "secondary-dns-address" : [
+            {
+                "data" : "10.49.32.97"
+            }
+            ], 
+            "ipv6-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a202::/64"
+            }
+            ], 
+            "ipv6-user-prefix" : [
+            {
+                "data" : "fc00:dead:beef:a100::/64"
+            }
+            ], 
+            "logical-system" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "routing-instance" : [
+            {
+                "data" : "default"
+            }
+            ], 
+            "interface" : [
+            {
+                "data" : "pp0.3221225479"
+            }
+            ], 
+            "interface-type" : [
+            {
+                "data" : "Dynamic"
+            }
+            ], 
+            "underlying-interface" : [
+            {
+                "data" : "demux0.3221225478"
+            }
+            ], 
+            "profile" : [
+            {
+                "data" : "pppoe1"
+            }
+            ], 
+            "version-alias" : [
+            {
+            }
+            ], 
+            "mac-address" : [
+            {
+                "data" : "56:04:1a:00:4a:11"
+            }
+            ], 
+            "state" : [
+            {
+                "data" : "Active"
+            }
+            ], 
+            "radius-accounting-id" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "session-id" : [
+            {
+                "data" : "8"
+            }
+            ], 
+            "pfe-flow-id" : [
+            {
+                "data" : "22"
+            }
+            ], 
+            "vlan-id" : [
+            {
+                "data" : "1001"
+            }
+            ], 
+            "login-time" : [
+            {
+                "data" : "2024-11-27 11:32:44 UTC"
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}

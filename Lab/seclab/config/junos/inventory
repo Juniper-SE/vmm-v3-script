@@ -1,0 +1,8 @@
+[all]
+srx1a
+srx2
+srx3
+sw
+ipfb
+[all:vars]
+ansible_python_interpreter=python3

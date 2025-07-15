@@ -1,0 +1,65 @@
+---
+- name: Updating system and installing the necessary software
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+  - name: apt -y upgrade
+    apt:
+      update_cache: true
+      upgrade: dist
+      cache_valid_time: 3600
+      force_apt_get: true
+      state: latest
+  - name: install application on node cp
+    when: inventory_hostname in 'cp'
+    apt:
+      pkg: 
+      - freeradius
+      - freeradius-mysql
+      - mariadb-server
+      - python3-pip
+      state: present
+  - name: install frr on gw
+    when: inventory_hostname in 'gw'
+    apt:
+      pkg: 
+      - frr
+      state: present
+  - name: enable BGP
+    when: inventory_hostname in 'gw'
+    ansible.builtin.lineinfile:
+      path: /etc/frr/daemons
+      regexp: '^bgpd='
+      line: bgpd=yes
+  - name: Restart service FRR
+    when: inventory_hostname in 'gw'
+    ansible.builtin.service:
+      name: frr
+      state: restarted
+  - name: remove applications on node CP
+    when: inventory_hostname in 'cp'
+    apt:
+      pkg: 
+      - python3-click 
+      - python3-markupsafe 
+      - python3-jinja2 
+      - python3-importlib-metadata
+      - python3-colorama
+      state: absent
+- name: rebooting host
+  hosts:
+  - cp
+  - webserver
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: reboot node
+    ansible.builtin.reboot:
+

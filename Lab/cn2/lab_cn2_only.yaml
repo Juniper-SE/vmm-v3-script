@@ -1,0 +1,227 @@
+---
+name: cn2
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  jumpserver: ttqc-shell003.juniper.net
+  vmmserver: q-pod32-vmm.englab.juniper.net
+  # vmmserver: q-pod08-vmm.englab.juniper.net
+  # the following entry can be commented out if your account can access vmm without using jump host
+  # jumpserver: ttqc-shell001.juniper.net
+  user: irzan
+  unixpassword:  NotUsedAnymore
+  adpassword:  MyBook
+  vmmpassword: AnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu-20.04.qcow2
+  desktop: images/desktop.qcow2
+  vmx_re: images/vmx/junos-vmx-x86-64-23.1R1.8.vmdk
+junos_login:
+  login: admin
+  password: pass01
+proxy:
+  forward:
+  - localPort: 6443
+    destPort: 6443
+    destIP: 172.16.12.10
+  - localPort: 6080
+    destPort: 6080
+      destIP: 172.16.12.10
+  DynForward: 1080
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: lan1
+        mtu: 9000
+        family:
+          inet: 172.16.11.1/24
+        dhcp_range: 172.16.11.5-172.16.11.25
+      em2: 
+        bridge: lan2
+        mtu: 9000
+        family:
+          inet: 172.16.12.1/24
+      em3: 
+        bridge: lan3
+        family:
+          inet: 172.16.13.130/31
+      em4: 
+        bridge: lan4
+        family:
+          inet: 172.16.14.1/24
+        dhcp_range: 172.16.14.5-172.16.14.25
+      em5: 
+        bridge: lan5
+        mtu: 9000
+        family:
+          inet: 172.16.13.128/31
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.13.129
+  node0:
+    type: pchpv1
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1
+        mtu: 9000
+        family:
+          inet: 172.16.11.10/24 
+          gateway4: 172.16.11.1
+      em1:
+        bridge: lan2
+        mtu: 9000
+        family:
+          inet: 172.16.12.10/24 
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.12.1
+  node1:
+    type: pchpv1
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1 
+        mtu: 9000
+        family:
+          inet: 172.16.11.11/24 
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: lan2
+        mtu: 9000
+        family:
+          inet: 172.16.12.11/24 
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.12.1
+  node2:
+    type: pchpv1
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1 
+        mtu: 9000
+        family:
+          inet: 172.16.11.12/24 
+          gateway4: 172.16.11.1   
+      em1: 
+        bridge: lan2
+        mtu: 9000
+        family:
+          inet: 172.16.12.12/24
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.12.1
+  node3:
+    type: pchpv1
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1 
+        mtu: 9000
+        family:
+          inet: 172.16.11.13/24 
+          gateway4: 172.16.11.1
+      em1: 
+        bridge: lan2
+        mtu: 9000
+        family:
+          inet: 172.16.12.13/24 
+          static:
+            - to: 172.16.255.1/32
+              via: 172.16.12.1
+  node4:
+    type: pcmedium
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan1 
+        mtu: 9000
+        family:
+          inet: 172.16.11.14/24 
+          gateway4: 172.16.11.1   
+      em1: 
+        bridge: lan2
+        mtu: 9000
+        family:
+          inet: 172.16.12.14/24 
+  registry:
+    type: pcmedium
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan4
+        family:
+          inet: 172.16.14.10/24 
+          gateway4: 172.16.14.1
+      em1: 
+        bridge: ds
+  control:
+    type: pcmedium
+    os: ubuntu
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: lan4
+        family:
+          inet: 172.16.14.11/24 
+          gateway4: 172.16.14.1
+  sdngw:
+    type: junos
+    os: mx240
+    interfaces:
+      mgmt:
+        bridge: lan1
+        family:
+          inet: 172.16.11.22/24 
+      lo0:
+        family:
+          inet: 172.16.255.1/32
+      ge-0/0/0:
+        bridge: lan5
+        family:
+          inet: 172.16.13.129/31
+        mtu: 9000
+        static:
+          - to: 172.16.11.0/24
+            via: 172.16.13.128
+      ge-0/0/1: 
+        bridge: lan3
+        family:
+          inet: 172.16.13.131/31
+      ge-0/0/2: 
+        bridge: ds
+      ge-0/0/3: 
+        bridge: client
+        family:
+          inet: 192.168.200.1/24
+  client1:
+    type: pcsmall
+    os: desktop
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: client
+  client2:
+    type: pcsmall
+    os: desktop
+    vnc: true
+    interfaces:
+      em0: 
+        bridge: client

@@ -1,0 +1,5 @@
+[all]
+kvm1
+gw
+[all:vars]
+ansible_python_interpreter=python3

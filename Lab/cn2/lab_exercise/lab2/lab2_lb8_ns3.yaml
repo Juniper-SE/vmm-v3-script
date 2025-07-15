@@ -1,0 +1,44 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-8
+  namespace: ns3
+spec:
+  selector:
+    app: webserver8
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver8
+  labels:
+    app: webserver8
+  namespace: ns3  
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver8
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver8]}
+  template:
+    metadata:
+      name: webserver8
+      labels:
+        app: webserver8
+    spec:
+      containers: 
+      - name: webserver6
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

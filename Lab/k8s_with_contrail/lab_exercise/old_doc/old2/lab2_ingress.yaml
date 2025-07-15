@@ -1,0 +1,34 @@
+---
+#apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress2
+spec:
+  backend:
+    serviceName: service-web-2
+    servicePort: 8888
+  rules:
+  - host: www.vmmlab4.com
+    http:
+      paths:
+      - backend:
+          serviceName: service-web-9
+          servicePort: 8888
+  - host: www.vmmlab5.com
+    http:
+      paths:
+      - backend:
+          serviceName: service-web-10
+          servicePort: 8888
+  - http:
+      paths:
+      - path: /foo
+        backend:
+          serviceName: service-web-7
+          servicePort: 8888 
+      - path: /bar
+        backend:
+          serviceName: service-web-8
+          servicePort: 8888 
+  

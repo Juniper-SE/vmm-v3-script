@@ -1,0 +1,44 @@
+#service-web-lb.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-web-4
+  namespace: ns1
+spec:
+  selector:
+    app: webserver4
+  type: LoadBalancer
+  ports:
+  - targetPort: 80
+    port: 80
+---
+#rc-webserver-do.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver4
+  namespace: ns1
+  labels:
+    app: webserver4
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver4
+    matchExpressions:
+      - {key: app, operator: In, values: [webserver4]}
+  template:
+    metadata:
+      name: webserver4
+      labels:
+        app: webserver4
+    spec:
+      containers: 
+      - name: webserver4
+        image: 172.16.14.10:5000/webserver:0.1
+        imagePullPolicy: IfNotPresent 
+        securityContext:
+           privileged: true
+        ports: 
+        - containerPort: 80
+

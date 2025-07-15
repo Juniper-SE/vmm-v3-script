@@ -1,0 +1,8 @@
+set interfaces {{interface}} unit {{unit_id}} vlan-id {{vlan_id}}
+set interfaces {{interface}} unit {{unit_id}} encapsulation vlan-bridge
+set routing-instances {{vrf_name}} instance-type mac-vrf
+set routing-instances {{vrf_name}} vrf-target {{vrf_target}}
+set routing-instances {{vrf_name}} protocols evpn
+set routing-instances {{vrf_name}} service-type vlan-based
+set routing-instances {{vrf_name}} vlans {{vlan_name}} vlan-id {{vlan_id_ri}}
+set routing-instances {{vrf_name}} vlans {{vlan_name}} interface {{interface}}.{{unit_id}}

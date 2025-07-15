@@ -1,0 +1,493 @@
+---
+name: pa
+pod: 
+  type: vmm
+  #vmmserver: sv8-pod4-vmm.englab.juniper.net
+  #jumpserver: ttsv-shell110.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  # jumpserver: ttqc-shell002.juniper.net
+  #jumpserver: ttsv-shell001.juniper.net
+  user: irzan
+  #adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+  ssh_key_name: key1
+  ssh_key_host_name: keyhost
+  #ntp: 172.16.10.1
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu22.04.qcow2
+  desktop: images/desktop.qcow2
+  vmx: images/vmx/junos-vmx-x86-64-23.2R1.13.vmdk
+  bridge: images/bridge.qcow2
+  vjunos_switch: images/vJunos-switch-23.2R1.14.qcow2
+  vjunos_router: images/vJunos-router-23.4R1.10.qcow2
+  # vjunos_evolved: images/vJunosEvolved-23.2R1.15.qcow2
+  vjunos_evolved: images/vJunosEvolved-23.2R1-S1.8-EVO.qcow2
+junos_login:
+  login: admin
+  password: pass01
+pcep_server: 172.16.255.6
+paragon_ingest: 172.16.255.3
+snmp: 
+  server: 172.16.255.4
+  ro_community: public
+fabric:
+  subnet: 10.100.0.0/24
+  topology:
+  # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+  # value for the field status:
+  # bit 0 : ipv4
+  # bit 1 : ipv6
+  # bit 2 : iso
+  # bit 3 : mpls
+  # bit 4 : isis
+  # bit 5 : rsvp
+  # bit 6 : ldp
+  # bit 7 : delay_measurement_rpm
+  # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
+  # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
+  # ingress controller: 172.16.255.1
+  # NGIX ingress controller: 172.16.255.2
+  # insight : 172.16.255.3
+  # SNMP trap: 172.16.255.4
+  # Netflow : 172.16.255.5
+  # PCE serveR: 172.16.255.6
+    - [ 0x7d, pe1, et-0/0/2, p1, et-0/0/0 ]
+    - [ 0x7d, pe1, et-0/0/3, p2, et-0/0/0 ]
+    - [ 0x7d, pe2, et-0/0/3, p1, et-0/0/1 ]
+    - [ 0x7d, pe2, et-0/0/2, p2, et-0/0/1 ]
+    - [ 0x7d, p1, et-0/0/2, p2, et-0/0/2 ]
+    - [ 0x7d, p1, et-0/0/3, p3, et-0/0/3 ]
+    - [ 0x7d, p1, et-0/0/4, p3, et-0/0/4 ]
+    - [ 0x7d, p1, et-0/0/5, p5, et-0/0/1 ]
+    - [ 0x7d, p2, et-0/0/3, p5, et-0/0/2 ]
+    - [ 0x7d, p3, et-0/0/2, p4, et-0/0/2 ]
+    - [ 0x7d, p3, et-0/0/0, pe3, et-0/0/2 ]
+    - [ 0x7d, p3, et-0/0/1, pe4, et-0/0/2 ]
+    - [ 0x7d, p3, et-0/0/5, p5, et-0/0/3 ]
+    - [ 0x7d, p4, et-0/0/0, pe3, et-0/0/3 ]
+    - [ 0x7d, p4, et-0/0/1, pe4, et-0/0/3 ]
+    - [ 0x7d, p4, et-0/0/3, p5, et-0/0/4 ]
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.254/24
+        dhcp_range: 172.16.10.5-172.16.10.100
+      em2: 
+        bridge: control
+        family:
+          inet: 172.16.11.1/28
+        dhcp_range: 172.16.11.2-172.16.11.6
+      em3: 
+        bridge: desktop
+        family:
+          inet: 172.16.12.1/24
+        dhcp_range: 172.16.12.10-172.16.12.20
+      em4: 
+        bridge: pce
+        family:
+          inet: 172.16.14.0/31
+          static:
+          - to: 10.100.0.0/24
+            via: 172.16.14.1
+          - to: 10.100.1.0/24
+            via: 172.16.14.1
+  control:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: desktop
+        family:
+          inet: 172.16.12.11/24
+          gateway4: 172.16.12.1
+      # em1:
+      #   bridge: pe1ge0
+      # em2:
+      #   bridge: pe1ge1
+      # em3:
+      #   bridge: pe2ge0
+      # em4:
+      #   bridge: pe2ge1
+      # em5:
+      #   bridge: pe3ge0
+      # em6:
+      #   bridge: pe3ge1
+      # em7:
+      #   bridge: pe4ge0
+      # em8:
+      #   bridge: pe4ge1
+  desktop:
+    type: pcmedium
+    os: desktop
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: desktop
+        family:
+          inet: 172.16.12.10/24
+          gateway4: 172.16.12.1
+  node1:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.2/28
+          gateway4: 172.16.11.1
+  node2:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.3/28
+          gateway4: 172.16.11.1
+  node3:
+    type: pchpv1
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.4/28
+          gateway4: 172.16.11.1
+  pe1:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.1/32
+          iso: 49.0001.0101.0000.1001.00
+        protocol:
+          isis: passive
+      et-0/0/0:
+        bridge: pe1ge0
+        mtu: 9000
+      et-0/0/1:
+        bridge: pe1ge1
+        mtu: 9000
+  pe2:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.2/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.2/32
+          iso: 49.0001.0101.0000.1002.00
+        protocol:
+          isis: passive
+      et-0/0/0:
+        bridge: pe2ge0
+        mtu: 9000
+      et-0/0/1:
+        bridge: pe2ge1
+        mtu: 9000
+  pe3:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.3/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.3/32
+          iso: 49.0001.0101.0000.1003.00
+        protocol:
+          isis: passive
+      et-0/0/0:
+        bridge: pe3ge0
+        mtu: 9000
+      et-0/0/1:
+        bridge: pe3ge1
+        mtu: 9000
+  pe4:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.4/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.4/32
+          iso: 49.0001.0101.0000.1004.00
+        protocol:
+          isis: passive
+      et-0/0/0:
+        bridge: pe4ge0
+        mtu: 9000
+      et-0/0/1:
+        bridge: pe4ge1
+        mtu: 9000
+  p1:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    # pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.11
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.11/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.11/32
+          iso: 49.0001.0101.0000.1011.00
+        protocol:
+          isis: passive
+  p2:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    #pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.12/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.12/32
+          iso: 49.0001.0101.0000.1012.00
+        protocol:
+          isis: passive
+  p3:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    #pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.13/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.13/32
+          iso: 49.0001.0101.0000.1013.00
+        protocol:
+          isis: passive
+  p4:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    #pcep: yes
+    # bgpls:
+    #   as: 64500
+    #   local: 10.100.1.1
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.14/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.14/32
+          iso: 49.0001.0101.0000.1014.00
+        protocol:
+          isis: passive
+  p5:
+    type: vjunos_evolved
+    os: vjunos_evolved
+    ztp: yes
+    #pcep: yes
+    bgpls:
+      as: 64500
+      local: 10.100.1.15
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.15/24
+          gateway4: 172.16.10.254
+      lo0:
+        family:
+          inet: 10.100.1.15/32
+          iso: 49.0001.0101.0000.1015.00
+        protocol:
+          isis: passive
+      et-0/0/0:
+        bridge: pce
+        family:
+          inet: 172.16.14.1/31 
+  client:
+    type: pchpv2
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.100/24
+          gateway4: 172.16.10.254
+      em1:
+        bridge: pe1ge0
+      em2:
+        bridge: pe1ge1
+      em3:
+        bridge: pe2ge0
+      em4:
+        bridge: pe2ge1
+      em5:
+        bridge: pe3ge0
+      em6:
+        bridge: pe3ge1
+      em7:
+        bridge: pe4ge0
+      em8:
+        bridge: pe4ge1
+  br1:
+    type: bridge
+    os: bridge
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.101/24
+          gateway4: 172.16.10.254
+      em1:
+        node: [pe1, et-0/0/2, pe1p1 ]
+      em2:
+        node: [p1, et-0/0/0, pe1p1 ]
+      em3:
+        node: [pe1, et-0/0/3, pe1p2 ]
+      em4:
+        node: [p2, et-0/0/0, pe1p2 ]
+      em5:
+        node: [pe2, et-0/0/3, pe2p1 ]
+      em6:
+        node: [p1, et-0/0/1, pe2p1 ]
+      em7:
+        node: [pe2, et-0/0/2, pe2p2 ]
+      em8:
+        node: [p2, et-0/0/1, pe2p2 ]
+      em9:
+        node: [p1, et-0/0/2, p1p2 ]
+      em10:
+        node: [p2, et-0/0/2, p1p2 ]
+  br2:
+    type: bridge
+    os: bridge
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.102/24
+          gateway4: 172.16.10.254
+      em1:
+        node: [p1, et-0/0/3, p1p3a ]
+      em2:
+        node: [p3, et-0/0/3, p1p3a ]
+      em3:
+        node: [p1, et-0/0/4, p1p3b ]
+      em4:
+        node: [p3, et-0/0/4, p1p3b ]
+      em5:
+        node: [p1, et-0/0/5, p1p5 ]
+      em6:
+        node: [p5, et-0/0/1, p1p5 ]
+      em7:
+        node: [p2, et-0/0/3, p2p5 ]
+      em8:
+        node: [p5, et-0/0/2, p2p5 ]
+      em9:
+        node: [p4, et-0/0/3, p4p5 ]
+      em10:
+        node: [p5, et-0/0/4, p4p5 ]
+      em11:
+        node: [p3, et-0/0/5, p3p5 ]
+      em12:
+        node: [p5, et-0/0/3, p3p5 ]
+  br3:
+    type: bridge
+    os: bridge
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.103/24
+          gateway4: 172.16.10.254
+      em1:
+        node: [p3, et-0/0/2, p3p4 ]
+      em2:
+        node: [p4, et-0/0/2, p3p4 ]
+      em3:
+        node: [p3, et-0/0/0, pe3p3 ]
+      em4:
+        node: [pe3, et-0/0/2, pe3p3 ]
+      em5:
+        node: [pe3, et-0/0/3, pe3p4 ]
+      em6:
+        node: [p4, et-0/0/0, pe3p4 ]
+      em7:
+        node: [pe4, et-0/0/2, pe4p3 ]
+      em8:
+        node: [p3, et-0/0/1, pe4p3 ]
+      em9:
+        node: [pe4, et-0/0/3, pe4p4 ]
+      em10:
+        node: [p4, et-0/0/1, pe4p4 ]
+

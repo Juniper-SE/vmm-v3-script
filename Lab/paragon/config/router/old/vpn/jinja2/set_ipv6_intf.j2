@@ -1,0 +1,4 @@
+{% for i in intf -%}
+set interfaces {{i.0}}.0 family inet6 address {{i.1}}
+{% endfor %}
+set routing-options ipv6-router-id {{ipv6_router_id}}

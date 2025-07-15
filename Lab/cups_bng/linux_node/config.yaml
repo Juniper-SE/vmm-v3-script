@@ -1,0 +1,118 @@
+---
+# This YAML file is used for BCS cluster configuration.
+#
+# All password fields are optional here, if a password is not provided
+# then the user will be prompted for it during execution
+#
+# All partition sizes are in GiB
+
+# Cluster name
+# Will be used for file system paths
+# Will be referenced by 1+ contexts in the kubeconfig
+clusterName: cp1  # example-cluster
+
+# NTP server to synchronize time across all nodes in the cluster
+ntpServer: ntp.juniper.net  # ntp.example.com
+
+# List of nodes in the cluster
+nodes:
+  # Controlplane node details
+  # Controlplane nodes are also worker and etcd nodes implicitly
+  - hostname: 172.16.11.111  # controlplane.example.com
+    user: ubuntu  # ubuntu
+    sudoPassword: pass01  # secret - Password for the sudo command on the node
+    role: controlplane
+    port: 22  # SSH port number
+
+  - hostname: 172.16.11.112  # controlplane.example.com
+    user: ubuntu  # ubuntu
+    sudoPassword: pass01  # secret - Password for the sudo command on the node
+    role: controlplane
+    port: 22  # SSH port number
+
+  - hostname: 172.16.11.113  # controlplane.example.com
+    user: ubuntu  # ubuntu
+    sudoPassword: pass01  # secret - Password for the sudo command on the node
+    role: controlplane
+    port: 22  # SSH port number
+  # Worker node details
+#  - hostname: ~  # worker.example.com
+#    user: ~  # ubuntu
+#    sudoPassword: ~  # secret
+#    role: worker
+#    port: 22
+
+# General system configuration
+# - The system address should be the FQDN of the Keepalived VIP
+#   (or the VIP itself if no DNS is available)
+# - The address, credentials, and certificates will be used for the following:
+#   - The K8s API server
+#   - The local private container registry (if installed)
+# - User-provided certificates should have the address as their CN
+system:
+  installRegistry: true  # Whether to install a private registry on the cluster
+  registrySize: 32  # Size of the persistent volume for the registry in GiB
+  registryPort: 5000  # Port number for the registry
+  address: 172.16.11.11  # cluster.example.com - DNS name of the keepalived VIP
+  user: admin  # username - Username for authentication
+  password: pass01  # secret - Password for authentication
+  # By default we will generate self-signed certs to secure the system services.
+  #  - These certs will have a 10 year validity period
+  # If generateCerts is disabled, the user will need to provide the paths to the
+  # key and cert to use along with the associated CA cert.
+  generateCerts: true
+  key: ~  # /path/to/reg_tls.key
+  cert: ~  # /path/to/reg_tls.crt
+  caCert: ~  # /path/to/reg_ca.crt
+  # If the cluster will not be able to pull system images from DockerHub,
+  # the images will need to be hosted in an separate private registry. This
+  # registry will be configured as the default registry for the cluster to pull
+  # images from.
+  systemRegistry: ~  # registry.example.com
+  systemRegistryUser: ~  # user
+  systemRegistryPassword: ~  # secret
+
+# Load balancer configuration
+metalLB:
+  install: true  # Whether to install MetalLB for load balancing
+  addresses:
+    - 172.16.11.21-172.16.11.30
+  # - 10.0.0.0/24 - Prefix of IP addresses for the load balancer
+  # - 10.0.1.2/32 - Individual IP address for the load balancer
+  # - 10.1.2.3-10.1.2.5 - Range of IP addresses for the load balancer
+
+# Network configuration
+network:
+  # The same interface must be available on all nodes in the cluster
+  cniInterface: eth0  # ens224 - Network interface for the Cluster network
+  sans: []
+  # - controlplane - Subject Alternative Name for TLS certificates
+  # - worker.example.com - Subject Alternative Name for TLS certificates
+  # Keepalived should be enabled for any multi-node cluster
+  keepalived:
+    install: true  # Whether to install Keepalived for VIP configuration
+    vip: 172.16.11.11  # 192.168.1.2 - Virtual IP address for the cluster
+    vrid: 12  # Virtual Router ID (1-255) - defaults to last octet of VIP
+
+# Storage configuration
+#  - The createPartition option is intended for testing/validation purposes
+#    only. Production clusters should use pre-defined physical partitions.
+#  - If the createPartition option is enabled, please refer to the
+#    User Guide for advice on choosing the correct partition size
+storage:
+  installLonghorn: true  # Whether to install Longhorn for persistent storage
+  storageClass: jnpr-bbe-storage  # Storage class name for Longhorn
+  partitions:
+    # Docker partition details
+    - name: DockerStore
+      createPartition: false  # Whether to create a partition for this volume
+      devicePath: /dev/sda2  # Path to the block device for the volume
+      location: /var/lib/docker  # Mount point for the volume
+      partitionSize: 64  # Size of the partition for the volume in GiB
+
+    # Longhorn partition details
+    - name: LonghornStore
+      createPartition: false
+      devicePath: /dev/sda3
+      location: /mnt/longhorn
+      partitionSize: 40

@@ -1,0 +1,106 @@
+CE1 
+-----------
+lxc network configuration
+
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: pe11gev101
+    type: nic
+  eth1:
+    name: eth1
+    nictype: bridged
+    parent: ce1eth1
+    type: nic
+
+network configuration 
+
+cat << EOF |  tee /etc/network/interfaces
+auto eth0
+iface eth0 inet static
+address 192.168.255.1/31
+mtu 1500
+auto eth1
+iface eth1 inet static
+address 192.168.1.1/24
+mtu 1500
+iface eth0 inet6 static
+address 2001:dead:beef:ffff::1/127
+iface eth1 inet6 static
+address 2001:dead:beef:aaa1::1/64
+EOF
+
+FRR configuration
+
+
+frr version 10.0.1
+frr defaults traditional
+hostname ce1
+log syslog informational
+ipv6 forwarding
+service integrated-vtysh-config
+!
+router bgp 1001
+ no bgp ebgp-requires-policy
+ neighbor 192.168.255.0 remote-as 65412
+ neighbor 2001:dead:beef:ffff:: remote-as 65412
+ !
+ address-family ipv4 unicast
+  network 192.168.1.0/24
+ exit-address-family
+ !
+ address-family ipv6 unicast
+  network 2001:dead:beef:aaa1::/64
+  neighbor 2001:dead:beef:ffff:: activate
+ exit-address-family
+exit
+!
+end
+
+DHCPD configuration
+
+cat << EOF | tee /etc/dhcp/dhcpd.conf 
+default-lease-time 600;
+max-lease-time 7200;
+log-facility local7;
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.101 192.168.1.200;
+  option routers 192.168.1.1;
+}
+EOF
+
+cat << EOF | tee /etc/radvd.conf
+interface eth1
+{
+     AdvSendAdvert on;
+    prefix 2001:dead:beef:aaa1::/64
+    {
+        AdvOnLink on;
+        AdvAutonomous on;
+        AdvRouterAddr on;
+    };
+};
+EOF
+
+------
+c1ce1
+-------
+lxc configuration
+
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: ce1eth1
+    type: nic
+
+
+------
+c2ce1
+-------
+lxc configuration
+
+  eth0:
+    name: eth0
+    nictype: bridged
+    parent: ce1eth1
+    type: nic

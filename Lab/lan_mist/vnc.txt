@@ -1,0 +1,35 @@
+console desktop1 : http://172.16.11.1:6081/vnc.html
+console desktop2 : http://172.16.11.1:6082/vnc.html
+console desktop3 : http://172.16.11.1:6083/vnc.html
+console svr1 : http://172.16.11.1:6084/vnc.html
+console desktop4 : http://172.16.11.1:6085/vnc.html
+console desktop5 : http://172.16.11.1:6086/vnc.html
+console svr2 : http://172.16.11.1:6087/vnc.html
+console desktop6 : http://172.16.11.1:6088/vnc.html
+console desktop7 : http://172.16.11.1:6089/vnc.html
+console svr3 : http://172.16.11.1:6090/vnc.html
+console desktop8 : http://172.16.11.1:6091/vnc.html
+console desktop9 : http://172.16.11.1:6092/vnc.html
+console svr4 : http://172.16.11.1:6093/vnc.html
+console svr0 : http://172.16.11.1:6094/vnc.html
+
+54.215.12.95
+
+
+Requesting renewal of the following subscriptions:
+1.   Wired Assurance 12 - 1 units, 12 months 
+
+Organization: irzan (ec8a5955-f68e-436f-9da1-6655fb0d1be5)
+
+
+set policy-options policy-statement TE from family traffic-engineering
+set policy-options policy-statement TE then accept
+
+set protocols bgp group BGP-LS family traffic-engineering unicast
+set protocols bgp group BGP-LS peer-as {{ AS_number_CRPD }}
+set protocols bgp group BGP-LS allow {{ subnet/IP address CRPD }}
+set protocols bgp group BGP-LS passive
+set protocols bgp group BGP-LS export TE
+
+set protocols ospf traffic-engineering igp-topology
+set protocols mpls traffic-engineering database import igp-topology

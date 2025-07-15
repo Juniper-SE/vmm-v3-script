@@ -1,0 +1,21 @@
+set security zones security-zone trust host-inbound-traffic system-services ping
+set security zones security-zone trust host-inbound-traffic protocols ospf
+set security zones security-zone trust interfaces ge-0/0/3.0
+set security zones security-zone trust interfaces ge-0/0/2.1001
+set security zones security-zone trust interfaces ge-0/0/1.1001
+set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic protocols bgp
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.12.1/31
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:ff12::1/127
+set interfaces ge-0/0/1 vlan-tagging
+set interfaces ge-0/0/1 unit 1001 family inet address 192.168.100.0/31
+set interfaces ge-0/0/1 unit 1001 vlan-id 1001
+set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 unit 1001 family inet address 192.168.100.2/31
+set interfaces ge-0/0/2 unit 1001 vlan-id 1001
+set interfaces ge-0/0/3 unit 0 family inet address 192.168.150.1/24
+set interfaces ge-0/0/3 unit 0 family inet6 address fc00:dead:beef:f150::1/64
+set protocols ospf area 0 interface ge-0/0/1.1001 interface-type p2p
+set protocols ospf area 0 interface ge-0/0/2.1001 interface-type p2p
+
+
+

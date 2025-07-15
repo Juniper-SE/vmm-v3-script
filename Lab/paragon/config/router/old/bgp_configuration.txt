@@ -1,0 +1,64 @@
+P1
+----
+set protocols bgp group to_rr_client local-address 10.100.1.15
+set protocols bgp group to_rr_client family inet-vpn any
+set protocols bgp group to_rr_client family inet any
+set protocols bgp group to_rr_client family evpn signaling
+set protocols bgp group to_rr_client cluster 10.100.1.15
+set protocols bgp group to_rr_client peer-as 4200000512
+set protocols bgp group to_rr_client local-as 4200000512
+set protocols bgp group to_rr_client passive
+set protocols bgp group to_rr_client allow 10.100.1.0/24
+
+delete  protocols bgp group to_rr_client
+
+set protocols bgp group to_rr_client neighbor 10.100.1.1
+set protocols bgp group to_rr_client neighbor 10.100.1.2
+set protocols bgp group to_rr_client neighbor 10.100.1.3
+set protocols bgp group to_rr_client neighbor 10.100.1.4
+
+PE1
+___
+set protocols bgp group to_rr type internal
+set protocols bgp group to_rr local-address 10.100.1.1
+set protocols bgp group to_rr family inet any
+set protocols bgp group to_rr family inet-vpn any
+set protocols bgp group to_rr family evpn signaling
+set protocols bgp group to_rr peer-as 4200000512
+set protocols bgp group to_rr local-as 4200000512
+set protocols bgp group to_rr neighbor 10.100.1.11
+
+PE2
+___
+set protocols bgp group to_rr type internal
+set protocols bgp group to_rr local-address 10.100.1.2
+set protocols bgp group to_rr family inet any
+set protocols bgp group to_rr family inet-vpn any
+set protocols bgp group to_rr family evpn signaling
+set protocols bgp group to_rr peer-as 4200000512
+set protocols bgp group to_rr local-as 4200000512
+set protocols bgp group to_rr neighbor 10.100.1.11
+
+PE3
+___
+set protocols bgp group to_rr type internal
+set protocols bgp group to_rr local-address 10.100.1.3
+set protocols bgp group to_rr family inet any
+set protocols bgp group to_rr family inet-vpn any
+set protocols bgp group to_rr family evpn signaling
+set protocols bgp group to_rr peer-as 4200000512
+set protocols bgp group to_rr local-as 4200000512
+set protocols bgp group to_rr neighbor 10.100.1.11
+
+PE4
+___
+set protocols bgp group to_rr type internal
+set protocols bgp group to_rr local-address 10.100.1.4
+set protocols bgp group to_rr family inet any
+set protocols bgp group to_rr family inet-vpn any
+set protocols bgp group to_rr family evpn signaling
+set protocols bgp group to_rr peer-as 4200000512
+set protocols bgp group to_rr local-as 4200000512
+set protocols bgp group to_rr neighbor 10.100.1.11
+
+

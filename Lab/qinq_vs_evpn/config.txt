@@ -1,0 +1,93 @@
+set interfaces ge-0/0/0 mtu 9000
+set interfaces ge-0/0/0 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan11
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan12
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan13
+set interfaces ge-0/0/1 unit 0 family ethernet-switching interface-mode access
+set interfaces ge-0/0/1 unit 0 family ethernet-switching vlan members vlan11
+set interfaces ge-0/0/2 unit 0 family ethernet-switching interface-mode access
+set interfaces ge-0/0/2 unit 0 family ethernet-switching vlan members vlan12
+set interfaces ge-0/0/3 unit 0 family ethernet-switching interface-mode access
+set interfaces ge-0/0/3 unit 0 family ethernet-switching vlan members vlan13
+set vlans vlan11 vlan-id 11
+set vlans vlan12 vlan-id 12
+set vlans vlan13 vlan-id 13
+
+
+set interfaces ge-0/0/0 mtu 9000
+set interfaces ge-0/0/0 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan11
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan12
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan13
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ge-0/0/1 unit 0 family ethernet-switching vlan members vlan11
+set interfaces ge-0/0/1 unit 0 family ethernet-switching vlan members vlan12
+set interfaces ge-0/0/01 unit 0 family ethernet-switching vlan members vlan13
+
+set vlans vlan11 vlan-id 11
+set vlans vlan12 vlan-id 12
+set vlans vlan13 vlan-id 13
+
+
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  bridges:
+    sw1p1:
+      interfaces:
+        - eth1
+    sw1p2:
+      interfaces:
+        - eth2
+    sw1p3:
+      interfaces:
+        - eth3
+    sw1p4:
+      interfaces:
+        - eth4
+    sw2p1:
+      interfaces:
+        - eth5
+    sw2p2:
+      interfaces:
+        - eth6
+    sw2p3:
+      interfaces:
+        - eth7
+    sw2p4:
+      interfaces:
+        - eth8
+EOF
+
+
+
+
+set interfaces ge-0/0/0 mtu 9000
+set interfaces ge-0/0/0 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan101
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan102
+set interfaces ge-0/0/0 unit 0 family ethernet-switching vlan members vlan103
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ge-0/0/1 unit 0 family ethernet-switching vlan members vlan101
+set interfaces ge-0/0/1 unit 0 family ethernet-switching vlan members vlan102
+set interfaces ge-0/0/01 unit 0 family ethernet-switching vlan members vlan103
+
+set vlans vlan101 vlan-id 101
+set vlans vlan102 vlan-id 102
+set vlans vlan103 vlan-id 103
+
+
+
+set interfaces ge-0/0/0 flexible-vlan-tagging
+set interfaces ge-0/0/0 encapsulation extended-vlan-bridge
+set interfaces ge-0/0/0 unit 101 vlan-id-list 11-13
+set interfaces ge-0/0/0 unit 101 input-vlan-map push
+set interfaces ge-0/0/0 unit 101 output-vlan-map pop
+set interfaces ge-0/0/1 flexible-vlan-tagging
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/1 unit 10 encapsulation vlan-bridge
+set interfaces ge-0/0/1 unit 10 vlan-id-list 101-103
+set vlans vlan101 interface ge-0/0/0.101
+set vlans vlan101 interface ge-0/0/1.10

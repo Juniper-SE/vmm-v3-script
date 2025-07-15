@@ -1,0 +1,7 @@
+set interfaces {{interface}} unit {{unit_id}} vlan-id {{vlan_id}}
+set interfaces {{interface}} unit {{unit_id}} encapsulation vlan-ccc
+set routing-instances {{vrf_name}} instance-type evpn-vpws
+set routing-instances {{vrf_name}} vrf-target {{vrf_target}}
+set routing-instances {{vrf_name}} protocols evpn interface {{interface}}.{{unit_id}} vpws-service-id local {{local_id}}
+set routing-instances {{vrf_name}} protocols evpn interface {{interface}}.{{unit_id}} vpws-service-id remote {{remote_id}}
+set routing-instances {{vrf_name}} interface {{interface}}.{{unit_id}}

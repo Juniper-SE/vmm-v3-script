@@ -1,0 +1,8 @@
+network:
+  ethernets:
+    eth1:
+      dhcp4: false
+      addresses: [ 172.16.12.14/24 ]
+      gateway4: 172.16.12.1
+      nameservers:
+         addresses: [ 172.16.11.7 ]

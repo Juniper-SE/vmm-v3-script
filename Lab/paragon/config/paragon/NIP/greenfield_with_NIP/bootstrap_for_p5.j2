@@ -1,0 +1,104 @@
+configure
+set groups junos_bootstrap interfaces ge-0/0/0 unit 0 family inet address 172.16.14.5/24
+set groups junos_bootstrap routing-options static route 0/0 next-hop 172.16.14.254
+set groups junos_bootstrap policy-options policy-statement from_static term 1 from protocol static
+set groups junos_bootstrap policy-options policy-statement from_static term 1 from route-filter 0.0.0.0/0 exact
+set groups junos_bootstrap policy-options policy-statement from_static term 1 then accept
+set groups junos_bootstrap protocols isis export from_static
+set groups junos_bootstrap protocols bgp group bgp_ls type internal
+set groups junos_bootstrap protocols bgp group bgp_ls local-as 65201
+set groups junos_bootstrap protocols bgp group bgp_ls description "Paragon BGP-TE Peering"
+set groups junos_bootstrap protocols bgp group bgp_ls family traffic-engineering unicast
+set groups junos_bootstrap protocols bgp group bgp_ls passive
+set groups junos_bootstrap protocols bgp group bgp_ls allow 0.0.0.0/0
+set groups junos_bootstrap protocols bgp group bgp_ls local-address 10.1.255.15
+set groups junos_bootstrap protocols bgp group bgp_ls export TE
+set groups junos_bootstrap policy-options policy-statement TE term 1 from family traffic-engineering
+set groups junos_bootstrap policy-options policy-statement TE term 1 then accept
+set groups junos_bootstrap protocols mpls traffic-engineering database import policy TE
+set apply-groups junos_bootstrap
+commit
+
+set routing-options static route 0.0.0.0/0 next-hop 172.16.14.254
+set policy-options policy-statement from_static term 1 from protocol static
+set policy-options policy-statement from_static term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement from_static term 1 then accept
+set protocols isis export from_static
+
+
+
+
+NIP without DP and IP 
+
+set groups jcloud-gnmi-sensors system services extension-service request-response grpc grpc-keep-alive 60
+set groups jcloud-gnmi-sensors system name-resolution no-resolve-host-on-input
+set groups jcloud-gnmi-sensors services analytics streaming-server gnmi-terminator.juniper.net remote-address 172.16.12.1
+set groups jcloud-gnmi-sensors services analytics streaming-server gnmi-terminator.juniper.net remote-port 32767
+set groups jcloud-gnmi-sensors services analytics export-profile _jcloud_gnmi_60 reporting-rate 60
+set groups jcloud-gnmi-sensors services analytics export-profile _jcloud_gnmi_60 format gpb-gnmi
+set groups jcloud-gnmi-sensors services analytics export-profile _jcloud_gnmi_60 transport grpc
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_components_component_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_components_component_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_components_component_ resource /components/component/
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_npu_memory_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_npu_memory_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_npu_memory_ resource /junos/system/linecard/npu/memory/
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_packet_usage_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_packet_usage_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_packet_usage_ resource /junos/system/linecard/packet/usage/
+set groups jcloud-gnmi-sensors forwarding-options suppress-interface-leaf-nodes
+
+
+set groups jcloud-gnmi-sensors system services extension-service request-response grpc grpc-keep-alive 60
+set groups jcloud-gnmi-sensors system name-resolution no-resolve-host-on-input
+set groups jcloud-gnmi-sensors services analytics streaming-server gnmi-terminator.juniper.net remote-address 172.16.12.1
+set groups jcloud-gnmi-sensors services analytics streaming-server gnmi-terminator.juniper.net remote-port 32767
+set groups jcloud-gnmi-sensors services analytics export-profile _jcloud_gnmi_60 reporting-rate 60
+set groups jcloud-gnmi-sensors services analytics export-profile _jcloud_gnmi_60 format gpb-gnmi
+set groups jcloud-gnmi-sensors services analytics export-profile _jcloud_gnmi_60 transport grpc
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_components_component_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_components_component_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_components_component_ resource /components/component/
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_interfaces_interface_state_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_interfaces_interface_state_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_interfaces_interface_state_ resource /interfaces/interface/state/
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_interfaces_interface_subinterfaces_subinterface_state_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_interfaces_interface_subinterfaces_subinterface_state_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_interfaces_interface_subinterfaces_subinterface_state_ resource /interfaces/interface/subinterfaces/subinterface/state/
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_services_label-switched-path_usage_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_services_label-switched-path_usage_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_services_label-switched-path_usage_ resource /junos/services/label-switched-path/usage/
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_npu_memory_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_npu_memory_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_npu_memory_ resource /junos/system/linecard/npu/memory/
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_packet_usage_ server-name gnmi-terminator.juniper.net
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_packet_usage_ export-name _jcloud_gnmi_60
+set groups jcloud-gnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_packet_usage_ resource /junos/system/linecard/packet/usage/
+set groups jcloud-gnmi-sensors forwarding-options suppress-interface-leaf-nodes
+
+
+
+
+
+
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_optics_ server-name gnmi-terminator.juniper.net
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_optics_ export-name _jcloud_gnmi_60
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_junos_system_linecard_optics_ resource /junos/system/linecard/optics/
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_lsps_ server-name gnmi-terminator.juniper.net
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_lsps_ export-name _jcloud_gnmi_60
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_lsps_ resource /network-instances/network-instance/mpls/lsps/
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_ldp_neighbors_ server-name gnmi-terminator.juniper.net
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_ldp_neighbors_ export-name _jcloud_gnmi_60
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_ldp_neighbors_ resource /network-instances/network-instance/mpls/signaling-protocols/ldp/neighbors/
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_rsvp-te_interface-attributes_interface_ server-name gnmi-terminator.juniper.net
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_rsvp-te_interface-attributes_interface_ export-name _jcloud_gnmi_60
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_rsvp-te_interface-attributes_interface_ resource /network-instances/network-instance/mpls/signaling-protocols/rsvp-te/interface-attributes/interface/
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_rsvp-te_neighbors_ server-name gnmi-terminator.juniper.net 
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_rsvp-te_neighbors_ export-name _jcloud_gnmi_60
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_mpls_signaling-protocols_rsvp-te_neighbors_ resource /network-instances/network-instance/mpls/signaling-protocols/rsvp-te/neighbors/
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_protocols_protocol_bgp_neighbors_ server-name gnmi-terminator.juniper.net
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_protocols_protocol_bgp_neighbors_ export-name _jcloud_gnmi_60
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_protocols_protocol_bgp_neighbors_ resource /network-instances/network-instance/protocols/protocol/bgp/neighbors/
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_protocols_protocol_isis_interfaces_ server-name gnmi-terminator.juniper.net
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_protocols_protocol_isis_interfaces_ export-name _jcloud_gnmi_60
+set groups jcloudgnmi-sensors services analytics sensor _jcloud_gnmi_network-instances_network-instance_protocols_protocol_isis_interfaces_ resource /network-instances/network-instance/protocols/protocol/isis/interfaces/

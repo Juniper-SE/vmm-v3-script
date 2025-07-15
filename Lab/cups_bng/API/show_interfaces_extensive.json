@@ -1,0 +1,748 @@
+{
+    "interface-information" : [
+    {
+        "attributes" : {"xmlns" : "http://xml.juniper.net/junos/24.2R0/junos-interface", 
+                        "junos:style" : "normal"
+                       }, 
+        "logical-interface" : [
+        {
+            "name" : [
+            {
+                "data" : "pp0.3221225479"
+            }
+            ], 
+            "local-index" : [
+            {
+                "data" : "536870934"
+            }
+            ], 
+            "snmp-index" : [
+            {
+                "data" : "200000022"
+            }
+            ], 
+            "generation" : [
+            {
+                "data" : "11"
+            }
+            ], 
+            "if-config-flags" : [
+            {
+                "iff-up" : [
+                {
+                    "data" : [null]
+                }
+                ], 
+                "iff-point-to-point" : [
+                {
+                    "data" : [null]
+                }
+                ]
+            }
+            ], 
+            "encapsulation" : [
+            {
+                "data" : "PPPoE"
+            }
+            ], 
+            "policer-overhead" : [
+            {
+            }
+            ], 
+            "pppoe-information" : [
+            {
+                "pppoe-interface" : [
+                {
+                    "state" : [
+                    {
+                        "data" : "SessionUp"
+                    }
+                    ], 
+                    "session-id" : [
+                    {
+                        "data" : "1"
+                    }
+                    ], 
+                    "ac-name-session" : [
+                    {
+                        "data" : "bng1"
+                    }
+                    ], 
+                    "remote-mac" : [
+                    {
+                        "data" : "56:04:1a:00:4a:11"
+                    }
+                    ], 
+                    "underlying-interface-name" : [
+                    {
+                        "data" : "demux0.3221225478"
+                    }
+                    ], 
+                    "underlying-interface-index" : [
+                    {
+                        "data" : "536870932"
+                    }
+                    ], 
+                    "ignore-eol-tag" : [
+                    {
+                        "data" : "Disable "
+                    }
+                    ]
+                }
+                ]
+            }
+            ], 
+            "traffic-statistics" : [
+            {
+                "attributes" : {"junos:style" : "verbose", 
+                                "junos:indent" : "2"
+                               }, 
+                "input-bytes" : [
+                {
+                    "data" : "7036447093"
+                }
+                ], 
+                "output-bytes" : [
+                {
+                    "data" : "1038406817"
+                }
+                ], 
+                "input-packets" : [
+                {
+                    "data" : "5027482"
+                }
+                ], 
+                "output-packets" : [
+                {
+                    "data" : "2811062"
+                }
+                ], 
+                "ipv6-total-statistics" : [
+                {
+                    "input-bytes" : [
+                    {
+                        "data" : "7032601027"
+                    }
+                    ], 
+                    "output-bytes" : [
+                    {
+                        "data" : "1011048098"
+                    }
+                    ], 
+                    "input-packets" : [
+                    {
+                        "data" : "5002568"
+                    }
+                    ], 
+                    "output-packets" : [
+                    {
+                        "data" : "2773739"
+                    }
+                    ]
+                }
+                ]
+            }
+            ], 
+            "local-traffic-statistics" : [
+            {
+                "input-bytes" : [
+                {
+                    "data" : "4931"
+                }
+                ], 
+                "output-bytes" : [
+                {
+                    "data" : "2950"
+                }
+                ], 
+                "input-packets" : [
+                {
+                    "data" : "62"
+                }
+                ], 
+                "output-packets" : [
+                {
+                    "data" : "31"
+                }
+                ]
+            }
+            ], 
+            "transit-traffic-statistics" : [
+            {
+                "input-bytes" : [
+                {
+                    "data" : "7036442162"
+                }
+                ], 
+                "input-bps" : [
+                {
+                    "data" : "264"
+                }
+                ], 
+                "output-bytes" : [
+                {
+                    "data" : "1038403867"
+                }
+                ], 
+                "output-bps" : [
+                {
+                    "data" : "56"
+                }
+                ], 
+                "input-packets" : [
+                {
+                    "data" : "5027420"
+                }
+                ], 
+                "input-pps" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "output-packets" : [
+                {
+                    "data" : "2811031"
+                }
+                ], 
+                "output-pps" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "ipv4-transit-statistics" : [
+                {
+                    "input-bytes" : [
+                    {
+                        "data" : "3681608"
+                    }
+                    ], 
+                    "input-bps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "output-bytes" : [
+                    {
+                        "data" : "27320617"
+                    }
+                    ], 
+                    "output-bps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "input-packets" : [
+                    {
+                        "data" : "20077"
+                    }
+                    ], 
+                    "input-pps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "output-packets" : [
+                    {
+                        "data" : "32486"
+                    }
+                    ], 
+                    "output-pps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ]
+                }
+                ], 
+                "ipv6-transit-statistics" : [
+                {
+                    "input-bytes" : [
+                    {
+                        "data" : "7032596096"
+                    }
+                    ], 
+                    "input-bps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "output-bytes" : [
+                    {
+                        "data" : "1011045148"
+                    }
+                    ], 
+                    "output-bps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "input-packets" : [
+                    {
+                        "data" : "5002506"
+                    }
+                    ], 
+                    "input-pps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ], 
+                    "output-packets" : [
+                    {
+                        "data" : "2773708"
+                    }
+                    ], 
+                    "output-pps" : [
+                    {
+                        "data" : "0"
+                    }
+                    ]
+                }
+                ]
+            }
+            ], 
+            "keepalive-config" : [
+            {
+                "keepalive-interval" : [
+                {
+                    "data" : "30"
+                }
+                ], 
+                "keepalive-up-count" : [
+                {
+                    "data" : "3"
+                }
+                ], 
+                "keepalive-down-count" : [
+                {
+                    "data" : "3"
+                }
+                ]
+            }
+            ], 
+            "ppp-flags" : [
+            {
+            }
+            ], 
+            "lcp-state" : [
+            {
+                "data" : "Opened"
+            }
+            ], 
+            "ncp-information" : [
+            {
+                "ncp-protocol" : [
+                {
+                    "data" : "inet"
+                }
+                ], 
+                "ncp-state" : [
+                {
+                    "data" : "Opened"
+                }
+                ]
+            }, 
+            {
+                "ncp-protocol" : [
+                {
+                    "data" : "inet6"
+                }
+                ], 
+                "ncp-state" : [
+                {
+                    "data" : "Opened"
+                }
+                ]
+            }, 
+            {
+                "ncp-protocol" : [
+                {
+                    "data" : "iso"
+                }
+                ], 
+                "ncp-state" : [
+                {
+                    "data" : "Not-configured"
+                }
+                ]
+            }, 
+            {
+                "ncp-protocol" : [
+                {
+                    "data" : "mpls"
+                }
+                ], 
+                "ncp-state" : [
+                {
+                    "data" : "Not-configured"
+                }
+                ]
+            }
+            ], 
+            "chap-state" : [
+            {
+                "data" : "Success"
+            }
+            ], 
+            "pap-state" : [
+            {
+                "data" : "Closed"
+            }
+            ], 
+            "filter-information" : [
+            {
+            }
+            ], 
+            "address-family" : [
+            {
+                "address-family-name" : [
+                {
+                    "data" : "inet"
+                }
+                ], 
+                "mtu" : [
+                {
+                    "data" : "1492"
+                }
+                ], 
+                "max-local-cache" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "new-hold-limit" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "intf-curr-cnt" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "intf-unresolved-cnt" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "intf-dropcnt" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "generation" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "route-table" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "address-family-flags" : [
+                {
+                    "ifff-unnumbered" : [
+                    {
+                        "data" : [null]
+                    }
+                    ]
+                }
+                ], 
+                "address-family-unnumbered" : [
+                {
+                    "unnumbered-family-donor-interface-name" : [
+                    {
+                        "data" : "lo0.0"
+                    }
+                    ], 
+                    "unnumbered-family-donor-interface-index" : [
+                    {
+                        "data" : "320"
+                    }
+                    ]
+                }
+                ], 
+                "filter-information" : [
+                {
+                    "filter-input" : [
+                    {
+                        "data" : "police-5M-pp0.3221225479-in"
+                    }
+                    ], 
+                    "filter-output" : [
+                    {
+                        "data" : "police-5M-pp0.3221225479-out"
+                    }
+                    ]
+                }
+                ], 
+                "policer-information" : [
+                {
+                }
+                ], 
+                "interface-address" : [
+                {
+                    "ifa-flags" : [
+                    {
+                        "ifaf-current-primary" : [
+                        {
+                            "data" : [null]
+                        }
+                        ]
+                    }
+                    ], 
+                    "ifa-destination" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "ifa-local" : [
+                    {
+                        "data" : "172.16.255.1"
+                    }
+                    ], 
+                    "ifa-broadcast" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "generation" : [
+                    {
+                        "data" : "0"
+                    }
+                    ]
+                }
+                ]
+            }, 
+            {
+                "address-family-name" : [
+                {
+                    "data" : "inet6"
+                }
+                ], 
+                "mtu" : [
+                {
+                    "data" : "1492"
+                }
+                ], 
+                "max-local-cache" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "new-hold-limit" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "intf-curr-cnt" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "intf-unresolved-cnt" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "intf-dropcnt" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "generation" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "route-table" : [
+                {
+                    "data" : "0"
+                }
+                ], 
+                "address-family-flags" : [
+                {
+                    "ifff-unnumbered" : [
+                    {
+                        "data" : [null]
+                    }
+                    ]
+                }
+                ], 
+                "address-family-unnumbered" : [
+                {
+                    "unnumbered-family-donor-interface-name" : [
+                    {
+                        "data" : "lo0.0"
+                    }
+                    ], 
+                    "unnumbered-family-donor-interface-index" : [
+                    {
+                        "data" : "320"
+                    }
+                    ]
+                }
+                ], 
+                "filter-information" : [
+                {
+                    "filter-input" : [
+                    {
+                        "data" : "police-5Mv6-pp0.3221225479-in"
+                    }
+                    ], 
+                    "filter-output" : [
+                    {
+                        "data" : "police-5Mv6-pp0.3221225479-out"
+                    }
+                    ]
+                }
+                ], 
+                "policer-information" : [
+                {
+                }
+                ], 
+                "interface-address" : [
+                {
+                    "ifa-flags" : [
+                    {
+                        "ifaf-current-default" : [
+                        {
+                            "data" : [null]
+                        }
+                        ], 
+                        "ifaf-current-primary" : [
+                        {
+                            "data" : [null]
+                        }
+                        ]
+                    }
+                    ], 
+                    "ifa-destination" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "ifa-local" : [
+                    {
+                        "data" : "fc00:dead:beef:ffff::ffff:1"
+                    }
+                    ], 
+                    "interface-address" : [
+                    {
+                        "in6-addr-flags" : [
+                        {
+                            "ifaf-none" : [
+                            {
+                                "data" : [null]
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "ifa-broadcast" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "generation" : [
+                    {
+                        "data" : "138"
+                    }
+                    ]
+                }, 
+                {
+                    "ifa-flags" : [
+                    {
+                        "ifaf-current-primary" : [
+                        {
+                            "data" : [null]
+                        }
+                        ]
+                    }
+                    ], 
+                    "ifa-destination" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "ifa-local" : [
+                    {
+                        "data" : "fc00:dead:beef:ffff::ffff:1"
+                    }
+                    ], 
+                    "interface-address" : [
+                    {
+                        "in6-addr-flags" : [
+                        {
+                            "ifaf-none" : [
+                            {
+                                "data" : [null]
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "ifa-broadcast" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "generation" : [
+                    {
+                        "data" : "0"
+                    }
+                    ]
+                }, 
+                {
+                    "ifa-flags" : [
+                    {
+                        "internal-flags" : [
+                        {
+                            "data" : "0x800"
+                        }
+                        ]
+                    }
+                    ], 
+                    "ifa-destination" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "ifa-local" : [
+                    {
+                        "data" : "fe80::5604:1aff:fe00:554c"
+                    }
+                    ], 
+                    "interface-address" : [
+                    {
+                        "in6-addr-flags" : [
+                        {
+                            "ifaf-none" : [
+                            {
+                                "data" : [null]
+                            }
+                            ]
+                        }
+                        ]
+                    }
+                    ], 
+                    "ifa-broadcast" : [
+                    {
+                        "data" : "Unspecified"
+                    }
+                    ], 
+                    "generation" : [
+                    {
+                        "data" : "0"
+                    }
+                    ]
+                }
+                ]
+            }
+            ]
+        }
+        ]
+    }
+    ]
+}

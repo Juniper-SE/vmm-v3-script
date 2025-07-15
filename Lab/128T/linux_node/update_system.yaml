@@ -1,0 +1,148 @@
+---
+- name: Updating system
+  hosts:
+    - all
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: apt -y update
+    ansible.builtin.apt:
+      update_cache: yes
+    # apt:
+    #   update_cache: true
+    #   cache_valid_time: 3600
+    #   force_apt_get: true
+  - name: apt -y upgrade
+    ansible.builtin.apt:
+      name: "*"
+      state: latest
+    # apt:
+    #   update_cache: true
+    #   upgrade: dist
+    #   cache_valid_time: 3600
+    #   force_apt_get: true
+    #   state: latest
+- name: install bridge-utils and lldpd
+  hosts:
+    - lxc1
+    - isp1
+    - isp2
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: install 1
+    ansible.builtin.apt:
+      pkg:
+      - bridge-utils
+      - lldpd
+- name: enabling ip forwarding
+  hosts:
+    - isp1
+    - isp2
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: add into /etc/sysctl.conf
+    ansible.builtin.blockinfile:
+      path: /etc/sysctl.conf
+      block: |
+        net.ipv4.ip_forward=1
+        net.ipv6.conf.all.forwarding=1
+  - name: install dhcp-server
+    ansible.builtin.apt:
+      name: isc-dhcp-server
+      state: present
+# - name: prepare kubernetes node
+#   hosts:
+#     - node1
+#     - node2
+#     - node3
+#     - control
+#   become: yes
+#   become_method: sudo
+#   tasks:
+#   - name: install application
+#     apt:
+#       name: "{{ item }}"
+#       update_cache: yes
+#     loop:
+#       - apt-transport-https 
+#       - ca-certificates 
+#       - curl 
+#       - docker.io 
+#       - jq 
+#       - keepalived 
+#       - chrony
+#   - name: add into limits.conf
+#     ansible.builtin.blockinfile:
+#       path: /etc/security/limits.conf
+#       block: |
+#         *         hard    nofile      1048576
+#         *         soft    nofile      1048576
+#         root      hard    nofile      1048576
+#         root      soft    nofile      1048576
+#         influxdb  hard    nofile      1048576
+#         influxdb  soft    nofile      1048576
+#   - name: add into /etc/hosts
+#     ansible.builtin.blockinfile:
+#       path: /etc/hosts
+#       block: |
+#         172.16.11.2 node1
+#         172.16.11.3 node2
+#         172.16.11.4 node3
+#         172.16.12.11 control
+#   - name: add into sysctl.conf
+#     ansible.builtin.blockinfile:
+#       path: /etc/sysctl.conf
+#       block: |
+#         fs.file-max = 2097152
+#         vm.max_map_count=262144
+#         fs.inotify.max_user_watches=524288
+#         fs.inotify.max_user_instances=512
+#   - name: adding user ubuntu into group docker
+#     user:
+#       name: ubuntu
+#       groups: docker
+#       append: yes
+#   - name: edit sshd_config
+#     ansible.builtin.lineinfile:
+#       path: /etc/ssh/sshd_config
+#       regexp: '#AllowTcpForwarding yes'
+#       line: AllowTcpForwarding yes
+#   - name: restart sshd
+#     ansible.builtin.service:
+#       name: sshd
+#       state: restarted
+#       enabled: true
+#   - name: create file 
+#     copy:
+#       dest: /tmp/create_part.sh
+#       content: |
+#         #!/bin/bash
+#         #sudo fdisk -l /dev/sda
+#         echo "n
+#         2
+
+
+#         w
+#         q
+#         " | sudo fdisk /dev/sda
+#         # sudo fdisk -l /dev/sda
+#   - name: Change mode /tmp/create_part.sh
+#     ansible.builtin.file:
+#       path: /tmp/create_part.sh
+#       mode: '0700'
+#   - name: run script /tmp/create_part.sh
+#     shell: | 
+#       /tmp/create_part.sh
+#       rm /tmp/create_part.sh
+- name: rebooting host
+  hosts:
+  - isp1
+  - isp2
+  - kvm1
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: reboot node
+    ansible.builtin.reboot:

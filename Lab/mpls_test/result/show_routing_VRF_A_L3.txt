@@ -1,0 +1,123 @@
+# Routing table of VRF-A on PE-X, PE-Y and PE-Z
+
+irzan-mbp:mpls_test irzan$ ssh PE-X "show route table VRF-A-L3.inet.0"
+
+VRF-A-L3.inet.0: 8 destinations, 9 routes (8 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.1.1.0/24        *[OSPF/10] 00:30:47, metric 2
+                    >  to 10.1.23.1 via ge-0/0/0.0
+10.1.2.0/24        *[EVPN/170] 00:33:09
+                    >  to 10.1.23.3 via ge-0/0/1.0, Push 16
+10.1.3.0/24        *[EVPN/170] 00:20:06
+                    >  to 10.1.23.5 via ge-0/0/2.0, Push 16
+10.1.23.0/31       *[Direct/0] 00:33:08
+                    >  via ge-0/0/0.0
+10.1.23.0/32       *[Local/0] 00:33:08
+                       Local via ge-0/0/0.0
+192.168.255.1/32   *[OSPF/10] 00:30:47, metric 1
+                    >  to 10.1.23.1 via ge-0/0/0.0
+192.168.255.2/32   *[EVPN/170] 00:05:35
+                    >  to 10.1.23.5 via ge-0/0/2.0, Push 16
+224.0.0.5/32       *[OSPF/10] 00:33:09, metric 1
+                       MultiRecv
+                    [EVPN/170] 00:05:35
+                    >  to 10.1.23.5 via ge-0/0/2.0, Push 16
+irzan-mbp:mpls_test irzan$
+
+irzan-mbp:mpls_test irzan$ ssh PE-Y "show route table VRF-A-L3.inet.0"
+
+VRF-A-L3.inet.0: 7 destinations, 8 routes (7 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.1.1.0/24        *[EVPN/170] 00:31:17
+                    >  to 10.1.23.2 via ge-0/0/3.0, Push 16
+10.1.2.0/24        *[Direct/0] 00:36:22
+                    >  via ge-0/0/0.0
+10.1.2.1/32        *[Local/0] 00:36:22
+                       Local via ge-0/0/0.0
+10.1.3.0/24        *[EVPN/170] 00:20:36
+                    >  to 10.1.23.7 via ge-0/0/4.0, Push 16
+192.168.255.1/32   *[EVPN/170] 00:07:50
+                    >  to 10.1.23.2 via ge-0/0/3.0, Push 16
+192.168.255.2/32   *[EVPN/170] 00:06:05
+                    >  to 10.1.23.7 via ge-0/0/4.0, Push 16
+224.0.0.5/32       *[EVPN/170] 00:07:50
+                    >  to 10.1.23.2 via ge-0/0/3.0, Push 16
+                    [EVPN/170] 00:06:05
+                    >  to 10.1.23.7 via ge-0/0/4.0, Push 16
+irzan-mbp:mpls_test irzan$
+
+irzan-mbp:mpls_test irzan$ ssh PE-Z "show route table VRF-A-L3.inet.0"
+
+VRF-A-L3.inet.0: 8 destinations, 9 routes (8 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.1.1.0/24        *[EVPN/170] 00:20:59
+                    >  to 10.1.23.4 via ge-0/0/2.0, Push 16
+10.1.2.0/24        *[EVPN/170] 00:20:59
+                    >  to 10.1.23.6 via ge-0/0/3.0, Push 16
+10.1.3.0/24        *[OSPF/10] 00:20:49, metric 2
+                    >  to 10.1.23.9 via ge-0/0/4.0
+10.1.23.8/31       *[Direct/0] 00:20:58
+                    >  via ge-0/0/4.0
+10.1.23.8/32       *[Local/0] 00:20:58
+                       Local via ge-0/0/4.0
+192.168.255.1/32   *[EVPN/170] 00:08:03
+                    >  to 10.1.23.4 via ge-0/0/2.0, Push 16
+192.168.255.2/32   *[OSPF/10] 00:20:49, metric 1
+                    >  to 10.1.23.9 via ge-0/0/4.0
+224.0.0.5/32       *[OSPF/10] 00:20:59, metric 1
+                       MultiRecv
+                    [EVPN/170] 00:08:03
+                    >  to 10.1.23.4 via ge-0/0/2.0, Push 16
+
+
+# connectivity from node vrfa1
+
+vrfa1:~$ ping -c 2 10.1.2.3
+PING 10.1.2.3 (10.1.2.3): 56 data bytes
+64 bytes from 10.1.2.3: seq=0 ttl=42 time=4.570 ms
+64 bytes from 10.1.2.3: seq=1 ttl=42 time=4.687 ms
+
+--- 10.1.2.3 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 4.570/4.628/4.687 ms
+vrfa1:~$ ping -c 2 10.1.3.2
+PING 10.1.3.2 (10.1.3.2): 56 data bytes
+64 bytes from 10.1.3.2: seq=0 ttl=42 time=7.102 ms
+64 bytes from 10.1.3.2: seq=1 ttl=42 time=5.541 ms
+
+--- 10.1.3.2 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 5.541/6.321/7.102 ms
+vrfa1:~$
+
+
+# IP address of nodes in VRF-A
+
+vrfa1:~$ ip addr show dev eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 56:04:1b:00:73:2d brd ff:ff:ff:ff:ff:ff
+    inet 10.1.1.2/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5404:1bff:fe00:732d/64 scope link
+       valid_lft forever preferred_lft forever
+vrfa1:~$
+
+vrfa2:~$ ip addr show dev eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 56:04:1b:00:56:f6 brd ff:ff:ff:ff:ff:ff
+    inet 10.1.2.3/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5404:1bff:fe00:56f6/64 scope link
+       valid_lft forever preferred_lft forever
+vrfa2:~$
+vrfa3:~$ ip addr show dev eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 56:04:1b:00:33:ef brd ff:ff:ff:ff:ff:ff
+    inet 10.1.3.2/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5404:1bff:fe00:33ef/64 scope link
+       valid_lft forever preferred_lft forever
+vrfa3:~$

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod0
+spec:
+  containers:
+  - name: c1
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent 
+  - name: c2
+    image: 172.16.14.10:5000/webserver:0.1
+    imagePullPolicy: IfNotPresent
+
+

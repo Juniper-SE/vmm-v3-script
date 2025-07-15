@@ -1,0 +1,120 @@
+global:
+  as_list: 4200065000-4200065100
+switch:
+  spine1:
+    type: spine
+    lo0: 2001:dead:beef:ffff::1
+    router_id: 10.1.100.1
+    intf:
+      - xe-0/0/0
+      - xe-0/0/1
+      - xe-0/0/2
+      - xe-0/0/3
+      - xe-0/0/4
+    bgp:
+      local_as: 4200065001
+      neighbor:
+        - remote_peer: 2001:dead:beef:ffff::11
+          remote_as: 4200065011
+        - remote_peer: 2001:dead:beef:ffff::12
+          remote_as: 4200065012
+        - remote_peer: 2001:dead:beef:ffff::13
+          remote_as: 4200065013
+        - remote_peer: 2001:dead:beef:ffff::14
+          remote_as: 4200065014
+        - remote_peer: 2001:dead:beef:ffff::15
+          remote_as: 4200065015
+  spine2:
+    type: spine
+    lo0: 2001:dead:beef:ffff::2
+    router_id: 10.1.100.2
+    intf:
+      - xe-0/0/0
+      - xe-0/0/1
+      - xe-0/0/2
+      - xe-0/0/3
+      - xe-0/0/4
+    bgp:
+      local_as: 4200065002
+      neighbor:
+        - remote_peer: 2001:dead:beef:ffff::11
+          remote_as: 4200065011
+        - remote_peer: 2001:dead:beef:ffff::12
+          remote_as: 4200065012
+        - remote_peer: 2001:dead:beef:ffff::13
+          remote_as: 4200065013
+        - remote_peer: 2001:dead:beef:ffff::14
+          remote_as: 4200065014
+        - remote_peer: 2001:dead:beef:ffff::15
+          remote_as: 4200065015
+  leaf1:
+    type: leaf
+    lo0: 2001:dead:beef:ffff::11
+    router_id: 10.1.100.11
+    intf:
+      - xe-0/0/0
+      - xe-0/0/1
+    bgp:
+      local_as: 4200065011
+      neighbor:
+        - remote_peer: 2001:dead:beef:ffff::1
+          remote_as: 4200065001
+        - remote_peer: 2001:dead:beef:ffff::2
+          remote_as: 4200065002
+  leaf2:
+    type: leaf
+    lo0: 2001:dead:beef:ffff::12
+    router_id: 10.1.100.12
+    intf:
+      - xe-0/0/0
+      - xe-0/0/1
+    bgp:
+      local_as: 4200065012
+      neighbor:
+        - remote_peer: 2001:dead:beef:ffff::1
+          remote_as: 4200065001
+        - remote_peer: 2001:dead:beef:ffff::2
+          remote_as: 4200065002
+  leaf3:
+    type: leaf
+    lo0: 2001:dead:beef:ffff::13
+    router_id: 10.1.100.13
+    intf:
+      - xe-0/0/0
+      - xe-0/0/1
+    bgp:
+      local_as: 4200065013
+      neighbor:
+        - remote_peer: 2001:dead:beef:ffff::1
+          remote_as: 4200065001
+        - remote_peer: 2001:dead:beef:ffff::2
+          remote_as: 4200065002
+  leaf4:
+    type: leaf
+    lo0: 2001:dead:beef:ffff::14
+    router_id: 10.1.100.14
+    intf:
+      - xe-0/0/0
+      - xe-0/0/1
+    bgp:
+      local_as: 4200065014
+      neighbor:
+        - remote_peer: 2001:dead:beef:ffff::1
+          remote_as: 4200065001
+        - remote_peer: 2001:dead:beef:ffff::2
+          remote_as: 4200065002
+  leaf5:
+    type: leaf
+    lo0: 2001:dead:beef:ffff::15
+    router_id: 10.1.100.15
+    intf:
+      - xe-0/0/0
+      - xe-0/0/1
+    bgp:
+      local_as: 4200065015
+      neighbor:
+        - remote_peer: 2001:dead:beef:ffff::1
+          remote_as: 4200065001
+        - remote_peer: 2001:dead:beef:ffff::2
+          remote_as: 4200065002
+

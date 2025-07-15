@@ -1,0 +1,210 @@
+SERVICE INSTANCE
+
+{
+    "service-instance": {
+        "port_tuples": [
+            {
+                "to": [
+                    "default-domain",
+                    "k8s-lab4",
+                    "csrx1",
+                    "csrx1-port-tuple0-04931170-c007-4847-a0c0-e196e18f7da0"
+                ],
+                "href": "http://127.0.0.1:8082/port-tuple/5fcfe723-0734-4885-9b83-08fce200a7fa",
+                "uuid": "5fcfe723-0734-4885-9b83-08fce200a7fa"
+            }
+        ],
+        "fq_name": [
+            "default-domain",
+            "k8s-lab4",
+            "csrx1"
+        ],
+        "uuid": "f3c68d03-6990-4a5e-bb19-f899fce64e4d",
+        "parent_type": "project",
+        "parent_uuid": "113240b5-86e1-4911-bb29-eb9104ca75c3",
+        "parent_href": "http://127.0.0.1:8082/project/113240b5-86e1-4911-bb29-eb9104ca75c3",
+        "service_instance_properties": {
+            "right_virtual_network": "default-domain:k8s-lab4:k8s-vn-right-pod-network",
+            "interface_list": [
+                {
+                    "virtual_network": "default-domain:k8s-lab4:k8s-vn-left-pod-network"
+                },
+                {
+                    "virtual_network": "default-domain:k8s-lab4:k8s-vn-right-pod-network"
+                }
+            ],
+            "left_virtual_network": "default-domain:k8s-lab4:k8s-vn-left-pod-network"
+        },
+        "perms2": {
+            "owner": "None",
+            "owner_access": 7,
+            "global_access": 0,
+            "share": []
+        },
+        "href": "http://127.0.0.1:8082/service-instance/f3c68d03-6990-4a5e-bb19-f899fce64e4d",
+        "instance_ip_refs": [
+            {
+                "to": [
+                    "f3c68d03-6990-4a5e-bb19-f899fce64e4d-left-v4"
+                ],
+                "href": "http://127.0.0.1:8082/instance-ip/7bc63e8f-3286-4562-9530-d03e86ca9681",
+                "attr": {
+                    "interface_type": "left"
+                },
+                "uuid": "7bc63e8f-3286-4562-9530-d03e86ca9681"
+            },
+            {
+                "to": [
+                    "f3c68d03-6990-4a5e-bb19-f899fce64e4d-right-v4"
+                ],
+                "href": "http://127.0.0.1:8082/instance-ip/941cff3b-03fd-4290-aca2-2664d3c5a0e5",
+                "attr": {
+                    "interface_type": "right"
+                },
+                "uuid": "941cff3b-03fd-4290-aca2-2664d3c5a0e5"
+            },
+            {
+                "to": [
+                    "f3c68d03-6990-4a5e-bb19-f899fce64e4d-left-v6"
+                ],
+                "href": "http://127.0.0.1:8082/instance-ip/20edddf1-ef30-41f7-9a06-e9b3ab09f414",
+                "attr": {
+                    "interface_type": "left"
+                },
+                "uuid": "20edddf1-ef30-41f7-9a06-e9b3ab09f414"
+            },
+            {
+                "to": [
+                    "f3c68d03-6990-4a5e-bb19-f899fce64e4d-right-v6"
+                ],
+                "href": "http://127.0.0.1:8082/instance-ip/cf55074e-b7cf-4e4d-b271-f77efc0214fd",
+                "attr": {
+                    "interface_type": "right"
+                },
+                "uuid": "cf55074e-b7cf-4e4d-b271-f77efc0214fd"
+            }
+        ],
+        "id_perms": {
+            "enable": true,
+            "description": null,
+            "created": "2022-01-29T15:23:45.367445",
+            "creator": null,
+            "uuid": {
+                "uuid_mslong": 17565882442400680542,
+                "uuid_lslong": 13482080299766926925
+            },
+            "user_visible": true,
+            "last_modified": "2022-01-29T15:23:46.227570",
+            "permissions": {
+                "owner": "cloud-admin",
+                "owner_access": 7,
+                "other_access": 7,
+                "group": "cloud-admin-group",
+                "group_access": 7
+            }
+        },
+        "display_name": "csrx1",
+        "service_template_refs": [
+            {
+                "to": [
+                    "default-domain",
+                    "fw1"
+                ],
+                "href": "http://127.0.0.1:8082/service-template/307a20cb-f4ee-4e0c-beb6-c6db7d314dd9",
+                "attr": null,
+                "uuid": "307a20cb-f4ee-4e0c-beb6-c6db7d314dd9"
+            }
+        ],
+        "name": "csrx1"
+    }
+}
+
+PORT TUPLE 
+
+{
+    "port-tuple": {
+        "virtual_machine_interface_back_refs": [
+            {
+                "to": [
+                    "default-domain",
+                    "k8s-lab4",
+                    "csrx1__2ae38a54-8117-11ec-8a3b-560419003adc"
+                ],
+                "href": "http://127.0.0.1:8082/virtual-machine-interface/2ae38a54-8117-11ec-8a3b-560419003adc",
+                "attr": null,
+                "uuid": "2ae38a54-8117-11ec-8a3b-560419003adc"
+            },
+            {
+                "to": [
+                    "default-domain",
+                    "k8s-lab4",
+                    "csrx1__2a8a987c-8117-11ec-8a3b-560419003adc"
+                ],
+                "href": "http://127.0.0.1:8082/virtual-machine-interface/2a8a987c-8117-11ec-8a3b-560419003adc",
+                "attr": null,
+                "uuid": "2a8a987c-8117-11ec-8a3b-560419003adc"
+            }
+        ],
+        "display_name": "csrx1-port-tuple0-04931170-c007-4847-a0c0-e196e18f7da0",
+        "uuid": "5fcfe723-0734-4885-9b83-08fce200a7fa",
+        "parent_uuid": "f3c68d03-6990-4a5e-bb19-f899fce64e4d",
+        "parent_href": "http://127.0.0.1:8082/service-instance/f3c68d03-6990-4a5e-bb19-f899fce64e4d",
+        "parent_type": "service-instance",
+        "perms2": {
+            "owner": "None",
+            "owner_access": 7,
+            "global_access": 0,
+            "share": []
+        },
+        "href": "http://127.0.0.1:8082/port-tuple/5fcfe723-0734-4885-9b83-08fce200a7fa",
+        "id_perms": {
+            "enable": true,
+            "description": null,
+            "creator": null,
+            "created": "2022-01-29T15:23:45.453257",
+            "user_visible": true,
+            "last_modified": "2022-01-29T15:23:45.453257",
+            "permissions": {
+                "owner": "cloud-admin",
+                "owner_access": 7,
+                "other_access": 7,
+                "group": "cloud-admin-group",
+                "group_access": 7
+            },
+            "uuid": {
+                "uuid_mslong": 6903990891412998277,
+                "uuid_lslong": 11205810180044400634
+            }
+        },
+        "fq_name": [
+            "default-domain",
+            "k8s-lab4",
+            "csrx1",
+            "csrx1-port-tuple0-04931170-c007-4847-a0c0-e196e18f7da0"
+        ],
+        "name": "csrx1-port-tuple0-04931170-c007-4847-a0c0-e196e18f7da0"
+    }
+}
+
+data1={
+            "port-tuple": {
+                "fq_name": [
+                    "default-domain",
+                    project_name,
+                    workload_name,
+                    tuple_name
+                ], 
+                "virtual_machine_interface_back_refs": [
+                    {
+                        "to": href_list[0]['fq_name'],
+                        "href": href_list[0]['href'],
+                        "uuid": href_list[0]['uuid']
+                    },
+                    {
+                        "to": href_list[1]['fq_name'],
+                        "href": href_list[1]['href'],
+                        "uuid": href_list[1]['uuid']
+                    }
+                ] 
+            }
+        }

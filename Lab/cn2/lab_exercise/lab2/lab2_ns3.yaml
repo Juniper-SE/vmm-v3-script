@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns3
+  labels:
+    core.juniper.net/isolated-namespace: "true"

@@ -1,0 +1,24 @@
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fdc4:c7ca:aebc::/48'
+
+config interface 'lan'
+	option type 'bridge'
+	option ifname 'eth0'
+	option proto 'static'
+	option ipaddr '192.168.100.1'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+
+config interface 'wan'
+	option ifname 'eth1'
+	option proto 'pppoe'
+	option username 'cpe5'
+	option password 'pass05'
+	option ipv6 'auto'
+

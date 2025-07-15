@@ -1,0 +1,97 @@
+set groups bng_common system configuration-database max-db-size 104857600
+set groups bng_common system services subscriber-management enable
+set groups bng access-profile pppoe1_profile
+set groups bng access radius-server 172.16.11.201 port 1812
+set groups bng access radius-server 172.16.11.201 accounting-port 1813
+set groups bng access radius-server 172.16.11.201 secret "$9$g34GikqfznCmfO1REyr"
+set groups bng access radius-server 172.16.11.201 source-address 172.16.12.1
+set groups bng access profile pppoe1_profile accounting-order radius
+set groups bng access profile pppoe1_profile authentication-order radius
+set groups bng access profile pppoe1_profile radius authentication-server 172.16.11.201
+set groups bng access profile pppoe1_profile radius accounting-server 172.16.11.201
+set groups bng access profile pppoe1_profile accounting order radius
+set groups bng access profile pppoe1_profile accounting accounting-stop-on-access-deny
+set groups bng access profile pppoe1_profile accounting immediate-update
+set groups bng access profile pppoe1_profile accounting address-change-immediate-update
+set groups bng access profile pppoe1_profile accounting update-interval 10
+set groups bng access profile pppoe1_profile accounting statistics volume-time
+set groups bng dynamic-profiles pppoe1 routing-instances "$junos-routing-instance" interface "$junos-interface-name"
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" ppp-options chap
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" ppp-options pap
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" pppoe-options underlying-interface "$junos-underlying-interface"
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" pppoe-options server
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet unnumbered-address "$junos-loopback-interface"
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet6 unnumbered-address "$junos-loopback-interface"
+set groups bng dynamic-profiles pppoe1 protocols router-advertisement interface "$junos-interface-name" other-stateful-configuration
+set groups bng dynamic-profiles pppoe1 protocols router-advertisement interface "$junos-interface-name" prefix $junos-ipv6-ndra-prefix
+set groups bng dynamic-profiles vlan-profile interfaces demux0 unit "$junos-interface-unit" vlan-id "$junos-vlan-id"
+set groups bng dynamic-profiles vlan-profile interfaces demux0 unit "$junos-interface-unit" demux-options underlying-interface "$junos-interface-ifd-name"
+set groups bng dynamic-profiles vlan-profile interfaces demux0 unit "$junos-interface-unit" family pppoe access-concentrator bng1
+set groups bng dynamic-profiles vlan-profile interfaces demux0 unit "$junos-interface-unit" family pppoe duplicate-protection
+set groups bng dynamic-profiles vlan-profile interfaces demux0 unit "$junos-interface-unit" family pppoe dynamic-profile pppoe1
+set groups ri interfaces lo0 unit 101 family inet address 10.100.1.11/32
+set groups ri interfaces lo0 unit 101 family inet6 address 2001:1010:dead:ffff::11/128
+set groups ri interfaces lo0 unit 102 family inet address 10.100.1.12/32
+set groups ri interfaces lo0 unit 102 family inet6 address 2001:1010:dead:ffff::12/128
+set groups ri interfaces lo0 unit 103 family inet address 10.100.1.13/32
+set groups ri interfaces lo0 unit 103 family inet6 address 2001:1010:dead:ffff::13/128
+set groups ri interfaces ge-0/0/4 flexible-vlan-tagging
+set groups ri interfaces ge-0/0/4 encapsulation flexible-ethernet-services
+set groups ri interfaces ge-0/0/4 unit 101 vlan-id 101
+set groups ri interfaces ge-0/0/4 unit 101 family inet address 172.16.16.1/31
+set groups ri interfaces ge-0/0/4 unit 101 family inet6 address 2001:1010:dead:beef::1:1/127
+set groups ri interfaces ge-0/0/4 unit 102 vlan-id 102
+set groups ri interfaces ge-0/0/4 unit 102 family inet address 172.16.16.3/31
+set groups ri interfaces ge-0/0/4 unit 102 family inet6 address 2001:1010:dead:beef::1:3/127
+set groups ri interfaces ge-0/0/4 unit 103 vlan-id 103
+set groups ri interfaces ge-0/0/4 unit 103 family inet address 172.16.16.5/31
+set groups ri interfaces ge-0/0/4 unit 103 family inet6 address 2001:1010:dead:beef::1:5/127
+set groups ri routing-instances isp1 instance-type virtual-router
+set groups ri routing-instances isp1 routing-options rib isp1.inet6.0 static route ::/0 next-hop 2001:1010:dead:beef::1:0
+set groups ri routing-instances isp1 routing-options static route 0.0.0.0/0 next-hop 172.16.16.0
+set groups ri routing-instances isp1 system services dhcp-local-server dhcpv6 overrides delegated-pool isp1_pool6pd
+set groups ri routing-instances isp1 system services dhcp-local-server dhcpv6 group isp1 interface pp0.0
+set groups ri routing-instances isp1 access address-assignment neighbor-discovery-router-advertisement isp1_pool6
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool6 family inet6 prefix fc00:1010:1101::/56
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool6 family inet6 range r1 prefix-length 64
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool6pd family inet6 prefix 2001:1010:dead:1100::/56
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool6pd family inet6 range r1 prefix-length 64
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool family inet network 172.16.101.0/24
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool_111 family inet network 172.16.111.0/24
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool_111 family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool_112 family inet network 172.16.112.0/24
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool_112 family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp1 interface lo0.101
+set groups ri routing-instances isp1 interface ge-0/0/4.101
+set groups ri routing-instances isp2 instance-type virtual-router
+set groups ri routing-instances isp2 routing-options rib isp2.inet6.0 static route ::/0 next-hop 2001:1010:dead:beef::1:2
+set groups ri routing-instances isp2 routing-options static route 0.0.0.0/0 next-hop 172.16.16.2
+set groups ri routing-instances isp2 system services dhcp-local-server dhcpv6 overrides delegated-pool isp2_pool6pd
+set groups ri routing-instances isp2 system services dhcp-local-server dhcpv6 group isp2 interface pp0.0
+set groups ri routing-instances isp2 access address-assignment neighbor-discovery-router-advertisement isp2_pool6
+set groups ri routing-instances isp2 access address-assignment pool isp2_pool6 family inet6 prefix fc00:1010:1102::/56
+set groups ri routing-instances isp2 access address-assignment pool isp2_pool6 family inet6 range r1 prefix-length 64
+set groups ri routing-instances isp2 access address-assignment pool isp2_pool6pd family inet6 prefix 2001:1010:dead:1200::/56
+set groups ri routing-instances isp2 access address-assignment pool isp2_pool6pd family inet6 range r1 prefix-length 64
+set groups ri routing-instances isp2 access address-assignment pool isp2_pool family inet network 172.16.102.0/24
+set groups ri routing-instances isp2 access address-assignment pool isp2_pool family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp2 interface lo0.102
+set groups ri routing-instances isp2 interface ge-0/0/4.102
+set groups ri routing-instances isp3 instance-type virtual-router
+set groups ri routing-instances isp3 routing-options rib isp3.inet6.0 static route ::/0 next-hop 2001:1010:dead:beef::1:4
+set groups ri routing-instances isp3 routing-options static route 0.0.0.0/0 next-hop 172.16.16.4
+set groups ri routing-instances isp3 system services dhcp-local-server dhcpv6 overrides delegated-pool isp3_pool6pd
+set groups ri routing-instances isp3 system services dhcp-local-server dhcpv6 group isp3 interface pp0.0
+set groups ri routing-instances isp3 access address-assignment neighbor-discovery-router-advertisement isp3_pool6
+set groups ri routing-instances isp3 access address-assignment pool isp3_pool6 family inet6 prefix fc00:1010:1103::/56
+set groups ri routing-instances isp3 access address-assignment pool isp3_pool6 family inet6 range r1 prefix-length 64
+set groups ri routing-instances isp3 access address-assignment pool isp3_pool6pd family inet6 prefix 2001:1010:dead:1300::/56
+set groups ri routing-instances isp3 access address-assignment pool isp3_pool6pd family inet6 range r1 prefix-length 64
+set groups ri routing-instances isp3 access address-assignment pool isp3_pool family inet network 172.16.103.0/24
+set groups ri routing-instances isp3 access address-assignment pool isp3_pool family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp3 interface lo0.103
+set groups ri routing-instances isp3 interface ge-0/0/4.103
+set apply-groups bng_common
+set apply-groups bng
+set apply-groups ri

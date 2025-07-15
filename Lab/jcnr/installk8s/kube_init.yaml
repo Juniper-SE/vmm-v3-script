@@ -1,0 +1,21 @@
+---
+# apiVersion: kubeadm.k8s.io/v1beta3
+# kind: InitConfiguration
+# localAPIEndpoint:
+#   advertiseAddress: "172.16.12.10"
+#   bindPort: 6443
+# ---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+cgroupDriver: systemd
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+clusterName: k8s
+networking:
+  podSubnet: "10.32.0.0/12"
+  serviceSubnet: "10.96.0.0/12"
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: ipvs
