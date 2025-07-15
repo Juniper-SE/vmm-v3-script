@@ -1,7 +1,0 @@
----
-api_server_host: 172.16.11.10
-virtual_network: vn-external4
-pool_name: pool-vn-external4
-namespace: ns-user4
-route_target_export: 64512:10004
-route_target_import: 64512:10000

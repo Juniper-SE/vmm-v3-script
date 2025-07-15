@@ -1,5 +1,0 @@
-set routing-options static route 0.0.0.0/0 next-hop 172.16.14.254
-set policy-options policy-statement from_static term 1 from protocol static
-set policy-options policy-statement from_static term 1 from route-filter 0.0.0.0/0 exact
-set policy-options policy-statement from_static term 1 then accept
-set protocols isis export from_static

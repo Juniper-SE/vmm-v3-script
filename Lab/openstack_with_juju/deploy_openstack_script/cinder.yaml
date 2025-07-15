@@ -1,3 +1,0 @@
-cinder:
-  block-device: None
-  glance-api-version: 2

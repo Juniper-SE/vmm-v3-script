@@ -1,2 +1,0 @@
-ceph-osd:
-  osd-devices: /dev/sdb /dev/sdc

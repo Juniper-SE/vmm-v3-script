@@ -1,4 +1,0 @@
-DEVICE=eth3
-TYPE=Ethernet
-BOOTPROTO=none
-ONBOOT=yes

@@ -1,7 +1,0 @@
----
-api_server_host: 127.0.0.1
-virtual_network: public2
-pool_name: public2-fip-pool
-namespace: lab2-ns2
-route_target_export: 64512:10002
-route_target_import: 64512:10000
