@@ -1,0 +1,15 @@
+set interfaces ge-0/0/1 unit 0 family ethernet-switching interface-mode access
+set interfaces ge-0/0/1 unit 0 family ethernet-switching vlan members vlan101
+set interfaces ge-0/0/2 unit 0 family ethernet-switching interface-mode access
+set interfaces ge-0/0/2 unit 0 family ethernet-switching vlan members vlan102
+set interfaces ge-0/0/3 unit 0 family ethernet-switching interface-mode access
+set interfaces ge-0/0/3 unit 0 family ethernet-switching vlan members vlan103
+set interfaces ge-0/0/4 unit 0 family ethernet-switching interface-mode access
+set interfaces ge-0/0/4 unit 0 family ethernet-switching vlan members vlan104
+set interfaces ge-0/0/5 mtu 9000
+set interfaces ge-0/0/5 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ge-0/0/5 unit 0 family ethernet-switching vlan members all
+set vlans vlan101 vlan-id 101
+set vlans vlan102 vlan-id 102
+set vlans vlan103 vlan-id 103
+set vlans vlan104 vlan-id 104

@@ -56,13 +56,13 @@ fabric:
   # bit 7 : delay_measurement_rpm
   # 0x3d means enable family ipv4, iso and mpls, and enable protocol isis and rsvp
   # 0xbd means enable family ipv4, iso and mpls, and enable protocol isis and rsvp, and delay measurement using RPM
-    - [ 0x16, acs1, ge-0/0/0, acs, ge-0/0/0 ]
-    - [ 0x16, acs, ge-0/0/1, p1, ge-0/0/0 ]
-    - [ 0x16, p1, ge-0/0/1, bng1, ge-0/0/1 ]
-    - [ 0x16, p1, ge-0/0/2, bng2, ge-0/0/1 ]
-    - [ 0x16, bng1, ge-0/0/2, p2, ge-0/0/1 ]
-    - [ 0x16, bng2, ge-0/0/2, p2, ge-0/0/2 ]
-    - [ 0x16, p2, ge-0/0/0, pe1, ge-0/0/0 ]
+    - [ 0x0, acs1, ge-0/0/0, acs, ge-0/0/0 ]
+    - [ 0x0, acs, ge-0/0/1, p1, ge-0/0/0 ]
+    - [ 0x0, p1, ge-0/0/1, bng1, ge-0/0/1 ]
+    - [ 0x0, p1, ge-0/0/2, bng2, ge-0/0/1 ]
+    - [ 0x0, bng1, ge-0/0/2, p2, ge-0/0/1 ]
+    - [ 0x0, bng2, ge-0/0/2, p2, ge-0/0/2 ]
+    - [ 0x0, p2, ge-0/0/0, pe1, ge-0/0/0 ]
 vm:
   gw:
     type: gw
@@ -156,8 +156,8 @@ vm:
         family:
           inet: 172.16.11.113/24
           gateway4: 172.16.11.1
-  lxc:
-    type: pchpv1
+  svr1:
+    type: pcmedium
     os: ubuntu
     vnc: yes
     interfaces:
@@ -167,20 +167,17 @@ vm:
           inet: 172.16.11.114/24
           gateway4: 172.16.11.1
       em1: 
-        bridge: cpe1c
-      em2: 
-        bridge: cpe2c
-      em3: 
-        bridge: cpe3c
-      em4: 
-        bridge: cpe4c
-      em5: 
         bridge: net5
+        family:
+          inet: 172.16.15.2/24
+          inet6: fc00:dead:beef:fe15::5/64
+          gateway4: 172.16.15.1
+          gateway6: fc00:dead:beef:fe15::1
   bng1:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    srv6-locator: fc00:dead:beef:ff01::/64
+    # srv6-locator: fc00:dead:beef:ff01::/64
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -189,7 +186,7 @@ vm:
       lo0:
         family:
           inet: 172.16.255.1/32
-          iso: 49.0001.1720.1625.5001.00
+          # iso: 49.0001.1720.1625.5001.00
           inet6: fc00:dead:beef:ffff::ffff:1/128
         protocol:
           isis: passive
@@ -205,7 +202,7 @@ vm:
   bng2:
     type: vjunos_router
     os: vjunos_router
-    srv6-locator: fc00:dead:beef:ff02::/64
+    # srv6-locator: fc00:dead:beef:ff02::/64
     ztp: yes
     interfaces:
       mgmt: 
@@ -215,7 +212,7 @@ vm:
       lo0:
         family:
           inet: 172.16.255.2/32
-          inet6: fc00:dead:beef:ffff::ffff:2/128
+          # inet6: fc00:dead:beef:ffff::ffff:2/128
           iso: 49.0001.1720.1625.5002.00
         protocol:
           isis: passive
@@ -232,7 +229,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    srv6-locator: fc00:dead:beef:ff03::/64
+    # srv6-locator: fc00:dead:beef:ff03::/64
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -241,7 +238,7 @@ vm:
       lo0:
         family:
           inet: 172.16.255.3/32
-          iso: 49.0001.1720.1625.5003.00
+          # iso: 49.0001.1720.1625.5003.00
           inet6: fc00:dead:beef:ffff::ffff:3/128
         protocol:
           isis: passive
@@ -249,7 +246,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    srv6-locator: fc00:dead:beef:ff11::/64
+    # srv6-locator: fc00:dead:beef:ff11::/64
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -258,7 +255,7 @@ vm:
       lo0:
         family:
           inet: 172.16.255.4/32
-          iso: 49.0001.1720.1625.5004.00
+          # iso: 49.0001.1720.1625.5004.00
           inet6: fc00:dead:beef:ffff::ffff:4/128
         protocol:
           isis: passive
@@ -266,7 +263,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    srv6-locator: fc00:dead:beef:ff12::/64
+    # srv6-locator: fc00:dead:beef:ff12::/64
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -283,7 +280,7 @@ vm:
     type: vjunos_router
     os: vjunos_router
     ztp: yes
-    srv6-locator: fc00:dead:beef:ff20::/64
+    # srv6-locator: fc00:dead:beef:ff20::/64
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -292,7 +289,7 @@ vm:
       lo0:
         family:
           inet: 172.16.255.6/32
-          iso: 49.0001.1720.1625.5006.00
+          # iso: 49.0001.1720.1625.5006.00
           inet6: fc00:dead:beef:ffff::ffff:6/128
         protocol:
           isis: passive

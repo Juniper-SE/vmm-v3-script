@@ -1,0 +1,119 @@
+mlpt@BNG-TESTBED.1> show configuration services                                                         
+captive-portal-content-delivery {
+    rule r1 {
+        match-direction input;
+        term 1 {
+            then {
+                redirect https://www.telkomsel.com/indihome-reminder/cp;
+            }
+        }
+    }
+    profile http-redirect {
+        cpcd-rules r1;
+    }
+    traceoptions {
+        file cpcd.log size 100m;
+        flag all;
+    }
+}
+service-set sset1 {
+    service-set-options {
+        routing-engine-services;
+    }
+    captive-portal-content-delivery-profile http-redirect;
+    interface-service {
+        service-interface si-1/1/0;
+    }
+}
+ 
+mlpt@BNG-TESTBED.1> show configuration firewall family inet service-filter ug-suspend   
+term 0 {
+    from {
+        destination-address {
+            202.3.208.158/32;
+        }
+    }
+    then {
+        count count202ip;
+        skip;
+    }
+}
+term 1 {
+    from {
+        destination-port 53;
+    }
+    then {
+        count countDNS;
+        skip;
+    }
+}
+term 2 {
+    from {
+        protocol icmp;
+    }
+    then {
+        count countICMP;
+        skip;
+    }
+}
+term 3 {
+    from {
+        destination-port [ 80 8080 443 ];
+    }
+    then {
+        count redirectcount;
+        service;
+    }
+}
+ 
+mlpt@BNG-TESTBED.1> show configuration dynamic-profiles autopppoe-ae |display inheritance no-comments   
+interfaces {
+    pp0 {
+        unit "$junos-interface-unit" {
+            actual-transit-statistics;
+            no-traps;
+            ppp-options {
+                chap {
+                    local-name testbed@telkomsel.net;
+                }
+                pap;
+                authentication [ chap pap ];
+                local-authentication {
+                    password testbed123;
+                    username-include {
+                        mac-address;
+                        domain-name testbed@telkomsel.net;
+                    }
+                }
+            }
+            pppoe-options {
+                underlying-interface "$junos-underlying-interface";
+                server;
+            }
+            targeted-distribution;
+            keepalives interval 30;
+            family inet {
+                rpf-check;
+                service {
+                    input {
+                        service-set sset1 service-filter ug-suspend;
+                    }
+                }
+                unnumbered-address lo0.0;
+            }
+            family inet6 {
+                rpf-check;
+                address $junos-ipv6-address;
+            }
+        }
+    }
+}
+protocols {
+    router-advertisement {
+        interface "$junos-interface-name" {
+            managed-configuration;
+            prefix $junos-ipv6-ndra-prefix;
+        }
+    }
+}
+ 

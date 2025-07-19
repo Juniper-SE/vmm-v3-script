@@ -57,6 +57,11 @@
     insert into radreply (username,attribute,value,op) values ('cpe4','ERX-IPv6-Ingress-Policy-Name','police-5Mv6',':=');
     insert into radreply (username,attribute,value,op) values ('cpe4','ERX-IPv6-Egress-Policy-Name','police-5Mv6',':=');
 
+    insert into radreply (username,attribute,value,op) values ('cpe1','ERX-Virtual-Router-Name','isp1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe2','ERX-Virtual-Router-Name','isp2',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe3','ERX-Virtual-Router-Name','isp3',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe4','ERX-Virtual-Router-Name','isp2',':=');
+
     EOF
 
     psql -U radius -h localhost radius < bng_lab.sql
@@ -100,6 +105,8 @@
     radius_db = "dbname=radius host=localhost user=radius password=pass01"
 
 # openwrt configuration
+
+    edit /etc/config/network
 
     config interface wan
         option ifname 'eth1'

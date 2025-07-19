@@ -1,6 +1,42 @@
 set groups bng_common system configuration-database max-db-size 104857600
 set groups bng_common system services subscriber-management enable
 set groups bng access-profile pppoe1_profile
+set groups bng firewall family inet6 filter police-5Mv6 interface-specific
+set groups bng firewall family inet6 filter police-5Mv6 term all then policer police-5M
+set groups bng firewall family inet6 filter police-1Mv6 interface-specific
+set groups bng firewall family inet6 filter police-1Mv6 term all then policer police-1M
+set groups bng firewall family inet6 filter lowestv6 interface-specific
+set groups bng firewall family inet6 filter lowestv6 term all then policer lowest
+set groups bng firewall family inet6 filter superv6 interface-specific
+set groups bng firewall family inet6 filter superv6 term 1 then accept
+set groups bng firewall family inet6 filter police-10Mv6 interface-specific
+set groups bng firewall family inet6 filter police-10Mv6 term all then policer police-10M
+set groups bng firewall policer police-5M logical-interface-policer
+set groups bng firewall policer police-5M if-exceeding bandwidth-limit 5m
+set groups bng firewall policer police-5M if-exceeding burst-size-limit 512k
+set groups bng firewall policer police-5M then discard
+set groups bng firewall policer police-1M logical-interface-policer
+set groups bng firewall policer police-1M if-exceeding bandwidth-limit 1m
+set groups bng firewall policer police-1M if-exceeding burst-size-limit 32k
+set groups bng firewall policer police-1M then discard
+set groups bng firewall policer lowest logical-interface-policer
+set groups bng firewall policer lowest if-exceeding bandwidth-limit 128k
+set groups bng firewall policer lowest if-exceeding burst-size-limit 32k
+set groups bng firewall policer lowest then discard
+set groups bng firewall policer police-10M logical-interface-policer
+set groups bng firewall policer police-10M if-exceeding bandwidth-limit 10m
+set groups bng firewall policer police-10M if-exceeding burst-size-limit 1024000
+set groups bng firewall policer police-10M then discard
+set groups bng firewall filter police-5M interface-specific
+set groups bng firewall filter police-5M term all then policer police-5M
+set groups bng firewall filter police-1M interface-specific
+set groups bng firewall filter police-1M term all then policer police-1M
+set groups bng firewall filter lowest interface-specific
+set groups bng firewall filter lowest term all then policer lowest
+set groups bng firewall filter super interface-specific
+set groups bng firewall filter super term 1 then accept
+set groups bng firewall filter police-10M interface-specific
+set groups bng firewall filter police-10M term all then policer police-10M
 set groups bng access radius-server 172.16.11.201 port 1812
 set groups bng access radius-server 172.16.11.201 accounting-port 1813
 set groups bng access radius-server 172.16.11.201 secret "$9$g34GikqfznCmfO1REyr"
@@ -20,7 +56,11 @@ set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-uni
 set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" ppp-options pap
 set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" pppoe-options underlying-interface "$junos-underlying-interface"
 set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" pppoe-options server
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet filter input "$junos-input-filter"
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet filter output "$junos-output-filter"
 set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet unnumbered-address "$junos-loopback-interface"
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet6 filter input "$junos-input-ipv6-filter"
+set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet6 filter output "$junos-output-ipv6-filter"
 set groups bng dynamic-profiles pppoe1 interfaces pp0 unit "$junos-interface-unit" family inet6 unnumbered-address "$junos-loopback-interface"
 set groups bng dynamic-profiles pppoe1 protocols router-advertisement interface "$junos-interface-name" other-stateful-configuration
 set groups bng dynamic-profiles pppoe1 protocols router-advertisement interface "$junos-interface-name" prefix $junos-ipv6-ndra-prefix
@@ -35,7 +75,6 @@ set groups ri interfaces lo0 unit 102 family inet address 10.100.1.12/32
 set groups ri interfaces lo0 unit 102 family inet6 address 2001:1010:dead:ffff::12/128
 set groups ri interfaces lo0 unit 103 family inet address 10.100.1.13/32
 set groups ri interfaces lo0 unit 103 family inet6 address 2001:1010:dead:ffff::13/128
-set groups ri interfaces ge-0/0/4 description "to upstream"
 set groups ri interfaces ge-0/0/4 flexible-vlan-tagging
 set groups ri interfaces ge-0/0/4 encapsulation flexible-ethernet-services
 set groups ri interfaces ge-0/0/4 unit 101 vlan-id 101
@@ -47,16 +86,23 @@ set groups ri interfaces ge-0/0/4 unit 102 family inet6 address 2001:1010:dead:b
 set groups ri interfaces ge-0/0/4 unit 103 vlan-id 103
 set groups ri interfaces ge-0/0/4 unit 103 family inet address 172.16.16.5/31
 set groups ri interfaces ge-0/0/4 unit 103 family inet6 address 2001:1010:dead:beef::1:5/127
-set groups ri interfaces ge-0/0/3 description "to subscriber"
 set groups ri interfaces ge-0/0/3 hierarchical-scheduler maximum-hierarchy-levels 2
 set groups ri interfaces ge-0/0/3 hierarchical-scheduler implicit-hierarchy
 set groups ri interfaces ge-0/0/3 flexible-vlan-tagging
 set groups ri interfaces ge-0/0/3 auto-configure vlan-ranges dynamic-profile vlan-profile accept pppoe
 set groups ri interfaces ge-0/0/3 auto-configure vlan-ranges dynamic-profile vlan-profile ranges 1-4094
 set groups ri interfaces ge-0/0/3 auto-configure remove-when-no-subscribers
+set groups ri policy-options policy-statement from_subs term 1 from protocol access
+set groups ri policy-options policy-statement from_subs term 1 from protocol access-internal
+set groups ri policy-options policy-statement from_subs term 1 then accept
+set groups ri policy-options policy-statement from_subs term default then reject
 set groups ri routing-instances isp1 instance-type virtual-router
-set groups ri routing-instances isp1 routing-options rib isp1.inet6.0 static route ::/0 next-hop 2001:1010:dead:beef::1:0
-set groups ri routing-instances isp1 routing-options static route 0.0.0.0/0 next-hop 172.16.16.0
+set groups ri routing-instances isp1 protocols bgp group to_gw neighbor 172.16.16.0 export from_subs
+set groups ri routing-instances isp1 protocols bgp group to_gw neighbor 172.16.16.0 peer-as 4200000000
+set groups ri routing-instances isp1 protocols bgp group to_gw neighbor 172.16.16.0 local-as 4200001001
+set groups ri routing-instances isp1 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:0 export from_subs
+set groups ri routing-instances isp1 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:0 peer-as 4200000000
+set groups ri routing-instances isp1 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:0 local-as 4200001001
 set groups ri routing-instances isp1 system services dhcp-local-server dhcpv6 overrides delegated-pool isp1_pool6pd
 set groups ri routing-instances isp1 system services dhcp-local-server dhcpv6 group isp1 interface pp0.0
 set groups ri routing-instances isp1 access address-assignment neighbor-discovery-router-advertisement isp1_pool6
@@ -65,16 +111,20 @@ set groups ri routing-instances isp1 access address-assignment pool isp1_pool6 f
 set groups ri routing-instances isp1 access address-assignment pool isp1_pool6pd family inet6 prefix 2001:1010:dead:1100::/56
 set groups ri routing-instances isp1 access address-assignment pool isp1_pool6pd family inet6 range r1 prefix-length 64
 set groups ri routing-instances isp1 access address-assignment pool isp1_pool family inet network 172.16.101.0/24
-set groups ri routing-instances isp1 access address-assignment pool isp1_pool family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool family inet xauth-attributes primary-dns 172.16.15.5/32
 set groups ri routing-instances isp1 access address-assignment pool isp1_pool_111 family inet network 172.16.111.0/24
-set groups ri routing-instances isp1 access address-assignment pool isp1_pool_111 family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool_111 family inet xauth-attributes primary-dns 172.16.15.5/32
 set groups ri routing-instances isp1 access address-assignment pool isp1_pool_112 family inet network 172.16.112.0/24
-set groups ri routing-instances isp1 access address-assignment pool isp1_pool_112 family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp1 access address-assignment pool isp1_pool_112 family inet xauth-attributes primary-dns 172.16.15.5/32
 set groups ri routing-instances isp1 interface lo0.101
 set groups ri routing-instances isp1 interface ge-0/0/4.101
 set groups ri routing-instances isp2 instance-type virtual-router
-set groups ri routing-instances isp2 routing-options rib isp2.inet6.0 static route ::/0 next-hop 2001:1010:dead:beef::1:2
-set groups ri routing-instances isp2 routing-options static route 0.0.0.0/0 next-hop 172.16.16.2
+set groups ri routing-instances isp2 protocols bgp group to_gw neighbor 172.16.16.2 export from_subs
+set groups ri routing-instances isp2 protocols bgp group to_gw neighbor 172.16.16.2 peer-as 4200000000
+set groups ri routing-instances isp2 protocols bgp group to_gw neighbor 172.16.16.2 local-as 4200001002
+set groups ri routing-instances isp2 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:2 export from_subs
+set groups ri routing-instances isp2 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:2 peer-as 4200000000
+set groups ri routing-instances isp2 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:2 local-as 4200001002
 set groups ri routing-instances isp2 system services dhcp-local-server dhcpv6 overrides delegated-pool isp2_pool6pd
 set groups ri routing-instances isp2 system services dhcp-local-server dhcpv6 group isp2 interface pp0.0
 set groups ri routing-instances isp2 access address-assignment neighbor-discovery-router-advertisement isp2_pool6
@@ -83,12 +133,16 @@ set groups ri routing-instances isp2 access address-assignment pool isp2_pool6 f
 set groups ri routing-instances isp2 access address-assignment pool isp2_pool6pd family inet6 prefix 2001:1010:dead:1200::/56
 set groups ri routing-instances isp2 access address-assignment pool isp2_pool6pd family inet6 range r1 prefix-length 64
 set groups ri routing-instances isp2 access address-assignment pool isp2_pool family inet network 172.16.102.0/24
-set groups ri routing-instances isp2 access address-assignment pool isp2_pool family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp2 access address-assignment pool isp2_pool family inet xauth-attributes primary-dns 172.16.15.5/32
 set groups ri routing-instances isp2 interface lo0.102
 set groups ri routing-instances isp2 interface ge-0/0/4.102
 set groups ri routing-instances isp3 instance-type virtual-router
-set groups ri routing-instances isp3 routing-options rib isp3.inet6.0 static route ::/0 next-hop 2001:1010:dead:beef::1:4
-set groups ri routing-instances isp3 routing-options static route 0.0.0.0/0 next-hop 172.16.16.4
+set groups ri routing-instances isp3 protocols bgp group to_gw neighbor 172.16.16.4 export from_subs
+set groups ri routing-instances isp3 protocols bgp group to_gw neighbor 172.16.16.4 peer-as 4200000000
+set groups ri routing-instances isp3 protocols bgp group to_gw neighbor 172.16.16.4 local-as 4200001003
+set groups ri routing-instances isp3 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:4 export from_subs
+set groups ri routing-instances isp3 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:4 peer-as 4200000000
+set groups ri routing-instances isp3 protocols bgp group to_gw neighbor 2001:1010:dead:beef::1:4 local-as 4200001003
 set groups ri routing-instances isp3 system services dhcp-local-server dhcpv6 overrides delegated-pool isp3_pool6pd
 set groups ri routing-instances isp3 system services dhcp-local-server dhcpv6 group isp3 interface pp0.0
 set groups ri routing-instances isp3 access address-assignment neighbor-discovery-router-advertisement isp3_pool6
@@ -97,10 +151,23 @@ set groups ri routing-instances isp3 access address-assignment pool isp3_pool6 f
 set groups ri routing-instances isp3 access address-assignment pool isp3_pool6pd family inet6 prefix 2001:1010:dead:1300::/56
 set groups ri routing-instances isp3 access address-assignment pool isp3_pool6pd family inet6 range r1 prefix-length 64
 set groups ri routing-instances isp3 access address-assignment pool isp3_pool family inet network 172.16.103.0/24
-set groups ri routing-instances isp3 access address-assignment pool isp3_pool family inet xauth-attributes primary-dns 10.49.32.95/32
+set groups ri routing-instances isp3 access address-assignment pool isp3_pool family inet xauth-attributes primary-dns 172.16.15.5/32
 set groups ri routing-instances isp3 interface lo0.103
 set groups ri routing-instances isp3 interface ge-0/0/4.103
+set groups test1 interfaces ge-0/0/3 flexible-vlan-tagging
+set groups test1 interfaces ge-0/0/3 encapsulation flexible-ethernet-services
+set groups test1 interfaces ge-0/0/3 unit 101 vlan-id 101
+set groups test1 interfaces ge-0/0/3 unit 101 family inet address 10.1.101.1/24
 set apply-groups bng_common
 set apply-groups ri
 set apply-groups bng
 
+
+
+
+set groups bng access radius-server 172.16.11.201 port 1812
+set groups bng access radius-server 172.16.11.201 accounting-port 1813
+set groups bng access radius-server 172.16.11.201 secret "$9$g34GikqfznCmfO1REyr"
+set groups bng access radius-server 172.16.11.201 source-address 172.16.12.1
+set groups bng access profile pppoe1_profile radius authentication-server 172.16.11.201
+set groups bng access profile pppoe1_profile radius accounting-server 172.16.11.201
