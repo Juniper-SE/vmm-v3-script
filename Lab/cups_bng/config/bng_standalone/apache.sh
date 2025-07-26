@@ -4,9 +4,9 @@ apk add apache2 php-apache2
 cat << EOF | tee /var/www/localhost/htdocs/index.html
 <html>
 <body>
-<h1>This is Web3</h1>
+<h1>This is Web1</h1>
 <h1>it works </h1>
-Welcome to server web3.vmmlab.com<p>
+Welcome to server web1.vmmlab.com<p>
 This is just a test inside the lab<p>
 please don't be afraid <p>
 </body>
@@ -14,6 +14,7 @@ please don't be afraid <p>
 EOF
 
 cat << EOF | tee /var/www/localhost/htdocs/index.php
+cat << EOF | tee ./index.php
 <?php
 echo '<html>';
 echo '<head>This is the page</head>';
@@ -30,9 +31,14 @@ echo '</body></html>';
 EOF
 
 cat << EOF | tee -a /etc/apache2/httpd.conf
-ServerName web3.vmmlab.com
+ServerName web1.vmmlab.com
+DirectoryIndex index.php index.html
 EOF
 
+
+sed -i -e "s/web1/web3/"  /var/www/localhost/htdocs/index.html
+sed -i -e "s/web1/web3/"  /etc/apache2/httpd.conf
+sed -i -e "s/101/103/" /etc/network/interfaces
 
 service apache2 start
 rc-update add apache2

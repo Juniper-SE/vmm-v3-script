@@ -202,6 +202,9 @@ vm:
         bridge: acs1bng1
       ge-0/0/4:
         bridge: net3
+      ge-0/0/5:
+        bridge: net5
+        inet: 172.16.15.11/24
   bng2:
     type: vjunos_router
     os: vjunos_router
@@ -228,6 +231,9 @@ vm:
         bridge: acs1bng2
       ge-0/0/4:
         bridge: net3
+      ge-0/0/5:
+        bridge: net5
+        inet: 172.16.15.11/24
   acs:
     type: vjunos_router
     os: vjunos_router

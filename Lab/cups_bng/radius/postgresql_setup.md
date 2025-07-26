@@ -25,9 +25,9 @@
     insert into radcheck (username,attribute,value,op) values ('cpe1','Auth-Type','Accept',':=');
     insert into radcheck (username,attribute,value,op) values ('cpe2','Cleartext-Password','pass01',':=');
     insert into radcheck (username,attribute,value,op) values ('cpe2','Auth-Type','Accept',':=');
-    insert into radcheck (username,attribute,value,op) values ('cpe3','Cleartext-Password','pass03',':=');
+    insert into radcheck (username,attribute,value,op) values ('cpe3','Cleartext-Password','pass01',':=');
     insert into radcheck (username,attribute,value,op) values ('cpe3','Auth-Type','Accept',':=');
-    insert into radcheck (username,attribute,value,op) values ('cpe4','Cleartext-Password','pass04',':=');
+    insert into radcheck (username,attribute,value,op) values ('cpe4','Cleartext-Password','pass01',':=');
     insert into radcheck (username,attribute,value,op) values ('cpe4','Auth-Type','Accept',':=');
 
     insert into radcheck (username,attribute,value,op) values ('cpe1','Simultaneous-Use','1',':=');
@@ -61,6 +61,26 @@
     insert into radreply (username,attribute,value,op) values ('cpe2','ERX-Virtual-Router-Name','isp2',':=');
     insert into radreply (username,attribute,value,op) values ('cpe3','ERX-Virtual-Router-Name','isp3',':=');
     insert into radreply (username,attribute,value,op) values ('cpe4','ERX-Virtual-Router-Name','isp2',':=');
+
+    insert into radreply (username,attribute,value,op) values ('cpe1','ERX-IPv4-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe1','ERX-IPv6-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe1','ERX-IPv4-Input-Service-Filter','sf1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe1','ERX-IPv6-Input-Service-Filter','sf1v6',':=');
+
+    insert into radreply (username,attribute,value,op) values ('cpe2','ERX-IPv4-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe2','ERX-IPv6-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe2','ERX-IPv4-Input-Service-Filter','allow',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe2','ERX-IPv6-Input-Service-Filter','allowv6',':=');
+
+    insert into radreply (username,attribute,value,op) values ('cpe3','ERX-IPv4-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe3','ERX-IPv6-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe3','ERX-IPv4-Input-Service-Filter','sf1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe3','ERX-IPv6-Input-Service-Filter','sf1v6',':=');
+
+    insert into radreply (username,attribute,value,op) values ('cpe4','ERX-IPv4-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe4','ERX-IPv6-Input-Service-Set','sset1',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe4','ERX-IPv4-Input-Service-Filter','allow',':=');
+    insert into radreply (username,attribute,value,op) values ('cpe4','ERX-IPv6-Input-Service-Filter','allowv6',':=');
 
     EOF
 
@@ -111,7 +131,7 @@
     config interface wan
         option ifname 'eth1'
         option proto 'pppoe'
-        option username 'cpe1'
+        option username 'cpe3'
         option password 'pass01'
         option ipv6 'auto'
 

@@ -1,9 +1,10 @@
+# apline LXC
 export LXC_NAME=client1
 #export VLAN=12
-export OVS=cpe1c
-export IPv4=172.16.15.5/24
+export OVS=net5
+export IPv4=172.16.15.201/24
 export GWv4=172.16.15.1
-export IPv6=fc00:dead:beef:fe15::1000:2/64
+export IPv6=fc00:dead:beef:fe15::1000:201/64
 export GWv6=fc00:dead:beef:fe15::1
 
 
@@ -84,3 +85,71 @@ network:
       - eth5
 EOF
 
+# client on cpe
+for CPE in {1..4}
+do
+LXC_NAME=client${CPE}
+OVS=cpe${CPE}c
+echo "Creating VM ${LXC_NAME}"
+lxc copy client ${LXC_NAME}
+lxc query --request PATCH /1.0/instances/${LXC_NAME} --data "{
+  \"devices\": {
+    \"eth0\" :{
+       \"name\": \"eth0\",
+       \"nictype\": \"bridged\",
+       \"parent\": \"${OVS}\",
+       \"type\": \"nic\"
+    }
+  }
+}"
+lxc start ${LXC_NAME}
+done
+
+
+# ubuntu LXC
+export LXC_NAME=web4
+#export VLAN=12
+export OVS=net5
+export IPv4=172.16.15.104/24
+export GWv4=172.16.15.1
+export IPv6=fc00:dead:beef:fe15::1000:104/64
+export GWv6=fc00:dead:beef:fe15::1
+
+
+echo "Creating VM ${LXC_NAME}"
+lxc copy ubuntu ${LXC_NAME}
+lxc query --request PATCH /1.0/instances/${LXC_NAME} --data "{
+  \"devices\": {
+    \"eth0\" :{
+       \"name\": \"eth0\",
+       \"nictype\": \"bridged\",
+       \"parent\": \"${OVS}\",
+       \"type\": \"nic\"
+    }
+  }
+}"
+
+
+echo "push configuration into node ${LXC_NAME}"
+cat << EOF | tee ./50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: false
+      addresses: [ ${IPv4} ,${IPv6} ]
+      routes:
+      - to: 0.0.0.0/0 
+        via: ${GWv4}
+      - to: ::/0
+        via: ${GWv6}
+      nameservers:
+        addresses: [ 172.16.15.5]
+EOF
+
+lxc file push ./50-cloud-init.yaml ${LXC_NAME}/etc/netplan/50-cloud-init.yaml
+lxc start ${LXC_NAME}
+
+
+
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j DNAT --to-destination 10.0.0.1

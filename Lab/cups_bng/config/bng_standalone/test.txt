@@ -116,4 +116,7 @@ protocols {
         }
     }
 }
+
+
+family inet6 service input service-set $junos-input-ipv6-service-set service-filter $junos-input-ipv6-service-filter
  
