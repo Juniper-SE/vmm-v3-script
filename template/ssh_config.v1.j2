@@ -9,7 +9,11 @@ host jumphost
     IdentityFile ~/.ssh/{{ ssh_key }}
 {% endif -%}
 host vmm 
+    {% if jumphost -%}
+    ProxyCommand ssh -W {{ vmm }}:22 jumphost
+    {% else -%}
     hostname {{vmm}}
+    {% endif -%}
     user {{ user }}
     IdentityFile ~/.ssh/{{ ssh_key }}
 host gw
@@ -20,7 +24,7 @@ host gw
     {% endif -%}
     user {{ gw.user }}
     IdentityFile ~/.ssh/{{ ssh_key_host }}
-{#
+
 host proxy 
     {% if jumphost -%}
     ProxyCommand ssh -W {{ gw.ip }}:22 jumphost
@@ -30,7 +34,7 @@ host proxy
     user {{ gw.user }}
     IdentityFile ~/.ssh/{{ ssh_key_host }}
     DynamicForward 1080
-#}
+
 {% for n in node -%}
 host {{ n }}
     ProxyCommand ssh -W {{ node[n].ip }}:22 gw

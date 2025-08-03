@@ -1,3 +1,4 @@
+set version 25.2R1.9
 set groups bng_common system configuration-database max-db-size 104857600
 set groups bng_common system services subscriber-management enable
 set groups bng1 access-profile pppoe1_profile
@@ -258,7 +259,7 @@ set groups bng2 dynamic-profiles vlan-profile interfaces demux0 unit "$junos-int
 set groups bng2 routing-options static route 172.16.11.0/24 next-hop 172.16.12.254
 set groups bng3 chassis fpc 0 pic 0 inline-services bandwidth 1g
 set groups bng3 services captive-portal-content-delivery rule r1 match-direction input
-set groups bng3 services captive-portal-content-delivery rule r1 term 1 then redirect http://web1.vmmlab.com
+set groups bng3 services captive-portal-content-delivery rule r1 term 1 then redirect https://web4.vmmlab.com
 set groups bng3 services captive-portal-content-delivery profile http-redirect cpcd-rules r1
 set groups bng3 services service-set sset1 service-set-options routing-engine-services
 set groups bng3 services service-set sset1 captive-portal-content-delivery-profile http-redirect
@@ -356,3 +357,52 @@ set groups bng3 routing-options static route 172.16.11.0/24 next-hop 172.16.12.2
 set apply-groups bng_common
 set apply-groups ri
 set apply-groups bng3
+set system host-name bng1
+set system root-authentication encrypted-password "$1$nPtj.OVf$EjYuGaTeAFaJQGZVjIYly0"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$1$nPtj.OVf$EjYuGaTeAFaJQGZVjIYly0"
+set system login user admin authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBUA+4YJwqE2rqwweZ3NG7GpXF3JqIxFbnDxraW8//QWjHLGVgn+jFbXFB3T/yLYpIRAh8SsAw6M6pZXzGd3oiltENLkoN5YGI1yW0bCTsS/Z4BoW/iuPR2rYQqhA+NPi9OZO/opVbJ+VIdfm+fugWPSVpduBiJN20P9iEF1zCW4EmWZn3qkl25LjVSBVMiwn+crcsCHUub3xDRicgTOOINFo4lZy03Fsa3PoqpxXv18FhNi3pVWmV2n3vIckWt8BbaPWMTFZmERHkVb4Y15GsHwcQxb6gm3h8Do4QgURbujCUJQhpJT4BRdD8kja1NQK4lbcPq6l9rF3YM7aQkscB16nCplWcgdnxI7eN//FA4ovvx7d57i43Y7GzSlQE87kcIDDQ1eCesYOfg9EfqCFSVWV0hbhc2Ap6YCoc0R9POpG1n0LO+o++h0J0bkLUWsIiQLb3LiC91FnP3giK5MEzdJ+maJcjIyGlTth52s01nLdT4gQDgTURqIpfL8L0HWE= irzan@irzan-mbp"
+set system services netconf ssh
+set system services ssh root-login allow
+set system services ssh sftp-server
+set system management-instance
+set system syslog user * any emergency
+set system syslog file interactive-commands interactive-commands any
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set chassis network-services enhanced-ip
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.12.1/24
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:fe12::1/64
+set interfaces ge-0/0/1 mtu 9000
+set interfaces ge-0/0/1 unit 0 family iso
+set interfaces ge-0/0/1 unit 0 family inet6
+set interfaces ge-0/0/2 mtu 9000
+set interfaces ge-0/0/2 unit 0 family iso
+set interfaces ge-0/0/2 unit 0 family inet6
+set interfaces fxp0 unit 0 family inet address 172.16.14.11/24
+set interfaces lo0 unit 0 family inet address 172.16.255.1/32 primary
+set interfaces lo0 unit 0 family inet address 172.16.255.1/32 preferred
+set interfaces lo0 unit 0 family iso address 49.0001.1720.1625.5001.00
+set interfaces lo0 unit 0 family inet6 address fc00:dead:beef:ffff::ffff:1/128
+set policy-options policy-statement LB term 1 then load-balance per-flow
+set policy-options policy-statement LB term 1 then accept
+set routing-options source-packet-routing srv6 locator SRV6-LOC-1 fc00:dead:beef:ff01::/64
+set routing-options route-distinguisher-id 172.16.255.1
+set routing-options router-id 172.16.255.1
+set routing-options forwarding-table export LB
+set protocols isis interface ge-0/0/1.0 level 1 disable
+set protocols isis interface ge-0/0/1.0 point-to-point
+set protocols isis interface ge-0/0/1.0 family inet bfd-liveness-detection minimum-interval 100
+set protocols isis interface ge-0/0/1.0 family inet6 bfd-liveness-detection minimum-interval 100
+set protocols isis interface ge-0/0/2.0 level 1 disable
+set protocols isis interface ge-0/0/2.0 point-to-point
+set protocols isis interface ge-0/0/2.0 family inet bfd-liveness-detection minimum-interval 100
+set protocols isis interface ge-0/0/2.0 family inet6 bfd-liveness-detection minimum-interval 100
+set protocols isis interface lo0.0 level 1 disable
+set protocols isis interface lo0.0 passive
+set protocols isis source-packet-routing srv6 locator SRV6-LOC-1 end-sid fc00:dead:beef:ff01::
+set protocols isis level 2 authentication-key "$9$H.fQ69A0BE9CK8LxsYTzF/9AtuO1Ec"
+set protocols isis level 2 authentication-type md5
+set protocols lldp interface all
+set protocols lldp interface fxp0 disable

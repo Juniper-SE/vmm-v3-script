@@ -1,0 +1,27 @@
+set interfaces interface-range to_server member ge-0/0/1
+set interfaces interface-range to_server member ge-0/0/2
+set interfaces interface-range to_server member ge-0/0/3
+set interfaces interface-range to_server member ge-0/0/4
+set interfaces interface-range to_server member ge-0/0/5
+set interfaces interface-range to_server unit 0 family ethernet-switching interface-mode trunk
+set interfaces interface-range to_server unit 0 family ethernet-switching vlan members all
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.12.1/31
+set interfaces ge-0/0/0 unit 0 family inet6 address fc00:dead:beef:a012::1/127
+set interfaces irb unit 101 family inet address 172.16.101.1/24
+set interfaces irb unit 101 family inet6 address fc00:dead:beef:a101::1/64
+set interfaces irb unit 102 family inet address 172.16.102.1/24
+set interfaces irb unit 102 family inet6 address fc00:dead:beef:a102::1/64
+set interfaces irb unit 103 family inet address 172.16.103.1/24
+set interfaces irb unit 103 family inet6 address fc00:dead:beef:a103::1/64
+set interfaces irb unit 104 family inet address 172.16.104.1/24
+set interfaces irb unit 104 family inet6 address fc00:dead:beef:a104::1/64
+set routing-options rib inet6.0 static route ::/0 next-hop fc00:dead:beef:a012::0
+set routing-options static route 0.0.0.0/0 next-hop 172.16.12.0
+set vlans vlan101 vlan-id 101
+set vlans vlan101 l3-interface irb.101
+set vlans vlan102 vlan-id 102
+set vlans vlan102 l3-interface irb.102
+set vlans vlan103 vlan-id 103
+set vlans vlan103 l3-interface irb.103
+set vlans vlan104 vlan-id 104
+set vlans vlan104 l3-interface irb.104
