@@ -1,0 +1,113 @@
+#!/bin/bash
+
+{% if dhcp -%}
+cat << EOF | sudo tee /etc/coredns/Corefile
+.:53 {
+    {% if dhcp['dns'] -%}
+    forward . {% for i in dhcp['dns'] -%} {{ i }} {% endfor %}
+    {% else -%}
+    forward . 8.8.8.8 8.8.4.4
+    {% endif %}
+    log
+    errors
+}
+vmmlab.com:53 {
+    file /etc/coredns/vmmlab.com.db
+    log
+    errors
+}
+EOF
+
+{% endif %}
+
+{% if dhcp -%}
+cat << EOF | sudo tee /etc/coredns/vmmlab.com.db
+\$ORIGIN vmmlab.com.
+@    IN       SOA    vmmlab.com. mir.vmmlab.com 2502011720 7200 3600 1209600 3600
+{% if dhcp['vm'] -%}
+{% for i in dhcp['vm'] -%}
+{{ i }} IN A {{ dhcp['vm'][i]['ip'] }}
+{% endfor %}
+{% endif %}
+EOF
+{% endif %}
+
+{% if net -%}
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  ethernets:
+    {% for intf in net -%}
+    {{ intf }}:
+      {% if net[intf].addresses -%}
+      addresses : {{ net[intf].addresses}}
+      {% else -%}
+      dhcp4: false
+      {% endif -%}
+      {% if net[intf].mtu -%}
+      mtu: {{ net[intf].mtu}}
+      {% endif -%} 
+      {% if net[intf].static -%}
+      routes: 
+       {% for s in net[intf].static -%}
+       - to: {{ s.to }}
+         via: {{ s.via }}
+         metric: 1
+       {% endfor %}
+      {% endif %} 
+    {% endfor %}  
+EOF
+{% endif %}
+
+
+{% if vnc -%}
+cat << EOF | sudo tee /usr/local/bin/start_vnc.sh
+#!/bin/bash
+{% for v in vnc -%}
+websockify -D --web=/usr/share/novnc/ {{vnc[v].port}} {{vnc[v].vnc_server}}
+{% endfor -%}
+exit 1
+EOF
+
+sudo chmod +x /usr/local/bin/start_vnc.sh
+
+cat << EOF | sudo tee /etc/update-motd.d/99-update
+#!/bin/bash
+echo "----------------------------------------------"
+echo "To access console of VM, use the following URL"
+echo "----------------------------------------------"
+{% for v in vnc -%}
+echo "console {{ v }} : http://{{ip_gw}}:{{vnc[v].port}}/vnc.html"
+{% endfor -%}
+EOF
+
+sudo chmod +x  /etc/update-motd.d/99-update
+{% endif -%}
+
+cat << EOF | tee ~/.ssh/authorized_keys
+{{ ssh_key_pub }}
+EOF
+
+cat << EOF |  tee ~/.ssh/id_rsa
+{{ ssh_key_priv }}
+EOF
+
+chmod og-rwx ~/.ssh/*
+
+sudo netplan apply
+
+sudo mv ~/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf
+sudo systemctl enable startup.service
+sudo systemctl restart startup.service
+sudo systemctl restart kea-dhcp4-server.service
+sudo systemctl restart tftpd-hpa.service
+sudo systemctl restart coredns.service
+sudo mv ~/tftp/*.conf /srv/tftp/
+
+sudo rm /etc/resolv.conf
+cat << EOF | sudo tee /etc/resolv.conf
+nameserver 127.0.0.1
+search vmmlab.com
+EOF
+
+# sudo reboot
+

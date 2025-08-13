@@ -4,6 +4,9 @@
 # 20 october 2019
 
 # 24 July 2021, updated for VMM 3.0 (not backward compatible with previous version of VMM)
+
+# 13 augustus 2025, updated with kea-dhcp4-server on node GW
+
 # add project
 #from re import L
 import param1
@@ -23,7 +26,8 @@ from scp import SCPClient
 import random
 import subprocess
 from passlib.hash import md5_crypt
-#import json
+import time
+import json
 
 
  
@@ -289,7 +293,7 @@ def change_gateway4(d1):
 							else:
 								#d1['vm'][i]['interfaces'][j]['static']=[{'to':'default','via': d1['vm'][i]['interfaces'][j]['gateway4']}]
 								d1['vm'][i]['interfaces'][j]['family']['static']=[{'to':'0.0.0.0/0','via': d1['vm'][i]['interfaces'][j]['family']['gateway4']}]
-							d1['vm'][i]['interfaces'][j]['family'].pop('gateway4')
+							#d1['vm'][i]['interfaces'][j]['family'].pop('gateway4')
 						else:
 							print("no gateway4")
 						if 'gateway6' in d1['vm'][i]['interfaces'][j]['family'].keys():
@@ -299,7 +303,7 @@ def change_gateway4(d1):
 							else:
 								#d1['vm'][i]['interfaces'][j]['static']=[{'to':'default','via': d1['vm'][i]['interfaces'][j]['gateway4']}]
 								d1['vm'][i]['interfaces'][j]['family']['static']=[{'to':'::/0','via': d1['vm'][i]['interfaces'][j]['family']['gateway6']}]
-							d1['vm'][i]['interfaces'][j]['family'].pop('gateway6')
+							#d1['vm'][i]['interfaces'][j]['family'].pop('gateway6')
 		#print(d1['vm'][i])
 
 def ipv4_to_int(ipv4):
@@ -602,6 +606,8 @@ def add_path(d1,path):
 		'junos2': f"{path}/template/junos2.j2",
 		'junos3': f"{path}/template/junos3.j2",
 		'set_gw': f"{path}/template/set_gw.j2",
+		'set_gw2': f"{path}/template/set_gw2.j2",
+		'kea_dhcp4': f"{path}/template/kea_dhcp4.j2",
 		'ztp_dhcp': f"{path}/template/ztp_dhcp.j2",
 		'dhcp': f"{path}/template/dhcp.j2",
 		'vjunos_config': f"{path}/template/vjunos_config.j2",
@@ -956,6 +962,7 @@ def get_dhcp_config(d1):
 				if 'family' in d1['vm'][i]['interfaces']['em0']:
 					if 'inet' in d1['vm'][i]['interfaces']['em0']['family']:
 						d1['vm'][i]['interfaces']['em0']['mac']=get_mac_vm(d1,i)
+						print(f"vm {i} mac {d1['vm'][i]['interfaces']['em0']['mac']}")
 						dhcp_list.append(i)
 			elif 'mgmt' in d1['vm'][i]['interfaces']:
 				if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX'] and d1['vm'][i]['ztp']:
@@ -963,49 +970,60 @@ def get_dhcp_config(d1):
 						if 'inet' in d1['vm'][i]['interfaces']['mgmt']['family']:
 							d1['vm'][i]['interfaces']['mgmt']['mac']=get_mac_vm(d1,i)
 							dhcp_list.append(i)
-	print(f"list of vm with dhcp {dhcp_list}")
+	#print(f"list of vm with dhcp {dhcp_list}")
 	#print("get_dhcp_config")
 	for i in dhcp_list:
 		if 'mgmt' in d1['vm'][i]['interfaces'].keys(): 
 			t1[i]={
 				'ip' : d1['vm'][i]['interfaces']['mgmt']['family']['inet'].split('/')[0],
-				'mac' : d1['vm'][i]['interfaces']['mgmt']['mac']
+				'mac' : d1['vm'][i]['interfaces']['mgmt']['mac'],
+				'type' : 'junos'
 			}
 		elif 'em0' in d1['vm'][i]['interfaces'].keys(): 
 			t1[i]={
 				'ip' : d1['vm'][i]['interfaces']['em0']['family']['inet'].split('/')[0],
-				'mac' : d1['vm'][i]['interfaces']['em0']['mac']
+				'mac' : d1['vm'][i]['interfaces']['em0']['mac'],
+				'type' : 'pc'
 			}
+		print(f"vm {i}, ip {t1[i]['ip']}, mac {t1[i]['mac']}")
 	
 	retval['dhcp']={
 		'vm': t1
 	}
-	cmd1 = "systemd-resolve --status | grep -A1 -m 1 \"DNS Servers\" | sed -e 's/DNS Servers://' | sed -e 's/ *//'"
-	ssh=sshconnect(d1)
-	_,stdout,_=ssh.exec_command(cmd1)
-	j = stdout.readlines()
-	#print(f"output {j}")
-	retval['dhcp']['dns']=[]
-	for i in j:
-		#print(i)
-		#print(i)
-		t1= i.rstrip()
-		#print(t1)
-		retval['dhcp']['dns'].append(t1)
+	# cmd1 = "systemd-resolve --status | grep -A1 -m 1 \"DNS Servers\" | sed -e 's/DNS Servers://' | sed -e 's/ *//'"
+	# ssh=sshconnect(d1)
+	# _,stdout,_=ssh.exec_command(cmd1)
+	# j = stdout.readlines()
+	# #print(f"output {j}")
+	# retval['dhcp']['dns']=[]
+	# for i in j:
+	# 	#print(i)
+	# 	#print(i)
+	# 	t1= i.rstrip()
+	# 	#print(t1)
+	# 	retval['dhcp']['dns'].append(t1)
+	retval['dhcp']['dns']=['10.49.32.95','10.49.32.97']
 	retval['dhcp']['range']=[]
 
 	#print(f"retval {retval}")
+	intf_list = []
+	id = 1
 	for i in d1['vm']['gw']['interfaces'].keys():
 		if 'dhcp_range' in d1['vm']['gw']['interfaces'][i].keys():
 			low_ip,high_ip = d1['vm']['gw']['interfaces'][i]['dhcp_range'].split('-')
 			ip_subnet, subnet_mask = get_subnet(d1['vm']['gw']['interfaces'][i]['family']['inet'])
+			intf_list.append(i.replace('em','eth'))
 			retval['dhcp']['range'].append({
 				'min': low_ip,
 				'max': high_ip,
 				'router': d1['vm']['gw']['interfaces'][i]['family']['inet'].split('/')[0],
 				'subnet' : ip_subnet,
-				'netmask' : subnet_mask
+				'prefix' : netmask2prefix(subnet_mask),
+				'netmask' : subnet_mask,
+				'id' : id
 			})
+			id+=1
+	retval['dhcp']['intf'] = intf_list
 	retval['net'] = get_net_config_gw(d1)
 	retval['vnc'] = create_novnc(d1)
 	# cmd1 = "ip addr show dev eth0 | grep 'inet ' | tr -s ' ' | cut -f 3 -d ' ' | cut -f 1 -d '/'"
@@ -1021,11 +1039,11 @@ def get_dhcp_config(d1):
 	#print(retval)
 	#print(retval.keys())
 	#print(retval['vnc'])
-
 	return retval
 
 
 def get_net_config(d1,vm):
+	print("get net config ",vm)
 	net_config={}
 	static_config={}
 	mtu_config={}
@@ -1044,7 +1062,9 @@ def get_net_config(d1,vm):
 			'dns': None,
 			'gateway4': None,
 			'gateway6': None,
+			'search' : 'vmmlab.com'
 		}
+
 	for i in d1['vm'][vm]['interfaces'].keys():
 		j = i.replace('em','eth')
 		if 'family' in d1['vm'][vm]['interfaces'][i].keys():
@@ -1087,7 +1107,8 @@ def get_net_config(d1,vm):
 		if j in net_config.keys():
 			retval[j]['addresses']=net_config[j]
 			if j == 'eth0':
-				retval[j]['dns']=d1['pod']['dns']
+				# retval[j]['dns']=d1['pod']['dns']
+				retval[j]['dns']=retval[j]['gateway4']
 		if j in static_config.keys():
 			retval[j]['static'] =  static_config[j]
 		if j in mtu_config.keys():
@@ -1187,7 +1208,82 @@ def change_dhcp(d1):
 	sftp.close()
 	ssh.close()
 
-def set_gw(d1):
+def set_gw_v2(d1):
+	# this function work with kea-dhcp4-server
+	print("Creating configuration for node GW")
+	set_gw_param = get_dhcp_config(d1)
+	#pprint.pprint(set_gw_param['dhcp'])
+	with open(d1['template']['kea_dhcp4']) as f1:
+		t1=f1.read()
+	kea4_script=Template(t1).render(set_gw_param['dhcp'])
+	kea4=yaml.load(kea4_script,Loader=yaml.FullLoader)
+	#kea4=yaml.safe_load(kea4_script)
+	# with open("tmp/kea-dhcp4.yaml","w") as f1:
+	# 	f1.write(kea4_script)
+	# with open("tmp/kea-dhcp4.yaml") as f1:
+	# 	kea4=yaml.load(f1,Loader=yaml.FullLoader)
+	# vm_list = []
+	# for i in set_gw_param['dhcp']['vm']:
+	# 	vm = {
+	# 		'hostname' : i, 
+	# 		'hw-address': set_gw_param['dhcp']['vm'][i]['mac'], 
+	# 		'ip-address': set_gw_param['dhcp']['vm'][i]['ip']
+	# 	}
+	# 	if set_gw_param['dhcp']['vm'][i]['type'] == 'junos':
+	# 		vm['option-data'] = [
+	# 			{ 'name': 'vendor-encapsulated-options'},
+	# 			{
+	# 				'data': i + '.conf',
+	# 				'name': 'config-file-name',
+	# 				'space': 'vendor-encapsulated-options-space'
+	# 			},
+	# 			{
+	# 				'data': 'tftp',
+	# 				'name': 'transfer-mode',
+	# 				'space': 'vendor-encapsulated-options-space'
+	# 			}
+	# 		]
+	# 	vm_list.append(vm)
+	# kea4['Dhcp4']['reservations'] = vm_list
+	kea4_json = json.dumps(kea4,indent=2)
+	# print(kea4_json)
+	file1=param1.tmp_dir + 'kea-dhcp4.conf'
+	with open(file1,"w") as f1:
+		f1.write(kea4_json)
+	print("uploading kea-dhcp4.conf to gw")
+	ssh=connect_to_gw(d1)
+	sftp=ssh.open_sftp()
+	ssh.exec_command("sudo rm  ~/kea-dhcp4.conf")
+	sftp.put(file1,'kea-dhcp4.conf')
+	sftp.close()
+	with open(d1['template']['set_gw2']) as f1:
+		t1=f1.read()
+	set_gw_script=Template(t1).render(set_gw_param)
+	file1=param1.tmp_dir + 'set_gw.sh'
+	with open(file1,"w") as f1:
+		f1.write(set_gw_script)
+	print("uploading set_gw.sh to gw")
+	ssh=connect_to_gw(d1)
+	ssh.exec_command("mkdir ~/tftp")
+	sftp=ssh.open_sftp()
+	sftp.put(file1,'set_gw.sh')
+	sftp.close()
+	for i in d1['vm'].keys():
+		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX'] and d1['vm'][i]['ztp']:
+			src1 = f"{param1.tmp_dir}{i}.conf"
+			dst1 = f"tftp/{i}.conf"
+			sftp=ssh.open_sftp()
+			print(f"uploading file {src1} to {dst1}")
+			sftp.put(src1,dst1)
+			sftp.close()
+	print("Executing script on gw")
+	cmd1="bash ~/set_gw.sh"
+	stdin_, stdout_, stderr_ = ssh.exec_command(cmd1)
+	stdout_.channel.recv_exit_status()
+	ssh.close()
+
+def set_gw_v1(d1):
+	# this function work with isc-dhcp4-server
 	print("Creating configuration for node GW")
 	set_gw_param = get_dhcp_config(d1)
 	#print(set_gw_param)
@@ -1609,7 +1705,7 @@ def create_esxi_disk(d1,ssh):
 					print(i.rstrip())
 
 def create_hd2(d1):
-	os_type=['ubuntu','ubuntu2','centos','debian']
+	os_type=['ubuntu','ubuntu2','centos','debian','pa2']
 	dest_dir=d1['pod']['home_dir'] +'/vm/' + d1['name'] + "/"
 	vm_with_hd2 = {}
 	vm_with_hd3 = {}
@@ -1641,13 +1737,12 @@ def start(d1):
 		ssh=sshconnect(d1)
 		print('-----')
 		print("stop and unbind the existing topology")
-		cmd1=create_hd2(d1)
-		print("create hd2/hd3 ")
+		
 		#print(cmd1)
-		if cmd1:
-			s1,s2,s3=ssh.exec_command(cmd1)
-			for i in s2.readlines():
-				print(i.rstrip())
+		# if cmd1:
+		# 	s1,s2,s3=ssh.exec_command(cmd1)
+		# 	for i in s2.readlines():
+		# 		print(i.rstrip())
 		cmd1="vmm stop"
 		s1,s2,s3=ssh.exec_command(cmd1)
 		for i in s2.readlines():
@@ -1656,12 +1751,16 @@ def start(d1):
 		s1,s2,s3=ssh.exec_command(cmd1)
 		for i in s2.readlines():
 			print(i.rstrip())
-		cmd1 = check_disk2(d1)
+		# cmd1 = check_disk2(d1)
+		# print("create hd2/hd3 ")
+		cmd1=create_hd2(d1)
 		if cmd1:
 			print("creating secondary disk")
+			# time.sleep(3)
 			s1,s2,s3=ssh.exec_command(cmd1)
 			for i in s2.readlines():
 				print(i.rstrip())
+			time.sleep(3)
 		print("start configuration ")
 		create_esxi_disk(d1,ssh)
 		cmd1=f"vmm config {lab_conf} -g {param1.vmm_group}"
@@ -1722,6 +1821,15 @@ def upload(d1,upload_status=1):
 		# 	f1 = param1.tmp_dir + "ztp_config.txt"
 		# 	ztp_config = create_ztp_config(d1)
 		# 	write_to_file(f1,ztp_config)
+
+		# cmd1=create_hd2(d1)
+		# if cmd1:
+		# 	ssh=sshconnect(d1)
+		# 	print("creating secondary disk")
+		# 	s1,s2,s3=ssh.exec_command(cmd1)
+		# 	for i in s2.readlines():
+		# 		print(i.rstrip())
+		
 		if upload_status:
 			upload_file_to_server(d1)
 	elif d1['pod']['type'] == 'kvm':
@@ -2293,6 +2401,33 @@ def prefix2netmask(prefs):
 			b.append(0)
 		pref -= 8
 	return str(b[0]) + "." + str(b[1]) + "." + str(b[2]) + "." + str(b[3])
+
+def netmask2prefix(netmask):
+    b = netmask.split('.')
+    prefix = 0
+    for i in b:
+        t = int(i)
+        match t:
+            case 0b11111111:
+                l = 8
+            case 0b11111110:
+                l = 7
+            case 0b11111100:
+                l = 6
+            case 0b11111000:
+                l = 5
+            case 0b11110000:
+                l = 4
+            case 0b11100000:
+                l = 3
+            case 0b11000000:
+                l = 2
+            case 0b10000000:
+                l = 1
+            case 0b0:
+                l = 0
+        prefix += l
+    return prefix
 
 def write_to_file(f1,line1):
 	print("writing " + f1)

@@ -15,6 +15,7 @@ pod:
   ssh_key_name: key1
   ssh_key_host_name: keyhost
   #ntp: 172.16.10.1
+  gw_type: 2
 images:
   gw: images/gw.qcow2
   ubuntu: images/ubuntu24.04.qcow2
@@ -104,6 +105,7 @@ vm:
     type: pchpv0
     os: pa2
     vnc: yes
+    hd2: 50G
     interfaces:
       em0: 
         bridge: control
@@ -115,6 +117,7 @@ vm:
     type: pchpv0
     os: pa2
     vnc: yes
+    hd2: 50G
     interfaces:
       em0: 
         bridge: control
@@ -126,6 +129,7 @@ vm:
     type: pchpv0
     os: pa2
     vnc: yes
+    hd2: 50G
     interfaces:
       em0: 
         bridge: control
@@ -137,6 +141,7 @@ vm:
     type: pchpv0
     os: pa2
     vnc: yes
+    hd2: 50G
     interfaces:
       em0: 
         bridge: control

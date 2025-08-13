@@ -13,6 +13,9 @@ pod:
   home_dir : /vmm/data/user_disks/irzan
   ssh_key_name: key1
   ssh_key_host_name: keyhost
+  # gateway type 1: using isc-dhcp-server
+  # gateway type 2: using kea-dhcp4-server
+  gw_type: 2 
   #ntp: 172.16.10.1
 images:
   gw: images/gw.qcow2

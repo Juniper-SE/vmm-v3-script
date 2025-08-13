@@ -4,6 +4,8 @@ import os
 import lib1
 import time
 # yaml.warnings({'YAMLLoadWarning': False})
+
+
 time_start = time.time()
 config1=lib1.check_argv(sys.argv)
 if config1:
@@ -29,7 +31,14 @@ if config1:
 		elif config1['cmd'] == 'list':
 			lib1.list_vm(d1)
 		elif config1['cmd'] == 'set_gw':
-			lib1.set_gw(d1)
+			if 'gw_type' in d1['pod'].keys():
+				if d1['pod']['gw_type'] == 1:
+					set_gw = lib1.set_gw_v1
+				elif d1['pod']['gw_type'] == 2:
+					set_gw = lib1.set_gw_v2
+			else:
+				set_gw = lib1.set_gw_v2
+			set_gw(d1)
 		elif config1['cmd'] == 'set_host':
 			lib1.set_host(d1,config1['vm'])
 		elif config1['cmd'] == 'test':

@@ -1,0 +1,112 @@
+Dhcp4:
+  control-socket:
+    socket-name: /run/kea/kea4-ctrl-socket
+    socket-type: unix
+  expired-leases-processing:
+    flush-reclaimed-timer-wait-time: 25
+    hold-reclaimed-time: 3600
+    max-reclaim-leases: 100
+    max-reclaim-time: 250
+    reclaim-timer-wait-time: 10
+    unwarned-reclaim-cycles: 5
+  interfaces-config:
+    interfaces:
+    {% for i in intf -%}
+    - {{ i }}
+    {% endfor %}
+  lease-database:
+    lfc-interval: 3600
+    type: memfile
+  loggers:
+  - debuglevel: 0
+    name: kea-dhcp4
+    output_options:
+    - output: /var/log/kea/kea-dhcp4.log
+      pattern: '%-5p %m
+
+        '
+    severity: INFO
+  option-def:
+  - array: false
+    code: 0
+    encapsulate: ''
+    name: image-file-name
+    record-types: ''
+    space: vendor-encapsulated-options-space
+    type: string
+  - array: false
+    code: 1
+    encapsulate: ''
+    name: config-file-name
+    record-types: ''
+    space: vendor-encapsulated-options-space
+    type: string
+  - array: false
+    code: 2
+    encapsulate: ''
+    name: image-file-type
+    record-types: ''
+    space: vendor-encapsulated-options-space
+    type: string
+  - array: false
+    code: 3
+    encapsulate: ''
+    name: transfer-mode
+    record-types: ''
+    space: vendor-encapsulated-options-space
+    type: string
+  - array: false
+    code: 4
+    encapsulate: ''
+    name: alt-image-file-name
+    record-types: ''
+    space: vendor-encapsulated-options-space
+    type: string
+  - array: false
+    code: 5
+    encapsulate: ''
+    name: http-port
+    record-types: ''
+    space: vendor-encapsulated-options-space
+    type: string
+  - array: true
+    code: 150
+    name: tftp-server-address
+    space: dhcp4
+    type: ipv4-address
+  rebind-timer: 1800
+  renew-timer: 900
+  reservations-global: true
+  reservations:
+  {% for i in vm -%}
+  - hostname: {{ i }}
+    hw-address: '{{ vm[i].mac }}'
+    ip-address: {{ vm[i].ip }}
+    {% if vm[i].type == 'junos' -%}
+    option-data:
+    - name: vendor-encapsulated-options
+    - data: {{ i }}.conf
+      name: config-file-name
+      space: vendor-encapsulated-options-space
+    - data: tftp
+      name: transfer-mode
+      space: vendor-encapsulated-options-space
+    {% endif %}
+  {% endfor %}
+  subnet4:
+  {% for i in range -%}
+  - id: {{ i.id }}
+    option-data:
+    - data: {{ i.router }}
+      name: routers
+    - data: {{ i.router }}
+      name: domain-name-servers
+    - data: vmmlab.com
+      name: domain-search
+    - data: {{ i.router }}
+      name: tftp-server-address
+    pools:
+    - pool: {{ i.min }} - {{ i.max }}
+    subnet: {{ i.subnet }}/{{ i.prefix }}
+  {% endfor %}
+  valid-lifetime: 3600

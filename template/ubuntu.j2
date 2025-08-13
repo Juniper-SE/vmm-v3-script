@@ -44,9 +44,10 @@ network:
       {% if net[intf].mtu -%}
       mtu: {{ net[intf].mtu}}
       {% endif -%}
-      {% if net[intf].dns -%}
+      {% if net[intf].gateway4 -%}
       nameservers:
-         addresses: {{ net[intf].dns }}
+         addresses: [{{ net[intf].gateway4 }} ] 
+         search: [ {{ net[intf].search }} ]
       {% endif -%}
       {% if net[intf].static -%}
       routes: 

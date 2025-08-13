@@ -1,6 +1,6 @@
 # How to use Juniper VMM
 
-release 0.8
+release 0.9
 ## Overview
 This script is used to create configuration files, which will be used to create and run VMs (Virtual Machines) on Juniper's VMM infastructure.
 The scripts has been modified to work with VMM 3.0 
