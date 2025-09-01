@@ -1,0 +1,22 @@
+interfaces {
+    {{ intf }} {
+        flexible-vlan-tagging;
+        mtu 9000;
+        encapsulation flexible-ethernet-services;
+        unit {{ unit }} {
+            vlan-id {{ unit }};
+            family inet {
+                address {{ myipv4 }};
+            }
+            family inet6 {
+                address {{ myipv6 }};
+            }
+            family iso;
+        }
+    }
+}
+protocols {
+    isis {
+        interface {{ intf }}.{{ unit }};
+    }
+}

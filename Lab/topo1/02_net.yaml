@@ -1,0 +1,18 @@
+network:
+  bridges:
+    r1:
+      openvswitch: {}
+      interfaces:
+      - eth1
+    r2:
+      openvswitch: {}
+      interfaces:
+      - eth2
+    r3:
+      openvswitch: {}
+      interfaces:
+      - eth3
+    r4:
+      openvswitch: {}
+      interfaces:
+      - eth4

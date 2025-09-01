@@ -252,12 +252,13 @@ def read_config(config):
 		for i in d1['vm'].keys():
 			if d1['vm'][i]['os']=='vjunos_evolved':
 				## add interface em1, em2, em3, em4
-				if 'vm_type' in d1['vm'][i].keys():
-					if d1['vm'][i]['vm_type'] == 0:
-						d1['vm'][i]['interfaces'].update({'vio1': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
-						d1['vm'][i]['interfaces'].update({'vio2': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
-						d1['vm'][i]['interfaces'].update({'vio3': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
-						d1['vm'][i]['interfaces'].update({'vio4': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
+				d1['vm'][i]['efi']='yes'
+				# if 'vm_type' in d1['vm'][i].keys():
+				# 	if d1['vm'][i]['vm_type'] == 0:
+				# 		d1['vm'][i]['interfaces'].update({'vio1': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
+				# 		d1['vm'][i]['interfaces'].update({'vio2': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
+				# 		d1['vm'][i]['interfaces'].update({'vio3': {'mtu' : 9600, 'bridge' : i + 'RPIO'}})
+				# 		d1['vm'][i]['interfaces'].update({'vio4': {'mtu' : 9600, 'bridge' : i + 'PFE'}})
 		# print("write tmp/lab.yaml")
 		# with open('lab_new.yaml','w') as f1:
 		#  	f1.write(yaml.dump(d1))
@@ -1934,16 +1935,17 @@ def create_lab_config(d1):
 						if j == 'mgmt':
 							intf1 = 'vio0'
 						elif j.split('-')[0] in ['ge','et','xe']:
-							if d1['vm'][i]['type'] == 'vjunos_evolved' or d1['vm'][i]['type'] == 'vjunos_evolvedBX':
-								if 'vm_type' in d1['vm'][i].keys():
-									if d1['vm'][i]['vm_type'] == 0:
-										idx = int(j.split('/')[2]) + 5
-									else:
-										idx = int(j.split('/')[2]) + 1
-								else:
-									idx = int(j.split('/')[2]) + 1
-							else:
-								idx = int(j.split('/')[2]) + 1
+							# if d1['vm'][i]['type'] == 'vjunos_evolved' or d1['vm'][i]['type'] == 'vjunos_evolvedBX':
+							# 	if 'vm_type' in d1['vm'][i].keys():
+							# 		if d1['vm'][i]['vm_type'] == 0:
+							# 			idx = int(j.split('/')[2]) + 5
+							# 		else:
+							# 			idx = int(j.split('/')[2]) + 1
+							# 	else:
+							# 		idx = int(j.split('/')[2]) + 1
+							# else:
+							# 	idx = int(j.split('/')[2]) + 1
+							idx = int(j.split('/')[2]) + 1
 							intf1 = f"vio{idx}"
 						else:
 							intf1=j

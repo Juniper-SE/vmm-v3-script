@@ -1,0 +1,4 @@
+intf: et-0/0/0
+unit: 103
+myipv4: 192.168.30.254/24
+myipv6: fc00:dead:beef:aa30::1/64

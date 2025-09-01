@@ -1,0 +1,8 @@
+export OS_AUTH_URL=http://172.16.11.15/openstack-keystone/v3
+export OS_USERNAME=demo2
+export OS_PASSWORD=pass01
+export OS_USER_DOMAIN_NAME=users
+export OS_PROJECT_DOMAIN_NAME=users
+export OS_PROJECT_NAME=demo2
+export OS_AUTH_VERSION=3
+export OS_IDENTITY_API_VERSION=3
