@@ -6,8 +6,6 @@
 
   vars:
     user: admin
-    passwd: pass01
-
   tasks:
     - name: load interface and protocol configuration
       juniper.device.config:  
