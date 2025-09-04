@@ -127,9 +127,17 @@ Select the vmm server that has enough token required for your topology, and put 
 
 ## Prepare python3 virtual environment
 
-1. Create python3 virtual environment to the script. Please use python3 version 3.12 or less... Python3 version 3.13 may have problem with ansible modules (related to paramiko modules)
+1. Create python3 virtual environment to the script. 
+
+       # Please use python3 version 3.12 or less... 
+       # Python3 version 3.13 may have problem with ansible modules (related to paramiko modules)
 
        python3 -m venv ~/python3/vmmlab
+
+       or
+
+       /opt/homebrew/Cellar/python@3.12/3.12.11/bin/python3.12 -m venv ~/python3/vmmlab
+       
 
 2. activate the python3 virtual environment
 

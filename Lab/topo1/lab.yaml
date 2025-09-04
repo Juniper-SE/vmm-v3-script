@@ -71,8 +71,6 @@ vm:
   r1:
     type: vjunos_router
     os: vjunos_router
-    ztp: yes
-    mgmt_dhcp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -92,8 +90,6 @@ vm:
   r2:
     type: vjunos_router
     os: vjunos_router
-    ztp: yes
-    mgmt_dhcp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -113,8 +109,6 @@ vm:
   r3:
     type: vjunos_evolved
     os: vjunos_evolved
-    ztp: yes
-    mgmt_dhcp: yes
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -134,8 +128,6 @@ vm:
   r4:
     type: vjunos_evolved
     os: vjunos_evolved
-    ztp: yes
-    mgmt_dhcp: yes
     interfaces:
       mgmt: 
         bridge: mgmt

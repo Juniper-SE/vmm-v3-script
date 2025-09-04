@@ -66,7 +66,7 @@ vmm_servers = ["q-pod08","q-pod13", "q-pod21", "q-pod22", "q-pod23", "q-pod25", 
 
 # jnpr_dns1="66.129.233.81"
 # jnpr_dns2="66.129.233.82"
-
+jnpr_dns = ['10.49.32.95','10.49.32.97']
 # #jnpr_dns1="8.8.8.8"
 # #jnpr_dns2="8.8.4.4"
 

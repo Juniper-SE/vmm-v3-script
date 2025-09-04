@@ -276,7 +276,30 @@ def change_ztp(d1):
 	for i in d1['vm'].keys():
 		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX']:
 			if 'ztp' not in d1['vm'][i].keys():
-				d1['vm'][i]['ztp'] = False
+				d1['vm'][i]['ztp'] = True
+			else:
+				if type(d1['vm'][i]['ztp'])==int:
+					if d1['vm'][i]['ztp'] <= 0:
+						d1['vm'][i]['ztp'] = False
+					else:
+						d1['vm'][i]['ztp'] = True
+			if 'mgmt_dhcp' not in d1['vm'][i].keys():
+				d1['vm'][i]['mgmt_dhcp'] = True
+			else:
+				if type(d1['vm'][i]['mgmt_dhcp'])==int:
+					if d1['vm'][i]['mgmt_dhcp'] <= 0:
+						d1['vm'][i]['mgmt_dhcp'] = False
+					else:
+						d1['vm'][i]['mgmt_dhcp'] = True
+			if 'mgmt_instc' not in d1['vm'][i].keys():
+				d1['vm'][i]['mgmt_instc'] = True
+			else:
+				if type(d1['vm'][i]['mgmt_instc'])==int:
+					if d1['vm'][i]['mgmt_instc'] <= 0:
+						d1['vm'][i]['mgmt_instc'] = False
+					else:
+						d1['vm'][i]['mgmt_instc'] = True
+			
 				
 def change_gateway4(d1):
 	for i in d1['vm'].keys():
@@ -1063,7 +1086,7 @@ def get_dhcp_config(d1):
 	# 	t1= i.rstrip()
 	# 	#print(t1)
 	# 	retval['dhcp']['dns'].append(t1)
-	retval['dhcp']['dns']=['10.49.32.95','10.49.32.97']
+	retval['dhcp']['dns']=param1.jnpr_dns
 	retval['dhcp']['range']=[]
 
 	#print(f"retval {retval}")
@@ -1245,29 +1268,29 @@ def bin2quad(binvalue):
 # 	print("dhcp_config")
 # 	print(dhcp_config)
 
-def change_dhcp(d1):
-	dhcp_config, net_config = get_dhcp_config(d1)
-	line_to_file = ['#!/bin/bash']
-	line_to_file += ['cat << EOF | sudo tee /etc/dhcp/dhcpd.conf']
-	line_to_file += dhcp_config
-	line_to_file += ['EOF']
-	line_to_file += ['']
-	line_to_file += ['sudo systemctl restart isc-dhcp-server']
-	f1=param1.tmp_dir + 'change_dhcp.sh'
-	write_to_file(f1,line_to_file)
-	ssh=connect_to_gw(d1)
-	sftp=ssh.open_sftp()
-	print("uploading file to gw")
-	sftp.put(f1,'change_dhcp.sh')
-	print("Executing script on gw")
-	print("chmod +x change_dhcp.sh")
-	cmd1="chmod +x /home/ubuntu/change_dhcp.sh"
-	s0,s1,s2=ssh.exec_command(cmd1)
-	cmd1="bash /home/ubuntu/change_dhcp.sh"
-	print("executing change_dhcp.sh")
-	ssh.exec_command(cmd1)
-	sftp.close()
-	ssh.close()
+# def change_dhcp(d1):
+# 	dhcp_config, net_config = get_dhcp_config(d1)
+# 	line_to_file = ['#!/bin/bash']
+# 	line_to_file += ['cat << EOF | sudo tee /etc/dhcp/dhcpd.conf']
+# 	line_to_file += dhcp_config
+# 	line_to_file += ['EOF']
+# 	line_to_file += ['']
+# 	line_to_file += ['sudo systemctl restart isc-dhcp-server']
+# 	f1=param1.tmp_dir + 'change_dhcp.sh'
+# 	write_to_file(f1,line_to_file)
+# 	ssh=connect_to_gw(d1)
+# 	sftp=ssh.open_sftp()
+# 	print("uploading file to gw")
+# 	sftp.put(f1,'change_dhcp.sh')
+# 	print("Executing script on gw")
+# 	print("chmod +x change_dhcp.sh")
+# 	cmd1="chmod +x /home/ubuntu/change_dhcp.sh"
+# 	s0,s1,s2=ssh.exec_command(cmd1)
+# 	cmd1="bash /home/ubuntu/change_dhcp.sh"
+# 	print("executing change_dhcp.sh")
+# 	ssh.exec_command(cmd1)
+# 	sftp.close()
+# 	ssh.close()
 
 def set_gw_v2(d1):
 	# this function work with kea-dhcp4-server
@@ -1397,24 +1420,24 @@ def set_gw_v1(d1):
 	#print(set_gw_script)
 
 
-def get_ztp_config(d1):
-	if 'ztp' in d1.keys():
-		print("Creating ZTP config for apstra")
-		filename1 = param1.tmp_dir + "ztp_config.txt"
-		if not os.path.exists(param1.tmp_dir):
-			os.mkdir(param1.tmp_dir)
-		with open(d1['template']['ztp_dhcp']) as f1:
-			jt=f1.read()
-		ztp_data = create_ztp_config(d1)
-		#print(ztp_data)
-		ztp_config = Template(jt).render(ztp_data)
-		print(f"write ztp configuration to {filename1}")
-		with open(filename1,"w") as f1:
-			f1.write(ztp_config)
-		print(f"Don't forget to upload file {filename1} to ztp server")
-		#write_to_file(f1,ztp_config)
-	else:
-		print("ZTP is not enabled")
+# def get_ztp_config(d1):
+# 	if 'ztp' in d1.keys():
+# 		print("Creating ZTP config for apstra")
+# 		filename1 = param1.tmp_dir + "ztp_config.txt"
+# 		if not os.path.exists(param1.tmp_dir):
+# 			os.mkdir(param1.tmp_dir)
+# 		with open(d1['template']['ztp_dhcp']) as f1:
+# 			jt=f1.read()
+# 		ztp_data = create_ztp_config(d1)
+# 		#print(ztp_data)
+# 		ztp_config = Template(jt).render(ztp_data)
+# 		print(f"write ztp configuration to {filename1}")
+# 		with open(filename1,"w") as f1:
+# 			f1.write(ztp_config)
+# 		print(f"Don't forget to upload file {filename1} to ztp server")
+# 		#write_to_file(f1,ztp_config)
+# 	else:
+# 		print("ZTP is not enabled")
 
 # def get_vjunos_config(d1):
 # 	print("creating configuration for vjunos")
@@ -2300,17 +2323,25 @@ def create_junos_config(d1,i):
 	# 		dummy1['mgmt_dhcp'] = 0
 	# else:
 	# 	dummy1['mgmt_dhcp'] = 0
-	dummy1['mgmt_dhcp'] = 0
-	if 'mgmt_dhcp' in d1['vm'][i].keys():
-		if d1['vm'][i]['mgmt_dhcp']:
-			dummy1['mgmt_dhcp'] = 1
-	if 'mgmt_instc' in d1['vm'][i].keys():
-		if d1['vm'][i]['mgmt_instc']:
-			dummy1['mgmt_instc'] = 1
-		else: 
-			dummy1['mgmt_instc'] = 0
+	if d1['vm'][i]['mgmt_dhcp']:
+		dummy1['mgmt_dhcp'] = 1
 	else:
+		dummy1['mgmt_dhcp'] = 0
+	if d1['vm'][i]['mgmt_instc']:
 		dummy1['mgmt_instc'] = 1
+	else:
+		dummy1['mgmt_instc'] = 0
+	# dummy1['mgmt_dhcp'] = 0
+	# if 'mgmt_dhcp' in d1['vm'][i].keys():
+	# 	if d1['vm'][i]['mgmt_dhcp']:
+	# 		dummy1['mgmt_dhcp'] = 1
+	# if 'mgmt_instc' in d1['vm'][i].keys():
+	# 	if d1['vm'][i]['mgmt_instc']:
+	# 		dummy1['mgmt_instc'] = 1
+	# 	else: 
+	# 		dummy1['mgmt_instc'] = 0
+	# else:
+	# 	dummy1['mgmt_instc'] = 1
 	# if 	'router-id' in d1['vm'][i].keys():	
 	# 	dummy1['router_id']  = d1['vm'][i]['router-id']
 	if 'isis_dm' in d1.keys():
@@ -2610,45 +2641,45 @@ def change_intf(intf):
 # 		retval.append('   interface "' +  intf + '" { bridge "' + d1['vm'][i]['interfaces'][j]['bridge'] + '";};')
 # 	return retval
 
-def init_junos(d1,vm=""):
-	print("this is for init junos")
-	list_of_jvm=[]
-	for i in d1['vm'].keys():
-		if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos-router','vjunos_evolved','vjunos_evolvedBX']:
-			list_of_jvm.append(i)
-	if list_of_jvm:
-		if vm:
-			#print(f"VM is {vm}")
-			if vm not in list_of_jvm:
-				print(f"VM {vm} is not configured in this topology")
-			else:
-				send_init(d1,vm)
-				# config_junos(d1,vm)
-		else:
-			print("list of virtual junos ",list_of_jvm)
-			for i in list_of_jvm:
-				send_init(d1,i)
-			# config_junos(d1)
+# def init_junos(d1,vm=""):
+# 	print("this is for init junos")
+# 	list_of_jvm=[]
+# 	for i in d1['vm'].keys():
+# 		if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos-router','vjunos_evolved','vjunos_evolvedBX']:
+# 			list_of_jvm.append(i)
+# 	if list_of_jvm:
+# 		if vm:
+# 			#print(f"VM is {vm}")
+# 			if vm not in list_of_jvm:
+# 				print(f"VM {vm} is not configured in this topology")
+# 			else:
+# 				send_init(d1,vm)
+# 				# config_junos(d1,vm)
+# 		else:
+# 			print("list of virtual junos ",list_of_jvm)
+# 			for i in list_of_jvm:
+# 				send_init(d1,i)
+# 			# config_junos(d1)
 
-def init_vjunos(d1,vm=""):
-	print("this is for init vjunos")
-	list_of_jvm=[]
-	for i in d1['vm'].keys():
-		if d1['vm'][i]['os'] in  ['vjunos_switch','vjunos_router']:
-			list_of_jvm.append(i)
-	if list_of_jvm:
-		if vm:
-			#print(f"VM is {vm}")
-			if vm not in list_of_jvm:
-				print(f"VM {vm} is not configured in this topology")
-			else:
-				send_init_vjunos(d1,vm)
-				# config_junos(d1,vm)
-		else:
-			print("list of virtual junos ",list_of_jvm)
-			for i in list_of_jvm:
-				send_init_vjunos(d1,i)
-			# config_junos(d1)
+# def init_vjunos(d1,vm=""):
+# 	print("this is for init vjunos")
+# 	list_of_jvm=[]
+# 	for i in d1['vm'].keys():
+# 		if d1['vm'][i]['os'] in  ['vjunos_switch','vjunos_router']:
+# 			list_of_jvm.append(i)
+# 	if list_of_jvm:
+# 		if vm:
+# 			#print(f"VM is {vm}")
+# 			if vm not in list_of_jvm:
+# 				print(f"VM {vm} is not configured in this topology")
+# 			else:
+# 				send_init_vjunos(d1,vm)
+# 				# config_junos(d1,vm)
+# 		else:
+# 			print("list of virtual junos ",list_of_jvm)
+# 			for i in list_of_jvm:
+# 				send_init_vjunos(d1,i)
+# 			# config_junos(d1)
 
 
 def connect_to_vm(d1,i):
@@ -2669,195 +2700,195 @@ def connect_to_vm(d1,i):
 	ssh.connect(hostname=host_ip,username=user_id,password=passwd,sock=jumphost_channel)
 	return ssh
 
-def config_junos(d1,vm=""):
-	if not vm:
-		print("this is put configuration into vEX and vEVO")
-		list_of_jvm=[]
-		for i in d1['vm'].keys():
-			if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos_router','vjunos_evolved','vjunos_evolvedBX']:
-				list_of_jvm.append(i)
-		if list_of_jvm:
-			print("list of virtual junos ",list_of_jvm)
-			#d1['gw_ip']=get_ip_vm(d1,'gw')
-			for i in list_of_jvm:
-				#print(f"To vm {i}")
-				upload_to_vm(d1,i)
-	else:
-		upload_to_vm(d1,vm)
+# def config_junos(d1,vm=""):
+# 	if not vm:
+# 		print("this is put configuration into vEX and vEVO")
+# 		list_of_jvm=[]
+# 		for i in d1['vm'].keys():
+# 			if d1['vm'][i]['os'] in ['vjunos_switch','evo','vjunos_router','vjunos_evolved','vjunos_evolvedBX']:
+# 				list_of_jvm.append(i)
+# 		if list_of_jvm:
+# 			print("list of virtual junos ",list_of_jvm)
+# 			#d1['gw_ip']=get_ip_vm(d1,'gw')
+# 			for i in list_of_jvm:
+# 				#print(f"To vm {i}")
+# 				upload_to_vm(d1,i)
+# 	else:
+# 		upload_to_vm(d1,vm)
 
-def upload_to_vm(d1,i):
-	local1 = f"./tmp/{i}.conf"
-	remote1= f"~/{i}.conf"
-	print(f"uploading file {local1} to {i}")
-	ssh2host=connect_to_vm(d1,i)
-	scp = SCPClient(ssh2host.get_transport())
-	scp.put(local1,remote1)
-	scp.close()
-	cmd1 = f"edit ; load merge relative {i}.conf ; commit"
-	print(f"executing {cmd1}")
-	s1,s2,s3=ssh2host.exec_command(cmd1)
-	for i in s2.readlines():
-		print(i)
-	ssh2host.close()
+# def upload_to_vm(d1,i):
+# 	local1 = f"./tmp/{i}.conf"
+# 	remote1= f"~/{i}.conf"
+# 	print(f"uploading file {local1} to {i}")
+# 	ssh2host=connect_to_vm(d1,i)
+# 	scp = SCPClient(ssh2host.get_transport())
+# 	scp.put(local1,remote1)
+# 	scp.close()
+# 	cmd1 = f"edit ; load merge relative {i}.conf ; commit"
+# 	print(f"executing {cmd1}")
+# 	s1,s2,s3=ssh2host.exec_command(cmd1)
+# 	for i in s2.readlines():
+# 		print(i)
+# 	ssh2host.close()
 
-def send_init(d1,i):
-	status=0
-	my_hash_root = md5_crypt.hash(d1['junos_login']['password'])
-	my_hash = md5_crypt.hash(d1['junos_login']['password'])
-	#cmd1="vmm serial -t " + i
-	ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
-	#br_mgmt = d1['vm'][i]['interfaces']['mgmt']['bridge']
-	if 'gateway4' not in d1['vm'][i]['interfaces']['mgmt']['family']:
-		gateway4 = '0.0.0.0'
-	else:
-		gateway4 = d1['vm'][i]['interfaces']['mgmt']['family']['gateway4']
-	#gateway4 = get_gateway4(d1,i)
-	junos_status=0
-	print("configuring ",i)
-	if d1['vm'][i]['os'] in  ['vjunos_switch']:
-		junos_status=1
-		c1=f"ssh vmm 'vmm serial -t {i}'"
-		print(f"COMMAND {c1}")
-		s_e = [
-				["","login:"],
-				["root","root@"],
-				["cli","root>"],
-				["configure","root#"],
-				["delete interfaces fxp0","root#"],
-				["delete chassis","root#"],
-				["delete protocols","root#"],
-				["delete system processes dhcp-service","root#"],
-				["set system host-name " + i,"root#"],
-				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root#"],
-				["set system services ssh","root#"],
-				["set system services netconf ssh","root#"],
-				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root#"],
-				[f"set interfaces fxp0 unit 0 family inet address {ip_mgmt}","root#"],
-				["set system management-instance","root#"],
-				[f"set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop {gateway4}", "root#"],
-				["set chassis network-services enhanced-ip","root#"],
-				["set chassis evpn-vxlan-default-switch-support","root#"],
-				["set snmp community public authorization read-only","root#"],
-				["commit",f"root@{i}#"],
-				["exit",f"root@{i}>"],
-				["request system reboot","(no)"],
-				["yes","IMMEDIATELY"]	
-			] 
-				# ["exit","root@:~ #"],
-				# ["exit","login:"]
-			## [f"set system login user {d1['junos_login']['login']} authentication ssh-rsa \"{d1['pod']['ssh_key']}\"","root#"],
-	elif d1['vm'][i]['os'] in  ['evo','vjunos_evolved','vjunos_evolvedBX']:
-		junos_status=1
-		if d1['vm'][i]['os'] == 'evo':
-			c1=f"ssh vmm 'vmm serial -t {i}_RE0'"
-		elif d1['vm'][i]['os'] == 'vjunos_evolved' or d1['vm'][i]['os'] == 'vjunos_evolvedBX':
-			c1=f"ssh vmm 'vmm serial -t {i}'"
-		print(f"COMMAND {c1}")
-		s_e = [
-				["","login:"],
-				["root","root@re0:~#"],
-				["cli","root@re0>"],
-				["configure","root@re0#"],
-				["delete system commit","root@re0#"],
-				["delete chassis","root@re0#"],
-				["set system host-name " + i,"root@re0#"],
-				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root@re0#"],
-				["set system services ssh","root@re0#"],
-				["set system services netconf ssh","root@re0#"],
-				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root@re0#"],
-				[f"set interfaces re0:mgmt-0 unit 0 family inet address {ip_mgmt}","root@re0#"],
-				["set system management-instance","root@re0#"],
-				[f"set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop {gateway4}", "root@re0#"],
-				["set snmp community public authorization read-only","root@re0#"],
-				[f"commit",f"root@{i}#"],
-				[f"exit",f"root@{i}>"],
-				["exit","root@re0:~#"],
-				["exit","login:"]
-			]
-			## [f"set system login user {d1['junos_login']['login']} authentication ssh-rsa \"{d1['pod']['ssh_key']}\"","root@re0#"],
-	if junos_status:
-		p1=pexpect.spawn(c1)
-		for j in s_e:
-			print(f"send :{j[0]}")
-			p1.sendline(j[0])
-			print(f"expect : {j[1]}")
-			p1.expect(j[1], timeout=240)
-		p1.close()
+# def send_init(d1,i):
+# 	status=0
+# 	my_hash_root = md5_crypt.hash(d1['junos_login']['password'])
+# 	my_hash = md5_crypt.hash(d1['junos_login']['password'])
+# 	#cmd1="vmm serial -t " + i
+# 	ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
+# 	#br_mgmt = d1['vm'][i]['interfaces']['mgmt']['bridge']
+# 	if 'gateway4' not in d1['vm'][i]['interfaces']['mgmt']['family']:
+# 		gateway4 = '0.0.0.0'
+# 	else:
+# 		gateway4 = d1['vm'][i]['interfaces']['mgmt']['family']['gateway4']
+# 	#gateway4 = get_gateway4(d1,i)
+# 	junos_status=0
+# 	print("configuring ",i)
+# 	if d1['vm'][i]['os'] in  ['vjunos_switch']:
+# 		junos_status=1
+# 		c1=f"ssh vmm 'vmm serial -t {i}'"
+# 		print(f"COMMAND {c1}")
+# 		s_e = [
+# 				["","login:"],
+# 				["root","root@"],
+# 				["cli","root>"],
+# 				["configure","root#"],
+# 				["delete interfaces fxp0","root#"],
+# 				["delete chassis","root#"],
+# 				["delete protocols","root#"],
+# 				["delete system processes dhcp-service","root#"],
+# 				["set system host-name " + i,"root#"],
+# 				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root#"],
+# 				["set system services ssh","root#"],
+# 				["set system services netconf ssh","root#"],
+# 				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root#"],
+# 				[f"set interfaces fxp0 unit 0 family inet address {ip_mgmt}","root#"],
+# 				["set system management-instance","root#"],
+# 				[f"set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop {gateway4}", "root#"],
+# 				["set chassis network-services enhanced-ip","root#"],
+# 				["set chassis evpn-vxlan-default-switch-support","root#"],
+# 				["set snmp community public authorization read-only","root#"],
+# 				["commit",f"root@{i}#"],
+# 				["exit",f"root@{i}>"],
+# 				["request system reboot","(no)"],
+# 				["yes","IMMEDIATELY"]	
+# 			] 
+# 				# ["exit","root@:~ #"],
+# 				# ["exit","login:"]
+# 			## [f"set system login user {d1['junos_login']['login']} authentication ssh-rsa \"{d1['pod']['ssh_key']}\"","root#"],
+# 	elif d1['vm'][i]['os'] in  ['evo','vjunos_evolved','vjunos_evolvedBX']:
+# 		junos_status=1
+# 		if d1['vm'][i]['os'] == 'evo':
+# 			c1=f"ssh vmm 'vmm serial -t {i}_RE0'"
+# 		elif d1['vm'][i]['os'] == 'vjunos_evolved' or d1['vm'][i]['os'] == 'vjunos_evolvedBX':
+# 			c1=f"ssh vmm 'vmm serial -t {i}'"
+# 		print(f"COMMAND {c1}")
+# 		s_e = [
+# 				["","login:"],
+# 				["root","root@re0:~#"],
+# 				["cli","root@re0>"],
+# 				["configure","root@re0#"],
+# 				["delete system commit","root@re0#"],
+# 				["delete chassis","root@re0#"],
+# 				["set system host-name " + i,"root@re0#"],
+# 				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root@re0#"],
+# 				["set system services ssh","root@re0#"],
+# 				["set system services netconf ssh","root@re0#"],
+# 				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root@re0#"],
+# 				[f"set interfaces re0:mgmt-0 unit 0 family inet address {ip_mgmt}","root@re0#"],
+# 				["set system management-instance","root@re0#"],
+# 				[f"set routing-instances mgmt_junos routing-options static route 0.0.0.0/0 next-hop {gateway4}", "root@re0#"],
+# 				["set snmp community public authorization read-only","root@re0#"],
+# 				[f"commit",f"root@{i}#"],
+# 				[f"exit",f"root@{i}>"],
+# 				["exit","root@re0:~#"],
+# 				["exit","login:"]
+# 			]
+# 			## [f"set system login user {d1['junos_login']['login']} authentication ssh-rsa \"{d1['pod']['ssh_key']}\"","root@re0#"],
+# 	if junos_status:
+# 		p1=pexpect.spawn(c1)
+# 		for j in s_e:
+# 			print(f"send :{j[0]}")
+# 			p1.sendline(j[0])
+# 			print(f"expect : {j[1]}")
+# 			p1.expect(j[1], timeout=240)
+# 		p1.close()
 
-def send_init_vjunos(d1,i):
-	status=0
-	my_hash_root = md5_crypt.hash(d1['junos_login']['password'])
-	my_hash = md5_crypt.hash(d1['junos_login']['password'])
-	#cmd1="vmm serial -t " + i
-	#ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
-	#br_mgmt = d1['vm'][i]['interfaces']['mgmt']['bridge']
-	#if 'gateway4' not in d1['vm'][i]['interfaces']['mgmt']['family']:
-	#	gateway4 = '0.0.0.0'
-	#else:
-	#	gateway4 = d1['vm'][i]['interfaces']['mgmt']['family']['gateway4']
-	#gateway4 = get_gateway4(d1,i)
-	junos_status=0
-	print("configuring ",i)
-	if d1['vm'][i]['os'] in  ['vjunos_switch']:
-		junos_status=1
-		c1=f"ssh vmm 'vmm serial -t {i}'"
-		ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
-		print(f"COMMAND {c1}")
-		s_e = [
-				["","login:"],
-				["root","root@"],
-				["cli","root>"],
-				["configure","root#"],
-				["delete interfaces fxp0","root#"],
-				["delete chassis","root#"],
-				["delete protocols","root#"],
-				["delete system processes dhcp-service","root#"],
-				["set system host-name " + i,"root#"],
-				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root#"],
-				["set system services ssh","root#"],
-				["set system services netconf ssh","root#"],
-				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root#"],
-				[f"set interfaces fxp0 unit 0 family inet address {ip_mgmt}","root#"],
-				["set chassis network-services enhanced-ip","root#"],
-				["set chassis evpn-vxlan-default-switch-support","root#"],
-				["set snmp community public authorization read-only","root#"],
-				["commit",f"root@{i}#"],
-				["exit",f"root@{i}>"],
-				["request system reboot","(no)"],
-				["yes","IMMEDIATELY"]	
-			] 
-	if d1['vm'][i]['os'] in  ['vjunos_router']:
-		junos_status=1
-		ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
-		c1=f"ssh vmm 'vmm serial -t {i}'"
-		print(f"COMMAND {c1}")
-		s_e = [
-				["","login:"],
-				["root","root@"],
-				["cli","root>"],
-				["configure","root#"],
-				["delete interfaces fxp0","root#"],
-				["delete chassis","root#"],
-				["delete protocols","root#"],
-				["delete system processes dhcp-service","root#"],
-				["set system host-name " + i,"root#"],
-				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root#"],
-				["set system services ssh","root#"],
-				["set system services netconf ssh","root#"],
-				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root#"],
-				[f"set interfaces fxp0 unit 0 family inet address {ip_mgmt}","root#"],
-				["set chassis network-services enhanced-ip","root#"],
-				["set snmp community public authorization read-only","root#"],
-				["commit",f"root@{i}#"],
-				["exit",f"root@{i}>"],
-				["request system reboot","(no)"],
-				["yes","IMMEDIATELY"]	
-			]
-	if junos_status:
-		p1=pexpect.spawn(c1)
-		for j in s_e:
-			print(f"send :{j[0]}")
-			p1.sendline(j[0])
-			print(f"expect : {j[1]}")
-			p1.expect(j[1], timeout=240)
-		p1.close()
+# def send_init_vjunos(d1,i):
+# 	status=0
+# 	my_hash_root = md5_crypt.hash(d1['junos_login']['password'])
+# 	my_hash = md5_crypt.hash(d1['junos_login']['password'])
+# 	#cmd1="vmm serial -t " + i
+# 	#ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
+# 	#br_mgmt = d1['vm'][i]['interfaces']['mgmt']['bridge']
+# 	#if 'gateway4' not in d1['vm'][i]['interfaces']['mgmt']['family']:
+# 	#	gateway4 = '0.0.0.0'
+# 	#else:
+# 	#	gateway4 = d1['vm'][i]['interfaces']['mgmt']['family']['gateway4']
+# 	#gateway4 = get_gateway4(d1,i)
+# 	junos_status=0
+# 	print("configuring ",i)
+# 	if d1['vm'][i]['os'] in  ['vjunos_switch']:
+# 		junos_status=1
+# 		c1=f"ssh vmm 'vmm serial -t {i}'"
+# 		ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
+# 		print(f"COMMAND {c1}")
+# 		s_e = [
+# 				["","login:"],
+# 				["root","root@"],
+# 				["cli","root>"],
+# 				["configure","root#"],
+# 				["delete interfaces fxp0","root#"],
+# 				["delete chassis","root#"],
+# 				["delete protocols","root#"],
+# 				["delete system processes dhcp-service","root#"],
+# 				["set system host-name " + i,"root#"],
+# 				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root#"],
+# 				["set system services ssh","root#"],
+# 				["set system services netconf ssh","root#"],
+# 				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root#"],
+# 				[f"set interfaces fxp0 unit 0 family inet address {ip_mgmt}","root#"],
+# 				["set chassis network-services enhanced-ip","root#"],
+# 				["set chassis evpn-vxlan-default-switch-support","root#"],
+# 				["set snmp community public authorization read-only","root#"],
+# 				["commit",f"root@{i}#"],
+# 				["exit",f"root@{i}>"],
+# 				["request system reboot","(no)"],
+# 				["yes","IMMEDIATELY"]	
+# 			] 
+# 	if d1['vm'][i]['os'] in  ['vjunos_router']:
+# 		junos_status=1
+# 		ip_mgmt = d1['vm'][i]['interfaces']['mgmt']['family']['inet']
+# 		c1=f"ssh vmm 'vmm serial -t {i}'"
+# 		print(f"COMMAND {c1}")
+# 		s_e = [
+# 				["","login:"],
+# 				["root","root@"],
+# 				["cli","root>"],
+# 				["configure","root#"],
+# 				["delete interfaces fxp0","root#"],
+# 				["delete chassis","root#"],
+# 				["delete protocols","root#"],
+# 				["delete system processes dhcp-service","root#"],
+# 				["set system host-name " + i,"root#"],
+# 				[f"set system root-authentication encrypted-password \"{my_hash_root}\"","root#"],
+# 				["set system services ssh","root#"],
+# 				["set system services netconf ssh","root#"],
+# 				[f"set system login user {d1['junos_login']['login']} class super-user authentication encrypted-password \"{my_hash}\"","root#"],
+# 				[f"set interfaces fxp0 unit 0 family inet address {ip_mgmt}","root#"],
+# 				["set chassis network-services enhanced-ip","root#"],
+# 				["set snmp community public authorization read-only","root#"],
+# 				["commit",f"root@{i}#"],
+# 				["exit",f"root@{i}>"],
+# 				["request system reboot","(no)"],
+# 				["yes","IMMEDIATELY"]	
+# 			]
+# 	if junos_status:
+# 		p1=pexpect.spawn(c1)
+# 		for j in s_e:
+# 			print(f"send :{j[0]}")
+# 			p1.sendline(j[0])
+# 			print(f"expect : {j[1]}")
+# 			p1.expect(j[1], timeout=240)
+# 		p1.close()
