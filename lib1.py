@@ -1527,28 +1527,29 @@ def create_novnc(d1):
 	return retval
 
 
-def get_dns(d1):
-	# cmd1="sudo systemd-resolve --status | grep -A1 \"DNS Servers\" | sed -e 's/DNS Servers://' | sed -e 's/ *//'"
-	cmd1="resolvectl status | grep DNS| grep 'DNS Servers:' | cut -f 2 -d ':'"
-	ssh=connect_to_gw(d1)
-	print(f"executing command {cmd1}")
-	print("Getting ip addresses of DNS server")
-	stdin, stdout, stderr = ssh.exec_command(cmd1)
-	output=stdout.read()
-	#print(f"output {output}")
-	a=output.strip().decode("utf-8").replace(" ",":").split(":")
-	dns=[]
-	for i in a:
-		if i:
-			dns.append(i)
-	#dns=['8.8.8.8','8.8.4.4']
-	if len(a)>2:
-		dns = dns[0:2]
-	print(f"dns {dns}")
-	d1['pod']['dns']=dns
-	# print(f"DNS1 {d1['pod']['dns'][0]}")
-	# print(f"DNS2 {d1['pod']['dns'][1]}")
-	ssh.close()
+# def get_dns(d1):
+# 	# cmd1="sudo systemd-resolve --status | grep -A1 \"DNS Servers\" | sed -e 's/DNS Servers://' | sed -e 's/ *//'"
+# 	cmd1="resolvectl status | grep DNS| grep 'DNS Servers:' | cut -f 2 -d ':'"
+# 	ssh=connect_to_gw(d1)
+# 	print(f"executing command {cmd1}")
+# 	print("Getting ip addresses of DNS server")
+# 	stdin, stdout, stderr = ssh.exec_command(cmd1)
+# 	output=stdout.read()
+# 	#print(f"output {output}")
+# 	a=output.strip().decode("utf-8").replace(" ",":").split(":")
+# 	# dns=[]
+# 	# for i in a:
+# 	# 	if i:
+# 	# 		dns.append(i)
+# 	# #dns=['8.8.8.8','8.8.4.4']
+# 	# if len(a)>2:
+# 	# 	dns = dns[0:2]
+# 	# print(f"dns {dns}")
+
+# 	d1['pod']['dns']=param1.jnpr_dns
+# 	# print(f"DNS1 {d1['pod']['dns'][0]}")
+# 	# print(f"DNS2 {d1['pod']['dns'][1]}")
+# 	ssh.close()
 
 def iscsi_initiator():
 	# file /etc/iscsi/initiatorname.iscsi
@@ -1561,7 +1562,7 @@ def iscsi_initiator():
 def set_host(d1,vm=""):
 	host_yes=['centos','rhel','ubuntu','ubuntu2','debian','bridge','desktop']
 	list_hosts=[]
-	get_dns(d1)
+	#get_dns(d1)
 	filename1=param1.tmp_dir + 'set_host.sh'
 	if vm:
 		if vm not in d1['vm'].keys():

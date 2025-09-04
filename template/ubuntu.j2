@@ -83,4 +83,4 @@ sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa
 sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa -b 521
 sudo systemctl restart sshd
 
-sudo reboot
+sudo netplan apply
