@@ -127,6 +127,8 @@ Select the vmm server that has enough token required for your topology, and put 
 
 ## Prepare python3 virtual environment
 
+Screenshot recording for this can be found [here](https://asciinema.org/a/RyHCmyU29Rfa38W7MWvLUyUCZ)
+
 1. Create python3 virtual environment to the script. 
 
        # Please use python3 version 3.12 or less... 
