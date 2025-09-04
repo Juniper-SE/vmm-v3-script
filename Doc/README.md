@@ -153,11 +153,6 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/RyHCmy
 
        ansible-galaxy collection install juniper.device
 
-
-
-
-       vi lab.yaml
-
 ## VMM topology configuration file
 
 1. Create configuration file for the lab **lab.yaml** or use one of the lab.yaml available inside directory Lab.
@@ -210,9 +205,10 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/RyHCmy
          bridge: images/bridge.qcow2
          vjunos_router: images/vJunos-router-25.2R1.9.qcow2
          vjunos_evolved: images/vJunosEvolved-25.2R1.8-EVO.qcow2
+         <os_name>: <disk_images>
 
 
-        gw: images/gw.qcow2, gw: refer to the os field for each nodes, and images/gw.qcow2 the disk image file on the home directory for the vmm server
+        gw: images/gw.qcow2, "gw:" or <os_name> refer to the field "os" on each nodes, and "images/gw.qcow2" or <disk_images> is the disk image file on the home directory for the vmm server
 
         
 7. This part of the configuration define connectivity between nodes/vJunosVM in the topology
@@ -230,7 +226,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/RyHCmy
 
        topology: define how the nodes/vJunosVM are connected to each other, it will have multiple lines, where each line define point-to-point connection between two nodes/vJunosVM. 
 
-       for example "[ 0x17, r1, ge-0/0/1, r2, ge-0/0/1 ]", define connection between node r1 and r2, where port ge-0/0/1 of r1 is connected to port ge-0/0/1 of r2, and the first field, in this case 0x17, define what will be configured on that point-to-point link. 
+       for example "[ 0x17, r1, ge-0/0/1, r2, ge-0/0/1 ]", define connection between node "r1" and "r2", where port "ge-0/0/1" of "r1" is connected to port "ge-0/0/1" of "r2", and the first field, in this case "0x17", define what will be configured on that point-to-point link. 
 
        the value of the first field is an integer, which can be in hexadecimal or decimal or binary, and the value of each bit of this field are the following 
 
