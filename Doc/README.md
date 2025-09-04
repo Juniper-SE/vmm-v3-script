@@ -158,6 +158,10 @@ Select the vmm server that has enough token required for your topology, and put 
        cd vmm-v3-script
        pip3 install -r requirements.txt
 
+5. Install ansible for junos
+
+       ansible-galaxy collection install juniper.device
+
 ## Step by Step guide on how to use the script
 
 1. Create configuration file for the lab **lab.yaml**. Put this file under a directory inside directory Lab. You can refer to the sample under directory lab.
