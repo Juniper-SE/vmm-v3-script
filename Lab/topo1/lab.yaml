@@ -2,20 +2,10 @@
 name: topo1
 pod: 
   type: vmm
-  #vmmserver: sv8-pod4-vmm.englab.juniper.net
-  #jumpserver: ttsv-shell110.juniper.net
-  #vmmserver: q-pod13-vmm.englab.juniper.net
   vmmserver: q-pod27-vmm.englab.juniper.net
-  # jumpserver: ttqc-shell002.juniper.net
-  #jumpserver: ttsv-shell001.juniper.net
   user: irzan
-  #adpassword: ThisIsAnaMabokCoy
-  #vmmpassword: sksksksk
+  #vmmpassword: AnaMabokCoy
   home_dir : /vmm/data/user_disks/irzan
-  ssh_key_name: key1
-  ssh_key_host_name: keyhost
-  #ntp: 172.16.10.1
-  gw_type: 2
 images:
   gw: images/gw.qcow2
   ubuntu: images/ubuntu24.04.qcow2

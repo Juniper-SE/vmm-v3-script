@@ -7,18 +7,16 @@
 
 # 13 augustus 2025, updated with kea-dhcp4-server on node GW
 
-# add project
-#from re import L
+# 4 sept 2025 : removing ssh key from the script
+
 import param1
 import sys
 import os
 import shutil
 import paramiko
-#import time
-import pathlib
 from jinja2 import Template
 import shutil
-from pathlib import Path
+
 import yaml
 import pexpect
 import pprint
@@ -28,9 +26,13 @@ import subprocess
 from passlib.hash import md5_crypt
 import time
 import json
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa, ed25519
+from cryptography.hazmat.backends import default_backend
 
-
- 
+#from pathlib import Path
+#import time
+#import pathlib
 # from jnpr.junos import Device
 # from jnpr.junos.utils.config import Config
 
@@ -569,35 +571,93 @@ def check_vm(d1):
 	junos_vm_f1= list_vm_from_fabric(d1)
 	return set(junos_vm_f1).issubset(set(junos_vm_d1))
 
+# old function
+# def add_ssh_key(d1):
+# 	if 'ssh_key_name' in d1['pod'].keys():
+# 		key_file = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_name'] + ".pub"
+# 		key_file_priv = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_name']
+# 	else:
+# 		key_file = str(pathlib.Path.home()) + "/.ssh/id_rsa.pub"
+# 		key_file_priv = str(pathlib.Path.home()) + "/.ssh/id_rsa"
+# 	try:
+# 		with open(key_file) as f:
+# 			ssh_key = f.read()
+# 		d1['pod']['ssh_key']=ssh_key.strip()
+# 		with open(key_file_priv) as f:
+# 			ssh_key_priv = f.read()
+# 		d1['pod']['ssh_key_priv']=ssh_key_priv.strip()
+# 		if 'ssh_key_host_name' in d1['pod'].keys():
+# 			key_file = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_host_name'] + ".pub"
+# 			key_file_priv = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_host_name']
+# 			with open(key_file) as f:
+# 				ssh_key = f.read()
+# 			d1['pod']['ssh_key_host']=ssh_key.strip()
+# 			with open(key_file_priv) as f:
+# 				ssh_key_priv = f.read()
+# 			d1['pod']['ssh_key_host_priv']=ssh_key_priv.strip()
+# 		else:
+# 			d1['pod']['ssh_key_host']=d1['pod']['ssh_key']
+# 			d1['pod']['ssh_key_host_priv']=d1['pod']['ssh_key_priv']
+# 	except Exception as e:
+# 		print(e)
+# 		sys.exit()
+
+
+# create ssh key
+def create_ssh_key(d1):
+	# Generate an RSA private key
+	ssh_dir = os.path.expanduser('~')  + "/.ssh/"
+	ssh_key_priv_file = ssh_dir + d1['name']
+	ssh_key_pub_file = ssh_dir + d1['name'] + ".pub"
+	# check file existence
+	key_file_not_avail = 1
+	if os.path.isfile(ssh_key_priv_file) and os.path.isfile(ssh_key_pub_file):
+		key_file_not_avail = 0
+
+	if key_file_not_avail:
+		rsa_private_key = rsa.generate_private_key(
+			public_exponent=65537,
+			key_size=2048,
+			backend=default_backend()
+		)
+
+		# Serialize the RSA private key to OpenSSH format
+		pem_private_key = rsa_private_key.private_bytes(
+			encoding=serialization.Encoding.PEM,
+			format=serialization.PrivateFormat.OpenSSH,
+			encryption_algorithm=serialization.NoEncryption() # Use NoEncryption or a password
+		)
+
+		# Get the public key in OpenSSH format
+		ssh_public_key = rsa_private_key.public_key().public_bytes(
+			encoding=serialization.Encoding.OpenSSH,
+			format=serialization.PublicFormat.OpenSSH
+		)
+
+		# Save to files
+		with open(ssh_key_priv_file, "wb") as f:
+			f.write(pem_private_key)
+		os.chmod(ssh_key_priv_file,0o600)
+		with open(ssh_key_pub_file, "wb") as f:
+			f.write(ssh_public_key)
+# revised function
 def add_ssh_key(d1):
-	if 'ssh_key_name' in d1['pod'].keys():
-		key_file = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_name'] + ".pub"
-		key_file_priv = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_name']
-	else:
-		key_file = str(pathlib.Path.home()) + "/.ssh/id_rsa.pub"
-		key_file_priv = str(pathlib.Path.home()) + "/.ssh/id_rsa"
-	try:
-		with open(key_file) as f:
-			ssh_key = f.read()
-		d1['pod']['ssh_key']=ssh_key.strip()
-		with open(key_file_priv) as f:
-			ssh_key_priv = f.read()
-		d1['pod']['ssh_key_priv']=ssh_key_priv.strip()
-		if 'ssh_key_host_name' in d1['pod'].keys():
-			key_file = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_host_name'] + ".pub"
-			key_file_priv = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_host_name']
-			with open(key_file) as f:
-				ssh_key = f.read()
-			d1['pod']['ssh_key_host']=ssh_key.strip()
-			with open(key_file_priv) as f:
-				ssh_key_priv = f.read()
-			d1['pod']['ssh_key_host_priv']=ssh_key_priv.strip()
-		else:
-			d1['pod']['ssh_key_host']=d1['pod']['ssh_key']
-			d1['pod']['ssh_key_host_priv']=d1['pod']['ssh_key_priv']
-	except Exception as e:
-		print(e)
-		sys.exit()
+	# if 'ssh_key_name' in d1['pod'].keys():
+	# 	key_file = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_name'] + ".pub"
+	# 	key_file_priv = str(pathlib.Path.home()) + "/.ssh/" + d1['pod']['ssh_key_name']
+	# else:
+	# 	key_file = str(pathlib.Path.home()) + "/.ssh/id_rsa.pub"
+	# 	key_file_priv = str(pathlib.Path.home()) + "/.ssh/id_rsa"
+	create_ssh_key(d1)
+	ssh_dir = os.path.expanduser('~')  + "/.ssh/"
+	key_file_priv = ssh_dir + d1['name']
+	key_file  = ssh_dir + d1['name'] + ".pub"
+	with open(key_file) as f:
+		ssh_key = f.read()
+	d1['pod']['ssh_key_host']=ssh_key.strip()
+	with open(key_file_priv) as f:
+		ssh_key_priv = f.read()
+	d1['pod']['ssh_key_host_priv']=ssh_key_priv.strip()
 
 def add_path(d1,path):
 	d1['pod']['path']=path
@@ -2012,14 +2072,14 @@ def write_ssh_config(d1):
 		if d1['vm'][i]['type']=='gw':
 			gw_name = i
 			break
-	if 'ssh_key_name' in d1['pod'].keys():
-		ssh_key = d1['pod']['ssh_key_name']
-	else:
-		ssh_key = "id_rsa"
-	if 'ssh_key_host_name' in d1['pod'].keys():
-		ssh_key_host = d1['pod']['ssh_key_host_name']
-	else:
-		ssh_key_host = ssh_key
+	# if 'ssh_key_name' in d1['pod'].keys():
+	# 	ssh_key = d1['pod']['ssh_key_name']
+	# else:
+	# 	ssh_key = "id_rsa"
+	# if 'ssh_key_host_name' in d1['pod'].keys():
+	# 	ssh_key_host = d1['pod']['ssh_key_host_name']
+	# else:
+	# 	ssh_key_host = ssh_key
 	# if 'jumpserver' in d1['pod'].keys():
 	# 	jumphost_stat = True
 	print("getting gw ip address")
@@ -2066,11 +2126,19 @@ def write_ssh_config(d1):
 		js_temp = d1['pod']['vmmserver']
 	else:
 		js_temp = None
+	# data1={
+	# 	'jumphost' : js_temp,
+	# 	'user' : d1['pod']['user'],
+	# 	'ssh_key': ssh_key,
+	# 	'ssh_key_host': ssh_key_host,
+	# 	'vmm': d1['pod']['vmmserver'],
+	# 	'gw': {'ip': gw_ip, 'user':user },
+	# 	'node': node
+	# 	}
 	data1={
 		'jumphost' : js_temp,
 		'user' : d1['pod']['user'],
-		'ssh_key': ssh_key,
-		'ssh_key_host': ssh_key_host,
+		'ssh_key_host': d1['name'],
 		'vmm': d1['pod']['vmmserver'],
 		'gw': {'ip': gw_ip, 'user':user },
 		'node': node

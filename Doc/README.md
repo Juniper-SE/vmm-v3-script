@@ -1,6 +1,6 @@
 # How to use Juniper VMM
 
-release 0.9
+release 0.91
 ## Overview
 This script is used to create configuration files, which will be used to create and run VMs (Virtual Machines) on Juniper's VMM infastructure.
 The scripts has been modified to work with VMM 3.0 
@@ -33,8 +33,8 @@ new features has been added into the scripts :
 ## Requirement
 This script requires the following :
 - Python3 (this script requires Python3)
-- passlib library (to install use `pip3 install passlib`)
-- paramiko library (to install use `pip3 install paramiko`)
+- passlib library 
+- paramiko library 
 - yaml library
 
 
@@ -68,15 +68,11 @@ This YAML file provide the definition of the lab topology
 please edit this file for the following :
 - the VMM pod which will be used
 - the jump host to access the VMM lab
-- the ssh key to access jumphost, vmm server and the VMs inside the topology. 
 - JNPR Lab Domain password (to access vmm server)
   - if you don't want to hardcode your VMM password into file lab.yaml, your can set environment variable VMMPASSWORD with your JNPRLAB domain password
 
         export VMMPASSWORD="what ever is your password"
 
-- the script assume the ssh key files are located inside directory ~/.ssh 
-  - the private key to be ~/.ssh/<ssh_key_name> 
-  - public key to be ~/.ssh/<ssh_key_name>.pub
 - the disk images for the VMs
 - fabric topology for point-to-point connection between VMs
 - the VM, its type, its OS, management IP address and network interfaces (and its bridge) for connection to other devices.
@@ -102,8 +98,8 @@ There are different arguments required by this script
 - argument `list` :  to get the list of running VMs
 - argument `set_gw`: to send configuration of gateway (ip address on other interface (em1,em2, etc) and DHCP server configuration)
 - argument `set_host`: to send configuration to Linux VMs
-- argument `init_junos`: to send configuration to vEX and/or vPTX
 - argument `create_gw_config`: to create wireguard configuration
+
 
 ## Caution
 
@@ -112,22 +108,58 @@ There are different arguments required by this script
 
 ## Accessing the VMM Lab
 
-Because of the network segmentation policy, VMM servers are not accessible directly from Juniper's intranet, jumphost is required to access the VMM server.
+VMM lab can only be accessed using Juniper's Laptop because it is located on Juniper's Intranet and required zscaler to access it.
 
-The following table are the available jump host for each location. There are multiple jump hosts and each jump host has maximumm number of users that can login.
+To check on which VMM server that you have active topology, can be found at [https://vmm.englab.juniper.net](https://vmm.englab.juniper.net)
 
-![table1](jh_vmm_server.png)
+Information about the availability of VMM servers (online status and available capacity) can be found at [https://vmm.englab.juniper.net/default_live](https://vmm.englab.juniper.net/default_live)
 
-To access jump host and VMM server, use your active directory username/password.
+Select the vmm server that has enough token required for your topology, and put this server name in lab topology file, lab.yaml. Remember to put the FQDN of the vmm server, which is the name of the pod name found from [https://vmm.englab.juniper.net/default_live](https://vmm.englab.juniper.net/default_live), and add suffix **-vmm.englab.juniper.net**  (like the following example)
 
-Unix password is no longer required.
+        lab.yaml
+        ---
+        name: topo1
+        pod:
+          vmmserver: q-pod26-vmm.englab.juniper.net
 
-You can also use ssh key to have passwordless access into the jump host and vmm server, although it may not work for all jump hosts, since not all jump hosts provide the home directory for your user-ID. The script will assume that ssh key <ssh_key_name> is used for accessing jumphost and vmm server.
+        ...
+        
+
+## Prepare python3 virtual environment
+
+1. Create python3 virtual environment to the script. Please use python3 version 3.12 or less... Python3 version 3.13 may have problem with ansible modules (related to paramiko modules)
+
+       python3 -m venv ~/python3/vmmlab
+
+2. activate the python3 virtual environment
+
+       source ~/python3/vmmlab/bin/activate
+
+3. Clone the [script's repository](https://github.com/Juniper-SE/vmm-v3-script) 
+
+       cd ~/git
+       git clone git@github.com:Juniper-SE/vmm-v3-script.git
+
+        or 
+
+       cd ~/git
+       git clone https://github.com/Juniper-SE/vmm-v3-script.git
+
+4. Install the necessary python3 package into the virtual environment
+
+       cd vmm-v3-script
+       pip3 install -r requirements.txt
 
 ## Step by Step guide on how to use the script
 
-1. Create configuration file for the lab **lab.yaml**. You can refer to the sample under directory lab.
-2. Run the script with argument `upload`, to upload the configuration files into VMM server. The script will ctreate the configurations under directory `./tmp`. Files inside these directory will be uploaded into VMM server.
+1. Create configuration file for the lab **lab.yaml**. Put this file under a directory inside directory Lab. You can refer to the sample under directory lab.
+
+       cd ~/git/vmm-v3-script/Lab
+       mkdir topo1
+       cd topo1 
+       vi lab.yaml
+
+2. Run the script with argument `upload`, to upload the configuration files into VMM server. The script will ctreate the configurations under directory `./tmp`. Files inside these directory will be uploaded into VMM server. You have to run this script, while you are inside the lab directory, for example if your lab name is topo1, then your lab directory will be ~/git/vmm-v3-script/Lab/topo1, and file lab.yaml must be on this directory.
 
         ../../vmm.py upload
 
@@ -135,12 +167,11 @@ You can also use ssh key to have passwordless access into the jump host and vmm 
 
         ../../vmm.py start
 
-
-4. Verify that node GW is up and running, by initiating ssh session into it. The username to access node GW is **pass01**
+4. Verify that node GW is up and running, by initiating ssh session into it. The username to access node GW is **ubuntu** and poassword is **pass01**
 
         ssh gw
 
-5. Run the script with argument `set_gw`, to configure other interfaces of node gw (interface em1, em2, etc), upload ssh key and dhcp server configuration. Node **GW** will be acting as DHCP server for on ubuntu/centos VM in the topology
+5. Run the script with argument `set_gw`, to configure other interfaces of node gw (interface em1, em2, etc), upload ssh key and dhcp server configuration. Node **GW** will be acting as DHCP server and tftp (for ZTP) for on ubuntu/centos/vJunos VM in the topology
 
         ../../vmm.py set_gw
 
@@ -149,9 +180,15 @@ You can also use ssh key to have passwordless access into the jump host and vmm 
 
         ../../vmm.py set_host
 
-6. If there are vEX (vJunos) and/or vPTX/vEVO in the topology, then run the script with argument `init_junos`,  vEX and vPTX.
+6. vJunos VM in the topology, such as vJunos-Router, vJunos-Switch, and vJunos-Evolved will be assigned with initial configuration using ZTP. the initial configuration for these vJunos VM are createed by the script during **../../vmm.py upload**. It may take few minutes for the ZTP process to finish.
 
-        ../../vmm.py init_junos
+7. To verify that VMs in the topology are running, you can open ssh session into node **vmm** and access serial console of the vmm
+
+       ssh vmm
+       vmm list
+       vmm serial -t r1
+       vmm serial -t gw
+       vmm serial -t pe1
 
 9. Now the lab is ready and can be used
 
