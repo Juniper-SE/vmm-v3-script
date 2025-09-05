@@ -124,7 +124,7 @@ Information about the availability of VMM servers (online status and available c
 
 ## Prepare python3 virtual environment
 
-Screenshot recording for this can be found [here]()
+Screenshot recording for this can be found [here](https://asciinema.org/a/738124)
 
 1. Create python3 virtual environment to the script. 
 
@@ -323,7 +323,7 @@ Screenshot recording for this can be found [here]()
 
 ## Step by Step guide on how to use the script
 
-Screenshot recording for this can be found [here](https://asciinema.org/a/PNuFH1nKVsohdr5V94ha80TrR)
+Screenshot recording for this can be found [here](https://asciinema.org/a/737867)
 
 1. Change directory to the lab topology that you want to deploy. For example, the following is when you want to deploy lab topo1
 
