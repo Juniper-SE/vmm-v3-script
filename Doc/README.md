@@ -5,6 +5,14 @@ release 0.91
 This script is used to create configuration files, which will be used to create and run VMs (Virtual Machines) on Juniper's VMM infastructure.
 The scripts has been modified to work with VMM 3.0 
 
+## Caveat
+
+The latest version for paramiko (version 4.0.0), support for DSSKey has been deprecated. 
+
+The problem is pyez 2.7.4 still use DSSKey when it uses the paramiko modules. 
+
+Until this is fixed, please use the previous version of paramiko. in my lab, I am using paramiko 3.5.1
+
 ## update on the script
 new features has been added into the scripts :
 
@@ -116,20 +124,12 @@ Information about the availability of VMM servers (online status and available c
 
 ## Prepare python3 virtual environment
 
-Screenshot recording for this can be found [here](https://asciinema.org/a/RyHCmyU29Rfa38W7MWvLUyUCZ)
+Screenshot recording for this can be found [here]()
 
 1. Create python3 virtual environment to the script. 
 
-       # Please use python3 version 3.12 or less... 
-       # Python3 version 3.13 may have problem with ansible modules (related to paramiko modules)
-
        python3 -m venv ~/python3/vmmlab
-
-       or
-
-       /opt/homebrew/Cellar/python@3.12/3.12.11/bin/python3.12 -m venv ~/python3/vmmlab
        
-
 2. activate the python3 virtual environment
 
        source ~/python3/vmmlab/bin/activate
@@ -164,14 +164,13 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/RyHCmy
 
        or
 
-       cd ~/git/vmm-v3-script/Lab
-       mkdir topo1
+       cd ~/git/vmm-v3-script/Lab/
        cd topo1
+
 
 2. In this document, we are going to take a look into the configuration for lab **topo1**
 
        cd ~/git/vmm-v3-script/Lab
-       mkdir topo1
        cd topo1
        vi lab.yaml
 
@@ -311,16 +310,16 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/RyHCmy
         
        for example, on this topology, there are four nodes, gw, r1, r2, and client1
 
-       node gw must be defined inside the topology, because this node will act as gateway/jumphost between juniper intranet and the other nodes inside the topology. This is the only node with connection to juniper intranet.  Port em0 is connected to juniper intranet, because it is connected to bridge external, and it will get ip address automatically from juniper intranet dhcp server.
+       node "gw" must be defined inside the topology, because this node will act as gateway/jumphost between juniper intranet and the other nodes inside the topology. This is the only node with connection to juniper intranet.  Port em0 is connected to juniper intranet, because it is connected to bridge "external", and it will get ip address automatically from juniper intranet dhcp server.
 
-       node gw will have another interface, for example em1, where the management interface of other node (linux VM, vJunos) will be connected to and they has to be assigned with the bridge and assigned with ip address from the same subnet. on this interface, another field is define, dhcp_range (ip pool), which will be used by the script to generate configuration for the dhcp server.
+       node "gw" will have another interface, for example em1, where the management interface of other node (linux VM, vJunos) will be connected to and they has to be assigned with the bridge and assigned with ip address from the same subnet. on this interface, another field is define, dhcp_range (ip pool), which will be used by the script to generate configuration for the dhcp server.
 
-       each node will have field os and type. 
+       each node will have field "os" and "type".
         
-       the field type supported by this script can be found inside file param1.py, for example type can be gw, vjunos_router, vjunos_switch, vjunos_evolved, pchpv1, pcmedium, etc.
-       on file param1.py, each type define three parameters, number of vcpu (ncpus), amount of RAM (memory), and parameter required by vmm/qemu to run the nodes (setvar)
+       the field "type" supported by this script can be found inside file param1.py, for example type can be gw, vjunos_router, vjunos_switch, vjunos_evolved, pchpv1, pcmedium, etc.
+       on file param1.py, each "type" define three parameters, number of vcpu (ncpus), amount of RAM (memory), and parameter required by vmm/qemu to run the nodes (setvar)
 
-       the field os will refer to the disk image defined under stanza images:
+       the field "os" will refer to the disk image defined under stanza "images:"
 
 ## Step by Step guide on how to use the script
 
