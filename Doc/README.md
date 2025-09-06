@@ -177,7 +177,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/738124
        cd topo1
 
 
-2. In this document, we are going to take a look into the configuration for lab **topo1**
+2. In this document, we are going to take a look into the configuration for lab [**topo1**](../Lab/topo1/lab.yaml)
 
        cd ~/git/vmm-v3-script/Lab
        cd topo1
@@ -240,7 +240,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/738124
 
         value for the field status:
         bit 0 : ipv4 --> family ipv4 is enabled, and ipv4 address will be allocated from subnet
-        bit 1 : ipv6 --> family ipv6 is enabled, and ipv6 address will be allocated from subnet
+        bit 1 : ipv6 --> family ipv6 is enabled, and ipv6 address will be allocated from subnet6 or local ipv6 address
         bit 2 : iso --> family iso is enabled
         bit 3 : mpls --> family mpls and protocol mpls are enabled
         bit 4 : isis --> protocol isis is enabled
@@ -359,7 +359,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/737867
 
        ssh gw
 
-6. Run the script with argument `set_gw`, to configure other interfaces of node gw (interface em1, em2, etc), upload ssh key and dhcp server configuration. Node **GW** will be acting as DHCP server and tftp (for ZTP) for on ubuntu/centos/vJunos VM in the topology
+6. Run the script with argument `set_gw`, to configure other interfaces of node gw (interface em1, em2, etc), upload ssh key and dhcp server configuration. Node **GW** will be acting as DHCP server and tftp (for ZTP) for VM ubuntu/centos/vJunos VM in the topology
 
        ../../vmm.py set_gw
 
@@ -375,10 +375,10 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/737867
 
        ../../vmm.py set_host
 
-9. vJunos VM in the topology, such as vJunos-Router, vJunos-Switch, and vJunos-Evolved will be assigned with initial configuration using ZTP. the initial configuration for these vJunos VM are createed by the script during **../../vmm.py upload**. It may take few minutes for the ZTP process to finish.
+9. vJunos VM in the topology, such as vJunos-Router, vJunos-Switch, and vJunos-Evolved will be assigned with initial configuration using ZTP. the initial configuration for these vJunos VM are created by the script during **../../vmm.py upload**. It may take few minutes for the ZTP process to finish.
 
 
-10. To verify that VMs in the topology are running, you can open ssh session into node **vmm** and access serial console of the vmm
+10. To verify that VMs in the topology are running, you can open ssh session into node **vmm** and access serial console of the VM/Nodes
 
        ssh vmm
        vmm list
@@ -386,7 +386,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/737867
        vmm serial -t gw
        vmm serial -t pe1
 
-11. Or you can open ssh session directly from your workstation 
+11. Or you can open ssh session directly from your workstation  or from node **gw**
 
        ssh r1
        ssh r2
