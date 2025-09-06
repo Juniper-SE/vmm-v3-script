@@ -9,9 +9,18 @@ The scripts has been modified to work with VMM 3.0
 
 The latest version for paramiko (version 4.0.0), support for DSSKey has been deprecated. 
 
-The problem is pyez 2.7.4 still use DSSKey when it uses the paramiko modules. 
+The problem is ncclient 0.6.15 which is required for ansible for junos,  still use DSSKey when it uses the paramiko modules. 
+so you need to upgrade ncclient to version 0.7.0, but during the upgrade, you may encounter the following message
 
-Until this is fixed, please use the previous version of paramiko. in my lab, I am using paramiko 3.5.1
+       Installing collected packages: ncclient
+         Attempting uninstall: ncclient
+           Found existing installation: ncclient 0.6.15
+           Uninstalling ncclient-0.6.15:
+              Successfully uninstalled ncclient-0.6.15
+       ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+       junos-eznc 2.7.4 requires ncclient==0.6.15, but you have ncclient 0.7.0 which is incompatible.
+       Successfully installed ncclient-0.7.0
+
 
 ## update on the script
 new features has been added into the scripts :
