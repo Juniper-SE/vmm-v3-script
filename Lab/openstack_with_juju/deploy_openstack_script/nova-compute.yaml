@@ -1,6 +1,0 @@
-nova-compute:
-  config-flags: default_ephemeral_format=ext4
-  enable-live-migration: true
-  enable-resize: true
-  migration-auth-type: ssh
-  virt-type: kvm

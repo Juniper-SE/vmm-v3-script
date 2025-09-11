@@ -1,8 +1,0 @@
-[all]
-kvm
-ap1
-ap2
-ap3
-ap4
-[all:vars]
-ansible_python_interpreter=python3

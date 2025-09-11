@@ -252,7 +252,6 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/738124
        vm:
          gw:
            type: gw
-           os: gw
            interfaces:
              em0: 
                bridge: external
@@ -263,7 +262,6 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/738124
                dhcp_range: 172.16.11.1-172.16.11.200
           r1:
             type: vjunos_router
-            os: vjunos_router
             interfaces:
               mgmt: 
                 bridge: mgmt
@@ -282,7 +280,6 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/738124
                 mtu: 9000
           r2:
             type: vjunos_router
-            os: vjunos_router
             interfaces:
               mgmt: 
                 bridge: mgmt
@@ -301,7 +298,6 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/738124
                 mtu: 9000
           client1:
             type: pchpv1
-            os: ubuntu
             interfaces:
             em0: 
                bridge: mgmt
@@ -328,7 +324,6 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/738124
        the field "type" supported by this script can be found inside file param1.py, for example type can be gw, vjunos_router, vjunos_switch, vjunos_evolved, pchpv1, pcmedium, etc.
        on file param1.py, each "type" define three parameters, number of vcpu (ncpus), amount of RAM (memory), and parameter required by vmm/qemu to run the nodes (setvar)
 
-       the field "os" will refer to the disk image defined under stanza "images:"
 
 ## Step by Step guide on how to use the script
 

@@ -1,8 +1,0 @@
-configure
-delete 
-yes
-load replace base.conf
-commit
-exit configuration-mode
-exit
-

@@ -188,6 +188,9 @@ interfaces {
         {% if interfaces[intf].mtu -%}
         mtu {{ interfaces[intf].mtu }};
         {% endif -%}
+        {% if interfaces[intf].desc -%}
+        description "{{ interfaces[intf].desc }}";
+        {% endif -%}
         {% if interfaces[intf].inet or interfaces[intf].inet6 or interfaces[intf].mpls or interfaces[intf].iso -%}
         unit 0 {
         {% if interfaces[intf].inet -%}

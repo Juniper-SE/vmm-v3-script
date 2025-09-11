@@ -55,6 +55,9 @@ vm_type={
    'mx480' : {'i2cid': 33}, 
    'mx960' : {'i2cid': 21}
 }
+pc_type_only = [ x for x in vm_type.keys() if 'pc' in x]
+vjunos_type = set([ x for x in vm_type.keys() if 'vjunos' in x])
+# print(pc_type)
 # vm_os=['centos','ubuntu','vmx','vqfx','vsrx','evo','mx960','mx480','mx240','wrt']
 # vm_os=['gw','alpine','centos','rhel','ubuntu','ubuntu2','debian','desktop','vmx','jspace','sdi','pa2',
 #        'vsrx','vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX','wrt','aos','aos_ztp','aos_flow','bridge','paagent','ssr']

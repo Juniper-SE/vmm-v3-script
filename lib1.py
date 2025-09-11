@@ -36,29 +36,29 @@ from cryptography.hazmat.backends import default_backend
 # from jnpr.junos import Device
 # from jnpr.junos.utils.config import Config
 
-def get_vmm_capacity(d1):
-	vmm_cap = {}
-	print("Checking capacity")
-	for vmm in param1.vmm_servers:
-		server=f"{vmm}-vmm.englab.juniper.net"
-		print(f"server : {server}, ", end=" ")
-		ssh=paramiko.SSHClient()
-		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-		ssh.connect(hostname=server,username=d1['pod']['user'],password=d1['pod']['vmmpassword'])
-		cmd1 = "vmm capacity -g vmm-default"
-		stdin, stdout, stderr = ssh.exec_command(cmd1, get_pty=True)
-		for line in iter(stdout.readline, ""):
-			if "Total" in line:
-				c1 = int(line.split(":")[1])
-			if "Free" in line:
-				f1 = int(line.split(":")[1])
-		# vmm_cap[vmm]={"total" : c1, "free": f1}
-			# print(line, end="")
-		ssh.close()
-		print(f"total {c1}, free {f1}")
-	# print("%10s %6d %5d" % ("server","total","free"))
-	# for vmm in vmm_cap.keys():
-	# 	print("%10s %5d %5d" % (vmm,vmm_cap[vmm]['total'],vmm_cap[vmm]['free']))
+# def get_vmm_capacity(d1):
+# 	vmm_cap = {}
+# 	print("Checking capacity")
+# 	for vmm in param1.vmm_servers:
+# 		server=f"{vmm}-vmm.englab.juniper.net"
+# 		print(f"server : {server}, ", end=" ")
+# 		ssh=paramiko.SSHClient()
+# 		ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+# 		ssh.connect(hostname=server,username=d1['pod']['user'],password=d1['pod']['vmmpassword'])
+# 		cmd1 = "vmm capacity -g vmm-default"
+# 		stdin, stdout, stderr = ssh.exec_command(cmd1, get_pty=True)
+# 		for line in iter(stdout.readline, ""):
+# 			if "Total" in line:
+# 				c1 = int(line.split(":")[1])
+# 			if "Free" in line:
+# 				f1 = int(line.split(":")[1])
+# 		# vmm_cap[vmm]={"total" : c1, "free": f1}
+# 			# print(line, end="")
+# 		ssh.close()
+# 		print(f"total {c1}, free {f1}")
+# 	# print("%10s %6d %5d" % ("server","total","free"))
+# 	# for vmm in vmm_cap.keys():
+# 	# 	print("%10s %5d %5d" % (vmm,vmm_cap[vmm]['total'],vmm_cap[vmm]['free']))
 	
 def generate_wireguard_keys():
     """
@@ -183,6 +183,7 @@ def read_config(config):
 			d1=yaml.load(f1,Loader=yaml.FullLoader)
 		add_ssh_key(d1)
 		add_path(d1,config['path'])
+		add_os(d1)
 		if 'fabric' in d1.keys():
 			#num_link = len(d1['fabric']['topology'])
 			num_link, num_link6 = num_link_with_ip(d1)
@@ -227,8 +228,11 @@ def read_config(config):
 			# 	status=1
 			# if status:
 			create_config_interfaces(d1)
+		# pprint.pprint(d1)
+		# exit()
 		change_gateway4(d1)
 		change_ztp(d1)
+		change_loopback(d1)
 		adpassword_env=os.getenv('ADPASSWORD')
 		#print(f"adpassword ${adpassword_env}")
 		user_env=os.getenv('USER')
@@ -272,6 +276,25 @@ def read_config(config):
 	
 	return(d1)
 
+def change_loopback(d1):
+	for i in d1['vm'].keys():
+		if d1['vm'][i]['type'] in param1.vjunos_type:
+			if 'lo0' in d1['vm'][i]['interfaces'].keys():
+				if 'family' in d1['vm'][i]['interfaces']['lo0'].keys():
+					if 'iso' in d1['vm'][i]['interfaces']['lo0']['family'].keys():
+						d1['vm'][i]['interfaces']['lo0']['protocol']={'isis':'passive'}
+def add_os(d1):
+	list_of_os = set(d1['images'].keys())
+	for i in d1['vm']:
+		if 'os' not in d1['vm'][i].keys() and d1['vm'][i]['type'] in param1.pc_type_only:
+			d1['vm'][i]['os']='ubuntu'
+		elif 'os' not in d1['vm'][i].keys():
+			d1['vm'][i]['os']=d1['vm'][i]['type']
+
+		if d1['vm'][i]['os'] not in list_of_os:
+			print(f"disk image {d1['vm'][i]['os']} is not defined in the configuration files (lab.yaml)")
+			exit()
+
 def change_ztp(d1):
 	for i in d1['vm'].keys():
 		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX']:
@@ -284,7 +307,7 @@ def change_ztp(d1):
 					else:
 						d1['vm'][i]['ztp'] = True
 			if 'mgmt_dhcp' not in d1['vm'][i].keys():
-				d1['vm'][i]['mgmt_dhcp'] = True
+				d1['vm'][i]['mgmt_dhcp'] = False
 			else:
 				if type(d1['vm'][i]['mgmt_dhcp'])==int:
 					if d1['vm'][i]['mgmt_dhcp'] <= 0:
@@ -451,6 +474,12 @@ def create_config_interfaces(d1):
 				# 		d2['vm'][i]['interfaces'][j[2]].update({'mtu' : param1.mtu  })
 				# 	else:
 				# 		d2['vm'][i]['interfaces'][j[2]]['mtu'] = param1.mtu
+
+				intf_desc = j[4].replace("em","eth") if "em" in j[4] else j[4]
+				#print(intf_desc)
+				d2['vm'][i]['interfaces'][j[2]]['desc']= f"connection to port {intf_desc} of {j[3]}"
+				#print(d2)
+
 			elif j[3] == i:
 				d2['vm'][i]['interfaces'].update({j[4]: {'bridge' : j[5]} })
 				if 'mtu' not in d2['vm'][i]['interfaces'][j[4]].keys():
@@ -501,6 +530,9 @@ def create_config_interfaces(d1):
 							d2['vm'][i]['interfaces'][j[4]].update({'rpm' : {'source': src, 'destination': dst } })
 						else:
 							d2['vm'][i]['interfaces'][j[4]]['rpm'] = {'source': src, 'destination': dst }
+
+				intf_desc = j[2].replace("em","eth") if "em" in j[2] else j[2]
+				d2['vm'][i]['interfaces'][j[4]]['desc']= f"connection to port {intf_desc} of {j[1]}"
 				# if j[0] & param1.mtu:
 				# 	if 'mtu' not in d2['vm'][i]['interfaces'][j[4]].keys():
 				# 		d2['vm'][i]['interfaces'][j[4]].update({'mtu' : param1.mtu  })
@@ -509,6 +541,7 @@ def create_config_interfaces(d1):
 
 	for i in d2['vm'].keys():
 		intf = d2['vm'][i]['interfaces']
+		#pprint.pprint(intf)
 		d1['vm'][i]['interfaces'].update(intf)	
 	#print(d2)
 	for i in d1['vm'].keys():
@@ -2345,9 +2378,9 @@ def create_junos_config(d1,i):
 	# 	dummy1['mgmt_instc'] = 1
 	# if 	'router-id' in d1['vm'][i].keys():	
 	# 	dummy1['router_id']  = d1['vm'][i]['router-id']
-	if 'isis_dm' in d1.keys():
-		if d1['isis_dm']:
-			dummy1['isis_dm']=True
+	# if 'isis_dm' in d1.keys():
+	# 	if d1['isis_dm']:
+	# 		dummy1['isis_dm']=True
 	if 'lo0' in d1['vm'][i]['interfaces'].keys():
 		if 'family' in d1['vm'][i]['interfaces']['lo0'].keys():
 			if 'inet' in d1['vm'][i]['interfaces']['lo0'].keys():
@@ -2407,12 +2440,15 @@ def create_junos_config(d1,i):
 					src = d1['vm'][i]['interfaces'][j]['rpm']['source']
 					dst = d1['vm'][i]['interfaces'][j]['rpm']['destination']
 					dummy1['rpm'].update({intf : { 'src': src, 'dst': dst }})
+				if 'desc' in d1['vm'][i]['interfaces'][j].keys():
+					add_desc(dummy1,j,d1['vm'][i]['interfaces'][j]['desc'])
 				#if 'static' in d1['vm'][i]['interfaces'][j].keys():
 				#	for k in d1['vm'][i]['interfaces'][j]['static']:
 				#		d1['vm'][i]['interfaces'][j]['static'].append(
 				#			{'to': k['to'], 'via':k['via']}
 				#		)
 				#	add_into_route_options_static(dummy1,)
+	#pprint.pprint(dummy1)
 	return dummy1
 
 
@@ -2459,6 +2495,14 @@ def add_mtu(dt,intf,mtu):
 		dt['interfaces'][intf]=None
 	dt['interfaces'][intf]={'mtu':mtu}
 	#return dt
+
+def add_desc(dt,intf,desc):
+	if not dt['interfaces']:
+		dt['interfaces']={intf:None}
+	if intf not in dt['interfaces'].keys():
+		dt['interfaces'][intf]=None
+	if 'desc' not in dt['interfaces'][intf].keys():
+		dt['interfaces'][intf]['desc']=desc
 
 def add_into_interfaces(dt,intf,family,family_address):
 	if not dt['interfaces']:
@@ -2571,6 +2615,7 @@ def list_of_bridge(d1):
 			if j not in ["lo0","irb"]:
 				#print(f"interface {j}")
 				#print(d1['vm'][i]['interfaces'][j])
+				#print(f" host {i} interface {j}")
 				if d1['vm'][i]['interfaces'][j]['bridge'] != 'external': 
 					if d1['vm'][i]['interfaces'][j]['bridge'] not in bridge1:
 						bridge1.append(d1['vm'][i]['interfaces'][j]['bridge'])

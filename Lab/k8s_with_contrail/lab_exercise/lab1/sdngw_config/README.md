@@ -1,1 +1,0 @@
-# configuring SDN gateway 

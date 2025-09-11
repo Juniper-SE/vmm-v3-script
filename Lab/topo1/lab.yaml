@@ -9,13 +9,9 @@ pod:
 images:
   gw: images/gw.qcow2
   ubuntu: images/ubuntu24.04.qcow2
-  #ubuntu2: images/ubuntu24.04_containerd.qcow2
   bridge: images/bridge.qcow2
   vjunos_router: images/vJunos-router-25.2R1.9.qcow2
-  #vjunos_router: images/vJunos-router-24.4R1.9.qcow2
   vjunos_evolved: images/vJunosEvolved-25.2R1.8-EVO.qcow2
-  #pa2: images/paragon-2.4.1.g07a6939699-disk1.vmdk
-  #paagent: images/paa-test-agent_4.4.0.9.qcow2
 junos_login:
   login: admin
   password: pass01
@@ -59,7 +55,6 @@ fabric:
 vm:
   gw:
     type: gw
-    os: gw
     interfaces:
       em0: 
         bridge: external
@@ -70,7 +65,6 @@ vm:
         dhcp_range: 172.16.11.1-172.16.11.200
   r1:
     type: vjunos_router
-    os: vjunos_router
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -89,7 +83,6 @@ vm:
         mtu: 9000
   r2:
     type: vjunos_router
-    os: vjunos_router
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -108,7 +101,6 @@ vm:
         mtu: 9000
   r3:
     type: vjunos_evolved
-    os: vjunos_evolved
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -127,7 +119,6 @@ vm:
         mtu: 9000
   r4:
     type: vjunos_evolved
-    os: vjunos_evolved
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -146,7 +137,6 @@ vm:
         mtu: 9000
   client1:
     type: pchpv1
-    os: ubuntu
     interfaces:
       em0: 
         bridge: mgmt
