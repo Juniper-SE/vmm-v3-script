@@ -56,35 +56,51 @@ Screenshot recording for this can be found [here]()
        cd setup/host
        ansible-playbook update_nodes.yaml
 
-10. Install software openvswitch and lxd into node client1
+11. Reboot the linux VMs node (client, nms1, nms2, crpd, br1, br2, br3 using script [reboot_vm.sh](setup/host/reboot_vm.sh))
 
-       ssh client1
-       tmux
-       sudo apt -y update && sudo apt -y upgrade && sudo apt -y install openvswitch-switch && sudo snap install lxd
+## Installing Juniper CRPD container on node crpd
+
+1. Upload script [install_crpd.sh](setup/host/install_crpd.sh) into node **crpd**
+
+       scp ./install_crpd.sh crpd:~/
+
+2. Upload crpd software into node **crpd** and load it using podman
+
+       scp junos-routing-crpd-amd64-25.2R1.9.tgz crpd:~/
+       ssh crpd
+       sudo podman load -i junos-routing-crpd-amd64-25.2R1.9.tgz 
+       sudo podman image ls
+       
+3. Run script [install_crpd.sh](setup/router/install_crpd.sh)  on node **crpd** to create container crpd
+
+       ./install_crpd.sh crpd 25.2R1.9
+       sudo podman ps -a 
+
+4. Access crpd container and insert the initial configuration [crpd_initial.conf](setup/router/crpd_initial.conf)
+
+       sudo podman exec -it crpd cli
+       
+
+5. Verify that isis adjacency has been established and crpd receive isis routes
+
+       show isis adj
+       show route protocol isis
 
 
-11. on node client1, copy file 02_net.yaml into directory /etc/netplan/, and activate the network configuration, and verify that four openswitch has been configured
-
-       ssh client1
-       sudo cp 02_net.yaml /etc/netplan/
-       sudo netplan apply 
-       sudo ovs-vsctl show 
-    
-
-## Upload additional configuration into node r1, r2, r3, r4
+## Upload additional configuration into vJunosRouter nodes
 
 Screenshot recording for this can be found [here](https://asciinema.org/a/738391)
 
 1. use ansible playbook [set_intf.yaml](setup/set_intf.yaml) to upload additional configuration (setting ip on interface ge-0/0/0 or et-0/0/0)
 
-       cd ~/git/vmm-v3-script/Lab/topo1/setup
-       ansible-playbook set_intf.yaml
+       cd ~/git/vmm-v3-script/Lab/topo2/setup/router
+       ansible-playbook set_bgp.yaml
 
-2. open ssh session into **r1** to verify that configuration is working
+2. open ssh session into **pe1** to verify that configuration is working (BGP session between PE1/2/3/4/5 and crpd has been established)
 
-       ssh r1
+       ssh pe1
        show configuration 
-       show route protocol isis
+       show bgp summary
 
 ## create linux container to simulate client on node client1
 
