@@ -35,6 +35,11 @@ EOF
 echo "push configuration into node ${LXC}"
 lxc file push interfaces  ${LXC}/etc/network/interfaces
 
+cat << EOF | tee resolv.conf
+nameserver 172.16.210.1
+EOF
+lxc file push resolv.conf ${LXC}/etc/resolv.conf
+
 lxc start ${LXC}
 
 cat << EOF | tee -a hosts
