@@ -1,0 +1,33 @@
+default-lease-time 600;
+max-lease-time 7200;
+ddns-update-style none;
+option space NEW_OP;
+option NEW_OP.image-file-name code 0 = text;
+option NEW_OP.config-file-name code 1 = text;
+option NEW_OP.image-file-type code 2 = text; 
+option NEW_OP.transfer-mode code 3 = text;
+option NEW_OP.alt-image-file-name code 4= text;
+option NEW_OP.http-port code 5= text;
+option NEW_OP-encapsulation code 43 = encapsulate NEW_OP;
+option NEW_OP.proxyv4-info code 8 = text;
+option option-150 code 150 = { ip-address };
+
+subnet {{ subnet }} netmask {{ netmask }} {
+	range {{ range_min }} {{ range_max }};
+	option routers {{ gateway }};
+	option option-150 {{ option150 }};
+}
+{% for vm in vm_data -%}
+host {{ vm }} {
+  hardware ethernet {{vm_data[vm].mac }};
+  {% if vm_data[vm].type == 'vjunos_ex' -%}
+  option NEW_OP.config-file-name "{{ vm }}.conf";
+  {% elif vm_data[vm].type == 'vjunos_ex' -%}
+  option NEW_OP.config-file-name "{{ vm }}.conf";
+  {% elif vm_data[vm].type == 'vevo' -%}
+  option NEW_OP.config-file-name "{{ vm }}.conf";
+  {% endif -%}
+  fixed-address {{ if vm_data[vm].ip }};
+}
+{% endfor %}
+

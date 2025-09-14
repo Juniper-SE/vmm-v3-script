@@ -1,0 +1,118 @@
+#!/bin/bash
+{% if dhcp -%}
+cat << EOF  | sudo tee /etc/dhcp/dhcpd.conf
+default-lease-time 600;
+max-lease-time 7200;
+ddns-update-style none;
+option space NEW_OP;
+option NEW_OP.image-file-name code 0 = text;
+option NEW_OP.config-file-name code 1 = text;
+option NEW_OP.image-file-type code 2 = text; 
+option NEW_OP.transfer-mode code 3 = text;
+option NEW_OP.alt-image-file-name code 4= text;
+option NEW_OP.http-port code 5= text;
+option NEW_OP-encapsulation code 43 = encapsulate NEW_OP;
+option NEW_OP.proxyv4-info code 8 = text;
+option option-150 code 150 = { ip-address };
+option domain-name-servers {{ dhcp['dns'][0] }}, {{ dhcp['dns'][1] }};
+
+
+{% for d in dhcp -%}
+
+{% if d == 'range' -%}
+
+{% for r in dhcp[d] -%}
+subnet {{ r.subnet }} netmask {{ r.netmask }}  {
+    range {{ r.min }} {{ r.max }};
+    option routers {{ r.router }};
+    option option-150 {{ r.router }};
+}
+{% endfor -%}
+{% endif -%}
+{% if d == 'vm' -%}
+{% for r in dhcp[d] -%}
+host {{ r }} {
+    hardware ethernet {{ dhcp[d][r].mac }};
+    fixed-address {{ dhcp[d][r].ip }};
+    option NEW_OP.config-file-name "{{ r }}.conf";
+    option host-name "{{ r }}";
+}
+{% endfor -%}
+
+{% endif -%}
+
+{% endfor -%}
+EOF
+{% endif -%}
+
+
+{% if net -%}
+cat << EOF | sudo tee /etc/netplan/02_net.yaml
+network:
+  ethernets:
+    {% for intf in net -%}
+    {{ intf }}:
+      {% if net[intf].addresses -%}
+      addresses : {{ net[intf].addresses}}
+      {% else -%}
+      dhcp4: false
+      {% endif -%}
+      {% if net[intf].mtu -%}
+      mtu: {{ net[intf].mtu}}
+      {% endif -%} 
+      {% if net[intf].static -%}
+      routes: 
+       {% for s in net[intf].static -%}
+       - to: {{ s.to }}
+         via: {{ s.via }}
+         metric: 1
+       {% endfor %}
+      {% endif %} 
+    {% endfor %}  
+EOF
+{% endif %}
+
+
+{% if vnc -%}
+cat << EOF | sudo tee /usr/local/bin/start_vnc.sh
+#!/bin/bash
+{% for v in vnc -%}
+websockify -D --web=/usr/share/novnc/ {{vnc[v].port}} {{vnc[v].vnc_server}}
+{% endfor -%}
+exit 1
+EOF
+
+sudo chmod +x /usr/local/bin/start_vnc.sh
+
+cat << EOF | sudo tee /etc/update-motd.d/99-update
+#!/bin/bash
+echo "----------------------------------------------"
+echo "To access console of VM, use the following URL"
+echo "----------------------------------------------"
+{% for v in vnc -%}
+echo "console {{ v }} : http://{{ip_gw}}:{{vnc[v].port}}/vnc.html"
+{% endfor -%}
+EOF
+
+sudo chmod +x  /etc/update-motd.d/99-update
+{% endif -%}
+
+cat << EOF | tee ~/.ssh/authorized_keys
+{{ ssh_key_pub }}
+EOF
+
+cat << EOF |  tee ~/.ssh/id_rsa
+{{ ssh_key_priv }}
+EOF
+
+chmod og-rwx ~/.ssh/*
+
+sudo netplan apply
+
+sudo systemctl enable startup.service
+sudo systemctl restart startup.service
+sudo systemctl restart isc-dhcp-server
+sudo systemctl restart tftpd-hpa
+sudo mv ~/tftp/*.conf /srv/tftp/
+# sudo reboot
+

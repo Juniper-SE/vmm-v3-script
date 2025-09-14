@@ -1,0 +1,4 @@
+intf: et-0/0/0
+unit: 104
+myipv4: 192.168.40.254/24
+myipv6: fc00:dead:beef:aa40::1/64

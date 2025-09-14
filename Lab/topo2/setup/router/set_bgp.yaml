@@ -1,0 +1,14 @@
+---
+- name: set bgp on PE
+  hosts: pe
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: load bgp configuration
+      juniper.device.config:  
+        template: set_bgp.j2
+        format: text
+        load: merge
+        vars: "{{ lookup('file', playbook_dir + '/vars_' + inventory_hostname + '.yaml') | from_yaml}}"

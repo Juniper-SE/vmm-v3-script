@@ -1,0 +1,504 @@
+system {
+    host-name {{ hostname }};
+    root-authentication {
+        encrypted-password {{password}};
+    }
+    login {
+        user {{username }} {
+            class super-user;
+            authentication {
+                encrypted-password {{password}};
+                {% if ssh_key -%}
+                ssh-rsa "{{ssh_key}}";
+                {% endif -%}
+            }
+        }
+    }
+    services {
+        ssh {
+            root-login allow;
+            sftp-server;
+        }
+        netconf {
+            ssh;
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+    {# default-address-selection; #}
+}
+{% if mgmt_instc == 1 -%}
+system {
+    management-instance;
+}
+
+{% endif -%}
+{% if type == 'vmx' -%}
+chassis {
+    network-services enhanced-ip;
+}
+interfaces {
+   fxp0 {
+      unit 0 {
+         family inet {
+             address {{mgmt_ip}};
+         }
+      }
+    }
+}
+{% elif type == 'vjunos_switch' -%}
+chassis {
+    network-services enhanced-ip;
+    evpn-vxlan-default-switch-support;
+}
+interfaces {
+   fxp0 {
+      unit 0 {
+         family inet {
+         {% if mgmt_dhcp == 1 -%}
+             dhcp;
+         {% else -%}
+             address {{mgmt_ip}};
+         {% endif -%}
+         }
+      }
+    }
+}
+
+{% elif type == 'vjunos_router' -%}
+chassis {
+    network-services enhanced-ip;
+}
+interfaces {
+   fxp0 {
+      unit 0 {
+         family inet {
+         {% if mgmt_dhcp == 1 -%}
+            dhcp;
+         {% else -%}
+            address {{mgmt_ip}};
+         {% endif -%}
+         }
+      }
+    }
+}
+{% elif type == 'vjunos_evolved' or type == 'vjunos_evolvedBX'  -%}
+chassis {
+    network-services enhanced-mode;
+}
+interfaces {
+   re0:mgmt-0 {
+      unit 0 {
+         family inet {
+         {% if mgmt_dhcp == 1 -%}
+            dhcp;
+         {% else -%}
+            address {{mgmt_ip}};
+         {% endif -%}
+         }
+      }
+    }
+}
+forwarding-options {
+    tunnel-termination;
+}
+{% elif type == 'vsrx' -%}
+interfaces {
+    fxp0 {
+        unit 0 {
+            family inet {
+                address {{mgmt_ip}};
+            }
+        }
+    }   
+}
+security {
+	screen {
+        ids-option untrust-screen {
+            icmp {
+                ping-death;
+            }
+            ip {
+                source-route-option;
+                tear-drop;
+            }
+            tcp {
+                syn-flood {
+                    alarm-threshold 1024;
+                    attack-threshold 200;
+                    source-threshold 1024;
+                    destination-threshold 2048;
+                    timeout 20;
+                }
+                land;
+            }
+        }
+    }
+    policies {
+        from-zone trust to-zone trust {
+            policy default-permit {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone trust to-zone untrust {
+            policy default-permit {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }   
+    }
+    zones {
+        security-zone trust {
+            tcp-rst;
+        }
+        security-zone untrust {
+            screen untrust-screen;
+        }
+    }
+}
+{% endif -%}
+
+{% if interfaces -%}
+interfaces {
+{% for intf in interfaces -%}
+    {{ intf }} {
+        {% if interfaces[intf].mtu -%}
+        mtu {{ interfaces[intf].mtu }};
+        {% endif -%}
+        {% if interfaces[intf].desc -%}
+        description "{{ interfaces[intf].desc }}";
+        {% endif -%}
+        {% if interfaces[intf].inet or interfaces[intf].inet6 or interfaces[intf].mpls or interfaces[intf].iso -%}
+        unit 0 {
+        {% if interfaces[intf].inet -%}
+            family inet {
+                {% if intf == "lo0" -%}
+                address {{interfaces[intf].inet}} {
+                    primary;
+                    preferred;
+                }
+                {% else -%}
+                address {{interfaces[intf].inet}};
+                {% endif -%}
+                
+            }
+        {% endif -%}
+        {% if interfaces[intf].inet6 -%}
+            {% if interfaces[intf].inet6 != "inet6" -%}
+            family inet6 {
+                address {{interfaces[intf].inet6}};
+            }
+            {% else -%}
+            family inet6;
+            {% endif -%}
+        {% endif -%}
+        {% if interfaces[intf].mpls -%}
+            family mpls;
+        {% endif -%}
+        {% if interfaces[intf].iso -%}
+            {% if intf == "lo0" -%}
+            family iso {
+                address {{interfaces[intf].iso}};
+            }
+            {% else -%}
+            family iso;
+            {% endif -%}
+        {% endif -%}
+        }
+        {% endif -%}
+    }
+{% endfor -%}
+}
+{% endif -%}
+{% if isis_dm -%}
+services {
+    rpm {
+        twamp {
+            server {
+                authentication-mode none;
+                light;
+            }
+        }
+    }
+}
+{% endif -%}
+{% if protocols -%}
+protocols { 
+	{% if protocols -%}
+        {% for prot in protocols -%}
+            {{prot}} {
+                {% if protocols[prot] -%}
+                    {% if prot == 'mpls' -%}
+                    statistics {
+                        interval 10;
+                    }
+                    sensor-based-stats;
+                    {% endif -%}
+                    {% if prot == 'isis' -%}
+                    {% if isis_dm -%}
+                    traffic-engineering {
+                        l3-unicast-topology;
+                        advertisement always;
+                    }
+                    {% endif -%}
+                    level 2 {
+                        authentication-key "$9$H.fQ69A0BE9CK8LxsYTzF/9AtuO1Ec"; ## SECRET-DATA
+                        authentication-type md5;
+                    }
+                        {% if srv6_locator -%}
+                            source-packet-routing {
+                                srv6 {
+                                    locator SRV6-LOC-1 {
+                                        end-sid {{srv6_end_sid}};
+                                    }
+                                }
+                            }
+                        {%endif -%}
+                    {% endif -%}
+                    {% for intf in protocols[prot] -%}
+                        {% if prot == 'lldp' -%}
+                            {% if intf != 'lo0' -%}
+                            interface  {{intf}};
+                            {% endif -%}
+                        {% else -%}
+                            {% if prot == 'isis' -%}
+                                interface  {{intf}}.0 {
+                                    level 1 disable;
+                                    {% if isis_dm and intf != 'lo0' -%}
+                                    delay-measurement;
+                                    {% endif -%}
+
+                                    {% if intf != 'lo0' -%}
+                                        family inet {
+                                            bfd-liveness-detection {
+                                                minimum-interval 100;
+                                            }
+                                        }
+                                        family inet6 {
+                                            bfd-liveness-detection {
+                                                minimum-interval 100;
+                                            }
+                                        }
+                                    {% endif -%}
+                                    {% if protocols[prot][intf] -%}
+                                        {{ protocols[prot][intf] }}; 
+                                    {% endif -%}
+                                }
+                            {% else %}
+                                interface {{intf}}.0;
+                            {% endif -%}
+                        {% endif -%}
+                    {% endfor -%}
+                {% endif -%}
+            }
+        {% endfor -%}
+	{% endif -%}
+}
+protocols {
+   lldp {
+      interface all;
+      {% if type == 'vjunos_evolved' or type == 'vjunos_evolvedBX'  -%}
+      interface re0:mgmt-0 {
+        disable;
+      }
+      {% else -%}
+      interface fxp0 {
+        disable;
+      }
+      {% endif -%}
+   }
+}
+{% endif -%}
+
+{% if router_id -%}
+routing-options {
+    router-id {{ router_id}};
+    route-distinguisher-id {{router_id}};
+    {%if srv6_locator -%}
+    source-packet-routing {
+        srv6 {
+            locator SRV6-LOC-1 {{srv6_locator}};
+        }
+    }
+    {%endif%}   
+    forwarding-table {
+        export LB;
+    }
+}
+policy-options {
+    policy-statement LB {
+        term 1 {
+            then {
+                load-balance per-flow;
+                accept;
+            }
+        }
+    }
+}
+{% endif -%}
+
+{% if bgpls -%}
+policy-options {
+    policy-statement TE {
+        term 1 {
+            from family traffic-engineering;
+            then accept;
+        }
+    }
+}
+protocols {
+    mpls {
+        traffic-engineering {
+            database {
+                import {
+                    policy TE;
+                }
+            }
+        }
+    }
+    bgp {
+        group bgpls {
+            type internal;
+            description "BGP-LS Peering";
+            local-address {{ bgpls.local }};
+            local-as {{ bgpls.as }};
+            passive;
+            family traffic-engineering {
+                unicast;
+            }
+            export TE;
+            allow 0.0.0.0/0;
+        }
+    }
+}
+{% endif -%}
+
+{% if pcep -%}
+protocols {
+    mpls {
+        lsp-external-controller pccd;
+    }
+    pcep {
+        pce pce1 {
+            local-address {{ pcep.local }};
+            destination-ipv4-address {{ pcep.server }};
+            destination-port 4189;
+            pce-type active stateful;
+            lsp-provisioning;
+        }
+    }
+}
+{% endif -%}
+{% if snmp %}
+snmp {
+    community {{snmp.ro_comm}} {
+        authorization read-only;
+    }
+    trap-group to_snmp {
+        categories {
+            chassis;
+            link;
+            routing;
+            configuration;
+            services;
+        }
+        targets {
+            {{snmp.server}};
+        }
+    }
+}
+{% endif -%}
+
+
+{% if ingest -%}
+services {
+    analytics {
+        streaming-server ns {
+            remote-address {{ ingest.ip }};
+            remote-port 4000;
+        }
+        export-profile ns {
+            local-address {{ ingest.source }};
+            reporting-rate 2;
+            format gpb;
+            transport udp;
+        }
+        sensor ifd {
+            server-name ns;
+            export-name ns;
+            resource /junos/system/linecard/interface/;
+        }
+        sensor ifl {
+            server-name ns;
+            export-name ns;
+            resource /junos/system/linecard/interface/logical/usage/;
+        }
+        sensor lsp {
+            server-name ns;
+            export-name ns;
+            resource /junos/services/label-switched-path/usage/;
+        }
+        sensor sr-te-color {
+            server-name ns;
+            export-name ns;
+            resource /junos/services/segment-routing/traffic-engineering/ingress/usage/;
+        }
+        sensor sid {
+            server-name ns;
+            export-name ns;
+            resource /junos/services/segment-routing/sid/usage/;
+        }
+        sensor sr-te-tunnels {
+            server-name ns;
+            export-name ns;
+            resource /junos/services/segment-routing/traffic-engineering/tunnel/ingress/usage/;
+        }
+    }
+}
+{% endif -%}
+
+{% if rpm -%}
+services {
+    rpm {
+        probe northstar-ifl {
+            {% for intf in rpm -%}
+            test {{ intf }} {
+                probe-type icmp-ping-timestamp;
+                target address {{ rpm[intf].dst }};
+                probe-count 11;
+                probe-interval 5;
+                test-interval 60;
+                source-address {{ rpm[intf].src }};
+                moving-average-size 12;
+                traps test-completion;
+                hardware-timestamp;
+            }
+            {% endfor -%}
+        }
+    }
+}
+{% endif -%}
+

@@ -1,0 +1,11 @@
+paramiko
+pathlib
+jinja2
+PyYaml
+pexpect
+scp
+passlib
+LooseVersion
+ansible
+jxmlease
+junos-eznc

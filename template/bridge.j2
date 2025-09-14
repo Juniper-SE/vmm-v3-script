@@ -1,0 +1,97 @@
+#!/bin/ash
+cat << EOF | sudo tee /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+127.0.1.1 {{ hostname }}
+EOF
+
+sudo rm /etc/local.d/*
+
+cat << EOF | sudo tee /etc/hostname
+{{ hostname }}
+EOF
+
+rm -rf ~/.ssh/
+mkdir ~/.ssh
+
+cat << EOF | tee ~/.ssh/authorized_keys
+{{ ssh_key_pub }}
+EOF
+
+cat << EOF | tee ~/.ssh/id_rsa
+{{ ssh_key_priv }}
+EOF
+
+sudo mkdir /root/.ssh
+sudo cp ~/.ssh/id_rsa /root/.ssh/id_rsa
+sudo cp ~/.ssh/authorized_keys /root/.ssh/authorized_keys
+
+{% if net -%}
+{# sudo rm /etc/network/interfaces.d/* #}
+{# sudo rm /run/network/interfaces.d/* #}
+cat << EOF | sudo tee /etc/network/interfaces
+auto lo
+iface lo inet loopback
+{% for intf in net -%}
+auto {{ intf }}
+{% if net[intf].addresses -%}
+{% if net[intf].addresses[0] -%}
+iface {{ intf }} inet static
+   address {{ net[intf].addresses[0] }}
+   {% if net[intf].gateway4 -%}
+   gateway {{ net[intf].gateway4 }}
+   {% endif -%}
+   {% if net[intf].dns -%}
+   dns-nameservers {{ net[intf].dns[0] }} {{ net[intf].dns[1] }} 
+   {% endif -%}
+{% endif %}
+{% if net[intf].addresses[1] -%}
+iface {{ intf }} inet6 static
+   address {{ net[intf].addresses[1] }}
+   {% if net[intf].gateway6 -%}
+   gateway {{ net[intf].gateway6 }}
+   {% endif -%}
+{% endif -%}
+{% else -%}
+    iface {{ intf }} inet manual
+    mtu 9000
+{% endif -%}
+{% if net[intf].mtu -%}
+    mtu {{ net[intf].mtu}}
+{% endif -%}
+{% if net[intf].static -%}
+{% for s in net[intf].static -%}
+    up ip route add {{ s.to }} via {{ s.via }} dev {{ intf }}
+{% endfor %}
+{% endif %} 
+{% endfor %}
+EOF
+{% endif %}
+
+uuidgen  | sed -e 's/-//g' |  sudo tee /etc/machine-id
+
+cat << EOF | tee ~/.ssh/config
+Host *
+   StrictHostKeyChecking no
+EOF
+
+{% if bridge -%}
+{% for br in bridge -%}
+cat << EOF | sudo tee /etc/local.d/{{ br }}.start
+#!/bin/sh
+ip link add dev {{ br }} type bridge
+{% for intf in bridge[br] -%}
+ip link set dev {{ intf }} master {{ br }}
+{% endfor %}
+ip link set {{ br }} up
+echo 0x4000 >  /sys/class/net/{{ br }}/bridge/group_fwd_mask
+EOF
+sudo chmod +x /etc/local.d/{{ br }}.start
+{% endfor %}
+sudo rc-update add local default
+{% endif %}
+
+chmod og-rwx ~/.ssh/*
+
+sleep 2 
+sudo reboot

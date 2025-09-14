@@ -1,0 +1,9 @@
+asn : 4200000000
+inet: 172.16.210.15/24
+inet6: fc00:dead:beef:a210::15/64
+unit: 101
+ce_ip: 172.16.210.1
+ce_ipv6: fc00:dead:beef:a210::1
+intf: ge-0/0/0
+intfs:
+- ge-0/0/1

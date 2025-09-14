@@ -1,0 +1,52 @@
+system {
+    host-name {{ hostname }};
+    root-authentication {
+        encrypted-password {{password}};
+    }
+    login {
+        user {{username }} {
+            class super-user;
+            authentication {
+                encrypted-password {{password}};
+                {% if ssh_key -%}
+                ssh-rsa "{{ssh_key}}";
+                {% endif -%}
+            }
+        }
+    }
+    services {
+        ssh {
+            root-login allow;
+        }
+        netconf {
+            ssh;
+        }
+    }
+    syslog {
+        user * {
+            any emergency;
+        }
+        file messages {
+            any notice;
+            authorization info;
+        }
+        file interactive-commands {
+            interactive-commands any;
+        }
+    }
+}
+chassis {
+   network-services enhanced-ip;
+{% if type == 'vjunos_ex' -%}
+   evpn-vxlan-default-switch-support;
+{% endif -%}
+}
+interfaces {
+    fxp0 {
+        unit 0 {
+            family inet {
+                dhcp;
+            }
+        }
+    }
+}
