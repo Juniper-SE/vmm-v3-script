@@ -1,0 +1,10 @@
+asn : 4200001002
+inet: 172.16.211.2/31
+inet6: fc00:dead:beef:a211::2/127
+unit: 101
+ce_ip: 172.16.211.3
+ce_ipv6: fc00:dead:beef:a211::3
+intf: ge-0/0/0
+intfs:
+- ge-0/0/1
+- ge-0/0/2

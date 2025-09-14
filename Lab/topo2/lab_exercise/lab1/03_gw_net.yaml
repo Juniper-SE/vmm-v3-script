@@ -1,0 +1,12 @@
+network:
+  vlans:
+    eth2.101:
+      link: eth2
+      id: 101
+      addresses:
+      - 172.16.210.1/24
+      - fc00:dead:beef:a210::1/64
+  ethernets:
+    eth2:
+      dhcp4: false
+      mtu: 9000
