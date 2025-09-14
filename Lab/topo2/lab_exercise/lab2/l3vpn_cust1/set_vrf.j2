@@ -1,0 +1,33 @@
+interfaces {
+    {{ intf }} {
+        flexible-vlan-tagging;
+        encapsulation flexible-ethernet-services;
+        unit {{ unit }} {
+            vlan-id {{ unit }};
+            family inet {
+                address {{ inet }};
+            }
+            family inet6 {
+                address {{ inet6 }};
+            }
+        }
+    }
+}
+routing-instances {
+    {{ vrf_name }} {
+        interface {{ intf }}.{{unit}};
+        vrf-table-label;
+        instance-type vrf;
+        vrf-target target:{{vrf_target}};
+        protocols {
+            bgp {
+                group to_ce {
+                    type external;
+                    peer-as {{ asn }};
+                    neighbor {{ ce_ip }};
+                    neighbor {{ ce_ipv6 }};
+                }
+            }
+        }
+    }
+}

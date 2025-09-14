@@ -1,0 +1,9 @@
+asn : 4200002001
+inet: 172.16.220.0/31
+inet6: fc00:dead:beef:a220::0/127
+unit: 102
+ce_ip: 172.16.220.1
+ce_ipv6: fc00:dead:beef:a220::1
+intf: ge-0/0/0
+vrf_target: 1000:2001
+vrf_name: cust1

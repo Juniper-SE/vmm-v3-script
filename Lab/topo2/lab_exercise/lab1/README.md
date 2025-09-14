@@ -6,11 +6,11 @@ In this lab, we are going to configure BGP free core on the ip MPLS backbone.
 
 The following configuration will be done on the network devices
 1. Configure PE routers with BGP for connection to customer and upstream internet. PE1, PE2, PE3, and PE4 are connected to CE1, CE2, CE3 and CE4 where subscribers are connected, and PE5 is connected to GW where connection to internet is available.
-between PE and CE, and PE and GW, eBGP will be configured.
+eBGP will be configured between PE and CE, and PE and GW, 
 
 2. verify that on the IP MPLS Backbone, internet routes are not available, that traffic between PE will be forwarded using MPLS forwarding.
 
-3. verify that clients are able to access the internet.
+3. verify that client on site is able to access client on other site and the internet.
 
 ## configure node GW and vJunosRouter
 
@@ -134,6 +134,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/740339
         ping6 lab1cl3-101
         ssh root@lab1cl3-101 or ssh -6 root@lab1cl3-101
         netstat -n
+        ping www.juniper.net
 
 
 

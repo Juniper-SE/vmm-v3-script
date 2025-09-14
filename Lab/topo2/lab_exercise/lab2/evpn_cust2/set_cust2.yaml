@@ -1,0 +1,17 @@
+---
+- name: set routing instances
+  hosts:
+  - pe1
+  - pe2
+  - pe3
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: load routing instances configuration
+      juniper.device.config:  
+        template: set_evpn.j2
+        format: text
+        load: merge
+        vars: "{{ lookup('file', playbook_dir + '/vars_' + inventory_hostname + '.yaml') | from_yaml}}"

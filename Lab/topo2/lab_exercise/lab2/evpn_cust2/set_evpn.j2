@@ -1,0 +1,18 @@
+interfaces {
+    {{ intf }} {
+        unit {{ unit }} {
+            vlan-id {{ unit }};
+            encapsulation vlan-bridge;
+        }
+    }
+}
+routing-instances {
+    {{ vrf_name }} {
+        interface {{ intf }}.{{unit}};
+        instance-type evpn;
+        vrf-target target:{{vrf_target}};
+        protocols {
+            evpn;
+        }
+    }
+}
