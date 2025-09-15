@@ -1,4 +1,4 @@
-# Lab exercise 1, L3VPN and EVPN over MPLS
+# Lab exercise 2, L3VPN and EVPN over MPLS
 ## Objective
 
 In this lab, we are going to configure L3VPN and EVPN over MPLS 
