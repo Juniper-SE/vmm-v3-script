@@ -114,4 +114,4 @@ Here are guide on some of the lab exercise that can be done with this topology
 | Lab | Description | Lab Guide |
 |-|-|-|
 | Lab1| BGP Free core | [Lab1](lab_exercise/lab1/README.md)
-| Lab2| BGP Free core | [Lab2](lab_exercise/lab2/README.md)
+| Lab2|  L3VPN and EVPN over MPLS | [Lab2](lab_exercise/lab2/README.md)
