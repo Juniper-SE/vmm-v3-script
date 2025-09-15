@@ -1,0 +1,54 @@
+interfaces {
+    irb {
+        unit {{ unit }} {
+            family inet {
+                address {{ inet }};
+            }
+            family inet6 {
+                address {{ inet6 }};
+            }
+        }
+    }
+    {{ intf }} {
+        unit {{ unit }} {
+            vlan-id {{ unit }};
+            encapsulation vlan-bridge;
+        }
+    }
+
+}
+routing-instances {
+    {{ vrf_name }}_l3 {
+        interface irb.{{unit}};
+        vrf-table-label;
+        instance-type vrf;
+        vrf-target target:{{vrf_target_l3}};
+        protocols {
+            {%  if asn -%}
+            bgp {
+                group to_ce {
+                    type external;
+                    peer-as {{ asn }};
+                    neighbor {{ ce_ip }};
+                    neighbor {{ ce_ipv6 }};
+                }
+            }
+            {% endif -%}
+            evpn {
+                ip-prefix-routes {
+                    advertise direct-nexthop;
+                }
+            }
+        }
+    }
+    {{ vrf_name }}_l2 {
+        interface {{ intf }}.{{unit}};
+        instance-type evpn;
+        vrf-target target:{{vrf_target_l2}};
+        vlan-id none;
+        routing-interface irb.{{unit}};
+        protocols {
+            evpn;
+        }
+    }
+}

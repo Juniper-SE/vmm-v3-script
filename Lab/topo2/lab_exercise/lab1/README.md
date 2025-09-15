@@ -12,6 +12,9 @@ eBGP will be configured between PE and CE, and PE and GW,
 
 3. verify that client on site is able to access client on other site and the internet.
 
+## Topology 
+![topology.webp](topology.webp)
+
 ## configure node GW and vJunosRouter
 
 Screenshot recording for this can be found [here](https://asciinema.org/a/740338)

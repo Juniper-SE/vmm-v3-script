@@ -1,0 +1,10 @@
+asn : 4200003001
+ce_ip: 172.16.220.1
+ce_ipv6: fc00:dead:beef:a220::1
+inet: 172.16.220.0/31
+inet6: fc00:dead:beef:a220::0/127
+unit: 110
+intf: ge-0/0/0
+vrf_target_l3: 1000:3303
+vrf_target_l2: 1000:3201
+vrf_name: cust3

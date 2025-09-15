@@ -1,0 +1,7 @@
+inet: 172.16.12.1/24
+inet6: fc00:dead:Beef:a012::1/64
+unit: 110
+intf: ge-0/0/0
+vrf_target_l3: 1000:3303
+vrf_target_l2: 1000:3202
+vrf_name: cust3
