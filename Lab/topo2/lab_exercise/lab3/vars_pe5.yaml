@@ -1,0 +1,5 @@
+intf:
+- ge-0/0/1
+start_label: 400000
+index_range: 5000
+node_index: 105

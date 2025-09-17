@@ -1,0 +1,34 @@
+---
+- name: add mpls config
+  hosts:
+  - pe
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: add mpls config
+      juniper.device.config:  
+        load: set
+        lines:
+        #- "deactivate protocols mpls explicit-null"
+        - "activate protocols ldp"
+        - "activate protocols rsvp"
+        - "activate protocols mpls explicit-null"
+
+- name: add mpls config
+  hosts:
+  - p
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: add mpls config
+      juniper.device.config:  
+        load: set
+        lines:
+        #- "deactivate protocols mpls explicit-null"
+        - "activate protocols ldp"
+        - "activate protocols rsvp"
+

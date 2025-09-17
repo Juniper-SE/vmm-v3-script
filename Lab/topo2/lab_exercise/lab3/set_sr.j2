@@ -1,0 +1,18 @@
+protocols {
+    isis {
+        {% for i in intf -%}
+        interface {{i}}  {
+            level 2 {
+                post-convergence-lfa;
+            }
+        }
+        backup-spf-options {
+            use-post-convergence-lfa maximum-backup-paths 8;
+        }
+        {% endfor -%}
+        source-packet-routing {
+            srgb start-label {{ start_label}} index-range {{ index_range}};
+            node-segment ipv4-index {{ node_index}};
+        }
+    }
+}

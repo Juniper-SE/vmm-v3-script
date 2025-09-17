@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in lab2ce{1..3}
+for i in lab2cust1ce{1..3}
 do
 sudo ip link add dev ${i} type bridge
 sudo ip link set dev ${i} up
@@ -9,7 +9,7 @@ for i in {1..3}
 do
 ip2=`expr ${ip1} + 1`
 WANBR=pe${i}ge0
-LANBR=lab2ce${i}
+LANBR=lab2cust1ce${i}
 VLAN=102
 LXC=${LANBR}
 echo "create ${LXC} "

@@ -1,7 +1,7 @@
 #!/bin/bash
 for i in {1..3}
 do
-LANBR=lab2ce${i}
+LANBR=lab2cust1ce${i}
 echo "deleting container $LANBR"
 lxc stop $LANBR
 lxc rm $LANBR

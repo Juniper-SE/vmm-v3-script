@@ -1,0 +1,16 @@
+---
+- name: configure SR-MPLS
+  hosts:
+  - pe
+  - p
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: configure SR-MPLS
+      juniper.device.config:  
+        template: set_sr.j2
+        format: text
+        load: merge
+        vars: "{{ lookup('file', playbook_dir + '/vars_' + inventory_hostname + '.yaml') | from_yaml}}"

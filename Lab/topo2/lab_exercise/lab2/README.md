@@ -46,7 +46,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/740484
 
         ./create_lxc_router.sh
         lxc ls
-        lxc exec lab2ce1 vtysh
+        lxc exec lab2cust1ce1 vtysh
         show bgp summary
         show ip route
         show ipv6 route
@@ -55,10 +55,10 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/740484
 
         ./create_lxc_client.sh
         lxc ls
-        lxc exec lab2cl1-101 sh
-        ping lab2cl3-101 
-        ping6 lab2cl3-101
-        ssh root@lab2cl3-101 or ssh -6 root@lab2cl3-101
+        lxc exec lab2cust1cl1-101 sh
+        ping lab2cust1cl3-101 
+        ping6 lab2cust1cl3-101
+        ssh root@lab2cust1cl3-101 or ssh -6 root@lab2cust1cl3-101
         netstat -n
 
 
@@ -87,7 +87,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/740498
 
         ./create_lxc_client.sh
         lxc ls
-        lxc exec lab2cust2cl11 shg
+        lxc exec lab2cust2cl11 sh
         ping lab2cust2cl31 
         ping6 lab2cust2cl31
         ssh root@llab2cust2cl31 or ssh -6 root@llab2cust2cl31

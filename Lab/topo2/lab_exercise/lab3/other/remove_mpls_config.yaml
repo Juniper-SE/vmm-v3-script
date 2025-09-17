@@ -1,0 +1,16 @@
+---
+- name: disable ldp and rsvp
+  hosts:
+  - pe
+  - p
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: disable ldp and rsvp
+      juniper.device.config:  
+        load: set
+        lines:
+        - "deactivate protocols mpls explicit-null"
+        - "deactivate protocols mpls ipv6-tunneling"

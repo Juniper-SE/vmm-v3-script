@@ -1,0 +1,23 @@
+set protocols isis source-packet-routing srgb start-label 200000
+set protocols isis source-packet-routing srgb index-range 5000
+set protocols isis source-packet-routing node-segment ipv4-index 107
+set protocols isis backup-spf-options use-post-convergence-lfa maximum-backup-paths 8
+set protocols isis interface ge-0/0/1.0 level 2 post-convergence-lfa
+set protocols isis interface ge-0/0/2.0 level 2 post-convergence-lfa
+
+
+protocols {
+    isis {
+        {% for i in intf -%}
+        interface {{i}}  {
+            level 2 {
+                post-convergence-lfa;
+            }
+        }
+        {% endfor -%}
+        source-packet-routing {
+            srgb start-label {{ start_label}} index-range {{ index_range}};
+            node-segment ipv4-index {{ node_index}};
+        }
+    }
+}
