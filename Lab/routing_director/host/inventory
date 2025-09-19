@@ -1,11 +1,5 @@
-[bridge]
-br1
-br2
-br3
 [ubuntu]
-client
-nms1
-crpd
 gw
+desktop1
 [all:vars]
 ansible_python_interpreter=python3

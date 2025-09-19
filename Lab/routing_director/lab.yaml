@@ -1,0 +1,97 @@
+---
+name: rd
+pod: 
+  type: vmm
+  vmmserver: q-pod26-vmm.englab.juniper.net
+  user: irzan
+  home_dir : /vmm/data/user_disks/irzan
+images:   
+  gw: images/gw2.qcow2
+  ubuntu: images/ubuntu24.04.qcow2
+  rd: images/rd/paragon-2.5.0-disk1.qcow2
+  #paagent: images/paa-test-agent_4.4.0.9.qcow2
+junos_login:
+  login: admin
+  password: pass01
+wg:
+  # tunnel_ip:
+  # - 192.168.199.1/24
+  # - 192.168.199.2/24
+  prefix_allowed:
+  - 172.16.10.0/24 
+  - 172.16.11.0/24 
+  - 172.16.12.0/24 
+  - 10.100.255.0/24
+vm:
+  gw:
+    type: gw
+    os: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: control
+        family:
+          inet: 172.16.11.254/24
+          inet6: fc00:dead:beef:a011::1/64
+        dhcp_range: 172.16.11.10-172.16.11.100
+  desktop1:
+    type: pcmedium
+    os: ubuntu
+    vnc: yes
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.50/24
+          inet6: fc00:dead:beef:a011::50/64
+          gateway4: 172.16.11.254
+  node1:
+    type: pchpv0
+    vnc: yes
+    os: rd
+    hd2: 50g
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.11/24
+          inet6: fc00:dead:beef:a011::11/64
+          gateway4: 172.16.11.254
+  node2:
+    type: pchpv0
+    vnc: yes
+    os: rd
+    hd2: 50g
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.12/24
+          inet6: fc00:dead:beef:a011::12/64
+          gateway4: 172.16.11.254
+  node3:
+    type: pchpv0
+    vnc: yes
+    os: rd
+    hd2: 50g
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.13/24
+          inet6: fc00:dead:beef:a011::13/64
+          gateway4: 172.16.11.254
+  node4:
+    type: pchpv0
+    vnc: yes
+    os: rd
+    hd2: 50g
+    interfaces:
+      em0: 
+        bridge: control
+        family:
+          inet: 172.16.11.14/24
+          inet6: fc00:dead:beef:a011::13/64
+          gateway4: 172.16.11.254
+

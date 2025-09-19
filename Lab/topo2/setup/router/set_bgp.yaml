@@ -12,3 +12,23 @@
         format: text
         load: merge
         vars: "{{ lookup('file', playbook_dir + '/vars_' + inventory_hostname + '.yaml') | from_yaml}}"
+- name: add configuration on p5
+  hosts: 
+  - p5
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: load configuration into p5
+      juniper.device.config:  
+        load: set
+        lines:
+        - "set routing-options static route 172.16.11.0/24 next-hop 172.16.13.254"
+        - "set routing-options static route 172.16.12.0/24 next-hop 172.16.13.254"
+        - "set policy-options policy-statement to_isis term 1 from protocol static"
+        - "set policy-options policy-statement to_isis term 1 then accept"
+        - "set protocols isis export to_isis"
+
+        
+

@@ -115,4 +115,15 @@
       ansible.builtin.file:
         path: /home/ubuntu/install_crpd.sh
         mode: '0777'
+- name: install software into node gw
+  hosts: 
+  - gw
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install wireguard, novnc and websockify
+      ansible.builtin.apt:
+        pkg:
+        - wireguard-tools
 

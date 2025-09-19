@@ -106,7 +106,6 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/740336
        show configuration 
        show bgp summary
 
-
 ## Lab exercise
 
 Here are guide on some of the lab exercise that can be done with this topology
@@ -115,3 +114,4 @@ Here are guide on some of the lab exercise that can be done with this topology
 |-|-|-|
 | Lab1| BGP Free core | [Lab1](lab_exercise/lab1/README.md)
 | Lab2|  L3VPN and EVPN over MPLS | [Lab2](lab_exercise/lab2/README.md)
+| Lab3|  Segment Routing  | [Lab3](lab_exercise/lab3/README.md)

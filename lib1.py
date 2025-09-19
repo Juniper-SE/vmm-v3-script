@@ -1067,26 +1067,26 @@ def get_ip_vm(d1,i):
 
 
 def get_dhcp_config(d1):
-	dhcp_yes=['centos','rhel','ubuntu','ubuntu2','debian','esxi','bridge','desktop','paagent','vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX','aos','aos_flow','aos_ztp']
+	#dhcp_yes=['centos','rhel','ubuntu','ubuntu2','debian','esxi','bridge','desktop','paagent','vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX','aos','aos_flow','aos_ztp']
 	dhcp_list=[]
 	retval={}
 	t1={}
 	print("Getting dhcp config")
 	for i in d1['vm'].keys():
-		if d1['vm'][i]['os'] in dhcp_yes:
-			#print(f"checking {i}")
-			if 'em0' in d1['vm'][i]['interfaces']:
-				if 'family' in d1['vm'][i]['interfaces']['em0']:
-					if 'inet' in d1['vm'][i]['interfaces']['em0']['family']:
-						d1['vm'][i]['interfaces']['em0']['mac']=get_mac_vm(d1,i)
-						print(f"vm {i} mac {d1['vm'][i]['interfaces']['em0']['mac']}")
+		# if d1['vm'][i]['os'] in dhcp_yes:
+		#print(f"checking {i}")
+		if 'em0' in d1['vm'][i]['interfaces']:
+			if 'family' in d1['vm'][i]['interfaces']['em0']:
+				if 'inet' in d1['vm'][i]['interfaces']['em0']['family']:
+					d1['vm'][i]['interfaces']['em0']['mac']=get_mac_vm(d1,i)
+					print(f"vm {i} mac {d1['vm'][i]['interfaces']['em0']['mac']}")
+					dhcp_list.append(i)
+		elif 'mgmt' in d1['vm'][i]['interfaces']:
+			if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX'] and d1['vm'][i]['ztp']:
+				if 'family' in d1['vm'][i]['interfaces']['mgmt']:
+					if 'inet' in d1['vm'][i]['interfaces']['mgmt']['family']:
+						d1['vm'][i]['interfaces']['mgmt']['mac']=get_mac_vm(d1,i)
 						dhcp_list.append(i)
-			elif 'mgmt' in d1['vm'][i]['interfaces']:
-				if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX'] and d1['vm'][i]['ztp']:
-					if 'family' in d1['vm'][i]['interfaces']['mgmt']:
-						if 'inet' in d1['vm'][i]['interfaces']['mgmt']['family']:
-							d1['vm'][i]['interfaces']['mgmt']['mac']=get_mac_vm(d1,i)
-							dhcp_list.append(i)
 	#print(f"list of vm with dhcp {dhcp_list}")
 	#print("get_dhcp_config")
 	for i in dhcp_list:
@@ -1803,46 +1803,52 @@ def check_vsan_status(d1):
 			break
 	return retval
 
-def create_esxi_disk(d1,ssh):
-	# print("create esxi disk")
-	# vsan_disk = check_vsan_status(d1)
-	if check_vsan_status(d1):
-		for i in d1['vm'].keys():
-			if d1['vm'][i]['os'] == 'esxi':
-				disk_name = 'esxi' + str(d1['vm'][i]['disk']) + ".vmdk"
-				# str1= d1['pod']['home_dir'] + "/" + d1['images'][disk_name]
-				str1 = d1['pod']['home_dir'] +'/vm/' + d1['name'] + "/" + disk_name
-				# str1= d1['pod']['home_dir'] +'/vm/' + d1['name'] + "/" + d1['images'][disk_name]
-				cmd2 = "qemu-img create -f vmdk " + str1.replace(".vmdk","disk2.vmdk") + " " + str(param1.esxi_ds_size) + "G"
-				cmd3 = "qemu-img create -f vmdk " + str1.replace(".vmdk","disk3.vmdk") + " " + str(param1.esxi_ds_size) + "G"
-				s1,s2,s3=ssh.exec_command(cmd2)
-				for i in s2.readlines():
-					print(i.rstrip())
-				s1,s2,s3=ssh.exec_command(cmd3)
-				for i in s2.readlines():
-					print(i.rstrip())
+# def create_esxi_disk(d1,ssh):
+# 	# print("create esxi disk")
+# 	# vsan_disk = check_vsan_status(d1)
+# 	if check_vsan_status(d1):
+# 		for i in d1['vm'].keys():
+# 			if d1['vm'][i]['os'] == 'esxi':
+# 				disk_name = 'esxi' + str(d1['vm'][i]['disk']) + ".vmdk"
+# 				# str1= d1['pod']['home_dir'] + "/" + d1['images'][disk_name]
+# 				str1 = d1['pod']['home_dir'] +'/vm/' + d1['name'] + "/" + disk_name
+# 				# str1= d1['pod']['home_dir'] +'/vm/' + d1['name'] + "/" + d1['images'][disk_name]
+# 				cmd2 = "qemu-img create -f vmdk " + str1.replace(".vmdk","disk2.vmdk") + " " + str(param1.esxi_ds_size) + "G"
+# 				cmd3 = "qemu-img create -f vmdk " + str1.replace(".vmdk","disk3.vmdk") + " " + str(param1.esxi_ds_size) + "G"
+# 				s1,s2,s3=ssh.exec_command(cmd2)
+# 				for i in s2.readlines():
+# 					print(i.rstrip())
+# 				s1,s2,s3=ssh.exec_command(cmd3)
+# 				for i in s2.readlines():
+# 					print(i.rstrip())
 
 def create_hd2(d1):
-	os_type=['ubuntu','ubuntu2','centos','debian','pa2']
+	#os_type=['ubuntu','ubuntu2','centos','debian','pa2']
 	dest_dir=d1['pod']['home_dir'] +'/vm/' + d1['name'] + "/"
 	vm_with_hd2 = {}
 	vm_with_hd3 = {}
 	for i in d1['vm'].keys():
-		if d1['vm'][i]['os'] in os_type:
-			if 'hd2' in d1['vm'][i].keys():
-				vm_with_hd2[i]=d1['vm'][i]['hd2']
-			if 'hd3' in d1['vm'][i].keys():
-				vm_with_hd3[i]=d1['vm'][i]['hd3']
+		# if d1['vm'][i]['os'] in os_type:
+		# 	if 'hd2' in d1['vm'][i].keys():
+		# 		vm_with_hd2[i]=d1['vm'][i]['hd2']
+		# 	if 'hd3' in d1['vm'][i].keys():
+		# 		vm_with_hd3[i]=d1['vm'][i]['hd3']
+		if 'hd2' in d1['vm'][i].keys():
+			vm_with_hd2[i]=d1['vm'][i]['hd2']
+		if 'hd3' in d1['vm'][i].keys():
+			vm_with_hd3[i]=d1['vm'][i]['hd3']
 	cmd_list=""
 	if vm_with_hd2:
 		for i in vm_with_hd2.keys():
 			ds=vm_with_hd2[i]
-			str_tmp1 = f"qemu-img create -f vmdk {dest_dir}{i}_disk2.img {ds}"
+			# str_tmp1 = f"qemu-img create -f vmdk {dest_dir}{i}_disk2.img {ds}"
+			str_tmp1 = f"qemu-img create -f qcow2 {dest_dir}{i}_disk2.img {ds}"
 			cmd_list += f"{str_tmp1};"
 	if vm_with_hd3:
 		for i in vm_with_hd3.keys():
 			ds=vm_with_hd3[i]
-			str_tmp1 = f"qemu-img create -f vmdk {dest_dir}{i}_disk3.img {ds}"
+			# str_tmp1 = f"qemu-img create -f vmdk {dest_dir}{i}_disk3.img {ds}"
+			str_tmp1 = f"qemu-img create -f qcow2 {dest_dir}{i}_disk3.img {ds}"
 			cmd_list += f"{str_tmp1};"
 	#print("create disk2 and disk3")
 	#print(cmd_list)
@@ -1880,7 +1886,7 @@ def start(d1):
 				print(i.rstrip())
 			time.sleep(3)
 		print("start configuration ")
-		create_esxi_disk(d1,ssh)
+		#create_esxi_disk(d1,ssh)
 		cmd1=f"vmm config {lab_conf} -g {param1.vmm_group}"
 		s1,s2,s3=ssh.exec_command(cmd1)
 		for i in s2.readlines():
@@ -1992,28 +1998,43 @@ def create_lab_config(d1):
 		dsk2 = f"{d1['pod']['home_dir']}/vm/{d1['name']}/{i}_disk2.img"
 		dsk3 = f"{d1['pod']['home_dir']}/vm/{d1['name']}/{i}_disk3.img"
 		if not d2['vm']:
-			if d1['vm'][i]['os'] == 'pa2':
-				d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,  'install':path1, 'intf':{}}}
-			else:
-				if 'hd2' in d1['vm'][i].keys():
-					if 'hd3' in d1['vm'][i].keys():
-						print(f"vm ${i} has hd3")
-						d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}}
-					else:
-						d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}}
+			# if d1['vm'][i]['os'] == 'pa2':
+			# 	d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,  'install':path1, 'intf':{}}}
+			# else:
+			# 	if 'hd2' in d1['vm'][i].keys():
+			# 		if 'hd3' in d1['vm'][i].keys():
+			# 			print(f"vm ${i} has hd3")
+			# 			d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}}
+			# 		else:
+			# 			d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}}
+			# 	else:
+			# 		d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk, 'install':path1, 'intf':{}}}
+			if 'hd2' in d1['vm'][i].keys():
+				if 'hd3' in d1['vm'][i].keys():
+					print(f"vm ${i} has hd3")
+					d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}}
 				else:
-					d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk, 'install':path1, 'intf':{}}}
+					d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}}
+			else:
+				d2['vm']={i : { 'type': param1.vm_type[type], 'disk': dsk, 'install':path1, 'intf':{}}}
 		else:
-			if d1['vm'][i]['os'] == 'pa2':
-				d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'disk2': dsk2,'install':path1,'intf':{}}
-			else:
-				if 'hd2' in d1['vm'][i].keys():
-					if 'hd3' in d1['vm'][i].keys():
-						d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}
-					else:
-						d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}
+			# if d1['vm'][i]['os'] == 'pa2':
+			# 	d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'disk2': dsk2,'install':path1,'intf':{}}
+			# else:
+			# 	if 'hd2' in d1['vm'][i].keys():
+			# 		if 'hd3' in d1['vm'][i].keys():
+			# 			d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}
+			# 		else:
+			# 			d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}
+			# 	else:
+			# 		d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'install':path1,'intf':{}}
+			if 'hd2' in d1['vm'][i].keys():
+				if 'hd3' in d1['vm'][i].keys():
+					d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'disk3':dsk3,'install':path1, 'intf':{}}
 				else:
-					d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'install':path1,'intf':{}}
+					d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk,'disk2': dsk2,'install':path1, 'intf':{}}
+			else:
+				d2['vm'][i]={ 'type': param1.vm_type[type], 'disk': dsk, 'install':path1,'intf':{}}
 		intf_list={}
 		if 'efi' in d1['vm'][i].keys():
 			if d1['vm'][i]['efi'] == 'yes' or d1['vm'][i]['efi']:
