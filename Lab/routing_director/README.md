@@ -20,7 +20,7 @@ For installation and setup of Lab topo2, please refer to this [document](../topo
 Tested with Routing Director 2.5.0, based on this [documentation](https://www.juniper.net/documentation/us/en/software/juniper-routing-director2.5.0/installation-guide/index.html).
 
 ## Getting disk image for Routing Director 2.5.0
-As for the current version of Routing Director Automation platform, version 2.5.0, the disk image only available as OVA package.
+As for the current version of Routing Director Automation platform, version 2.5.0, the installation package only available as OVA package.
 
 To install Routing Director virtual appliance on vmm, it requires the disk image in QCOW2 format.
 
