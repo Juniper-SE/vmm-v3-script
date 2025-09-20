@@ -1,4 +1,4 @@
-# How setup Routing Director 2.5.0 on VMM
+# How setup Routing Director on VMM
 ## topology
 
 ![topology](topology.webp)
@@ -19,7 +19,7 @@ For installation and setup of Lab topo2, please refer to this [document](../topo
 ## note
 Tested with Routing Director 2.5.0, based on this [documentation](https://www.juniper.net/documentation/us/en/software/juniper-routing-director2.5.0/installation-guide/index.html).
 
-## Getting disk image for Routing Director 2.5.0
+## Getting disk image for Routing Director
 As for the current version of Routing Director Automation platform, version 2.5.0, the installation package only available as OVA package.
 
 To install Routing Director virtual appliance on vmm, it requires the disk image in QCOW2 format.
@@ -31,7 +31,7 @@ The challenge is the size of the disk image itself is around  36G++, so you need
 You can copy the disk image from my home directory on VMM /vmm/data/user_disks/irzan/images/rd.
 
 
-## Deploying Routing Director 2.5.0 lab topology and initial configuration of VMs
+## Deploying Routing Director lab topology and initial configuration of VMs
 
 Screenshot recording for this can be found [here](https://asciinema.org/a/741932)
 
@@ -351,7 +351,7 @@ Screenshot recording for this can be found here [part1](https://asciinema.org/a/
         C>* 192.168.199.2/31 is directly connected, wg1, 05:36:22
         gwrd#
 
-11. Now the Routing Director 2.5.0 cluster is up and running.
+11. Now the Routing Director cluster is up and running.
 
 
 ## access the web dashboard of Routing Director appliance
@@ -418,6 +418,6 @@ Screenshot recording for this steps can be found [here](https://asciinema.org/a/
 
 
 ## Lab Exercise
-Now you can start exploring Juniper Routing Director 2.5.0
+Now you can start exploring Juniper Routing Director
 
-you can use the following [document](lab_exercise/README.me) as guideline 
+you can use the following [document](lab_exercise/README.md) as guideline 
