@@ -20,11 +20,11 @@ For installation and setup of Lab topo2, please refer to this [document](../topo
 Tested with Routing Director 2.5.0, based on this [documentation](https://www.juniper.net/documentation/us/en/software/juniper-routing-director2.5.0/installation-guide/index.html).
 
 ## Getting disk image for Routing Director 2.5.0
-As for the current version of Routing Director Automation platform, version 2.5.0, the disk image is as only available as OVA package.
+As for the current version of Routing Director Automation platform, version 2.5.0, the disk image only available as OVA package.
 
-To install Routing Director virtual appliance on vmm, it requires the disk image, in QCOW2 format.
+To install Routing Director virtual appliance on vmm, it requires the disk image in QCOW2 format.
 
-So you need to extract the disk image from the OVA package, convert the disk image from VMDK to QCOW2, and put it into your home directory.
+So you need to extract the disk image from the OVA package, convert the disk image from VMDK to QCOW2, and put it into your home directory. Only disk1 is required. Disk2 will be created automatically by the script.
 
 The challenge is the size of the disk image itself is around  36G++, so you need to ensure that your VMM account has enough quota on the VMM directory.
 
