@@ -33,7 +33,7 @@ You can copy the disk image from my home directory on VMM /vmm/data/user_disks/i
 
 ## Deploying Routing Director 2.5.0 lab topology and initial configuration of VMs
 
-Screenshot recording for this can be found [here]()
+Screenshot recording for this can be found [here](https://asciinema.org/a/741932)
 
 1. Go to directory [Routing Director Lab](./)
 2. Edit file [lab.yaml](./lab.yaml). Set the following parameters to choose which vmm server that you are going to use and the login credential:
@@ -68,7 +68,7 @@ To access the console of routing director appliance, it can be done using the se
 
 ### The following steps are to configure ip address on Routing Director appliances using serial console
 
-Screenshot recording for this can be found [here]()
+Screenshot recording for this can be found [here](https://asciinema.org/a/741933)
 
 1. Open ssh session into node VMM, and list the virtual machines running on VMM
 
@@ -169,7 +169,7 @@ The following step is to setup wireguard to allow direct access into the lab, fo
 
 Wireguard is also used to provide connectivity to another VMM topology (lab topo2) where all the vJunos VMs are running.
 
-Screenshot recording for this can be found [here]()
+Screenshot recording for this can be found [here](https://asciinema.org/a/741934)
 
 1. Install wireguard into your workstation
 
@@ -192,7 +192,7 @@ Screenshot recording for this can be found [here]()
 
 4. On your workstation, copy configuration file wg0_ws.conf into the wireguard local directory 
 
-        cp tmp/wg0_ws.conf /usr/local/etc/wireguard/wg0.conf
+        sudo cp tmp/wg0_ws.conf /usr/local/etc/wireguard/wg0.conf
 
 7. on your workstation, start wireguard session, and test connectivity to the lab
 
@@ -238,7 +238,7 @@ Screenshot recording for this can be found [here]()
 
 ## create Routing Director cluster
 
-Screenshot recording for this can be found [here]()
+Screenshot recording for this can be found [here](https://asciinema.org/a/741936)
 
 1. From your workstation, open ssh session into node1, and you will enter Routing Director shell
 
@@ -318,7 +318,15 @@ Please follow the document, but don't run the lab exercise, because we are going
 
 ## Connecting Lab routing_director and topo2.
 
-Screenshot recording for this can be found [here]()
+Screenshot recording for this steps are :
+- deploying lab topo2 [here](https://asciinema.org/a/741942)
+- install crpd [here](https://asciinema.org/a/741964)
+- update vJunos configuration [here](https://asciinema.org/a/741987)
+
+Next we are going to configure wireguard between Lab routing_director and topo2, to allow Routing Director software running in lab routing_director to access vJunos Nodes running in lab topo2.
+
+
+Screenshot recording for this steps can be found [here](https://asciinema.org/a/742028)
 1. Upload file [create_wg_gwrd.sh](wireguard_config/create_wg_gwrd.sh) into node **gw** of lab **routing_director**.
 
         scp wireguard_config/create_gw_gwrd.sh 
@@ -332,23 +340,27 @@ Screenshot recording for this can be found [here]()
 
         sudo wg show
 
-4. Upload file [create_wg_gwnet.sh](wireguard_config/create_wg_gwnet.sh) into node **gw** of lab **topo2**.
+4. Get the external ip address of node **gw** of lab **routing_director**  (interface eth0), which is required for the next step
+
+        ip addr show dev eth0
+
+5. Upload file [create_wg_gwnet.sh](wireguard_config/create_wg_gwnet.sh) into node **gw** of lab **topo2**.
 
         scp wireguard_config/create_gw_gwnet.sh 
 
-2. ssh into  node **gw** of lab **topo2r** and execute script create_wg_gwnet.sh
+6. ssh into  node **gw** of lab **topo2r** and execute script create_wg_gwnet.sh
 
         ssh gw
-        ./create_wg_gwnet.sh 
+        ./create_wg_gwnet.sh <ip_of_gwrd>
 
-3. Verify that node **gw** of lab **topo2** has one wireguard interface, wg0, and test connectivity to lab **routing_director**
+7. Verify that node **gw** of lab **topo2** has one wireguard interface, wg0, and test connectivity to lab **routing_director**
 
         sudo wg show
         ping 192.168.199.2
         ping 172.16.11.11
         ssh root@172.16.11.11
         
-4. Now lab **routing_director** and lab **topo2** which run on different pod of VMM are connected.
+8. Now lab **routing_director** and lab **topo2** which run on different pod of VMM are connected.
 
 
 ## Lab Exercise
