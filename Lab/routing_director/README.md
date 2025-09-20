@@ -270,6 +270,9 @@ Screenshot recording for this can be found here [part1](https://asciinema.org/a/
        commit
        exit
 
+       # for single node installation (strictly for demo, not production) add the following
+       # set paragon cluster install scale-mode single
+
        # optional
        # set Routing Director cluster applications routingbot routingbot-crpd-vip 172.16.12.4
        # set Routing Director cluster applications aiops install-aiml true
