@@ -115,7 +115,7 @@ node4|172.16.11.14/24|172.16.11.254|172.16.11.254|172.16.11.254
         systemctl restart sshd
         systemctl status sshd
 
-9. Exit serial console of node1 by presssing **CTRL ]** and quite
+9. Exit serial console of node1 by presssing **CTRL ]** and **quit**
 
 11. Repat step 2 to 8 for node2, node3, and node4
 12. From node **gw**, verify that all appliance can be accessed using ssh 
