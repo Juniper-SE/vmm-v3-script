@@ -1,0 +1,194 @@
+{
+  "customer_id": "4b26ac60-960e-11f0-b4f0-f6ffe64b72fa",
+  "design_id": "infrastructure",
+  "design_version": "0.14.46",
+  "fh_config": {
+    "edited-by": "irzan@juniper.net",
+    "status": "uploaded"
+  },
+  "infrastructure_ntw": {
+    "default_interface_profiles": [],
+    "default_node_profiles": [],
+    "interface_profiles": {
+      "interface_profile": []
+    },
+    "labels": {
+      "label": []
+    },
+    "network_nodes": {
+      "network_node": [
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "pe1",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1ABAE9",
+          "site_id": "8d8a4886-4407-4458-829e-746f65c889a7",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "pe2",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1AB9A8",
+          "site_id": "86dce2d3-7df1-43f1-918c-c0cc7ec77924",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "p1",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1ABBE1",
+          "site_id": "bbb147a3-a8e5-4835-b726-32630e70ab3a",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "p2",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1AC025",
+          "site_id": "1a4f8eee-bd45-4cd8-ba76-00d072e468e8",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "p5",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1ABDBF",
+          "site_id": "676388b5-fad6-4cd7-8470-23b4ecb224d7",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "pe5",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1AB56F",
+          "site_id": "a3bc9f81-ffa5-4615-83e7-9aeb79bdd12b",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "p3",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE8835F5",
+          "site_id": "59840b2c-dc4c-4575-abce-a1bdc85cce66",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "p4",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1AC266",
+          "site_id": "19febf5c-d840-4bb2-9aed-b7d3b702a297",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "pe3",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1AC276",
+          "site_id": "f3b6a7c4-08ec-42ca-9369-55f6c83596b8",
+          "vendor": "Juniper Networks"
+        },
+        {
+          "installation": {
+            "duration": 5
+          },
+          "interfaces": {
+            "interface": [],
+            "port": []
+          },
+          "model": "vMX",
+          "name": "pe4",
+          "node_type": "paper-node",
+          "profiles": [],
+          "serial": "VM68CE1AC79D",
+          "site_id": "644f0f6d-e01c-4558-aad1-7042f4f74725",
+          "vendor": "Juniper Networks"
+        }
+      ]
+    },
+    "node_profiles": {
+      "node_profile": []
+    }
+  },
+  "instance_id": "NIP1",
+  "instance_status": "feasibility_checked",
+  "instance_uuid": "8140294a-961a-11f0-9fd9-6e3d0bb79b54",
+  "operation": "create",
+  "order_id": "81403425-961a-11f0-9fd9-6e3d0bb79b54",
+  "org_id": "41f9080b-93bd-42b5-9c75-6590f47dc19a",
+  "upload_time": "2025-09-20T12:08:23Z",
+  "version": "1.0.0"
+}

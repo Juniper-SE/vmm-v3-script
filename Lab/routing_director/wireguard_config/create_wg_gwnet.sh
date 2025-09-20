@@ -18,6 +18,7 @@ sudo systemctl enable wg-quick@wg0
 sudo systemctl start wg-quick@wg0
 sudo hostname gwnet
 hostname | sudo tee /etc/hostname
+sudo sed -i -e "s/gw/gwnet/" /etc/hosts
 
 
 # EJCdiVEcLifpqIcAsWKcNoQ9zU7lWiXQh8AfWA9rOGM=

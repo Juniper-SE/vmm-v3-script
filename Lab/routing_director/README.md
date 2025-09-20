@@ -418,10 +418,6 @@ Screenshot recording for this steps can be found [here](https://asciinema.org/a/
 
 
 ## Lab Exercise
-Now you can start exploring Juniper Routing Director 2.0.0
+Now you can start exploring Juniper Routing Director 2.5.0
 
-you can use the following [document](pa_2.0.0/LabExercise.md) as guideline 
-
-## start and stop 
-
-
+you can use the following [document](lab_exercise/README.me) as guideline 

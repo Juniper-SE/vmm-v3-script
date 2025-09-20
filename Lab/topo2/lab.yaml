@@ -2,7 +2,7 @@
 name: topo2 # this is topo2
 pod: 
   type: vmm
-  vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod26-vmm.englab.juniper.net
   user: irzan
   # adpassword: ThisIsAnaMabokCoy
   home_dir : /vmm/data/user_disks/irzan
@@ -76,6 +76,8 @@ vm:
           inet: 172.16.13.254/24
           static:
           - to: 10.100.255.0/24
+            via: 172.16.13.15
+          - to: 10.100.0.0/24
             via: 172.16.13.15
   pe1:
     type: vjunos_router

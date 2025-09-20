@@ -1,0 +1,25 @@
+---
+- name: get serial number of vJunosNode
+  hosts:
+  - pe
+  - p
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    # - name: get serial number of vJunosNode
+    #   juniper.device.rpc:
+    #     rpc: get-chassis-inventory
+    #   register: chassis_inventory
+    # - name: Extract and display chassis serial number
+    #   ansible.builtin.debug:
+    #     msg: "Chassis Serial Number: {{ chassis_inventory.parsed_xml_data.serial_number }}"
+    - name: Retrieve device facts and configuration and save facts to file
+      juniper.device.facts:        
+        config_format: "json"
+      register: result
+
+    - name: Print configuration
+      ansible.builtin.debug:
+        var: result.facts.serialnumber

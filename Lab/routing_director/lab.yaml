@@ -2,7 +2,7 @@
 name: rd
 pod: 
   type: vmm
-  vmmserver: q-pod26-vmm.englab.juniper.net
+  vmmserver: q-pod22-vmm.englab.juniper.net
   user: irzan
   home_dir : /vmm/data/user_disks/irzan
 images:   
