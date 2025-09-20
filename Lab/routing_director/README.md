@@ -238,7 +238,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/741935
 
 ## create Routing Director cluster
 
-Screenshot recording for this can be found [here](https://asciinema.org/a/741936)
+Screenshot recording for this can be found here [part1](https://asciinema.org/a/741936) and [part2](https://asciinema.org/a/742072)
 
 1. From your workstation, open ssh session into node1, and you will enter Routing Director shell
 
@@ -298,6 +298,58 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/741936
         tail -f /root/epic/config/log
     
 10. Once the cluster successfully deployed, exit from the Routing Director shell, and login again to finish the installation
+11. on node GW, access frr console, and verify that node **GW** has received BGP update from Routing Director cluster
+        ssh gw
+        sudo vtysh 
+        show bgp summary 
+        show ip bgp
+
+
+        ubuntu@gwrd:~$ sudo vtysh
+
+        Hello, this is FRRouting (version 8.4.4).
+        Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+        gwrd# show bgp summary
+
+        IPv4 Unicast Summary (VRF default):
+        BGP router identifier 192.168.199.0, local AS number 65100 vrf-id 0
+        BGP table version 5
+        RIB entries 5, using 960 bytes of memory
+        Peers 4, using 2896 KiB of memory
+
+        Neighbor        V         AS   MsgRcvd   MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd   PfxSnt Desc
+        172.16.11.11    4      65101       709       709        0    0    0 05:50:47            2        3 N/A
+        172.16.11.12    4      65101       707       709        0    0    0 05:50:47            1        3 N/A
+        172.16.11.13    4      65101       710       709        0    0    0 05:50:47            3        3 N/A
+        172.16.11.14    4      65101       708       709        0    0    0 05:50:47            1        3 N/A
+
+        Total number of neighbors 4
+        gwrd# sho ip route
+        Codes: K - kernel route, C - connected, S - static, R - RIP,
+        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+        T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+        f - OpenFabric,
+        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+        t - trapped, o - offload failure
+
+        K>* 0.0.0.0/0 [0/100] via 10.49.31.254, eth0, src 10.49.12.103, 06:30:50
+        C>* 10.49.0.0/19 [0/100] is directly connected, eth0, 06:30:50
+        K>* 10.49.31.254/32 [0/100] is directly connected, eth0, 06:30:50
+        K>* 10.49.32.95/32 [0/100] via 10.49.31.254, eth0, src 10.49.12.103, 06:30:50
+        K>* 10.49.32.97/32 [0/100] via 10.49.31.254, eth0, src 10.49.12.103, 06:30:50
+        K>* 10.100.255.0/24 [0/0] is directly connected, wg1, 05:36:22
+        C>* 172.16.11.0/24 is directly connected, eth1, 06:30:50
+        B>* 172.16.12.1/32 [20/0] via 172.16.11.11, eth1, weight 1, 05:50:02
+        *                       via 172.16.11.13, eth1, weight 1, 05:50:02
+        B>* 172.16.12.2/32 [20/0] via 172.16.11.11, eth1, weight 1, 05:50:01
+        *                       via 172.16.11.12, eth1, weight 1, 05:50:01
+        *                       via 172.16.11.13, eth1, weight 1, 05:50:01
+        *                       via 172.16.11.14, eth1, weight 1, 05:50:01
+        B>* 172.16.12.3/32 [20/0] via 172.16.11.13, eth1, weight 1, 05:01:32
+        C>* 192.168.199.0/31 is directly connected, wg0, 06:30:50
+        C>* 192.168.199.2/31 is directly connected, wg1, 05:36:22
+        gwrd#
 
 11. Now the Routing Director 2.5.0 cluster is up and running.
 
@@ -309,6 +361,8 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/741936
 
 2. access [web dashboard of Paragaon automation ](https://172.16.12.1)
 3. Login using the username (email addressess) and password that was configured during cluster deployment.
+4. Create the organization, and now the Routing Director can be used.
+
 
 ## Deploying Lab topo2
 
