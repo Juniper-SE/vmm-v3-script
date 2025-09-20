@@ -209,7 +209,7 @@ If BGP is going to be enabled on MetalLB on Routing Director, then we need to co
 
 If MetalLB on Routing Director cluster is going to use L2, then BGP is not needed on node **gw**
 
-Screenshot recording for this can be found [here]()
+Screenshot recording for this can be found [here](https://asciinema.org/a/741935)
 
 1. Enable BGP on frr on node **gw**
 
