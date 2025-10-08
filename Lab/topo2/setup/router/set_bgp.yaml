@@ -30,6 +30,3 @@
         - "set policy-options policy-statement to_isis term 1 from protocol static"
         - "set policy-options policy-statement to_isis term 1 then accept"
         - "set protocols isis export to_isis"
-
-        
-

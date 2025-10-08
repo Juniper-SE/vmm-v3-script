@@ -1,0 +1,88 @@
+---
+name: dc1
+pod: 
+  type: vmm
+  vmmserver: q-pod27-vmm.englab.juniper.net
+  user: irzan
+  home_dir : /vmm/data/user_disks/irzan
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu24.04.qcow2
+  vsrx: images/junos-vsrx3-x86-64-25.2R1.9.qcow2
+  aos: images/aos_server_6.0.0-189.qcow2
+  aos_ztp: images/apstra-ztp-6.0.0-8.qcow2
+  aos_flow: images/apstra-flow-6.0.0-ubuntu-22.04-7.10.2.qcow2
+  vjunos_switch: images/vJunos-switch-25.2R1.9.qcow2
+  vjunos_router: images/vJunos-router-24.2R1-S2.5.qcow2
+junos_login:
+  login: admin
+  password: pass01
+wg:
+  prefix_allowed:
+  - 172.16.55.0/24 
+  - 172.16.51.0/24
+  - 172.16.52.0/24
+vm:
+  gw:
+    type: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1:
+        bridge: ctrl
+        mtu: 9000
+        family:
+          inet: 172.16.55.254/24
+          inet6: fc00:dead:beef:ff55::FFFF/64
+        dhcp_range: 172.16.55.1-172.16.55.200
+  apstra:
+    type: pchpv1
+    os: aos
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: ctrl
+        family:
+          inet: 172.16.55.1/24 
+          gateway4: 172.16.55.254
+  apstraw2:
+    type: pchpv1
+    os: aos
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: ctrl
+        family:
+          inet: 172.16.55.2/24 
+          gateway4: 172.16.55.254
+  apstraw3:
+    type: pchpv1
+    os: aos
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: ctrl
+        family:
+          inet: 172.16.55.3/24 
+          gateway4: 172.16.55.254
+  ztp:
+    type: pctiny
+    os: aos_ztp
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: ctrl
+        family:
+          inet: 172.16.55.4/24 
+          gateway4: 172.16.55.254
+  flow:
+    type: pchpv1
+    os: aos_flow
+    vnc: yes
+    interfaces: 
+      em0: 
+        bridge: ctrl
+        family:
+          inet: 172.16.55.5/24 
+          gateway4: 172.16.55.254
+  

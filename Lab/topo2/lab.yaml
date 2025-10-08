@@ -2,7 +2,7 @@
 name: topo2 # this is topo2
 pod: 
   type: vmm
-  vmmserver: q-pod26-vmm.englab.juniper.net
+  vmmserver: q-pod27-vmm.englab.juniper.net
   user: irzan
   # adpassword: ThisIsAnaMabokCoy
   home_dir : /vmm/data/user_disks/irzan
@@ -81,6 +81,10 @@ vm:
             via: 172.16.13.15
   pe1:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 101
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -98,6 +102,10 @@ vm:
         mtu: 9000
   pe2:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 102
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -115,6 +123,10 @@ vm:
         mtu: 9000
   pe3:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 103
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -132,6 +144,10 @@ vm:
         mtu: 9000
   pe4:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 104
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -149,6 +165,10 @@ vm:
         mtu: 9000
   pe5:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 105
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -162,6 +182,10 @@ vm:
         bridge: ext
   p1:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 111
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -173,6 +197,10 @@ vm:
           inet: 10.100.255.11/32
   p2:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 112
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -186,6 +214,10 @@ vm:
           isis: passive
   p3:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 113
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -197,6 +229,10 @@ vm:
           inet: 10.100.255.13/32
   p4:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 114
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -208,6 +244,10 @@ vm:
           inet: 10.100.255.14/32
   p5:
     type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 115
     interfaces:
       mgmt: 
         bridge: mgmt

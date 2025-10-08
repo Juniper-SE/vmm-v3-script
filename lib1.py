@@ -297,7 +297,7 @@ def add_os(d1):
 
 def change_ztp(d1):
 	for i in d1['vm'].keys():
-		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX']:
+		if d1['vm'][i]['type'] in ['vjunos_switch','vjunos_router','vjunos_evolved','vjunos_evolvedBX','vsrx']:
 			if 'ztp' not in d1['vm'][i].keys():
 				d1['vm'][i]['ztp'] = True
 			else:
@@ -2378,6 +2378,7 @@ def create_junos_config(d1,i):
 	# 		dummy1['mgmt_dhcp'] = 0
 	# else:
 	# 	dummy1['mgmt_dhcp'] = 0
+	#print(f"vm {i}")
 	if d1['vm'][i]['mgmt_dhcp']:
 		dummy1['mgmt_dhcp'] = 1
 	else:

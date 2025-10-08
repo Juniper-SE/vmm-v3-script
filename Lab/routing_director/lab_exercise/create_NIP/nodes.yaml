@@ -1,0 +1,32 @@
+nodes:
+  pe1:
+    sernum: VM68D3E82094
+    site: "11236c0b-e9fe-40f6-95a5-d379649cf252"
+  pe2:
+    sernum: VM68D3E82058
+    site: "4b0a1a8c-7ada-4355-b709-f20ef96354d1"
+  pe3:
+    sernum: VM68D3E8293B
+    site: "b7719e11-7dcb-4bde-8276-8d7803395b91"
+  pe4:
+    sernum: VM68D3E82983
+    site: "b55be435-817d-41f7-8aad-70c8c310a4da"
+  pe5:
+    sernum: VM68D3E81ED1
+    site: "d0773db9-7f6c-48ad-b4f8-bd278f065b37"
+  p1:
+    sernum: VM68D3E81EC2
+    site: "550cc38b-8311-45ce-9dd4-b8c7d74c2f05"
+  p2:
+    sernum: VM68D3E82294
+    site: "4f02445c-b1e2-4221-8edd-b3e02196bfec"
+  p3:
+    sernum: VM68D3E823E9
+    site: "6d17a50d-b3a0-4653-af6a-730e096cf1ed"
+  p4:
+    sernum: VM68D3E82E34
+    site: "a28bfcb1-9107-44f9-b288-e20ed1d07587"
+  p5:
+    sernum: VM68D3F0B222
+    site: "52b1fe4a-a9e5-49a9-80e3-f0e1762896f7"
+

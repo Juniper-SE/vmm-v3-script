@@ -2,7 +2,7 @@
 name: rd
 pod: 
   type: vmm
-  vmmserver: q-pod22-vmm.englab.juniper.net
+  vmmserver: q-pod23-vmm.englab.juniper.net
   user: irzan
   home_dir : /vmm/data/user_disks/irzan
 images:   
@@ -35,17 +35,17 @@ vm:
           inet: 172.16.11.254/24
           inet6: fc00:dead:beef:a011::1/64
         dhcp_range: 172.16.11.10-172.16.11.100
-  desktop1:
-    type: pcmedium
-    os: ubuntu
-    vnc: yes
-    interfaces:
-      em0: 
-        bridge: control
-        family:
-          inet: 172.16.11.50/24
-          inet6: fc00:dead:beef:a011::50/64
-          gateway4: 172.16.11.254
+  # desktop1:
+  #   type: pcmedium
+  #   os: ubuntu
+  #   vnc: yes
+  #   interfaces:
+  #     em0: 
+  #       bridge: control
+  #       family:
+  #         inet: 172.16.11.50/24
+  #         inet6: fc00:dead:beef:a011::50/64
+  #         gateway4: 172.16.11.254
   node1:
     type: pchpv0
     vnc: yes

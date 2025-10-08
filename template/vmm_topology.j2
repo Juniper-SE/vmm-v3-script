@@ -51,13 +51,14 @@ config "{{name}}" {
        ncpus {{vm[v]['type'].ncpus }};
        memory {{vm[v]['type'].memory }};
        setvar {{vm[v]['type'].setvar }};
+       setvar "attach_usb" "0";
        {% if vm[v].efi -%}
        setvar "use_uefi" "1";
        {% endif -%}
        {% if vm[v].vnc -%}
        setvar "enable_vnc" "1";
        {% endif -%}
-       install "{{vm[v]['install'] }}" "/{{ v }}.conf";
+       {# install "{{vm[v]['install'] }}" "/{{ v }}.conf"; #}
        {% for intf1 in vm[v].intf -%}
        interface "{{ intf1 }}" { bridge "{{vm[v].intf[intf1] }}";};
        {% endfor %} 

@@ -1,0 +1,16 @@
+cat << EOF | sudo tee /etc/netplan/01_net.yaml
+network:
+  version: 2
+  ethernets:
+    eth0:
+       addresses: [ 172.16.51.100/24]
+       nameservers:
+         addresses: [ 172.16.51.254]
+         search: [vmmlab.com]
+       routes:
+       - to: default
+         via: 172.16.51.254
+EOF
+sudo hostname svr0
+hostname | sudo tee /etc/hostname
+sudo netplan apply

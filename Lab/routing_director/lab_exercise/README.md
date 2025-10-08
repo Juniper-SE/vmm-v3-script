@@ -75,5 +75,6 @@ In this step, we are going to update DNS server inside the routing director lab,
 11. Routing Director will start the onboarding process.
 12. Navigate to **Inventory** > **Network Inventory**, and wait until all devices status become **Ready for Service**
 13. Navigate to **Inventory** > **Onboarding Dashboar**, select all devices and click **Put into Service**
+14. 
 14. Now you can start playing around with Routing Director
 

@@ -1,0 +1,41 @@
+---
+- name: updating node with ubuntu OS
+  hosts: all
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: update and upgrade repository
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: yes
+        state: latest
+- name: install software into node gw
+  hosts: 
+  - gw
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install wireguard, novnc and websockify
+      ansible.builtin.apt:
+        pkg:
+        - wireguard-tools
+        - novnc
+        - websockify
+- name: install and lxd openvswitch on node lxd
+  hosts: 
+  - lxd
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install openvswitch-switch
+      ansible.builtin.apt:
+        pkg:
+        - openvswitch-switch
+    - name: install lxd
+      community.general.snap:
+        name:
+          - lxd
+
