@@ -1,32 +1,106 @@
 nodes:
   pe1:
-    sernum: VM68D3E82094
-    site: "11236c0b-e9fe-40f6-95a5-d379649cf252"
+    sernum: VM68FFA2A0EC
+    site: "27170355-1193-4d02-a9aa-e4872f1320eb"
+    interfaces:
+    - name: ge-0/0/1.0
+      link: Link_PE1_P1
+    - name: ge-0/0/2.0
+      link: Link_PE1_P2
   pe2:
-    sernum: VM68D3E82058
-    site: "4b0a1a8c-7ada-4355-b709-f20ef96354d1"
+    sernum: VM68FFA2A064
+    site: "3d6b477a-a18b-4408-b1e5-43ad39422194"
+    interfaces:
+    - name: ge-0/0/1.0
+      link: Link_PE2_P1
+    - name: ge-0/0/2.0
+      link: Link_PE2_P2
   pe3:
-    sernum: VM68D3E8293B
-    site: "b7719e11-7dcb-4bde-8276-8d7803395b91"
+    sernum: VM68FFA2A2E9
+    site: "ebbf60ae-b12a-4b54-9402-50c0f6e76ced"
+    interfaces:
+    - name: ge-0/0/1.0
+      link: Link_PE3_P3
+    - name: ge-0/0/2.0
+      link: Link_PE3_P4
   pe4:
-    sernum: VM68D3E82983
-    site: "b55be435-817d-41f7-8aad-70c8c310a4da"
+    sernum: VM68FFA29DD5
+    site: "7d16721f-bb03-4481-9c8b-edb869c4ff11"
+    interfaces:
+    - name: ge-0/0/1.0
+      link: Link_PE4_P3
+    - name: ge-0/0/2.0
+      link: Link_PE4_P4
   pe5:
-    sernum: VM68D3E81ED1
-    site: "d0773db9-7f6c-48ad-b4f8-bd278f065b37"
+    sernum: VM68FFA29E05
+    site: "568e73ab-ed9c-4640-bf47-fc8f2976279a"
+    interfaces:
+    - name: ge-0/0/1.0
+      link: Link_PE5_P5
   p1:
-    sernum: VM68D3E81EC2
-    site: "550cc38b-8311-45ce-9dd4-b8c7d74c2f05"
+    sernum: VM68FFA29F64
+    site: "0cec4d64-89b0-49a6-8377-ed307171bfc0"
+    interfaces:
+    - name: ge-0/0/0.0
+      link: Link_PE1_P1
+    - name: ge-0/0/1.0
+      link: Link_PE2_P1
+    - name: ge-0/0/2.0
+      link: Link_P1_P2
+    - name: ge-0/0/3.0
+      link: Link_P1_P5
   p2:
-    sernum: VM68D3E82294
-    site: "4f02445c-b1e2-4221-8edd-b3e02196bfec"
+    sernum: VM68FFA2A356
+    site: "290897ab-2a7b-4328-a67f-41a995345cb0"
+    interfaces:
+    - name: ge-0/0/0.0
+      link: Link_PE1_P2
+    - name: ge-0/0/1.0
+      link: Link_PE2_P2
+    - name: ge-0/0/2.0
+      link: Link_P1_P2
+    - name: ge-0/0/3.0
+      link: Link_P2_P4
+    - name: ge-0/0/4.0
+      link: Link_P2_P5
   p3:
-    sernum: VM68D3E823E9
-    site: "6d17a50d-b3a0-4653-af6a-730e096cf1ed"
+    sernum: VM68FFA29FCA
+    site: "2ea56feb-8734-4e20-afab-e72c77af1c1f"
+    interfaces:
+    - name: ge-0/0/0.0
+      link: Link_PE3_P3
+    - name: ge-0/0/1.0
+      link: Link_PE4_P3
+    - name: ge-0/0/2.0
+      link: Link_P3_P4
+    - name: ge-0/0/3.0
+      link: Link_P3_P5
   p4:
-    sernum: VM68D3E82E34
-    site: "a28bfcb1-9107-44f9-b288-e20ed1d07587"
+    sernum: VM68FFA29A13
+    site: "bbfabcab-fc16-456d-8741-ab19a495be38"
+    interfaces:
+    - name: ge-0/0/0.0
+      link: Link_PE3_P4
+    - name: ge-0/0/1.0
+      link: Link_PE4_P4
+    - name: ge-0/0/2.0
+      link: Link_P3_P4
+    - name: ge-0/0/3.0
+      link: Link_P2_P4
+    - name: ge-0/0/4.0
+      link: Link_P4_P5
   p5:
-    sernum: VM68D3F0B222
-    site: "52b1fe4a-a9e5-49a9-80e3-f0e1762896f7"
+    sernum: VM68FFA29DD0
+    site: "6641c04a-bc7a-416c-9095-677120bd984a"
+    interfaces:
+    - name: ge-0/0/0.0
+      link: Link_P1_P5
+    - name: ge-0/0/1.0
+      link: Link_P2_P5
+    - name: ge-0/0/2.0
+      link: Link_P3_P5
+    - name: ge-0/0/3.0
+      link: Link_P4_P5
+    - name: ge-0/0/4.0
+      link: Link_PE5_P5
 

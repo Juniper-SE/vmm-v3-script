@@ -1,0 +1,40 @@
+---
+
+- name: updating node with ubuntu OS
+  hosts: ubuntu
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: update and upgrade repository
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: yes
+        state: latest
+- name: install software on node gw
+  hosts: 
+  - gw
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install software
+      ansible.builtin.apt:
+        pkg:
+        - novnc
+        - websockify
+        - wireguard-tools
+- name: install software on node desktop1
+  hosts: 
+  - desktop1
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install software
+      ansible.builtin.apt:
+        pkg:
+        - ubuntu-desktop-minimal
+    - name: Unconditionally reboot the machine with all defaults
+      ansible.builtin.reboot:
+        msg: "Rebooting machine in 5 seconds"

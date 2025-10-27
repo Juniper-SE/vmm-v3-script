@@ -18,23 +18,23 @@ Connection between nodes
 
 Screenshot recording for this can be found [here](https://asciinema.org/a/740334)
 
-1. go into the **topo2** directory 
+1. go into the **network** directory 
 
        cd ~/git/vmm-v3-script/Lab/topo2
        source ~/python3/vmmlab/bin/activate
 
 2. upload the topology into VMM
 
-       ../../vmm.py upload
+       ../../../vmm.py upload
 
 3. start the topology 
 
-       ../../vmm.py start
+       ../../../vmm.py start
 
 4. wait for few minutes until node **gw** is up and running
 5. upload configuration into node **gw**
 
-       ../../vmm.py set_gw
+       ../../../vmm.py set_gw
 
 6. wait for few minutes until the ZTP process for all vjunos node are up and running
 7. open ssh session into node **gw**, test connectivity to vjunos node (pe1/2/3/4/5, p1/2/3/4/5) and open ssh session, or test ssh to junos VM from your workstation.

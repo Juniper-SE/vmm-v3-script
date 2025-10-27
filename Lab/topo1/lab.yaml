@@ -1,8 +1,8 @@
 ---
-name: topo1
+name: topo2
 pod: 
   type: vmm
-  vmmserver: q-pod27-vmm.englab.juniper.net
+  vmmserver: q-pod23-vmm.englab.juniper.net
   user: irzan
   #vmmpassword: AnaMabokCoy
   home_dir : /vmm/data/user_disks/irzan
@@ -12,6 +12,7 @@ images:
   bridge: images/bridge.qcow2
   vjunos_router: images/vJunos-router-25.2R1.9.qcow2
   vjunos_evolved: images/vJunosEvolved-25.2R1.8-EVO.qcow2
+  vjunos_evolvedBX: images/vJunosEvolved-25.2R1.8-EVO.qcow2
 junos_login:
   login: admin
   password: pass01
@@ -48,10 +49,10 @@ fabric:
   # SNMP trap: 172.16.255.4
   # Netflow : 172.16.255.5
   # PCE serveR: 172.16.255.6
-    - [ 0x17, r1, ge-0/0/1, r2, ge-0/0/1 ]
+    - [ 0x17, r1, ge-0/0/1, r2, et-0/0/1 ]
     - [ 0x17, r1, ge-0/0/2, r4, et-0/0/1 ]
-    - [ 0x17, r2, ge-0/0/2, r3, et-0/0/1 ]
-    - [ 0x17, r4, et-0/0/2, r3, et-0/0/2 ]
+    - [ 0x17, r3, ge-0/0/1, r2, et-0/0/2 ]
+    - [ 0x17, r3, ge-0/0/1, r4, et-0/0/2 ]
 vm:
   gw:
     type: gw
@@ -82,7 +83,7 @@ vm:
         bridge: r1ge0
         mtu: 9000
   r2:
-    type: vjunos_router
+    type: vjunos_evolved
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -96,11 +97,11 @@ vm:
           inet6: fc00:dead:beef:ffff::2/128
         protocol:
           isis: passive
-      ge-0/0/0:
-        bridge: r2ge0
+      et-0/0/0:
+        bridge: r2et0
         mtu: 9000
   r3:
-    type: vjunos_evolved
+    type: vjunos_router
     interfaces:
       mgmt: 
         bridge: mgmt
@@ -146,9 +147,9 @@ vm:
       em1: 
         bridge: r1ge0
       em2: 
-        bridge: r2ge0
+        bridge: r2et0
       em3: 
-        bridge: r3et0
+        bridge: r3ge0
       em4: 
         bridge: r4et0
 

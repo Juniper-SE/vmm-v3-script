@@ -48,8 +48,8 @@ vm_type={
    'vjunos_switch' : {'ncpus' : 4,'memory':5120,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=1,product=VM-VEX"'},
    'vjunos_router_old' : {'ncpus' : 4,'memory':5120,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=1,product=VM-VMX,family=lab"'},
    'vjunos_router' : {'ncpus' : 4,'memory':5120,'setvar':'"+qemu_args" "-cpu host,+vmx"'},
-   'vjunos_evolved': {'ncpus' : 4,'memory':16384,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=0,vendor=Bochs,version=Bochs -smbios type=3,manufacturer=Bochs -smbios type=1,manufacturer=Bochs,product=Bochs,serial=chassis_no=0:slot=0:type=1:assembly_id=0x0D20:platform=251:master=0:channelized=no"'},
-   'vjunos_evolvedBX': {'ncpus' : 4,'memory':16384,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=0,vendor=Bochs,version=Bochs -smbios type=3,manufacturer=Bochs -smbios type=1,manufacturer=Bochs,product=Bochs,serial=chassis_no=0:slot=0:type=1:assembly_id=0x0DA9:platform=272:master=0:channelized=no"'},
+   'vjunos_evolved': {'ncpus' : 4,'memory':8192,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=0,vendor=Bochs,version=Bochs -smbios type=3,manufacturer=Bochs -smbios type=1,manufacturer=Bochs,product=Bochs,serial=chassis_no=0:slot=0:type=1:assembly_id=0x0D20:platform=251:master=0:channelized=no"'},
+   'vjunos_evolvedBX': {'ncpus' : 4,'memory':8192,'setvar':'"+qemu_args" "-cpu host,+vmx -smbios type=0,vendor=Bochs,version=Bochs -smbios type=3,manufacturer=Bochs -smbios type=1,manufacturer=Bochs,product=Bochs,serial=chassis_no=0:slot=0:type=1:assembly_id=0x0DA9:platform=272:master=0:channelized=no"'},
    'vsrx': {'ncpus' : 2,'memory':4096,'setvar':'"qemu_args" "-cpu qemu64,+vmx,+ssse3,+sse4_1,+sse4_2,+aes,+avx,+pat,+pclmulqdq,+rdtscp,+syscall,+tsc-deadline,+x2apic,+xsave"'},
    'vmx' : {'i2cid': 161}, 
    'mx240' : {'i2cid': 48}, 
@@ -66,7 +66,7 @@ tmp_dir="./tmp/"
 vmm_group="vmm-default"
 esxi_ds_size=100
 #vmm_servers = ["q-pod05", "q-pod08","q-pod13", "q-pod21", "q-pod22", "q-pod23", "q-pod25", "q-pod26", "q-pod27", "q-pod29", "q-pod30", "q-pod32", "q-pod35","q-pod36","q-pod38","q-pod39","elpod1", "elpod2", "elpod3", "enpod2", "enpod4", "enpod6", "enpod7"]
-vmm_servers = ["q-pod08","q-pod13", "q-pod21", "q-pod22", "q-pod23", "q-pod25", "q-pod26", "q-pod27", "q-pod29", "q-pod30", "q-pod32", "q-pod35","q-pod36","q-pod38"]
+# vmm_servers = ["q-pod08","q-pod13", "q-pod21", "q-pod22", "q-pod23", "q-pod25", "q-pod26", "q-pod27", "q-pod29", "q-pod30", "q-pod32", "q-pod35","q-pod36","q-pod38"]
 
 # jnpr_dns1="66.129.233.81"
 # jnpr_dns2="66.129.233.82"

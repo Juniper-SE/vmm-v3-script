@@ -1584,12 +1584,12 @@ def create_novnc(d1):
 # 	# print(f"DNS2 {d1['pod']['dns'][1]}")
 # 	ssh.close()
 
-def iscsi_initiator():
-	# file /etc/iscsi/initiatorname.iscsi
-	# tmp1="InitiatorName=iqn.1993-08.org.debian:01:895b5c8"
-	_,a=str(hex(random.randint(0x1000,0xffff))).split('x')
-	tmp1="iqn.2004-10.com.ubuntu:01:60f35178" + a
-	return tmp1
+# def iscsi_initiator():
+# 	# file /etc/iscsi/initiatorname.iscsi
+# 	# tmp1="InitiatorName=iqn.1993-08.org.debian:01:895b5c8"
+# 	_,a=str(hex(random.randint(0x1000,0xffff))).split('x')
+# 	tmp1="iqn.2004-10.com.ubuntu:01:60f35178" + a
+# 	return tmp1
 
 
 def set_host(d1,vm=""):
@@ -1675,15 +1675,17 @@ def get_gateway(d1,i):
 	return retval
 	
 def get_vjunos_mac(d1):
-	print("inside get_vjunos_mac")
+	#print("inside get_vjunos_mac")
 	mac_vjunos = get_mac_vjunos(d1)
 	pprint.pprint(mac_vjunos)
 
 def get_mac_vjunos(d1):
 	mac_vjunos={}
+	#print("inside one")
+	#print(d1['vm'].keys())
 	for i in d1['vm'].keys():
 		# if d1['vm'][i]['os'] == 'vjunos_switch':
-		if d1['vm'][i]['os'] == 'vjunos_switch' or d1['vm'][i]['os'] == 'evo' or d1['vm'][i]['os'] == 'vjunos_evolved' or d1['vm'][i]['os'] == 'vjunos_evolvedBX':
+		if d1['vm'][i]['os'] == 'vjunos_router' or d1['vm'][i]['os'] == 'vjunos_switch' or d1['vm'][i]['os'] == 'evo' or d1['vm'][i]['os'] == 'vjunos_evolved' or d1['vm'][i]['os'] == 'vjunos_evolvedBX':
 			print(f"Getting mac of {i}")
 			mac_vjunos[i]={}
 			mac_vjunos[i]['mac']=get_mac_vm(d1,i)
@@ -1793,15 +1795,15 @@ def stop(d1):
 	elif d1['pod']['type'] == 'kvm':
 		print("not yet implemented")
 
-def check_vsan_status(d1):
-	retval = False
-	for i in d1['vm'].keys():
-		if d1['vm'][i]['type'] == 'vcsa':
-			if 'vsan' in d1['vm'][i].keys():
-				if d1['vm'][i]['vsan'] == 'yes' or d1['vm'][i]['vsan']:
-					retval = True
-			break
-	return retval
+# def check_vsan_status(d1):
+# 	retval = False
+# 	for i in d1['vm'].keys():
+# 		if d1['vm'][i]['type'] == 'vcsa':
+# 			if 'vsan' in d1['vm'][i].keys():
+# 				if d1['vm'][i]['vsan'] == 'yes' or d1['vm'][i]['vsan']:
+# 					retval = True
+# 			break
+# 	return retval
 
 # def create_esxi_disk(d1,ssh):
 # 	# print("create esxi disk")
@@ -2400,9 +2402,9 @@ def create_junos_config(d1,i):
 	# 	dummy1['mgmt_instc'] = 1
 	# if 	'router-id' in d1['vm'][i].keys():	
 	# 	dummy1['router_id']  = d1['vm'][i]['router-id']
-	# if 'isis_dm' in d1.keys():
-	# 	if d1['isis_dm']:
-	# 		dummy1['isis_dm']=True
+	if 'isis_dm' in d1.keys():
+		if d1['isis_dm']:
+			dummy1['isis_dm']=True
 	if 'lo0' in d1['vm'][i]['interfaces'].keys():
 		if 'family' in d1['vm'][i]['interfaces']['lo0'].keys():
 			if 'inet' in d1['vm'][i]['interfaces']['lo0'].keys():

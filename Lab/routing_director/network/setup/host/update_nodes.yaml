@@ -126,4 +126,36 @@
       ansible.builtin.apt:
         pkg:
         - wireguard-tools
+        - novnc
+        - websockify
+- name: reboot node crpd and client
+  hosts: 
+  - crpd
+  - client
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: Unconditionally reboot node crpd and client
+      ansible.builtin.reboot:
+        msg: "Rebooting machine in 5 seconds"
+- name: reboot node bridges
+  hosts: bridge
+  become: yes
+  vars:
+    user: alpine
+  tasks:
+    - name: Unconditionally reboot node bridges
+      ansible.builtin.reboot:
+        msg: "Rebooting machine in 5 seconds"
+- name: reboot node gw
+  hosts: 
+  - gw
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: Unconditionally reboot node GW
+      ansible.builtin.reboot:
+        msg: "Rebooting machine in 5 seconds"
 

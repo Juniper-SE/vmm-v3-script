@@ -4,16 +4,20 @@
 ![topology](topology.webp)
 
 This lab consist of two topology (lab configuration) on VMM:
-1. Routing director
-2. [Lab Topo2](../topo2/README.md) 
+1. [Routing director](RD/lab.yaml)
+2. [Network devices](network/lab.yaml)
 
-For topology Routing director, it consist the following nodes:
+For topology **Routing director**, it consists of the following nodes:
 - Routing director appliance: node1, node2, node2, node 4
 - GW : gateway for connection to Juniper's Intranet.
 
-This documentation provides information on how to install and setup routing director.
+for topology **network**, it consists of the following:
+- vJunos-Router: PE1, PE2, PE3, PE4, PE5, P1, P2, P3, P4, P5
+- linux VM to run cRPD: crpd
+- Linux VM to simulate CE or subscriber's devices: client
+- GW: gateway for connection to Juniper's Intranet
 
-For installation and setup of Lab topo2, please refer to this [document](../topo2/README.md)
+This documentation provides information on how to install and setup this lab.
 
 
 ## note
@@ -33,31 +37,27 @@ You can copy the disk image from my home directory on VMM /vmm/data/user_disks/i
 
 ## Deploying Routing Director lab topology and initial configuration of VMs
 
-Screenshot recording for this can be found [here](https://asciinema.org/a/741932)
+Screenshot recording for this can be found [here](https://asciinema.org/a/750939)
 
-1. Go to directory [Routing Director Lab](./)
-2. Edit file [lab.yaml](./lab.yaml). Set the following parameters to choose which vmm server that you are going to use and the login credential:
-    - vmmserver # for the vmmserver, use different pod on the VMM for lab routing_director and lab topo2. They can't run on the same VMM pod
+1. Go to directory [Routing Director Lab](./RD)
+2. Edit file [lab.yaml](./RD/lab.yaml). Set the following parameters to choose which vmm server that you are going to use and the login credential:
+    - vmmserver # for the vmmserver, use different pod on the VMM for [RD](RD/lab.yaml) and lab [network](network/lab.yaml) . They can't run on the same VMM pod
     - user 
-4. use [vmm.py](../../vmm.py) script to deploy the topology into the VMM. Run the following command from terminal
+4. use [vmm.py](../../../vmm.py) script to deploy the topology into the VMM. Run the following command from terminal
 
-        ../../vmm.py upload  <-- to create the topology file and the configuration for the VMs and upload them into vmm server
-        ../../vmm.py start   <-- to start the topology in the vmm server
+        ../../../vmm.py upload  <-- to create the topology file and the configuration for the VMs and upload them into vmm server
+        ../../../vmm.py start   <-- to start the topology in the vmm server
 
 5. Verify that you can access node **gw** using ssh (username: ubuntu,  password: pass01 ). You may have to wait for few minutes for node **gw** to be up and running
 6. Run script [vmm.py](../../vmm.py) to send and run initial configuration on node **gw**. This will configure ip address on other interfaces (such ase eth1, eth2, etc), enable dhcp server and dns server on node gw
 
-        ../../vmm.py set_gw
-
-7. Run script [vmm.py](../../vmm.py) to send and run initial configuration on other Linux node. 
-
-        ../../vmm.py set_host
+        ../../../vmm.py set_gw
 
 ## update and upgrade package on linux node
 
 1. use ansible playbook [updates_nodes.yaml](host/update_nodes.yaml) to update and install software on node gw
 
-        cd ~/git/vmm-v3-script/Lab/routing_director/host
+        cd ~/git/vmm-v3-script/Lab/routing_director/RD/host
         ansible-playbook updates_node.yaml
 
 2. Wait until they are rebooted.
@@ -167,7 +167,7 @@ node4|172.16.11.14/24|172.16.11.254|172.16.11.254|172.16.11.254
 ## configure wireguard
 The following step is to setup wireguard to allow direct access into the lab, for example to access the Routing Director dashboard directly from your workstation.
 
-Wireguard is also used to provide connectivity to another VMM topology (lab topo2) where all the vJunos VMs are running.
+Wireguard is also used to provide connectivity to another VMM topology (lab network) where all the vJunos VMs are running.
 
 Screenshot recording for this can be found [here](https://asciinema.org/a/741934)
 
@@ -177,7 +177,7 @@ Screenshot recording for this can be found [here](https://asciinema.org/a/741934
 
 2. on your workstation, run the following script
 
-        ../../vmm.py get_wg_config
+        ../../../vmm.py get_wg_config
 
 3. It will create configuration file for wireguard
 
@@ -367,20 +367,42 @@ Screenshot recording for this can be found here [part1](https://asciinema.org/a/
 4. Create the organization, and now the Routing Director can be used.
 
 
-## Deploying Lab topo2
+## Deploying network devices
 
-To deploy lab topo2, please refer to this [document](../topo2/README.md).
+Screenshot recording for this can be found [here](https://asciinema.org/a/750945)
 
-Please follow the document, but don't run the lab exercise, because we are going to use Routing Director to do configuration on the network devices.
+1. Go to directory [network Lab](./networks)
+2. Edit file [lab.yaml](./networks/lab.yaml). Set the following parameters to choose which vmm server that you are going to use and the login credential:
+    - vmmserver # for the vmmserver, use different pod on the VMM for [RD](RD/lab.yaml) and lab [network](network/lab.yaml) . They can't run on the same VMM pod
+    - user 
+4. use [vmm.py](../../../vmm.py) script to deploy the topology into the VMM. Run the following command from terminal
 
-## Connecting Lab routing_director and topo2.
+        ../../../vmm.py upload  <-- to create the topology file and the configuration for the VMs and upload them into vmm server
+        ../../../vmm.py start   <-- to start the topology in the vmm server
 
-Screenshot recording for this steps are :
-- deploying lab topo2 [here](https://asciinema.org/a/741942)
+5. Verify that you can access node **gw** using ssh (username: ubuntu,  password: pass01 ). You may have to wait for few minutes for node **gw** to be up and running
+6. Run script [vmm.py](../../vmm.py) to send and run initial configuration on node **gw**. This will configure ip address on other interfaces (such ase eth1, eth2, etc), enable dhcp server and dns server on node gw
+
+        ../../../vmm.py set_gw
+
+7. Run script [vmm.py](../../vmm.py) to send and run initial configuration on node **crpd**, **client**, **br1**, **br2**, **br3**. This will configure ip address on other interfaces (such ase eth1, eth2, etc), enable dhcp server and dns server on node gw
+
+        ../../../vmm.py set_host
+
+8. use ansible playbook [updates_nodes.yaml](network/setup/host/update_nodes.yaml) to update and install software on node gw
+
+        cd ~/git/vmm-v3-script/Lab/routing_director/network/setup/host
+        ansible-playbook updates_node.yaml
+
+9. Wait until they are rebooted. 
+
+Additional Screenshot recording :
 - install crpd [here](https://asciinema.org/a/741964)
 - update vJunos configuration [here](https://asciinema.org/a/741987)
 
-Next we are going to configure wireguard between Lab routing_director and topo2, to allow Routing Director software running in lab routing_director to access vJunos Nodes running in lab topo2.
+## Configuring wireguard to connect topology and topoogy network
+
+Next we are going to configure wireguard between topology **RD** and topology **network**, to allow Routing Director software to access network devices
 
 
 Screenshot recording for this steps can be found [here](https://asciinema.org/a/742028)
@@ -401,23 +423,30 @@ Screenshot recording for this steps can be found [here](https://asciinema.org/a/
 
         ip addr show dev eth0
 
-5. Upload file [create_wg_gwnet.sh](wireguard_config/create_wg_gwnet.sh) into node **gw** of lab **topo2**.
+5. Upload file [create_wg_gwnet.sh](wireguard_config/create_wg_gwnet.sh) into node **gw** of lab **network**.
 
         scp wireguard_config/create_gw_gwnet.sh 
 
-6. ssh into  node **gw** of lab **topo2r** and execute script create_wg_gwnet.sh
+6. ssh into  node **gw** of lab **networkr** and execute script create_wg_gwnet.sh
 
         ssh gw
         ./create_wg_gwnet.sh <ip_of_gwrd>
 
-7. Verify that node **gw** of lab **topo2** has one wireguard interface, wg0, and test connectivity to lab **routing_director**
+7. Verify that node **gw** of lab **network** has one wireguard interface, wg0, and test connectivity to lab **routing_director**
 
         sudo wg show
         ping 192.168.199.2
         ping 172.16.11.11
         ssh root@172.16.11.11
         
-8. Now lab **routing_director** and lab **topo2** which run on different pod of VMM are connected.
+8. Now lab **routing_director** and lab **network** which run on different pod of VMM are connected.
+9. Open ssh session into **node1**, and test connectivity to network devices
+
+        ssh root@node1
+        ping pe1
+        ssh admin@pe1
+        ping p1
+        ssh admin@p1
 
 
 ## Lab Exercise

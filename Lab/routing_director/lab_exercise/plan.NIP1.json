@@ -1,9 +1,28 @@
 {
+  "customer_id": "d82ee9d5-b187-11f0-8335-7a76ea4eb7b8",
+  "design_id": "infrastructure",
+  "design_version": "0.14.46",
+  "fh_config": {
+    "edited-by": "irzan@juniper.net",
+    "status": "uploaded"
+  },
   "infrastructure_ntw": {
-    "default_interface_profiles": [],
-    "default_node_profiles": [],
+    "default_interface_profiles": [
+      "IP1"
+    ],
+    "default_node_profiles": [
+      "DP1"
+    ],
+    "default_port_profiles": [
+      "PP1"
+    ],
     "interface_profiles": {
-      "interface_profile": []
+      "interface_profile": [
+        {
+          "name": "IP1",
+          "templates": []
+        }
+      ]
     },
     "labels": {
       "label": []
@@ -11,171 +30,3908 @@
     "network_nodes": {
       "network_node": [
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf542da00",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE1_P1",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE1_P2",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:42:da:00",
           "model": "vMX",
           "name": "pe1",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D003FF05",
-          "site_id": "c09a371a-8616-4009-aeb6-04b348fe9bec",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:10:18.021242+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:06.152724+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf542da00",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:03.004312+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:09:52.839077+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:08:45.498940+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:08:33.568356+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf542da00",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:08:31.141906+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:08:21.778236+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:08:15.463980+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:08:10.356557+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:08:04.572288+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:53.186110+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:50.734851+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:48.316254+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:45.648120+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:43.183949+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:28.615862+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:28.275878+00:00"
+              },
+              {
+                "reason": "Planned site 42dfeac0-6ce9-4bbd-8752-15b1fcf4691d and actual site 42dfeac0-6ce9-4bbd-8752-15b1fcf4691d matched for node pe1",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:27.993776+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:07:58.874656+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf542da00"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf542da00"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC88703C",
+          "site_id": "42dfeac0-6ce9-4bbd-8752-15b1fcf4691d",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf54cd000",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE2_P1",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE2_P2",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:4c:d0:00",
           "model": "vMX",
           "name": "pe2",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D003FB2B",
-          "site_id": "5247b1bb-819f-4ef3-9b29-e996a922ae72",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:06:14.806121+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:03.386657+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf54cd000",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:06:00.727730+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:05:51.089078+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:04:43.559415+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:04:31.907346+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf54cd000",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:04:29.670828+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:04:20.482220+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:04:15.486910+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:04:09.742774+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:04:04.216910+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:03:02.615418+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:03:00.390242+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:58.220805+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:55.496452+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:52.900329+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:38.523225+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:38.260003+00:00"
+              },
+              {
+                "reason": "Planned site 2f00b9a3-103c-41d9-9b9d-1508b427e3f8 and actual site 2f00b9a3-103c-41d9-9b9d-1508b427e3f8 matched for node pe2",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:37.913313+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:03:58.253206+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf54cd000"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf54cd000"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC8860CD",
+          "site_id": "2f00b9a3-103c-41d9-9b9d-1508b427e3f8",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf5a62f00",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE3_P3",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE3_P4",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:a6:2f:00",
           "model": "vMX",
           "name": "pe3",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D00418AD",
-          "site_id": "dfebe152-7d20-4866-adf1-5e608ada2afa",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:02:24.071877+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:12.567709+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5a62f00",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:02:09.736766+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:01:59.483907+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:00:51.266805+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:00:39.732237+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5a62f00",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:00:37.100527+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:00:28.249427+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:00:21.802992+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:00:16.292346+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:00:10.781969+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:59:00.765424+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:58:58.210187+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:58:55.497874+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:58:53.414602+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:58:50.466090+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:58:35.954421+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:58:35.712432+00:00"
+              },
+              {
+                "reason": "Planned site 7c3f35bd-6cd5-4380-8f7f-1bdf676ef700 and actual site 7c3f35bd-6cd5-4380-8f7f-1bdf676ef700 matched for node pe3",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T09:58:35.463535+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:00:05.506555+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5a62f00"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5a62f00"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC886C79",
+          "site_id": "7c3f35bd-6cd5-4380-8f7f-1bdf676ef700",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf569bc00",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE4_P3",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE4_P4",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:69:bc:00",
           "model": "vMX",
           "name": "pe4",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D00408E2",
-          "site_id": "7dab774e-0b52-435e-a6ea-cc7c37f82b6b",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:27:05.715633+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:26:54.004907+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf569bc00",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:26:51.451342+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:26:41.895126+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:25:33.870870+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:25:22.431092+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf569bc00",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:25:19.942633+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:25:10.987947+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:25:05.601183+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:24:59.834706+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:24:53.512091+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:42.197537+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:39.464948+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:37.134891+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:34.892618+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:32.142568+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:11.175877+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:10.778618+00:00"
+              },
+              {
+                "reason": "Planned site 3164a962-8bac-4b92-91a5-22b322cd3ae7 and actual site 3164a962-8bac-4b92-91a5-22b322cd3ae7 matched for node pe4",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:23:10.385979+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:24:47.641888+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf569bc00"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf569bc00"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC886851",
+          "site_id": "3164a962-8bac-4b92-91a5-22b322cd3ae7",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf5005900",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_PE5",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:00:59:00",
           "model": "vMX",
           "name": "pe5",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D0040EC5",
-          "site_id": "9f24f1e1-6c50-4970-a39d-4c996647be54",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:18:36.146505+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:18:24.362756+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5005900",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:18:21.135572+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:18:12.131285+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:16:54.939966+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:16:43.142819+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5005900",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:16:40.583105+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:16:31.673603+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:16:25.625519+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:16:19.414824+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:16:13.975896+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:15:03.046573+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:15:00.335387+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:57.624145+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:54.929529+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:51.804149+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:37.012711+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:36.600945+00:00"
+              },
+              {
+                "reason": "Planned site dd2dbc23-9310-4071-a454-529ed43dc634 and actual site dd2dbc23-9310-4071-a454-529ed43dc634 matched for node pe5",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:36.201689+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:16:08.773093+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5005900"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5005900"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC88695C",
+          "site_id": "dd2dbc23-9310-4071-a454-529ed43dc634",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf55d1200",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE1_P1",
+                "name": "ge-0/0/0.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE2_P1",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P1_P2",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P1",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:5d:12:00",
           "model": "vMX",
           "name": "p1",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D0041DAE",
-          "site_id": "7067a7a5-de0b-4149-a1bc-707d4d5212dd",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:22:50.253805+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:22:38.237217+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55d1200",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:22:35.840683+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:22:25.243224+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:21:16.486578+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:21:02.180853+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55d1200",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:20:59.565135+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:20:45.339200+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:20:41.301267+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:20:34.826466+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:20:28.609619+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:19:17.431147+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:19:15.063631+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:19:12.353518+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:19:09.695727+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:19:07.134931+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:18:50.945801+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:18:50.576271+00:00"
+              },
+              {
+                "reason": "Planned site f70d479f-a05e-484b-a203-90da6f631953 and actual site f70d479f-a05e-484b-a203-90da6f631953 matched for node p1",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:18:50.173853+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:20:22.605493+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55d1200"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55d1200"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC886729",
+          "site_id": "f70d479f-a05e-484b-a203-90da6f631953",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf5ecb500",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE1_P2",
+                "name": "ge-0/0/0.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE2_P2",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P1_P2",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P2",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P2_P4",
+                "name": "ge-0/0/4.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:ec:b5:00",
           "model": "vMX",
           "name": "p2",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D0041B59",
-          "site_id": "ea18e1d8-cf0e-4bec-b000-8ba306ae5a5f",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:14:21.945604+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:10.924163+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5ecb500",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:14:08.338110+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:13:58.688552+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:12:50.610622+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:12:38.649496+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5ecb500",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:12:36.302721+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:12:26.506022+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:12:20.177326+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:12:14.610721+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:12:08.638097+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:58.178810+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:55.469873+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:52.864013+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:50.457615+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:47.744327+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:33.293382+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:32.931579+00:00"
+              },
+              {
+                "reason": "Planned site c7b8a9cd-aeae-4030-9f44-55b2b09a86fd and actual site c7b8a9cd-aeae-4030-9f44-55b2b09a86fd matched for node p2",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:10:32.338263+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:12:03.249214+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5ecb500"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5ecb500"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC886949",
+          "site_id": "c7b8a9cd-aeae-4030-9f44-55b2b09a86fd",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf5290c00",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE3_P3",
+                "name": "ge-0/0/0.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE4_P3",
+                "name": "ge-0/0/1.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P3_P4",
+                "name": "ge-0/0/2.0",
+                "profiles": [
+                  "IP1"
+                ]
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P3",
+                "name": "ge-0/0/3.0",
+                "profiles": [
+                  "IP1"
+                ]
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:29:0c:00",
           "model": "vMX",
           "name": "p3",
-          "node_type": "paper-node",
-          "profiles": [],
-          "serial": "VM68D0041B00",
-          "site_id": "7ff52fb2-6f3d-4120-bc4c-3988bb5229c6",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:31:12.324240+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:00.747768+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5290c00",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:30:58.013748+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:30:48.441563+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:29:39.716298+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:29:27.846190+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5290c00",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:29:25.056888+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:29:15.351615+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:29:08.024649+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:29:02.441565+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:28:57.315029+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:46.076262+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:43.025100+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:39.754883+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:37.430261+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:34.674256+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:19.681033+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:19.296401+00:00"
+              },
+              {
+                "reason": "Planned site dee7775b-ded4-4444-bd68-b1b0cb17d656 and actual site dee7775b-ded4-4444-bd68-b1b0cb17d656 matched for node p3",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:27:18.885585+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:28:52.449068+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5290c00"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5290c00"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
+          "profiles": [
+            "DP1"
+          ],
+          "serial": "VM68FC886AEF",
+          "site_id": "dee7775b-ded4-4444-bd68-b1b0cb17d656",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf55a2b00",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE3_P4",
+                "name": "ge-0/0/0.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_PE4_P4",
+                "name": "ge-0/0/1.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P3_P4",
+                "name": "ge-0/0/2.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P2_P4",
+                "name": "ge-0/0/3.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P4",
+                "name": "ge-0/0/4.0",
+                "profiles": []
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:5a:2b:00",
           "model": "vMX",
           "name": "p4",
-          "node_type": "paper-node",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:39:26.130114+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:39:14.457489+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55a2b00",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:39:11.622959+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:39:01.478338+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:37:53.838789+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:37:42.147651+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55a2b00",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:37:39.340987+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:37:28.652477+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:37:24.185776+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:37:17.895023+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:37:11.615936+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:36:01.252905+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:58.602494+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:55.599270+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:53.185701+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:50.785222+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:36.394721+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:35.971345+00:00"
+              },
+              {
+                "reason": "Planned site 3b1f696e-287d-43a6-96c9-bfc75602a4ce and actual site 3b1f696e-287d-43a6-96c9-bfc75602a4ce matched for node p4",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:35.532203+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:37:06.378910+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55a2b00"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf55a2b00"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
           "profiles": [],
-          "serial": "VM68D0042A2C",
-          "site_id": "813986d4-c4cc-49b6-b3ee-48cc465c2ecc",
+          "serial": "VM68FC886A92",
+          "site_id": "3b1f696e-287d-43a6-96c9-bfc75602a4ce",
           "vendor": "Juniper Networks"
         },
         {
+          "device_uuid": "00000000-0000-0000-1000-2c6bf5d46800",
           "installation": {
             "duration": 5
           },
           "interfaces": {
-            "interface": [],
+            "interface": [
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P1",
+                "name": "ge-0/0/0.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P2",
+                "name": "ge-0/0/1.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P3",
+                "name": "ge-0/0/2.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_P4",
+                "name": "ge-0/0/3.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "link": "Link_P5_PE5",
+                "name": "ge-0/0/4.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "name": "ge-0/0/5.0",
+                "profiles": []
+              },
+              {
+                "access_parameters": {
+                  "ces": []
+                },
+                "name": "ge-0/0/6.0",
+                "profiles": []
+              }
+            ],
             "port": []
           },
+          "mac_address": "2c:6b:f5:d4:68:00",
           "model": "vMX",
           "name": "p5",
-          "node_type": "paper-node",
+          "node_type": "real-node",
+          "onboard": {
+            "history": [
+              {
+                "reason": "Recorded Trust details at the end of logical stage of onboarding",
+                "state_info": {
+                  "state": "node-state-onboarded"
+                },
+                "time": "2025-10-25T10:35:20.674178+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing for logical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-trust"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:08.752519+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5d46800",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:35:06.028691+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-active-assurance"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:34:56.513641+00:00"
+              },
+              {
+                "reason": "Recorded Trust details at the end of physical stage of onboarding",
+                "state_info": {
+                  "onboarding": {
+                    "logical_stage": {
+                      "sub_state": "logical-modify"
+                    },
+                    "stage": "stage-logical"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:33:48.484802+00:00"
+              },
+              {
+                "reason": "Finished 'modify' and 'active assurance' processing for physical stage, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:33:36.968328+00:00"
+              },
+              {
+                "reason": "Finished 'active assurance' tasks, and no tests performed; No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5d46800",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:33:34.338333+00:00"
+              },
+              {
+                "reason": "Finished 'modify' processing, and active assurance is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-active-assurance"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:33:23.654182+00:00"
+              },
+              {
+                "reason": "No active alarms. Installed pluggables are as expected, check node onboard>subsystems>ems>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:33:18.031069+00:00"
+              },
+              {
+                "reason": "Interfaces are healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:33:12.280136+00:00"
+              },
+              {
+                "reason": "Chassis hardware is healthy, check node onboard>subsystems>insights>physical stats for details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-insights"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:33:06.281745+00:00"
+              },
+              {
+                "reason": " No device EMS templates configured. No interface EMS templates configured.",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "ems-template-execute"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:55.287462+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:52.766738+00:00"
+              },
+              {
+                "reason": "No request id provided in node instance data, no software to upgrade",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-modify"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:49.514569+00:00"
+              },
+              {
+                "reason": "software image not specified",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update",
+                      "sub_sub_state": "software-update-launch"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:47.079321+00:00"
+              },
+              {
+                "reason": "Recorded Trust baseline details",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-software-update"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:44.384501+00:00"
+              },
+              {
+                "reason": "Node is a paper node, and Trust is enabled",
+                "state_info": {
+                  "onboarding": {
+                    "phys_stage": {
+                      "sub_state": "phys-trust-baseline"
+                    },
+                    "stage": "stage-phys"
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:27.977025+00:00"
+              },
+              {
+                "reason": "Planned model [vMX] matches with the installed model [VMX] Planned vendor [Juniper Networks] matches with the installed vendor [Juniper Networks]",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:27.563071+00:00"
+              },
+              {
+                "reason": "Planned site c3740024-ef55-4408-bbe6-8e09e2ad5cfa and actual site c3740024-ef55-4408-bbe6-8e09e2ad5cfa matched for node p5",
+                "state_info": {
+                  "onboarding": {
+                    "stage": "stage-verify",
+                    "verify_stage": {
+                      "sub_state": "verify"
+                    }
+                  },
+                  "state": "node-state-onboarding"
+                },
+                "time": "2025-10-25T10:31:27.142161+00:00"
+              }
+            ],
+            "installation": {
+              "check_start": "2025-10-25T10:33:00.926303+00:00"
+            },
+            "state_info": {
+              "onboarded": {
+                "message": "Node has been successfully onboarded"
+              },
+              "state": "node-state-onboarded"
+            },
+            "subsystems": {
+              "active_assurance": {
+                "logical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5d46800"
+                },
+                "physical": {
+                  "active_assurance_onboard_status": "No-active-assurance-tests: No tests to trigger on device: 00000000-0000-0000-1000-2c6bf5d46800"
+                }
+              },
+              "ems": {
+                "physical": {
+                  "chassis_alarms": {
+                    "active_alarms": [],
+                    "active_alarms_count": 0
+                  },
+                  "pluggables": []
+                }
+              },
+              "insights": {
+                "physical": {
+                  "chassis_health": {
+                    "fans_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "linecards_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    },
+                    "psms_health": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "interfaces_health": {
+                    "operational_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  },
+                  "optics_health": {
+                    "optics_status": {
+                      "available": 0,
+                      "unhealthy_units": []
+                    }
+                  }
+                }
+              },
+              "trust": {
+                "baseline": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "logical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                },
+                "physical": {
+                  "authenticity": {
+                    "hardware": "trust-authenticated",
+                    "software": "trust-authenticated"
+                  },
+                  "score": {
+                    "value": 0
+                  }
+                }
+              }
+            }
+          },
           "profiles": [],
-          "serial": "VM68D0042702",
-          "site_id": "8c8759ef-aea7-4e9f-a6a6-4d69a52a08f2",
+          "serial": "VM68FC886933",
+          "site_id": "c3740024-ef55-4408-bbe6-8e09e2ad5cfa",
           "vendor": "Juniper Networks"
         }
       ]
     },
     "node_profiles": {
-      "node_profile": []
+      "node_profile": [
+        {
+          "analytics": {
+            "traffic_engineering": {}
+          },
+          "ipv6_tunneling": {
+            "enabled": false
+          },
+          "labels": [],
+          "name": "DP1",
+          "per_flow_load_balancing": {
+            "enabled": false
+          },
+          "templates": [],
+          "trust": {
+            "enabled": true
+          }
+        }
+      ]
+    },
+    "port_profiles": {
+      "port_profile": [
+        {
+          "name": "PP1"
+        }
+      ]
     }
   },
   "instance_id": "NIP1",
-  "org_id": "428552b2-2d60-4f13-ae3a-c5851651da15"
+  "instance_status": "feasibility_checked",
+  "instance_uuid": "c906a896-b188-11f0-a827-2ac9c3c97ecb",
+  "operation": "modify",
+  "order_id": "4981f6d2-b1a8-11f0-8335-7a76ea4eb7b8",
+  "order_status": {
+    "status": "processing",
+    "workflow_trace": [
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "init_service_order_status",
+        "time": "2025-10-25T13:41:38.609127+00:00"
+      }
+    ]
+  },
+  "org_id": "64581290-706b-4d68-a65d-e71bc7a6e0c9",
+  "place": [],
+  "placement": {},
+  "upload_time": "2025-10-25T13:41:38Z",
+  "version": "1.0.0",
+  "workflow_id": "modify-infrastructure-0_14_46",
+  "workflow_run_id": "fh.foghorn__20a9dc81-9046-41eb-8e12-3fd7be038f05"
 }
