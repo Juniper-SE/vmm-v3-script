@@ -1,0 +1,71 @@
+- address: Jl. HM. Joni No.64, Teladan Tim., Kec. Medan Kota, Kota Medan, Sumatera Utara 20217
+  country_code: ID
+  latlng:
+    lat: 3.568395
+    lng: 98.701615
+  name: PE1
+  timezone: Asia/Jakarta
+- address: Jl. Kapten Anwar Sastro, Sungai Pangeran, Kec. Ilir Tim. I, Kota Palembang, Sumatera Selatan 30127
+  country_code: ID
+  latlng:
+    lat: -2.977466
+    lng: 104.748493
+  name: PE2
+  timezone: Asia/Jakarta
+- address: Jl. DR. J. B Dr. Sitanala No.9, Kel Wainitu, Kec. Nusaniwe, Kota Ambon, Maluku 97115, Indonesia
+  country_code: ID
+  latlng:
+    lat: -3.702862
+    lng: 128.173683
+  name: PE3
+  timezone: Asia/Jayapura
+- address: Dasan Agung Baru, Selaparang, Mataram City, West Nusa Tenggara 83125, Indonesia
+  country_code: ID
+  latlng:
+    lat: -8.582337
+    lng: 116.097633
+  name: PE4
+  timezone: Asia/Makassar
+- address: Jl. Agatish, Tj. Selor Hilir, Kec. Tj. Selor, Kabupaten Bulungan, Kalimantan Utara 77216, Indonesia
+  country_code: ID
+  latlng:
+    lat: 2.84395
+    lng: 117.376701
+  name: PE5
+  timezone: Asia/Makassar
+- address: Jl. Laksamana Bintan, Baloi Permai, Kec. Batam Kota, Kota Batam, Kepulauan Riau 29444, Indonesia
+  country_code: ID
+  latlng:
+    lat: 1.115314
+    lng: 104.050687
+  name: P1
+  timezone: Asia/Jakarta
+- address: Jl. DI. Panjaitan No.42, RT.12/RW.5, Rw. Bunga, Kecamatan Jatinegara, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13350, Indonesia
+  country_code: ID
+  latlng:
+    lat: -6.220898
+    lng: 106.873851
+  name: P2
+  timezone: Asia/Jakarta
+- address: Jl. A. P. Pettarani No.02, Gn. Sari, Kec. Rappocini, Kota Makassar, Sulawesi Selatan 90223
+  country_code: ID
+  latlng:
+    lat: -5.172810
+    lng: 119.432835
+  name: P3
+  timezone: Asia/Makassar
+- address: Jl. Ketintang No.156, Ketintang, Kec. Gayungan, Surabaya, Jawa Timur 60231, Indonesia
+  country_code: ID
+  latlng:
+    lat: -7.311166
+    lng: 112.728915
+  name: P4
+  timezone: Asia/Jakarta
+- address: Langkai, Pahandut, Palangka Raya City, Central Kalimantan 74874, Indonesia
+  country_code: ID
+  latlng:
+    lat: -2.220325
+    lng: 113.925056
+  name: P5
+  timezone: Asia/Pontianak
+

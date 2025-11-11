@@ -1,0 +1,28 @@
+{
+	"vpn_resources": {
+		"community": [
+			{
+				"count": 100,
+				"name": "999"
+			}
+		],
+		"route_distinguisher": [
+			{
+				"count": 1024,
+				"name": 1234
+			}
+		],
+		"route_target": [
+			{
+				"count": 1024,
+				"name": 1234
+			}
+		],
+		"virtual_circuit_id": [
+			{
+				"count": 1000,
+				"start": 100
+			}
+		]
+	}
+}

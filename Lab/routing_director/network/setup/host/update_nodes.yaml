@@ -102,8 +102,18 @@
         create: true
         block: |
           #!/usr/bin/env bash
-          export CRPD_NAME=crpd
-          export CRPD_VER=25.2R1.9
+          export CRPD_NAME=$1
+          export CRPD_VER=$2
+          if [ "${CRPD_NAME}" == "" ];
+          then
+            echo "variable CRPD_NAME is not defined"
+            exit
+          fi
+          if [ "${CRPD_VER}" == "" ];
+          then
+            echo "variable CRPD_VER is not defined"
+            exit
+          fi
           sudo podman volume create ${CRPD_NAME}-config
           sudo podman volume create ${CRPD_NAME}-varlog
           sudo podman run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} \

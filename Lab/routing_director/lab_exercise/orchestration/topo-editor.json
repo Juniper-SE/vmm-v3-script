@@ -1,0 +1,72 @@
+{
+	"topo": {
+		"pop": [
+			{
+				"name": "PE2",
+				"node": [
+					{
+						"access": [
+							{
+								"ce": "ce1",
+								"name": "ge-0/0/0",
+								"speed": 1000,
+								"type": "ethernet",
+								"vlans": {
+									"size": 10,
+									"start": 1000
+								}
+							}
+						],
+						"bandwidth": 40000000,
+						"mac_addrs": 1000000,
+						"name": "pe2",
+						"node_id": "00000000-0000-0000-1000-2c6bf5e4c400",
+						"roles": [
+							"pe"
+						],
+						"routes": 1000000
+					}
+				],
+				"postal_code_matches": [
+					{
+						"name": "Indonesia",
+						"regex": "30..."
+					}
+				],
+				"site_id": "3d6b477a-a18b-4408-b1e5-43ad39422194"
+			},
+			{
+				"name": "PE4",
+				"node": [
+					{
+						"access": [
+							{
+								"ce": "ce2",
+								"lag": false,
+								"name": "ge-0/0/0",
+								"speed": 1000,
+								"tag_type": "untagged",
+								"type": "ethernet"
+							}
+						],
+						"bandwidth": 40000000,
+						"mac_addrs": 1000000,
+						"name": "pe4",
+						"node_id": "00000000-0000-0000-1000-2c6bf559a000",
+						"roles": [
+							"pe"
+						],
+						"routes": 1000000
+					}
+				],
+				"postal_code_matches": [
+					{
+						"name": "Indonesia",
+						"regex": "83..."
+					}
+				],
+				"site_id": "7d16721f-bb03-4481-9c8b-edb869c4ff11"
+			}
+		]
+	}
+}

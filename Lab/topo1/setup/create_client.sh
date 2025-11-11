@@ -24,11 +24,11 @@ echo "changing container ${LXC}"
 lxc query --request PATCH /1.0/instances/${LXC} --data "{
   \"devices\": {
     \"eth0\" :{
-       \"name\": \"eth0\",
-       \"nictype\": \"bridged\",
-       \"parent\": \"${OVS}\",
-       \"vlan\" : \"${VLAN}\",
-       \"type\": \"nic\"
+      \"name\": \"eth0\",
+      \"nictype\": \"bridged\",
+      \"parent\": \"${OVS}\",
+      \"vlan\" : \"${VLAN}\",
+      \"type\": \"nic\"
     }
   }
 }"

@@ -76,11 +76,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "pe1",
+          "name": "PE1",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA2A0EC",
-          "site_id": "27170355-1193-4d02-a9aa-e4872f1320eb",
+          "serial": "VM6911E82E0F",
+          "site_id": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
           "vendor": "Juniper Networks"
         },
         {
@@ -109,11 +109,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "pe2",
+          "name": "PE2",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA2A064",
-          "site_id": "3d6b477a-a18b-4408-b1e5-43ad39422194",
+          "serial": "VM6911E80CC6",
+          "site_id": "b1ec7628-8c98-4d07-9873-36429a0d1185",
           "vendor": "Juniper Networks"
         },
         {
@@ -142,11 +142,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "pe3",
+          "name": "PE3",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA2A2E9",
-          "site_id": "ebbf60ae-b12a-4b54-9402-50c0f6e76ced",
+          "serial": "VM6911E824E0",
+          "site_id": "4d4000fb-2e49-4bd6-8411-f0725323f91d",
           "vendor": "Juniper Networks"
         },
         {
@@ -175,11 +175,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "pe4",
+          "name": "PE4",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA29DD5",
-          "site_id": "7d16721f-bb03-4481-9c8b-edb869c4ff11",
+          "serial": "VM6911E80738",
+          "site_id": "d13a118d-9ada-45a7-a985-ce5abc614c59",
           "vendor": "Juniper Networks"
         },
         {
@@ -200,11 +200,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "pe5",
+          "name": "PE5",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA29E05",
-          "site_id": "568e73ab-ed9c-4640-bf47-fc8f2976279a",
+          "serial": "VM6911E8095E",
+          "site_id": "e4b5abcc-fc2c-425f-835b-4463e6c14844",
           "vendor": "Juniper Networks"
         },
         {
@@ -249,11 +249,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "p1",
+          "name": "P1",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA29F64",
-          "site_id": "0cec4d64-89b0-49a6-8377-ed307171bfc0",
+          "serial": "VM6911E803A7",
+          "site_id": "64b479a3-8175-46d3-8893-bdb244af7091",
           "vendor": "Juniper Networks"
         },
         {
@@ -306,11 +306,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "p2",
+          "name": "P2",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA2A356",
-          "site_id": "290897ab-2a7b-4328-a67f-41a995345cb0",
+          "serial": "VM6911E80EC3",
+          "site_id": "491ff272-c269-460b-bf8e-e4a5b9a95787",
           "vendor": "Juniper Networks"
         },
         {
@@ -355,11 +355,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "p3",
+          "name": "P3",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA29FCA",
-          "site_id": "2ea56feb-8734-4e20-afab-e72c77af1c1f",
+          "serial": "VM6911E803A3",
+          "site_id": "f6c16714-2338-4be2-9a0a-44a7f69b951d",
           "vendor": "Juniper Networks"
         },
         {
@@ -412,11 +412,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "p4",
+          "name": "P4",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA29A13",
-          "site_id": "bbfabcab-fc16-456d-8741-ab19a495be38",
+          "serial": "VM6911E808E6",
+          "site_id": "4e3c719b-32b6-46e5-85ce-88658d98c3e9",
           "vendor": "Juniper Networks"
         },
         {
@@ -469,11 +469,11 @@
             "port": []
           },
           "model": "vMX",
-          "name": "p5",
+          "name": "P5",
           "node_type": "paper-node",
           "profiles": [],
-          "serial": "VM68FFA29DD0",
-          "site_id": "6641c04a-bc7a-416c-9095-677120bd984a",
+          "serial": "VM6911E80759",
+          "site_id": "57fffe9a-0f6b-4e30-8b75-b7a960259735",
           "vendor": "Juniper Networks"
         }
       ],

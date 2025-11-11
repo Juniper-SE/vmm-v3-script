@@ -1,0 +1,218 @@
+{
+    "operation": "create",
+    "fh_config": {
+        "type": "service_order"
+    },
+    "customer_id": "a4f1c980-06b1-11ef-af49-c6656c4b6af6",
+    "design_id": "l3vpn",
+    "instance_id": "L3vpn-RD",
+    "l3vpn_svc": {
+        "sites": {
+            "site": [
+                {
+                    "site_id": "Palembang1",
+                    "site_network_accesses": {
+                        "site_network_access": [
+                            {
+                                "site_network_access_id": "Palembang1",
+                                "bearer": {
+                                    "requested_type": {
+                                        "requested_type": "ethernet",
+                                        "strict": true
+                                    }
+                                },
+                                "ip_connection": {
+                                    "ipv4": {
+                                        "address_allocation_type": "static-address",
+                                        "addresses": {
+                                            "customer_address": "192.168.1.1",
+                                            "provider_address": "192.168.1.2",
+                                            "prefix_length": 24
+                                        }
+                                    },
+                                    "oam": {
+                                        "bfd": {
+                                            "enabled": false
+                                        }
+                                    }
+                                },
+                                "placement_interface": {
+                                    "ce": "ce1",
+                                    "ifSpeed": "1000",
+                                    "interface": "ge-0/0/0.201",
+                                    "pe": "00000000-0000-0000-1000-2c6bf5e4c400",
+                                    "pop": "3d6b477a-a18b-4408-b1e5-43ad39422194"
+                                },
+                                "placement_options": [
+                                    {
+                                        "ce": "ce1",
+                                        "ifSpeed": "1000",
+                                        "pe": "00000000-0000-0000-1000-2c6bf5e4c400",
+                                        "pop": "3d6b477a-a18b-4408-b1e5-43ad39422194",
+                                        "port": "ge-0/0/0",
+                                        "vlans": {
+                                            "size": 10,
+                                            "start": 200
+                                        }
+                                    }
+                                ],
+                                "service": {
+                                    "svc_input_bandwidth": 100,
+                                    "svc_output_bandwidth": 100,
+                                    "svc_mtu": 1500
+                                },
+                                "vpn_attachment": {
+                                    "site_role": "any-to-any-role",
+                                    "vpn_id": "111"
+                                },
+                                "access_diversity": {
+                                    "groups": {
+                                        "group": []
+                                    },
+                                    "constraints": {
+                                        "constraint": []
+                                    }
+                                },
+                                "routing_protocols": {
+                                    "routing_protocol": [
+                                        {
+                                            "type": "bgp",
+                                            "bgp": {
+                                                "autonomous_system": 111
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "devices": {
+                        "device": []
+                    },
+                    "locations": {
+                        "location": [
+                            {
+                                "location_id": "Indonesia",
+                                "postal_code": "30127"
+                            }
+                        ]
+                    },
+                    "maximum_routes": {
+                        "address_family": [
+                            {
+                                "af": "ipv4",
+                                "maximum_routes": 1000
+                            }
+                        ]
+                    }
+                },
+                {
+                    "site_id": "Mataram1",
+                    "site_network_accesses": {
+                        "site_network_access": [
+                            {
+                                "site_network_access_id": "Mataram1",
+                                "bearer": {
+                                    "requested_type": {
+                                        "requested_type": "ethernet",
+                                        "strict": true
+                                    }
+                                },
+                                "ip_connection": {
+                                    "ipv4": {
+                                        "address_allocation_type": "static-address",
+                                        "addresses": {
+                                            "customer_address": "192.168.4.1",
+                                            "provider_address": "192.168.4.2",
+                                            "prefix_length": 24
+                                        }
+                                    },
+                                    "oam": {
+                                        "bfd": {
+                                            "enabled": false
+                                        }
+                                    }
+                                },
+                                "placement_interface": {
+                                    "ce": "ce2",
+                                    "ifSpeed": "1000",
+                                    "interface": "ge-0/0/0.201",
+                                    "pe": "00000000-0000-0000-1000-2c6bf559a000",
+                                    "pop": "7d16721f-bb03-4481-9c8b-edb869c4ff11"
+                                },
+                                "placement_options": [
+                                    {
+                                        "ce": "ce2",
+                                        "ifSpeed": "1000",
+                                        "pe": "00000000-0000-0000-1000-2c6bf559a000",
+                                        "pop": "7d16721f-bb03-4481-9c8b-edb869c4ff11",
+                                        "port": "ge-0/0/0",
+                                        "vlans": {
+                                            "size": 10,
+                                            "start": 200
+                                        }
+                                    }
+                                ],
+                                "service": {
+                                    "svc_input_bandwidth": 100,
+                                    "svc_output_bandwidth": 100,
+                                    "svc_mtu": 1500
+                                },
+                                "vpn_attachment": {
+                                    "site_role": "any-to-any-role",
+                                    "vpn_id": "111"
+                                },
+                                "access_diversity": {
+                                    "groups": {
+                                        "group": []
+                                    },
+                                    "constraints": {
+                                        "constraint": []
+                                    }
+                                },
+                                "routing_protocols": {
+                                    "routing_protocol": [
+                                        {
+                                            "type": "bgp",
+                                            "bgp": {
+                                                "autonomous_system": 114
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "devices": {
+                        "device": []
+                    },
+                    "locations": {
+                        "location": [
+                            {
+                                "location_id": "Indonesia",
+                                "postal_code": "83125"
+                            }
+                        ]
+                    },
+                    "maximum_routes": {
+                        "address_family": [
+                            {
+                                "af": "ipv4",
+                                "maximum_routes": 1000
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "vpn_services": {
+            "vpn_service": [
+                {
+                    "vpn_service_topology": "any-to-any",
+                    "vpn_id": "111",
+                    "customer_name": "L3vpn-cust"
+                }
+            ]
+        }
+    }
+}

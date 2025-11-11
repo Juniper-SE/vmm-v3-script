@@ -252,21 +252,21 @@ Screenshot recording for this can be found here [part1](https://asciinema.org/a/
 2. Enter the following configuration on Routing Director shell. change the web-admin-user to your email
 
        configure
-       set paragon cluster nodes kubernetes 1 address 172.16.11.11
-       set paragon cluster nodes kubernetes 2 address 172.16.11.12
-       set paragon cluster nodes kubernetes 3 address 172.16.11.13
-       set paragon cluster nodes kubernetes 4 address 172.16.11.14
-       set paragon cluster ntp ntp-servers ntp.juniper.net
-       set paragon cluster common-services ingress ingress-vip 172.16.12.1
-       set paragon cluster applications active-assurance test-agent-gateway-vip 172.16.12.2
-       set paragon cluster applications web-ui web-admin-user "irzan@juniper.net"   
-       set paragon cluster applications web-ui web-admin-password "J4k4rt4#170845" 
-       set paragon cluster applications pathfinder pce-server pce-server-vip 172.16.12.3
-       set paragon cluster install enable-l3-vip true
-       set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.11 
-       set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.12
-       set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.13  
-       set paragon cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.14
+       set deployment cluster nodes kubernetes 1 address 172.16.11.11
+       set deployment cluster nodes kubernetes 2 address 172.16.11.12
+       set deployment cluster nodes kubernetes 3 address 172.16.11.13
+       set deployment cluster nodes kubernetes 4 address 172.16.11.14
+       set deployment cluster ntp ntp-servers ntp.juniper.net
+       set deployment cluster common-services ingress ingress-vip 172.16.12.1
+       set deployment cluster applications active-assurance test-agent-gateway-vip 172.16.12.2
+       set deployment cluster applications web-ui web-admin-user "irzan@juniper.net"   
+       set deployment cluster applications web-ui web-admin-password "J4k4rt4#170845" 
+       set deployment cluster applications pathfinder pce-server pce-server-vip 172.16.12.3
+       set deployment cluster install enable-l3-vip true
+       set deployment cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.11 
+       set deployment cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.12
+       set deployment cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.13  
+       set deployment cluster common-services metallb metallb-bgp-peer peer-ip 172.16.11.254 peer-asn 65100 local-asn 65101 local-nodes 172.16.11.14
        commit
        exit
 
@@ -281,15 +281,15 @@ Screenshot recording for this can be found here [part1](https://asciinema.org/a/
 
 3. Create the configuration file by running this command on Routing Director shell
 
-        request paragon config
+        request deployment config
 
 4. Create ssh-key to allow access between nodes. Use user **root** and the password that you setup on the node initialization
 
-        request paragon ssh-key
+        request deployment ssh-key
 
 5. Start deploying cluster
 
-        request paragon deploy cluster input "-e ignore_iops_check=yes"
+        request deployment deploy cluster input "-e ignore_iops_check=yes"
 
 6. It will take around 60++ minutes for Routing Director cluster deployment
 7. If the deployment failed, just repeat step 5.
