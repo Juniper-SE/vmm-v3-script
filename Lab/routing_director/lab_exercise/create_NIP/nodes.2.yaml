@@ -1,0 +1,31 @@
+nodes:
+  PE1:
+    profile: [DP1_PE]
+    interfaces: []
+  PE2:
+    profile: [DP1_PE]
+    interfaces: []
+  PE3:
+    profile: [DP1_PE]
+    interfaces: []
+  PE4:
+    profile: [DP1_PE]
+    interfaces: []
+  PE5:
+    profile: [DP1_PE]
+    interfaces: []
+  P1:
+    profile: [DP1]
+    interfaces: []
+  P2:
+    profile: [DP1]
+    interfaces: []
+  P3:
+    profile: [DP1]
+    interfaces: []
+  P4:
+    profile: [DP1]
+    interfaces: []
+  P5:
+    profile: [DP1]
+    interfaces: []

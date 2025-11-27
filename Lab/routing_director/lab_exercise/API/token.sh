@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-export TOKEN_ID=c43450dc-554f-4421-9f44-5ebbbd77d7e0
-export TOKEN_API=A6KaQQyhSblb3ZwverjQFhN1x2PvinMnaDAet0Ucb6NUz3HZDtDw7ne2Q3RN21RDMBgeb16DwxxkMxafuXcUXNFtOZjtcXmM
+export TOKEN_ID=97b27db2-f43c-4955-b063-21a455026016
+export TOKEN_API=yrSVweoPbft48Q3OpZWthI2kn5cfXFjJUStmZ4fyoPcFpdbhDtdbSa98fAEHrfrrD4HkCYTlOSErdT0hQfNZxW6WndFNQG8q

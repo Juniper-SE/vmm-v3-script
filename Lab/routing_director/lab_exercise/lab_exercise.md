@@ -1,6 +1,5 @@
 # lab exercise
 
-
 ## Create token for authentication
 1. use script [create_token.py](API/create_token.py) to create token for authentication. it will create output file token.sh
 

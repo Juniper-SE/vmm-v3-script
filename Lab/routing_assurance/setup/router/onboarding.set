@@ -1,0 +1,10 @@
+set system services ssh protocol-version v2
+set system authentication-order password
+set system login user ai-prod class super-user
+set system login user ai-prod authentication encrypted-password $6$3Dp08cXrg5pyfHGq$7LA6.oGGk.9Hc3owUbgHCevKBsL2oeU5Took9O.OyQSAupNmd38FODMmumkmmpJHFgAexlbkGovwxydF/3ruS1
+set system login user ai-prod authentication ssh-rsa "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvBL8fKV4VXUQn98CEE6Jo3fQa7EKYgcm+LMvFxm2k4dqOnVrztMFUq/Y6KimZwIRu7/AtbTubYNLN/Y8RC9baERkVON1Q7kYMd9Jm29Azxha+LFDTHvXlkHNu9Qfi/Z6DzZGCkINncY6JXgrtS0VLau6ldSPaP/nFYSuudEJVFrwur0PqU601izCVJVWFuOCoOXGdRfhAWPibjG7Na34orORVWlwaRmGkjiukKLJVurlaCyrsDLBN9QHXUQN2h+g8/Po8KD7fO7XtK6Rcdsl/T8ih6CsswunrgWFAgKtfT6BpUgBSE02C5raQpFeumbVPyy5WFCvonZ8NE49HC5pYzyc16qfvmUc01ZBZkFbe6rD9yojk7OZ63gGXB6HK4Ghc/B6rDWZ8aXWscaIxn7i3kmwdvwppddSsnjqDUedPCrsNlAdVrieezMd18FHQxxnvOWDbaGc7kDlMsz5iXY0FQJXF1/+Yw5GYHDK10lb/wvQ5faX3SVT4NtFTjbJoqSk= mist@cb8779eb-ade1-4c7a-980b-60d773c3a659"
+set system services outbound-ssh client ai-prod device-id cb8779eb-ade1-4c7a-980b-60d773c3a659
+set system services outbound-ssh client ai-prod secret 06973c15f00d7eb25c7fc8d9b28236be3e06cbb91b0ec417c924d68efc67d4f92823bb38a6da9dd7a9357d5cb5b397781c59839bfcd5bff856072074d96bb37b
+set system services outbound-ssh client ai-prod services netconf keep-alive retry 12 timeout 5
+set system services outbound-ssh client ai-prod oc-term.ai.juniper.net port 2200 timeout 60 retry 1000
+set system services outbound-ssh client ai-prod device-id cb8779eb-ade1-4c7a-980b-60d773c3a659

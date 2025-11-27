@@ -1,0 +1,4 @@
+set services rpm twamp server authentication-mode none
+set services rpm twamp server light
+set protocols isis traffic-engineering l3-unicast-topology
+set protocols isis traffic-engineering advertisement always

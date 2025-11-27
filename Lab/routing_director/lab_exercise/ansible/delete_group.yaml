@@ -1,0 +1,18 @@
+---
+- name: delete groups
+  hosts:
+  - pe
+  - p
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+    password: pass01
+  tasks:
+    - name: delete groups
+      juniper.device.config:  
+        load: set
+        lines:
+        - "delete groups"
+        - "delete apply-groups"
+

@@ -103,8 +103,8 @@ AllowedIPs={{allowed_ip_ws}}
 				dummy1['gw_ip'] = '192.168.199.0/31;fc00:dead:beef:ffcc::1000:0/127'
 				dummy1['ws_ip'] = '192.168.199.1/31;fc00:dead:beef:ffcc::1000:1/127'
 			else:
-				dummy1['gw_ip'] = d1['wg']['gw_ip']
-				dummy1['ws_ip'] = d1['wg']['ws_ip']
+				dummy1['gw_ip'] = d1['wg']['tunnel_ip']['gw_ip']
+				dummy1['ws_ip'] = d1['wg']['tunnel_ip']['ws_ip']
 			
 			dummy1['gw_key'] = generate_wireguard_keys()
 			dummy1['ws_key'] = generate_wireguard_keys()

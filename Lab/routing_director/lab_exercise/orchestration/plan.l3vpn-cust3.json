@@ -1,0 +1,2220 @@
+{
+  "active_assurance_test_result": {
+    "nodes": [
+      {
+        "device": "00000000-0000-0000-1000-2c6bf5bbfb00",
+        "status": "healthy",
+        "test_results": [
+          {
+            "execution_id": "9bd8e9cd-5a8b-4137-baaf-7d63c1e2fceb",
+            "status": "STATUS_PASSED",
+            "test_id": "299a4f87-6d88-4b7e-b703-cfbe70ac74d2"
+          }
+        ]
+      },
+      {
+        "device": "00000000-0000-0000-1000-2c6bf52af100",
+        "status": "healthy",
+        "test_results": [
+          {
+            "execution_id": "9c3210f6-e85b-4ce0-8a2d-ed89dc7652f7",
+            "status": "STATUS_PASSED",
+            "test_id": "779c6afa-d65e-47c7-a3af-7e2dfe22aa50"
+          }
+        ]
+      }
+    ],
+    "summary": "healthy"
+  },
+  "customer_id": "6dbd0534-c078-11f0-bbdc-4a476f2ac3af",
+  "design_id": "l3vpn",
+  "design_version": "0.8.55",
+  "fh_config": {
+    "active_assurance_debug_info": "active assurance tests initiated on [00000000-0000-0000-1000-2c6bf5bbfb00 00000000-0000-0000-1000-2c6bf52af100]",
+    "active_assurance_status": "active-assurance-tests-initiated",
+    "edited-by": "irzan@juniper.net",
+    "status": "network resources updated",
+    "type": "service_order"
+  },
+  "instance_id": "l3vpn-cust3",
+  "instance_status": "active",
+  "instance_uuid": "14e81cd8-c07a-11f0-bddf-fa723a073339",
+  "l3vpn_ntw": {
+    "insights": {
+      "insight": [
+        {
+          "customer_neighbour_address": {
+            "address": [
+              {
+                "ip": "192.168.255.3",
+                "vpn_encoded_value": "vpn_5f2a4db22a194fe325f4cce58edcebfcdc836a01"
+              },
+              {
+                "ip": "fc00:dead:beef:ffff::3",
+                "vpn_encoded_value": "vpn_5bf398bb0e43d3cc3884ae2fc750062c805f52cc"
+              }
+            ]
+          },
+          "vna_id": "ce4-cust3"
+        },
+        {
+          "customer_neighbour_address": {
+            "address": [
+              {
+                "ip": "192.168.255.1",
+                "vpn_encoded_value": "vpn_8750952d3810ae57120fc6695931202cbde9a5c8"
+              },
+              {
+                "ip": "fc00:dead:Beef:ffff::1",
+                "vpn_encoded_value": "vpn_6959fc04b00e5ba1cef6fcca4ac3e14bccccce67"
+              }
+            ]
+          },
+          "vna_id": "ce1-cust3"
+        }
+      ]
+    },
+    "vpn_services": {
+      "vpn_service": [
+        {
+          "bgp_link_protection": false,
+          "customer_name": "customer3",
+          "enable_bgp_pic_edge": false,
+          "vpn_description": "Routing instance for VPN l3vpn-cust3 for customer customer3",
+          "vpn_id": "l3vpn-cust3",
+          "vpn_name": "14e81cd8-c07a-11f0-bddf-fa723a073339",
+          "vpn_nodes": {
+            "vpn_node": [
+              {
+                "description": "VPN l3vpn-cust3 on PE 00000000-0000-0000-1000-2c6bf52af100 for customer customer3 any-to-any-role role",
+                "ne_id": "00000000-0000-0000-1000-2c6bf52af100",
+                "node_role": "any-to-any-role",
+                "rd": "0:23000:6",
+                "site_id": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+                "vpn_network_accesses": {
+                  "vpn_network_access": [
+                    {
+                      "connection": {
+                        "encapsulation_type": "dot1q",
+                        "tagged_interface": {
+                          "dot1q_vlan_tagged": {
+                            "cvlan_id": 1003
+                          },
+                          "type": "dot1q"
+                        }
+                      },
+                      "description": "Network access to VPN l3vpn-cust3 for customer customer3",
+                      "id": "ce4-cust3",
+                      "ip_connection": {
+                        "ipv4": {
+                          "address": [
+                            {
+                              "address_id": "prim-addr-0",
+                              "s_customer_address": "192.168.255.3",
+                              "s_prefix_length": 31,
+                              "s_provider_address": "192.168.255.2"
+                            }
+                          ],
+                          "address_allocation_type": "static-address",
+                          "primary_address": "prim-addr-0"
+                        },
+                        "ipv6": {
+                          "address": [
+                            {
+                              "address_id": "prim-addr-0",
+                              "s_customer_address": "fc00:dead:beef:ffff::3",
+                              "s_prefix_length": 127,
+                              "s_provider_address": "fc00:dead:beef:ffff::2"
+                            }
+                          ],
+                          "address_allocation_type": "static-address",
+                          "primary_address": "prim-addr-0"
+                        },
+                        "oam": {
+                          "bfd": {
+                            "enabled": false
+                          }
+                        }
+                      },
+                      "port_id": "ge-0/0/0.1003",
+                      "routing_protocols": {
+                        "routing_protocol": [
+                          {
+                            "bgp": {
+                              "address_family": [
+                                "ipv4"
+                              ],
+                              "as_override": true,
+                              "bgp_max_prefix": {
+                                "max_prefix": 1000,
+                                "restart_interval": 60,
+                                "violate_action": "restart",
+                                "warning_threshold": 75
+                              },
+                              "bgp_timer": {
+                                "hold_time": 180,
+                                "keep_alive": 60
+                              },
+                              "default_route": false,
+                              "description": "BGP neighbor for VPN l3vpn-cust3",
+                              "multihop": 1,
+                              "neighbor": [
+                                "192.168.255.3"
+                              ],
+                              "peer_autonomous_system": 4200003004
+                            },
+                            "id": "bgp",
+                            "type": "bgp"
+                          },
+                          {
+                            "bgp": {
+                              "address_family": [
+                                "ipv6"
+                              ],
+                              "as_override": true,
+                              "bgp_max_prefix": {
+                                "max_prefix": 1000,
+                                "restart_interval": 60,
+                                "violate_action": "restart",
+                                "warning_threshold": 75
+                              },
+                              "bgp_timer": {
+                                "hold_time": 180,
+                                "keep_alive": 60
+                              },
+                              "default_route": false,
+                              "description": "BGP neighbor for VPN l3vpn-cust3",
+                              "multihop": 1,
+                              "neighbor": [
+                                "fc00:dead:beef:ffff::3"
+                              ],
+                              "peer_autonomous_system": 4200003004
+                            },
+                            "id": "bgp-V6",
+                            "type": "bgp"
+                          }
+                        ]
+                      },
+                      "service": {
+                        "svc_input_bandwidth": 100,
+                        "svc_mtu": 1500,
+                        "svc_output_bandwidth": 100
+                      },
+                      "type": "regular"
+                    }
+                  ]
+                },
+                "vpn_node_id": "customer3-l3vpn-cust3-00000000-0000-0000-1000-2c6bf52af100-any-to-any-role",
+                "vpn_targets": {
+                  "vpn_target": [
+                    {
+                      "id": 1,
+                      "route_target_type": "both",
+                      "route_targets": [
+                        {
+                          "route_target": "0:25000:2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "description": "VPN l3vpn-cust3 on PE 00000000-0000-0000-1000-2c6bf5bbfb00 for customer customer3 any-to-any-role role",
+                "ne_id": "00000000-0000-0000-1000-2c6bf5bbfb00",
+                "node_role": "any-to-any-role",
+                "rd": "0:23000:5",
+                "site_id": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+                "vpn_network_accesses": {
+                  "vpn_network_access": [
+                    {
+                      "connection": {
+                        "encapsulation_type": "dot1q",
+                        "tagged_interface": {
+                          "dot1q_vlan_tagged": {
+                            "cvlan_id": 1003
+                          },
+                          "type": "dot1q"
+                        }
+                      },
+                      "description": "Network access to VPN l3vpn-cust3 for customer customer3",
+                      "id": "ce1-cust3",
+                      "ip_connection": {
+                        "ipv4": {
+                          "address": [
+                            {
+                              "address_id": "prim-addr-0",
+                              "s_customer_address": "192.168.255.1",
+                              "s_prefix_length": 31,
+                              "s_provider_address": "192.168.255.0"
+                            }
+                          ],
+                          "address_allocation_type": "static-address",
+                          "primary_address": "prim-addr-0"
+                        },
+                        "ipv6": {
+                          "address": [
+                            {
+                              "address_id": "prim-addr-0",
+                              "s_customer_address": "fc00:dead:Beef:ffff::1",
+                              "s_prefix_length": 127,
+                              "s_provider_address": "fc00:dead:Beef:ffff::0"
+                            }
+                          ],
+                          "address_allocation_type": "static-address",
+                          "primary_address": "prim-addr-0"
+                        },
+                        "oam": {
+                          "bfd": {
+                            "enabled": false
+                          }
+                        }
+                      },
+                      "port_id": "ge-0/0/0.1003",
+                      "routing_protocols": {
+                        "routing_protocol": [
+                          {
+                            "bgp": {
+                              "address_family": [
+                                "ipv4"
+                              ],
+                              "as_override": true,
+                              "bgp_max_prefix": {
+                                "max_prefix": 1000,
+                                "restart_interval": 60,
+                                "violate_action": "restart",
+                                "warning_threshold": 75
+                              },
+                              "bgp_timer": {
+                                "hold_time": 180,
+                                "keep_alive": 60
+                              },
+                              "default_route": false,
+                              "description": "BGP neighbor for VPN l3vpn-cust3",
+                              "multihop": 1,
+                              "neighbor": [
+                                "192.168.255.1"
+                              ],
+                              "peer_autonomous_system": 4200003001
+                            },
+                            "id": "bgp",
+                            "type": "bgp"
+                          },
+                          {
+                            "bgp": {
+                              "address_family": [
+                                "ipv6"
+                              ],
+                              "as_override": true,
+                              "bgp_max_prefix": {
+                                "max_prefix": 1000,
+                                "restart_interval": 60,
+                                "violate_action": "restart",
+                                "warning_threshold": 75
+                              },
+                              "bgp_timer": {
+                                "hold_time": 180,
+                                "keep_alive": 60
+                              },
+                              "default_route": false,
+                              "description": "BGP neighbor for VPN l3vpn-cust3",
+                              "multihop": 1,
+                              "neighbor": [
+                                "fc00:dead:Beef:ffff::1"
+                              ],
+                              "peer_autonomous_system": 4200003001
+                            },
+                            "id": "bgp-V6",
+                            "type": "bgp"
+                          }
+                        ]
+                      },
+                      "service": {
+                        "svc_input_bandwidth": 100,
+                        "svc_mtu": 1500,
+                        "svc_output_bandwidth": 100
+                      },
+                      "type": "regular"
+                    }
+                  ]
+                },
+                "vpn_node_id": "customer3-l3vpn-cust3-00000000-0000-0000-1000-2c6bf5bbfb00-any-to-any-role",
+                "vpn_targets": {
+                  "vpn_target": [
+                    {
+                      "id": 1,
+                      "route_target_type": "both",
+                      "route_targets": [
+                        {
+                          "route_target": "0:25000:2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "vpn_service_topology": "any-to-any"
+        }
+      ]
+    }
+  },
+  "l3vpn_svc": {
+    "service_settings": {
+      "active_assurance": {
+        "monitors": true,
+        "on_change_tests": true
+      }
+    },
+    "sites": {
+      "site": [
+        {
+          "devices": {
+            "device": []
+          },
+          "locations": {
+            "location": [
+              {
+                "city": "medan",
+                "country_code": "ID",
+                "location_id": "pe1",
+                "postal_code": "20217"
+              }
+            ]
+          },
+          "maximum_routes": {
+            "address_family": [
+              {
+                "af": "ipv4",
+                "maximum_routes": 100
+              }
+            ]
+          },
+          "site_id": "pe1",
+          "site_network_accesses": {
+            "site_network_access": [
+              {
+                "access_diversity": {
+                  "constraints": {
+                    "constraint": []
+                  },
+                  "groups": {
+                    "group": []
+                  }
+                },
+                "bearer": {
+                  "requested_type": {
+                    "requested_type": "ethernet",
+                    "strict": false
+                  }
+                },
+                "connection": {
+                  "eth_inf_type": "tagged",
+                  "physical_port": {
+                    "speed": 1000
+                  },
+                  "tagged_interface": {
+                    "dot1q_vlan_tagged": {
+                      "cvlan_id": 1003
+                    },
+                    "type": "dot1q"
+                  }
+                },
+                "ip_connection": {
+                  "ipv4": {
+                    "address_allocation_type": "static-address",
+                    "addresses": {
+                      "customer_addresses": [
+                        "192.168.255.1"
+                      ],
+                      "prefix_length": 31,
+                      "provider_address": "192.168.255.0"
+                    }
+                  },
+                  "ipv6": {
+                    "address_allocation_type": "static-address",
+                    "addresses": {
+                      "customer_addresses": [
+                        "fc00:dead:Beef:ffff::1"
+                      ],
+                      "prefix_length": 127,
+                      "provider_address": "fc00:dead:Beef:ffff::0"
+                    }
+                  },
+                  "oam": {
+                    "bfd": {
+                      "enabled": false
+                    }
+                  }
+                },
+                "placement_interface": {
+                  "ce": "ces",
+                  "ifSpeed": "1000",
+                  "interface": "ge-0/0/0.1003",
+                  "pe": "00000000-0000-0000-1000-2c6bf5bbfb00",
+                  "pop": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8"
+                },
+                "placement_options": [
+                  {
+                    "ce": "ces",
+                    "ifSpeed": "1000",
+                    "pe": "00000000-0000-0000-1000-2c6bf5bbfb00",
+                    "pop": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+                    "port": "ge-0/0/0"
+                  }
+                ],
+                "routing_protocols": {
+                  "routing_protocol": [
+                    {
+                      "bgp": {
+                        "address_family": [
+                          "ipv4",
+                          "ipv6"
+                        ],
+                        "autonomous_system": 4200003001
+                      },
+                      "type": "bgp"
+                    }
+                  ]
+                },
+                "service": {
+                  "svc_input_bandwidth": 100,
+                  "svc_mtu": 1500,
+                  "svc_output_bandwidth": 100
+                },
+                "site_network_access_id": "ce1-cust3",
+                "type": "regular",
+                "vpn_attachment": {
+                  "site_role": "any-to-any-role",
+                  "vpn_id": "l3vpn-cust3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "devices": {
+            "device": []
+          },
+          "locations": {
+            "location": [
+              {
+                "city": "mataram",
+                "country_code": "ID",
+                "location_id": "pe4",
+                "postal_code": "83125"
+              }
+            ]
+          },
+          "maximum_routes": {
+            "address_family": [
+              {
+                "af": "ipv4",
+                "maximum_routes": 100
+              }
+            ]
+          },
+          "site_id": "pe4",
+          "site_network_accesses": {
+            "site_network_access": [
+              {
+                "access_diversity": {
+                  "constraints": {
+                    "constraint": []
+                  },
+                  "groups": {
+                    "group": []
+                  }
+                },
+                "bearer": {
+                  "requested_type": {
+                    "requested_type": "ethernet",
+                    "strict": false
+                  }
+                },
+                "connection": {
+                  "eth_inf_type": "tagged",
+                  "physical_port": {
+                    "speed": 1000
+                  },
+                  "tagged_interface": {
+                    "dot1q_vlan_tagged": {
+                      "cvlan_id": 1003
+                    },
+                    "type": "dot1q"
+                  }
+                },
+                "ip_connection": {
+                  "ipv4": {
+                    "address_allocation_type": "static-address",
+                    "addresses": {
+                      "customer_addresses": [
+                        "192.168.255.3"
+                      ],
+                      "prefix_length": 31,
+                      "provider_address": "192.168.255.2"
+                    }
+                  },
+                  "ipv6": {
+                    "address_allocation_type": "static-address",
+                    "addresses": {
+                      "customer_addresses": [
+                        "fc00:dead:beef:ffff::3"
+                      ],
+                      "prefix_length": 127,
+                      "provider_address": "fc00:dead:beef:ffff::2"
+                    }
+                  },
+                  "oam": {
+                    "bfd": {
+                      "enabled": false
+                    }
+                  }
+                },
+                "placement_interface": {
+                  "ce": "ces",
+                  "ifSpeed": "1000",
+                  "interface": "ge-0/0/0.1003",
+                  "pe": "00000000-0000-0000-1000-2c6bf52af100",
+                  "pop": "d13a118d-9ada-45a7-a985-ce5abc614c59"
+                },
+                "placement_options": [
+                  {
+                    "ce": "ces",
+                    "ifSpeed": "1000",
+                    "pe": "00000000-0000-0000-1000-2c6bf52af100",
+                    "pop": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+                    "port": "ge-0/0/0"
+                  }
+                ],
+                "routing_protocols": {
+                  "routing_protocol": [
+                    {
+                      "bgp": {
+                        "address_family": [
+                          "ipv4",
+                          "ipv6"
+                        ],
+                        "autonomous_system": 4200003004
+                      },
+                      "type": "bgp"
+                    }
+                  ]
+                },
+                "service": {
+                  "svc_input_bandwidth": 100,
+                  "svc_mtu": 1500,
+                  "svc_output_bandwidth": 100
+                },
+                "site_network_access_id": "ce4-cust3",
+                "type": "regular",
+                "vpn_attachment": {
+                  "site_role": "any-to-any-role",
+                  "vpn_id": "l3vpn-cust3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "vpn_services": {
+      "vpn_service": [
+        {
+          "customer_name": "customer3",
+          "placement_bgp_color_community": {
+            "options": [
+              "Gold",
+              "Silver",
+              "Bronze"
+            ]
+          },
+          "placement_rt": {
+            "number": 2,
+            "options_with_info": [
+              {
+                "max": 999,
+                "name": "25000"
+              }
+            ],
+            "pool": "25000"
+          },
+          "route_distinguisher_type": "type0",
+          "vpn_id": "l3vpn-cust3",
+          "vpn_service_topology": "any-to-any"
+        }
+      ]
+    }
+  },
+  "operation": "create",
+  "order_id": "6c02008a-c07a-11f0-bbdc-4a476f2ac3af",
+  "order_status": {
+    "components": [
+      {
+        "component_data": [
+          {
+            "message": "placed",
+            "status": "success",
+            "time": "2025-11-13T10:20:59Z"
+          }
+        ],
+        "component_type": "placement"
+      },
+      {
+        "component_data": [
+          {
+            "message": "transform service order to device config",
+            "status": "success",
+            "time": "2025-11-13T10:21:08Z"
+          },
+          {
+            "message": "applied device config to [00000000-0000-0000-1000-2c6bf5bbfb00(pe1), 00000000-0000-0000-1000-2c6bf52af100(pe4)]",
+            "status": "success",
+            "time": "2025-11-13T10:21:22Z"
+          }
+        ],
+        "component_type": "device"
+      },
+      {
+        "component_data": [
+          {
+            "message": "transform service order to insights config",
+            "status": "success",
+            "time": "2025-11-13T10:21:30Z"
+          },
+          {
+            "message": "apply-insights-configuration",
+            "status": "success",
+            "support_hint": "insights configuration done for devices with mac addresses [2c6bf52af100 2c6bf5bbfb00]",
+            "time": "2025-11-13T10:21:40Z"
+          }
+        ],
+        "component_type": "insights"
+      },
+      {
+        "component_data": [
+          {
+            "message": "transform service order to active assurance config",
+            "status": "success",
+            "time": "2025-11-13T10:21:48Z"
+          },
+          {
+            "message": "active-assurance-tests-initiated",
+            "status": "success",
+            "support_hint": "active assurance tests initiated on [00000000-0000-0000-1000-2c6bf5bbfb00 00000000-0000-0000-1000-2c6bf52af100]",
+            "time": "2025-11-13T10:21:52Z"
+          }
+        ],
+        "component_type": "active assurance"
+      }
+    ],
+    "status": "success",
+    "workflow_trace": [
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "init_service_order_status",
+        "time": "2025-11-13T10:20:51.769265+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.get_and_update_topo_resource",
+        "time": "2025-11-13T10:20:54.631997+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.upload_network_resources",
+        "time": "2025-11-13T10:20:56.920878+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.place_service_order",
+        "time": "2025-11-13T10:20:59.852824+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.transform_service_order",
+        "time": "2025-11-13T10:21:02.245803+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.apply_device_config",
+        "time": "2025-11-13T10:21:22.813292+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.apply_device_done",
+        "time": "2025-11-13T10:21:24.815354+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.transform_service_order_insights",
+        "time": "2025-11-13T10:21:30.714541+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.apply_insights_config",
+        "time": "2025-11-13T10:21:41.297477+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "common_fh.insight_provisioning_done",
+        "time": "2025-11-13T10:21:43.210054+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "check_paa_parameters",
+        "time": "2025-11-13T10:21:45.712012+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "transform_service_order_paa",
+        "time": "2025-11-13T10:21:49.233560+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "apply_paa_configuration",
+        "time": "2025-11-13T10:21:52.393255+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "check_paa_enable",
+        "time": "2025-11-13T10:21:54.996909+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "get_paa_tests",
+        "time": "2025-11-13T10:24:57.242737+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "record_paa_test_results",
+        "time": "2025-11-13T10:24:59.519370+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "check_paa_monitors",
+        "time": "2025-11-13T10:25:01.375260+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "get_paa_monitors",
+        "time": "2025-11-13T10:25:03.836085+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "record_paa_monitor_ids",
+        "time": "2025-11-13T10:25:06.385795+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "apply_paa_done",
+        "time": "2025-11-13T10:25:08.485686+00:00"
+      },
+      {
+        "message": "task completed successfully",
+        "runs": 1,
+        "status": "success",
+        "task": "service_provisioning_done",
+        "time": "2025-11-13T10:25:12.614608+00:00"
+      }
+    ]
+  },
+  "org_id": "a4159609-701f-4362-b63c-b12a98361233",
+  "place": [
+    {
+      "description": "VPN \"l3vpn-cust3\" any-to-any route target",
+      "instPath": [
+        "l3vpn_svc",
+        "vpn_services",
+        "vpn_service",
+        "l3vpn_cust3"
+      ],
+      "number": 2,
+      "optionFiltersqs": [
+        {
+          "path": [
+            {
+              "name": "rt",
+              "type": "resource"
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "description": "route target 25000",
+          "from_opt": {
+            "path": [
+              {
+                "name": "rt",
+                "type": "resource"
+              }
+            ]
+          },
+          "numbers": 998,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "rt",
+              "type": "resource"
+            },
+            {
+              "name": "25000",
+              "type": "rt"
+            }
+          ],
+          "properties": {
+            "size": 1000
+          },
+          "resource_name": "rt allocation"
+        }
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "rt-any-to-any",
+          "type": "rt"
+        }
+      ],
+      "pool": [
+        {
+          "name": "rt",
+          "type": "resource"
+        },
+        {
+          "name": "25000",
+          "type": "rt"
+        }
+      ],
+      "properties": {
+        "size": 1000
+      },
+      "req_name": "rt allocation 2",
+      "type": "numbered"
+    },
+    {
+      "description": "Interface with vlan 1003 for VPN \"l3vpn-cust3\", access \"ce1-cust3\" for site \"pe1\"",
+      "instPath": [
+        "l3vpn_svc",
+        "sites",
+        "site",
+        "pe1",
+        "site_network_accesses",
+        "site_network_access",
+        "ce1_cust3"
+      ],
+      "iteration": 2,
+      "number": 1003,
+      "optionFiltersqs": [
+        {
+          "path": [
+            {
+              "name": "interface",
+              "type": "resource"
+            },
+            {
+              "name": "ethernet",
+              "type": "ifType"
+            },
+            {
+              "name": "1000",
+              "type": "ifSpeed"
+            },
+            {
+              "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+              "type": "pop"
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "description": "ethernet port ge-0/0/0 on PE 00000000-0000-0000-1000-2c6bf5bbfb00 in site 57ccf8c5-21d7-4938-85ca-b59bb8d656a8 with speed 1000 with tag_type dot1q",
+          "from_opt": {
+            "path": [
+              {
+                "name": "interface",
+                "type": "resource"
+              },
+              {
+                "name": "ethernet",
+                "type": "ifType"
+              },
+              {
+                "name": "1000",
+                "type": "ifSpeed"
+              },
+              {
+                "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+                "type": "pop"
+              }
+            ]
+          },
+          "numbers": 4093,
+          "offset": 1,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "interface",
+              "type": "resource"
+            },
+            {
+              "name": "ethernet",
+              "type": "ifType"
+            },
+            {
+              "name": "1000",
+              "type": "ifSpeed"
+            },
+            {
+              "name": "ces",
+              "type": "ce"
+            },
+            {
+              "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+              "type": "pop"
+            },
+            {
+              "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+              "type": "pe"
+            },
+            {
+              "name": "ge-0/0/0",
+              "type": "port"
+            }
+          ],
+          "properties": {
+            "id": "00000000-0000-0000-1000-2c6bf5bbfb00",
+            "lag": false,
+            "site": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8"
+          },
+          "resource_name": "vlan"
+        }
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "pe1",
+          "type": "site"
+        },
+        {
+          "name": "ce1-cust3",
+          "type": "access"
+        },
+        {
+          "name": "ifReq",
+          "type": "interface"
+        }
+      ],
+      "pool": [
+        {
+          "name": "interface",
+          "type": "resource"
+        },
+        {
+          "name": "ethernet",
+          "type": "ifType"
+        },
+        {
+          "name": "1000",
+          "type": "ifSpeed"
+        },
+        {
+          "name": "ces",
+          "type": "ce"
+        },
+        {
+          "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+          "type": "pop"
+        },
+        {
+          "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+          "type": "pe"
+        },
+        {
+          "name": "ge-0/0/0",
+          "type": "port"
+        }
+      ],
+      "properties": {
+        "id": "00000000-0000-0000-1000-2c6bf5bbfb00",
+        "lag": false,
+        "site": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8"
+      },
+      "req_name": "VLAN 1003",
+      "reqprops": {
+        "backward_compatability_placement_rd": null,
+        "backward_compatability_placement_rd_routes": null,
+        "pool_filter": [
+          {
+            "name": "interface",
+            "type": "resource"
+          },
+          {
+            "name": "ethernet",
+            "type": "ifType"
+          },
+          {
+            "name": "1000",
+            "type": "ifSpeed"
+          },
+          {
+            "name": "ces",
+            "type": "ce"
+          },
+          {
+            "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+            "type": "pop"
+          },
+          {
+            "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+            "type": "pe"
+          },
+          {
+            "name": "ge-0/0/0",
+            "type": "port"
+          }
+        ],
+        "rd_type": true,
+        "site_role": "any-to-any-role"
+      },
+      "type": "numbered"
+    },
+    {
+      "description": "VPN \"l3vpn-cust3\", access \"ce1-cust3\" for site \"pe1\" 100 routes",
+      "instPath": [
+        "l3vpn_svc",
+        "sites",
+        "site",
+        "pe1",
+        "site_network_accesses",
+        "site_network_access",
+        "ce1_cust3"
+      ],
+      "iteration": 2,
+      "options": [
+        {
+          "description": "PE 00000000-0000-0000-1000-2c6bf5bbfb00 in site 57ccf8c5-21d7-4938-85ca-b59bb8d656a8 routes 32000",
+          "from_opt": [
+            {
+              "name": "routes",
+              "type": "resource"
+            },
+            {
+              "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+              "type": "pop"
+            }
+          ],
+          "int": 31000,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "routes",
+              "type": "resource"
+            },
+            {
+              "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+              "type": "pop"
+            },
+            {
+              "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+              "type": "pe"
+            }
+          ],
+          "properties": {
+            "id": "00000000-0000-0000-1000-2c6bf5bbfb00"
+          },
+          "resource_name": "routes"
+        }
+      ],
+      "optionsqs": [
+        [
+          {
+            "name": "routes",
+            "type": "resource"
+          },
+          {
+            "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+            "type": "pop"
+          }
+        ]
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "pe1",
+          "type": "site"
+        },
+        {
+          "name": "ce1-cust3",
+          "type": "access"
+        },
+        {
+          "name": "routesReq",
+          "type": "routes"
+        }
+      ],
+      "pool": [
+        {
+          "name": "routes",
+          "type": "resource"
+        },
+        {
+          "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+          "type": "pop"
+        },
+        {
+          "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+          "type": "pe"
+        }
+      ],
+      "properties": {
+        "id": "00000000-0000-0000-1000-2c6bf5bbfb00"
+      },
+      "req_name": "100 routes",
+      "requirement": 100
+    },
+    {
+      "description": "VPN \"l3vpn-cust3\", access \"ce4-cust3\" for site \"pe4\" 100 routes",
+      "instPath": [
+        "l3vpn_svc",
+        "sites",
+        "site",
+        "pe4",
+        "site_network_accesses",
+        "site_network_access",
+        "ce4_cust3"
+      ],
+      "iteration": 2,
+      "options": [
+        {
+          "description": "PE 00000000-0000-0000-1000-2c6bf52af100 in site d13a118d-9ada-45a7-a985-ce5abc614c59 routes 32000",
+          "from_opt": [
+            {
+              "name": "routes",
+              "type": "resource"
+            },
+            {
+              "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+              "type": "pop"
+            }
+          ],
+          "int": 31900,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "routes",
+              "type": "resource"
+            },
+            {
+              "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+              "type": "pop"
+            },
+            {
+              "name": "00000000-0000-0000-1000-2c6bf52af100",
+              "type": "pe"
+            }
+          ],
+          "properties": {
+            "id": "00000000-0000-0000-1000-2c6bf52af100"
+          },
+          "resource_name": "routes"
+        }
+      ],
+      "optionsqs": [
+        [
+          {
+            "name": "routes",
+            "type": "resource"
+          },
+          {
+            "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+            "type": "pop"
+          }
+        ]
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "pe4",
+          "type": "site"
+        },
+        {
+          "name": "ce4-cust3",
+          "type": "access"
+        },
+        {
+          "name": "routesReq",
+          "type": "routes"
+        }
+      ],
+      "pool": [
+        {
+          "name": "routes",
+          "type": "resource"
+        },
+        {
+          "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+          "type": "pop"
+        },
+        {
+          "name": "00000000-0000-0000-1000-2c6bf52af100",
+          "type": "pe"
+        }
+      ],
+      "properties": {
+        "id": "00000000-0000-0000-1000-2c6bf52af100"
+      },
+      "req_name": "100 routes",
+      "requirement": 100
+    },
+    {
+      "description": "Interface with vlan 1003 for VPN \"l3vpn-cust3\", access \"ce4-cust3\" for site \"pe4\"",
+      "instPath": [
+        "l3vpn_svc",
+        "sites",
+        "site",
+        "pe4",
+        "site_network_accesses",
+        "site_network_access",
+        "ce4_cust3"
+      ],
+      "iteration": 2,
+      "number": 1003,
+      "optionFiltersqs": [
+        {
+          "path": [
+            {
+              "name": "interface",
+              "type": "resource"
+            },
+            {
+              "name": "ethernet",
+              "type": "ifType"
+            },
+            {
+              "name": "1000",
+              "type": "ifSpeed"
+            },
+            {
+              "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+              "type": "pop"
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "description": "ethernet port ge-0/0/0 on PE 00000000-0000-0000-1000-2c6bf52af100 in site d13a118d-9ada-45a7-a985-ce5abc614c59 with speed 1000 with tag_type dot1q",
+          "from_opt": {
+            "path": [
+              {
+                "name": "interface",
+                "type": "resource"
+              },
+              {
+                "name": "ethernet",
+                "type": "ifType"
+              },
+              {
+                "name": "1000",
+                "type": "ifSpeed"
+              },
+              {
+                "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+                "type": "pop"
+              }
+            ]
+          },
+          "numbers": 2047,
+          "offset": 1000,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "interface",
+              "type": "resource"
+            },
+            {
+              "name": "ethernet",
+              "type": "ifType"
+            },
+            {
+              "name": "1000",
+              "type": "ifSpeed"
+            },
+            {
+              "name": "ces",
+              "type": "ce"
+            },
+            {
+              "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+              "type": "pop"
+            },
+            {
+              "name": "00000000-0000-0000-1000-2c6bf52af100",
+              "type": "pe"
+            },
+            {
+              "name": "ge-0/0/0",
+              "type": "port"
+            }
+          ],
+          "properties": {
+            "id": "00000000-0000-0000-1000-2c6bf52af100",
+            "lag": false,
+            "site": "d13a118d-9ada-45a7-a985-ce5abc614c59"
+          },
+          "resource_name": "vlan"
+        }
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "pe4",
+          "type": "site"
+        },
+        {
+          "name": "ce4-cust3",
+          "type": "access"
+        },
+        {
+          "name": "ifReq",
+          "type": "interface"
+        }
+      ],
+      "pool": [
+        {
+          "name": "interface",
+          "type": "resource"
+        },
+        {
+          "name": "ethernet",
+          "type": "ifType"
+        },
+        {
+          "name": "1000",
+          "type": "ifSpeed"
+        },
+        {
+          "name": "ces",
+          "type": "ce"
+        },
+        {
+          "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+          "type": "pop"
+        },
+        {
+          "name": "00000000-0000-0000-1000-2c6bf52af100",
+          "type": "pe"
+        },
+        {
+          "name": "ge-0/0/0",
+          "type": "port"
+        }
+      ],
+      "properties": {
+        "id": "00000000-0000-0000-1000-2c6bf52af100",
+        "lag": false,
+        "site": "d13a118d-9ada-45a7-a985-ce5abc614c59"
+      },
+      "req_name": "VLAN 1003",
+      "reqprops": {
+        "backward_compatability_placement_rd": null,
+        "backward_compatability_placement_rd_routes": null,
+        "pool_filter": [
+          {
+            "name": "interface",
+            "type": "resource"
+          },
+          {
+            "name": "ethernet",
+            "type": "ifType"
+          },
+          {
+            "name": "1000",
+            "type": "ifSpeed"
+          },
+          {
+            "name": "ces",
+            "type": "ce"
+          },
+          {
+            "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+            "type": "pop"
+          },
+          {
+            "name": "00000000-0000-0000-1000-2c6bf52af100",
+            "type": "pe"
+          },
+          {
+            "name": "ge-0/0/0",
+            "type": "port"
+          }
+        ],
+        "rd_type": true,
+        "site_role": "any-to-any-role"
+      },
+      "type": "numbered"
+    },
+    {
+      "description": "route distinguisher type0 for pe 00000000-0000-0000-1000-2c6bf52af100",
+      "iteration": 3,
+      "number": 6,
+      "optionFiltersqs": [
+        {
+          "path": [
+            {
+              "name": "rd",
+              "type": "resource"
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "description": "route distinguisher 23000",
+          "from_opt": {
+            "path": [
+              {
+                "name": "rd",
+                "type": "resource"
+              }
+            ]
+          },
+          "numbers": 995,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "rd",
+              "type": "resource"
+            },
+            {
+              "name": "23000",
+              "type": "rd"
+            }
+          ],
+          "properties": {
+            "size": 1000
+          },
+          "resource_name": "rd allocation"
+        }
+      ],
+      "path": [
+        {
+          "name": "00000000-0000-0000-1000-2c6bf52af100",
+          "type": "pe"
+        },
+        {
+          "name": "rdReq",
+          "type": "rd"
+        }
+      ],
+      "pool": [
+        {
+          "name": "rd",
+          "type": "resource"
+        },
+        {
+          "name": "23000",
+          "type": "rd"
+        }
+      ],
+      "properties": {
+        "size": 1000
+      },
+      "req_name": "rd type0 allocation 6",
+      "type": "numbered"
+    },
+    {
+      "description": "route distinguisher type0 for pe 00000000-0000-0000-1000-2c6bf5bbfb00",
+      "iteration": 3,
+      "number": 5,
+      "optionFiltersqs": [
+        {
+          "path": [
+            {
+              "name": "rd",
+              "type": "resource"
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "description": "route distinguisher 23000",
+          "from_opt": {
+            "path": [
+              {
+                "name": "rd",
+                "type": "resource"
+              }
+            ]
+          },
+          "numbers": 995,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "rd",
+              "type": "resource"
+            },
+            {
+              "name": "23000",
+              "type": "rd"
+            }
+          ],
+          "properties": {
+            "size": 1000
+          },
+          "resource_name": "rd allocation"
+        }
+      ],
+      "path": [
+        {
+          "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+          "type": "pe"
+        },
+        {
+          "name": "rdReq",
+          "type": "rd"
+        }
+      ],
+      "pool": [
+        {
+          "name": "rd",
+          "type": "resource"
+        },
+        {
+          "name": "23000",
+          "type": "rd"
+        }
+      ],
+      "properties": {
+        "size": 1000
+      },
+      "req_name": "rd type0 allocation 5",
+      "type": "numbered"
+    },
+    {
+      "description": "all available pop locations",
+      "messages": [
+        "placement not possible",
+        "placement not possible",
+        "placement not possible"
+      ],
+      "noplace": true,
+      "options": [
+        {
+          "description": "pop site for postal codes 97...",
+          "from_opt": [
+            {
+              "name": "location",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "location",
+              "type": "resource"
+            },
+            {
+              "name": "d5e8e12b-be4d-11f0-bddf-fa723a073339",
+              "type": "customer_id"
+            },
+            {
+              "name": "topo1",
+              "type": "instance_id"
+            },
+            {
+              "name": "4d4000fb-2e49-4bd6-8411-f0725323f91d",
+              "type": "pop"
+            }
+          ],
+          "properties": {
+            "postal_code_matches": [
+              {
+                "country_code": "ID",
+                "name": "ambon",
+                "regex": "97..."
+              }
+            ]
+          }
+        },
+        {
+          "description": "pop site for postal codes 77...",
+          "from_opt": [
+            {
+              "name": "location",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "location",
+              "type": "resource"
+            },
+            {
+              "name": "d5e8e12b-be4d-11f0-bddf-fa723a073339",
+              "type": "customer_id"
+            },
+            {
+              "name": "topo1",
+              "type": "instance_id"
+            },
+            {
+              "name": "e4b5abcc-fc2c-425f-835b-4463e6c14844",
+              "type": "pop"
+            }
+          ],
+          "properties": {
+            "postal_code_matches": [
+              {
+                "country_code": "ID",
+                "name": "tanjung selor",
+                "regex": "77..."
+              }
+            ]
+          }
+        },
+        {
+          "description": "pop site for postal codes 83...",
+          "from_opt": [
+            {
+              "name": "location",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "location",
+              "type": "resource"
+            },
+            {
+              "name": "d5e8e12b-be4d-11f0-bddf-fa723a073339",
+              "type": "customer_id"
+            },
+            {
+              "name": "topo1",
+              "type": "instance_id"
+            },
+            {
+              "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+              "type": "pop"
+            }
+          ],
+          "properties": {
+            "postal_code_matches": [
+              {
+                "country_code": "ID",
+                "name": "mataram",
+                "regex": "83..."
+              }
+            ]
+          }
+        },
+        {
+          "description": "pop site for postal codes 30...",
+          "from_opt": [
+            {
+              "name": "location",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "location",
+              "type": "resource"
+            },
+            {
+              "name": "d5e8e12b-be4d-11f0-bddf-fa723a073339",
+              "type": "customer_id"
+            },
+            {
+              "name": "topo1",
+              "type": "instance_id"
+            },
+            {
+              "name": "b1ec7628-8c98-4d07-9873-36429a0d1185",
+              "type": "pop"
+            }
+          ],
+          "properties": {
+            "postal_code_matches": [
+              {
+                "country_code": "ID",
+                "name": "palembang",
+                "regex": "30..."
+              }
+            ]
+          }
+        },
+        {
+          "description": "pop site for postal codes 20...",
+          "from_opt": [
+            {
+              "name": "location",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "location",
+              "type": "resource"
+            },
+            {
+              "name": "d5e8e12b-be4d-11f0-bddf-fa723a073339",
+              "type": "customer_id"
+            },
+            {
+              "name": "topo1",
+              "type": "instance_id"
+            },
+            {
+              "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+              "type": "pop"
+            }
+          ],
+          "properties": {
+            "postal_code_matches": [
+              {
+                "country_code": "ID",
+                "name": "Medan",
+                "regex": "20..."
+              }
+            ]
+          }
+        }
+      ],
+      "optionsq": [
+        {
+          "name": "location",
+          "type": "resource"
+        }
+      ],
+      "path": [
+        {
+          "name": "location",
+          "type": "resource"
+        }
+      ],
+      "req_name": "pops",
+      "type": "numbered"
+    },
+    {
+      "description": "VPN \"l3vpn-cust3\" color community options",
+      "instPath": [
+        "l3vpn_svc",
+        "vpn_services",
+        "vpn_service",
+        "l3vpn_cust3"
+      ],
+      "messages": [
+        "placement not possible",
+        "placement not possible",
+        "placement not possible"
+      ],
+      "noplace": true,
+      "options": [
+        {
+          "description": "color Gold(65001)",
+          "from_opt": [
+            {
+              "name": "color",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "color",
+              "type": "resource"
+            },
+            {
+              "name": "Gold",
+              "type": "color"
+            }
+          ],
+          "properties": {
+            "color_attribute": 65001
+          },
+          "resource_name": "Gold allocation"
+        },
+        {
+          "description": "color Silver(65002)",
+          "from_opt": [
+            {
+              "name": "color",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "color",
+              "type": "resource"
+            },
+            {
+              "name": "Silver",
+              "type": "color"
+            }
+          ],
+          "properties": {
+            "color_attribute": 65002
+          },
+          "resource_name": "Silver allocation"
+        },
+        {
+          "description": "color Bronze(65003)",
+          "from_opt": [
+            {
+              "name": "color",
+              "type": "resource"
+            }
+          ],
+          "numbers": 10000000,
+          "offset": 0,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "color",
+              "type": "resource"
+            },
+            {
+              "name": "Bronze",
+              "type": "color"
+            }
+          ],
+          "properties": {
+            "color_attribute": 65003
+          },
+          "resource_name": "Bronze allocation"
+        }
+      ],
+      "optionsq": [
+        {
+          "name": "color",
+          "type": "resource"
+        }
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "color",
+          "type": "resource"
+        }
+      ],
+      "req_name": "color options",
+      "type": "numbered"
+    },
+    {
+      "description": "VPN \"l3vpn-cust3\", access \"ce1-cust3\" for site \"pe1\" bandwidth 0 Gbps",
+      "instPath": [
+        "l3vpn_svc",
+        "sites",
+        "site",
+        "pe1",
+        "site_network_accesses",
+        "site_network_access",
+        "ce1_cust3"
+      ],
+      "iteration": 2,
+      "options": [
+        {
+          "description": "PE 00000000-0000-0000-1000-2c6bf5bbfb00 in site 57ccf8c5-21d7-4938-85ca-b59bb8d656a8 bandwidth 12000",
+          "from_opt": [
+            {
+              "name": "bandwidth",
+              "type": "resource"
+            },
+            {
+              "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+              "type": "pop"
+            }
+          ],
+          "int": 11900,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "bandwidth",
+              "type": "resource"
+            },
+            {
+              "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+              "type": "pop"
+            },
+            {
+              "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+              "type": "pe"
+            }
+          ],
+          "properties": {
+            "id": "00000000-0000-0000-1000-2c6bf5bbfb00"
+          },
+          "resource_name": "bandwidth"
+        }
+      ],
+      "optionsqs": [
+        [
+          {
+            "name": "bandwidth",
+            "type": "resource"
+          },
+          {
+            "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+            "type": "pop"
+          }
+        ]
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "pe1",
+          "type": "site"
+        },
+        {
+          "name": "ce1-cust3",
+          "type": "access"
+        },
+        {
+          "name": "bwReq",
+          "type": "bandwidth"
+        }
+      ],
+      "pool": [
+        {
+          "name": "bandwidth",
+          "type": "resource"
+        },
+        {
+          "name": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8",
+          "type": "pop"
+        },
+        {
+          "name": "00000000-0000-0000-1000-2c6bf5bbfb00",
+          "type": "pe"
+        }
+      ],
+      "properties": {
+        "id": "00000000-0000-0000-1000-2c6bf5bbfb00"
+      },
+      "req_name": "0 Gbps",
+      "requirement": 100
+    },
+    {
+      "description": "VPN \"l3vpn-cust3\", access \"ce4-cust3\" for site \"pe4\" bandwidth 0 Gbps",
+      "instPath": [
+        "l3vpn_svc",
+        "sites",
+        "site",
+        "pe4",
+        "site_network_accesses",
+        "site_network_access",
+        "ce4_cust3"
+      ],
+      "iteration": 2,
+      "options": [
+        {
+          "description": "PE 00000000-0000-0000-1000-2c6bf52af100 in site d13a118d-9ada-45a7-a985-ce5abc614c59 bandwidth 12000",
+          "from_opt": [
+            {
+              "name": "bandwidth",
+              "type": "resource"
+            },
+            {
+              "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+              "type": "pop"
+            }
+          ],
+          "int": 11900,
+          "oper_status": "up",
+          "path": [
+            {
+              "name": "bandwidth",
+              "type": "resource"
+            },
+            {
+              "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+              "type": "pop"
+            },
+            {
+              "name": "00000000-0000-0000-1000-2c6bf52af100",
+              "type": "pe"
+            }
+          ],
+          "properties": {
+            "id": "00000000-0000-0000-1000-2c6bf52af100"
+          },
+          "resource_name": "bandwidth"
+        }
+      ],
+      "optionsqs": [
+        [
+          {
+            "name": "bandwidth",
+            "type": "resource"
+          },
+          {
+            "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+            "type": "pop"
+          }
+        ]
+      ],
+      "path": [
+        {
+          "name": "l3vpn-cust3",
+          "type": "vpn"
+        },
+        {
+          "name": "pe4",
+          "type": "site"
+        },
+        {
+          "name": "ce4-cust3",
+          "type": "access"
+        },
+        {
+          "name": "bwReq",
+          "type": "bandwidth"
+        }
+      ],
+      "pool": [
+        {
+          "name": "bandwidth",
+          "type": "resource"
+        },
+        {
+          "name": "d13a118d-9ada-45a7-a985-ce5abc614c59",
+          "type": "pop"
+        },
+        {
+          "name": "00000000-0000-0000-1000-2c6bf52af100",
+          "type": "pe"
+        }
+      ],
+      "properties": {
+        "id": "00000000-0000-0000-1000-2c6bf52af100"
+      },
+      "req_name": "0 Gbps",
+      "requirement": 100
+    }
+  ],
+  "placement": {
+    "nodes": [
+      {
+        "node_id": "00000000-0000-0000-1000-2c6bf52af100",
+        "rd": {
+          "number": 6,
+          "options_with_info": [
+            {
+              "max": 999,
+              "name": "23000"
+            }
+          ],
+          "pool": "23000",
+          "type": "type0"
+        }
+      },
+      {
+        "node_id": "00000000-0000-0000-1000-2c6bf5bbfb00",
+        "rd": {
+          "number": 5,
+          "options_with_info": [
+            {
+              "max": 999,
+              "name": "23000"
+            }
+          ],
+          "pool": "23000",
+          "type": "type0"
+        }
+      }
+    ]
+  },
+  "upload_time": "2025-11-13T10:25:14Z",
+  "version": "1.0.0",
+  "workflow_id": "create-l3vpn-0_8_55",
+  "workflow_run_id": "fh.foghorn__1a3bdd83-ca2f-4e40-91c8-e63b32787754"
+}

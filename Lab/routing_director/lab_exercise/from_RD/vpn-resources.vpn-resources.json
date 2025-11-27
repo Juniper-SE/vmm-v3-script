@@ -1,0 +1,38 @@
+{
+	"vpn_resources": {
+		"colors": [
+			{
+				"color_attribute": 65001,
+				"name": "Gold"
+			},
+			{
+				"color_attribute": 65002,
+				"name": "Silver"
+			},
+			{
+				"color_attribute": 65003,
+				"name": "Bronze"
+			}
+		],
+		"community": [
+		],
+		"route_distinguisher": [
+			{
+				"count": 1000,
+				"name": 23000
+			}
+		],
+		"route_target": [
+			{
+				"count": 1000,
+				"name": 25000
+			}
+		],
+		"virtual_circuit_id": [
+			{
+				"count": 1000,
+				"start": 10001
+			}
+		]
+	}
+}

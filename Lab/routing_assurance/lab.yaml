@@ -1,0 +1,356 @@
+---
+name: ra # this is rdnet
+pod: 
+  type: vmm
+  vmmserver: q-pod29-vmm.englab.juniper.net
+  user: irzan
+  # adpassword: ThisIsAnaMabokCoy
+  home_dir : /vmm/data/user_disks/irzan
+images:
+  gw: images/gw.qcow2
+  ubuntu: images/ubuntu24.04.qcow2
+  bridge: images/bridge.qcow2
+  vjunos_router: images/vJunos-router-25.2R1.9.qcow2
+junos_login:
+  login: admin
+  password: pass01
+isis_dm: yes
+fabric:
+  subnet: 10.100.0.0/24
+  topology:
+  - [ 0x7d, pe1, ge-0/0/1, p1, ge-0/0/0 ]
+  - [ 0x7d, pe1, ge-0/0/2, p2, ge-0/0/0 ]
+  - [ 0x7d, pe2, ge-0/0/1, p1, ge-0/0/1 ]
+  - [ 0x7d, pe2, ge-0/0/2, p2, ge-0/0/1 ]
+  - [ 0x7d, pe3, ge-0/0/1, p3, ge-0/0/0 ]
+  - [ 0x7d, pe3, ge-0/0/2, p4, ge-0/0/0 ]
+  - [ 0x7d, pe4, ge-0/0/1, p3, ge-0/0/1 ]
+  - [ 0x7d, pe4, ge-0/0/2, p4, ge-0/0/1 ]
+  - [ 0x7d, p1, ge-0/0/2, p2, ge-0/0/2 ]
+  - [ 0x7d, p3, ge-0/0/2, p4, ge-0/0/2 ]
+  - [ 0x7d, p2, ge-0/0/3, p4, ge-0/0/3 ]
+  - [ 0x7d, p1, ge-0/0/3, p5, ge-0/0/0 ]
+  - [ 0x7d, p2, ge-0/0/4, p5, ge-0/0/1 ]
+  - [ 0x7d, p3, ge-0/0/3, p5, ge-0/0/2 ]
+  - [ 0x7d, p4, ge-0/0/4, p5, ge-0/0/3 ]
+  - [ 0x7d, pe5, ge-0/0/1,p5, ge-0/0/4 ]
+  - [ 0x15, p5, ge-0/0/5, crpd, em1 ]
+  - [ 0x0, pe1, ge-0/0/0, client, em1 ]
+  - [ 0x0, pe2, ge-0/0/0, client, em2 ]
+  - [ 0x0, pe3, ge-0/0/0, client, em3 ]
+  - [ 0x0, pe4, ge-0/0/0, client, em4 ]
+  - [ 0x0, pe1, ge-0/0/3, client, em5 ]
+  - [ 0x0, pe2, ge-0/0/3, client, em6 ]
+  - [ 0x0, pe3, ge-0/0/3, client, em7 ]
+  - [ 0x0, pe4, ge-0/0/3, client, em8 ]
+
+#   # there are five field: status, VM node A, interface of node A, VM node Z, interface of node Z
+#   # value for the field status:
+#   # bit 0 : ipv4
+#   # bit 1 : ipv6
+#   # bit 2 : iso
+#   # bit 3 : mpls
+#   # bit 4 : isis
+#   # bit 5 : rsvp
+#   # bit 6 : ldp
+#   # bit 7 : delay_measurement_rpm
+wg:
+  prefix_allowed:
+  - 172.16.13.0/24 
+  - 172.16.10.0/24
+  - 10.100.255.0/24 
+vm:
+  gw:
+    type: gw
+    interfaces:
+      em0: 
+        bridge: external
+      em1: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.254/24
+        dhcp_range: 172.16.10.1-172.16.10.100
+      em2: 
+        bridge: ext
+      em3:
+        bridge: nms
+        family:
+          inet: 172.16.13.254/24
+          static:
+          - to: 10.100.255.0/24
+            via: 172.16.13.15
+          - to: 10.100.0.0/24
+            via: 172.16.13.15
+  pe1:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 101
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.1/24 
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0001.00
+          inet: 10.100.255.1/32
+  pe2:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 102
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.2/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0002.00
+          inet: 10.100.255.2/32
+  pe3:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 103
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.3/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0003.00
+          inet: 10.100.255.3/32
+  pe4:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 104
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.4/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0004.00
+          inet: 10.100.255.4/32
+  pe5:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 105
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.5/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0005.00
+          inet: 10.100.255.5/32
+      ge-0/0/0:
+        bridge: ext
+  p1:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 111
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.11/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0011.00
+          inet: 10.100.255.11/32
+  p2:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 112
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.12/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0012.00
+          inet: 10.100.255.12/32
+        protocol:
+          isis: passive
+  p3:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 113
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.13/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0013.00
+          inet: 10.100.255.13/32
+  p4:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 114
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.14/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0014.00
+          inet: 10.100.255.14/32
+  p5:
+    type: vjunos_router
+    SR:
+      start_label: 400000
+      index_range: 5000
+      node_segment: 115
+    interfaces:
+      mgmt: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.15/24
+      lo0:
+        family:
+          iso:  49.0001.0001.0001.0015.00
+          inet: 10.100.255.15/32
+      ge-0/0/6:
+        bridge: nms
+        mtu: 9000
+        family:
+          inet: 172.16.13.15/24
+  br1:
+    type: bridge
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.21/24
+          gateway4: 172.16.10.254
+      em1:
+        node: [p1, ge-0/0/3, p1p5 ]
+      em2:
+        node: [p5, ge-0/0/0, p1p5 ]
+      em3:
+        node: [p1, ge-0/0/2, p1p2 ]
+      em4:
+        node: [p2, ge-0/0/2, p1p2 ]
+      em5:
+        node: [p2, ge-0/0/4, p2p5 ]
+      em6:
+        node: [p5, ge-0/0/1, p2p5 ]
+      em7:
+        node: [p2, ge-0/0/3, p2p4 ]
+      em8:
+        node: [p4, ge-0/0/3, p2p4 ]
+      em9:
+        node: [p3, ge-0/0/2, p3p4 ]
+      em10:
+        node: [p4, ge-0/0/2, p3p4 ]
+      em11:
+        node: [p3, ge-0/0/3, p3p5 ]
+      em12:
+        node: [p5, ge-0/0/2, p3p5 ]
+      em13:
+        node: [p4, ge-0/0/4, p4p5 ]
+      em14:
+        node: [p5, ge-0/0/3, p4p5 ]
+  br2:
+    type: bridge
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.22/24
+          gateway4: 172.16.10.254
+      em1:
+        node: [pe1, ge-0/0/1, pe1p1 ]
+      em2:
+        node: [p1, ge-0/0/0, pe1p1 ]
+      em3:
+        node: [pe1, ge-0/0/2, pe1p2 ]
+      em4:
+        node: [p2, ge-0/0/0, pe1p2 ]
+      em5:
+        node: [pe2, ge-0/0/1, pe2p1 ]
+      em6:
+        node: [p1, ge-0/0/1, pe2p1 ]
+      em7:
+        node: [pe2, ge-0/0/2, pe2p2 ]
+      em8:
+        node: [p2, ge-0/0/1, pe2p2 ]
+  br3:
+    type: bridge
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.23/24
+          gateway4: 172.16.10.254
+      em1:
+        node: [pe3, ge-0/0/1, pe3p3 ]
+      em2:
+        node: [p3, ge-0/0/0, pe3p3 ]
+      em3:
+        node: [pe3, ge-0/0/2, pe3p4 ]
+      em4:
+        node: [p4, ge-0/0/0, pe3p4 ]
+      em5:
+        node: [pe4, ge-0/0/1, pe4p3 ]
+      em6:
+        node: [p3, ge-0/0/1, pe4p3 ]
+      em7:
+        node: [pe4, ge-0/0/2, pe4p4 ]
+      em8:
+        node: [p4, ge-0/0/1, pe4p4 ]
+  client:
+    type: pchpv2
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.24/24
+          gateway4: 172.16.10.254
+      em10:
+        bridge: ext
+  crpd:
+    type: pcsmall
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.25/24
+          gateway4: 172.16.10.254
+  nms1:
+    type: pchpv1
+    interfaces:
+      em0: 
+        bridge: mgmt
+        family:
+          inet: 172.16.10.26/24
+          gateway4: 172.16.10.254
+      em1:
+        bridge: nms
+        mtu: 9000
+  

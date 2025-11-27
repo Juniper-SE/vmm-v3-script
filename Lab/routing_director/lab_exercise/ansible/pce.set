@@ -1,0 +1,7 @@
+set protocols mpls ipv6-tunneling
+set protocols pcep pce rd destination-ipv4-address 172.16.12.3
+set protocols pcep pce rd  destination-port 4189
+set protocols pcep pce rd pce-type active
+set protocols pcep pce rd pce-type stateful
+set protocols pcep pce rd lsp-provisioning
+set protocols mpls lsp-external-controller pccd

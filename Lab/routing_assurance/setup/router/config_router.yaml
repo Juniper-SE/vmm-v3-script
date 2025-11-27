@@ -1,0 +1,53 @@
+---
+- name: add configuration on p5
+  hosts: 
+  - p5
+  connection: local
+  gather_facts: no
+  tags:
+  - set_p5
+  vars:
+    user: admin
+  tasks:
+    - name: load configuration into p5
+      juniper.device.config:  
+        load: set
+        lines:
+        - "set routing-options static route 0.0.0.0/0 next-hop 172.16.13.254"
+        - "set policy-options policy-statement to_isis term 1 from protocol static"
+        - "set policy-options policy-statement to_isis term 1 then accept"
+        - "set protocols isis export to_isis"
+- name: set bgp on PE
+  hosts: pe
+  tags:
+  - set_pe
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+  tasks:
+    - name: load bgp configuration
+      juniper.device.config:  
+        template: set_bgp.j2
+        format: text
+        load: merge
+        vars: "{{ lookup('file', playbook_dir + '/vars_' + inventory_hostname + '.yaml') | from_yaml}}"
+- name: add dns to all router
+  hosts: 
+  - pe
+  - p
+  connection: local
+  gather_facts: no
+  tags:
+  - set_all
+  vars:
+    user: admin
+  tasks:
+    - name: load configuration into routers
+      juniper.device.config:  
+        load: set
+        lines:
+        - "set system domain-name vmmlab.com"
+        - "set system domain-search vmmlab.com"
+        - "set system name-server 172.16.13.254"
+

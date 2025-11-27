@@ -1,8 +1,8 @@
 ---
-name: rd
+name: rd2
 pod: 
   type: vmm
-  vmmserver: q-pod26-vmm.englab.juniper.net
+  vmmserver: q-pod29-vmm.englab.juniper.net
   user: irzan
   home_dir : /vmm/data/user_disks/irzan
 images:   
@@ -15,9 +15,9 @@ junos_login:
   login: admin
   password: pass01
 wg:
-  # tunnel_ip:
-  # - 192.168.199.1/24
-  # - 192.168.199.2/24
+  tunnel_ip:
+    gw_ip: 192.168.199.254/24
+    ws_ip: 192.168.199.1/24
   prefix_allowed:
   - 172.16.10.0/24 
   - 172.16.11.0/24 

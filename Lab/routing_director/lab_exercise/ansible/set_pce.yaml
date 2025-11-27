@@ -1,0 +1,14 @@
+---
+- name: Upload onboarding script into devices
+  hosts:
+  - pe
+  connection: local
+  gather_facts: no
+  vars:
+    user: admin
+    password: pass01
+  tasks:
+    - name:  Upload onboarding script into devices
+      juniper.device.config:  
+        src: pce.set
+        load: set

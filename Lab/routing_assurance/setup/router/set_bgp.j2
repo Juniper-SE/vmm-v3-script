@@ -1,0 +1,42 @@
+protocols {
+    bgp {
+        group to_rr {
+            type internal;
+            local-address {{ local_address}};
+            family inet {
+                any;
+            }
+            family inet-vpn {
+                any;
+            }
+            family inet6 {
+                labeled-unicast {
+                    explicit-null;
+                }
+            }
+            family inet6-vpn {
+                any;
+            }
+            family evpn {
+                signaling;
+            }
+            neighbor {{ rr_ip }};
+            export nh;
+        }
+    }
+}
+
+routing-options {
+    autonomous-system {{ asn }};
+}
+policy-options {
+    policy-statement nh {
+        term 1 {
+            from protocol bgp;
+            then {
+                next-hop self;
+                accept;
+            }
+        }
+    }
+}

@@ -1,0 +1,77 @@
+infrastructure_ntw:
+  default_interface_profiles:
+  - IP1
+  default_node_profiles: []
+  default_port_profiles:
+  - PP1
+  interface_profiles:
+    interface_profile:
+    - name: IP1
+      templates: []
+  node_profiles:
+    node_profile:
+    - analytics:
+        traffic_engineering: {}
+      ipv6_tunneling:
+        enabled: false
+      labels: [P]
+      name: DP1
+      per_flow_load_balancing:
+        enabled: false
+      templates: []
+      trust:
+        enabled: true
+    - analytics:
+        traffic_engineering: {}
+      ipv6_tunneling:
+        enabled: true
+      labels: [PE]
+      name: DP1_PE
+      per_flow_load_balancing:
+        enabled: false
+      placement_resource:
+        bandwidth: 12000,
+        mac_addrs: 32000
+        route_distinguisher: 
+          - name: RD,
+            size: 10000,
+            start: 25000
+        routes: 64000
+      pcep: 
+        pce_address: 172.16.12.3
+      templates: []
+      trust:
+        enabled: true
+  port_profiles:
+    port_profile: 
+      - name: PP1
+  labels:
+    label: [PE, P]
+  network_nodes:
+    network_node:
+    {% for node in nodes -%}
+    - installation:
+        duration: 5
+      {% if nodes[node].interfaces -%}
+      interfaces:
+        interface: 
+        {% for interface in nodes[node].interfaces -%}
+        - access_parameters:
+            ces: []
+          link: {{interface.link}}
+          name: {{interface.name}}
+          profiles: []
+        {% endfor -%}
+        port: []
+      {% else -%}
+      interfaces: {}
+      {% endif -%}
+      model: vMX
+      name: {{node}}
+      node_type: paper-node
+      profiles: {{nodes[node].profile}}
+      serial: {{ nodes[node].sernum}}
+      site_id: {{ nodes[node].site}}
+      vendor: Juniper Networks
+    {% endfor -%}
+instance_id: NIP1

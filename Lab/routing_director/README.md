@@ -21,10 +21,10 @@ This documentation provides information on how to install and setup this lab.
 
 
 ## note
-Tested with Routing Director 2.5.0, based on this [documentation](https://www.juniper.net/documentation/us/en/software/juniper-routing-director2.5.0/installation-guide/index.html).
+Tested with Routing Director 2.6.0, based on this [documentation](https://www.juniper.net/documentation/us/en/software/juniper-routing-director2.6.0/installation-guide/index.html).
 
 ## Getting disk image for Routing Director
-As for the current version of Routing Director Automation platform, version 2.5.0, the installation package only available as OVA package.
+As for the current version of Routing Director Automation platform, version 2.6.0, the installation package only available as OVA package.
 
 To install Routing Director virtual appliance on vmm, it requires the disk image in QCOW2 format.
 
@@ -270,9 +270,7 @@ Screenshot recording for this can be found here [part1](https://asciinema.org/a/
        commit
        exit
 
-       # for single node installation (strictly for demo, not production) add the following
-       # set paragon cluster install scale-mode single
-
+       
        # optional
        # set Routing Director cluster applications routingbot routingbot-crpd-vip 172.16.12.4
        # set Routing Director cluster applications aiops install-aiml true

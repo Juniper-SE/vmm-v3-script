@@ -1,0 +1,171 @@
+---
+- name: updating node with alpine OS
+  hosts: bridge
+  become: yes
+  vars:
+    user: alpine
+  tasks:
+    - name: update and upgrade repository
+      community.general.apk: 
+        upgrade: yes
+    - name: install the necessary package
+      community.general.apk: 
+        name: 
+        - iproute2
+- name: updating node with ubuntu OS
+  hosts: ubuntu
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: update and upgrade repository
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: yes
+        state: latest
+- name: install openvswitch on node client
+  hosts: 
+  - client
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install openvswitch-switch
+      ansible.builtin.apt:
+        pkg:
+        - openvswitch-switch
+    - name: install lxd
+      community.general.snap:
+        name:
+          - lxd
+    - name: create netplan /etc/netplan/02_net.yaml
+      ansible.builtin.blockinfile:
+        path: /etc/netplan/02_net.yaml
+        create: true
+        block: |
+          network:
+            bridges:
+              pe1ge0:
+                openvswitch: {}
+                interfaces:
+                - eth1
+              pe2ge0:
+                openvswitch: {}
+                interfaces:
+                - eth2
+              pe3ge0:
+                openvswitch: {}
+                interfaces:
+                - eth3
+              pe4ge0:
+                openvswitch: {}
+                interfaces:
+                - eth4
+              pe1ge3:
+                openvswitch: {}
+                interfaces:
+                - eth5
+              pe2ge3:
+                openvswitch: {}
+                interfaces:
+                - eth6
+              pe3ge3:
+                openvswitch: {}    
+                interfaces:
+                - eth7
+              pe4ge3:
+                openvswitch: {}
+                interfaces:
+                - eth8
+    - name: chmod /etc/netplan/02_net.yaml
+      ansible.builtin.file:
+        path: /etc/netplan/02_net.yaml
+        mode: '0600'
+    - name: applying netplan
+      ansible.builtin.command: netplan apply
+      changed_when: true
+- name: install podman and containerd on crpd
+  hosts: 
+  - crpd
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install podman and containerd on node crpd
+      ansible.builtin.apt:
+        pkg:
+        - podman
+        - containerd
+    - name: upload install_crpd.sh script
+      ansible.builtin.blockinfile:
+        path: /home/ubuntu/install_crpd.sh
+        create: true
+        block: |
+          #!/usr/bin/env bash
+          export CRPD_NAME=$1
+          export CRPD_VER=$2
+          if [ "${CRPD_NAME}" == "" ];
+          then
+            echo "variable CRPD_NAME is not defined"
+            exit
+          fi
+          if [ "${CRPD_VER}" == "" ];
+          then
+            echo "variable CRPD_VER is not defined"
+            exit
+          fi
+          sudo podman volume create ${CRPD_NAME}-config
+          sudo podman volume create ${CRPD_NAME}-varlog
+          sudo podman run --rm --detach --name ${CRPD_NAME} -h ${CRPD_NAME} \
+                --net=host --privileged \
+                -v ${CRPD_NAME}-config:/config \
+                -v ${CRPD_NAME}-varlog:/var/log \
+                -it localhost/crpd:${CRPD_VER}
+    - name: chmod /home/ubuntu/install_crpd.sh
+      ansible.builtin.file:
+        path: /home/ubuntu/install_crpd.sh
+        mode: '0777'
+- name: install software into node gw
+  hosts: 
+  - gw
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: install wireguard, novnc and websockify
+      ansible.builtin.apt:
+        pkg:
+        - wireguard-tools
+        - novnc
+        - websockify
+- name: reboot node crpd and client
+  hosts: 
+  - crpd
+  - client
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: Unconditionally reboot node crpd and client
+      ansible.builtin.reboot:
+        msg: "Rebooting machine in 5 seconds"
+- name: reboot node bridges
+  hosts: bridge
+  become: yes
+  vars:
+    user: alpine
+  tasks:
+    - name: Unconditionally reboot node bridges
+      ansible.builtin.reboot:
+        msg: "Rebooting machine in 5 seconds"
+- name: reboot node gw
+  hosts: 
+  - gw
+  become: yes
+  vars:
+    user: ubuntu
+  tasks:
+    - name: Unconditionally reboot node GW
+      ansible.builtin.reboot:
+        msg: "Rebooting machine in 5 seconds"
+

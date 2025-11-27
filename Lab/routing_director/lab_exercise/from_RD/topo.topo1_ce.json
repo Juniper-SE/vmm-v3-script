@@ -1,0 +1,196 @@
+{
+	"topo": {
+		"pop": [
+			{
+				"name": "PE1",
+				"node": [
+					{
+						"name": "pe1",
+						"bandwidth": "12000",
+						"ipv4_loopback": [
+							"10.100.255.1"
+						],
+						"mac_addrs": "10000",
+						"roles": [
+							"pe"
+						],
+						"routes": "32000",
+						"irbs": {
+							"start": 0,
+							"size": 16385
+						},
+						"access": [
+							{
+								"name": "ge-0/0/0",
+								"lag": false,
+								"speed": "1000",
+								"type": "ethernet"
+							}
+						],
+						"node_id": "00000000-0000-0000-1000-2c6bf5bbfb00"
+					}
+				],
+				"postal_code_matches": [
+					{
+						"name": "Medan",
+						"country_code": "ID",
+						"regex": "20..."
+					}
+				],
+				"site_id": "57ccf8c5-21d7-4938-85ca-b59bb8d656a8"
+			},
+			{
+				"name": "PE2",
+				"node": [
+					{
+						"name": "pe2",
+						"bandwidth": "12000",
+						"ipv4_loopback": [
+							"10.100.255.2"
+						],
+						"mac_addrs": "10000",
+						"roles": [
+							"pe"
+						],
+						"routes": "32000",
+						"irbs": {
+							"start": 0,
+							"size": 16385
+						},
+						"access": [
+							{
+								"name": "ge-0/0/0",
+								"lag": false,
+								"speed": "1000",
+								"type": "ethernet"
+							}
+						],
+						"node_id": "00000000-0000-0000-1000-2c6bf5c7ae00"
+					}
+				],
+				"postal_code_matches": [
+					{
+						"name": "palembang",
+						"country_code": "ID",
+						"regex": "30..."
+					}
+				],
+				"site_id": "b1ec7628-8c98-4d07-9873-36429a0d1185"
+			},
+			{
+				"name": "PE3",
+				"node": [
+					{
+						"name": "pe3",
+						"bandwidth": "12000",
+						"ipv4_loopback": [
+							"10.100.255.3"
+						],
+						"mac_addrs": "10000",
+						"roles": [
+							"pe"
+						],
+						"routes": "32000",
+						"irbs": {
+							"start": 0,
+							"size": 16385
+						},
+						"access": [
+							{
+								"name": "ge-0/0/0",
+								"lag": false,
+								"speed": "1000",
+								"type": "ethernet"
+							}
+						],
+						"node_id": "00000000-0000-0000-1000-2c6bf5bd3e00"
+					}
+				],
+				"postal_code_matches": [
+					{
+						"name": "ambon",
+						"country_code": "ID",
+						"regex": "97..."
+					}
+				],
+				"site_id": "4d4000fb-2e49-4bd6-8411-f0725323f91d"
+			},
+			{
+				"name": "PE4",
+				"node": [
+					{
+						"name": "pe4",
+						"bandwidth": "12000",
+						"ipv4_loopback": [
+							"10.100.255.4"
+						],
+						"mac_addrs": "10000",
+						"roles": [
+							"pe"
+						],
+						"routes": "32000",
+						"irbs": {
+							"start": 0,
+							"size": 16385
+						},
+						"access": [
+							{
+								"name": "ge-0/0/0",
+								"lag": false,
+								"speed": "1000",
+								"type": "ethernet"
+							}
+						],
+						"node_id": "00000000-0000-0000-1000-2c6bf52af100"
+					}
+				],
+				"postal_code_matches": [
+					{
+						"name": "mataram",
+						"country_code": "ID",
+						"regex": "83..."
+					}
+				],
+				"site_id": "d13a118d-9ada-45a7-a985-ce5abc614c59"
+			},
+			{
+				"name": "PE5",
+				"node": [
+					{
+						"name": "pe5",
+						"bandwidth": "12000",
+						"ipv4_loopback": [
+							"10.100.255.5"
+						],
+						"mac_addrs": "10000",
+						"roles": [
+							"pe"
+						],
+						"routes": "32000",
+						"irbs": {
+							"start": 0,
+							"size": 16385
+						},
+						"access": [
+							{
+								"name": "ge-0/0/0",
+								"lag": false,
+								"speed": "1000",
+								"type": "ethernet"
+							}
+						],
+						"node_id": "00000000-0000-0000-1000-2c6bf5346c00"
+					}
+				],
+				"postal_code_matches": [
+					{
+						"name": "tanjung selor",
+						"country_code": "ID",
+						"regex": "77..."
+					}
+				],
+				"site_id": "e4b5abcc-fc2c-425f-835b-4463e6c14844"
+			}
+		]
+	}
+}
